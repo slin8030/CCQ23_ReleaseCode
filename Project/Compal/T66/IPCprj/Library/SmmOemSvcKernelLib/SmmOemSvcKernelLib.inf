@@ -1,0 +1,92 @@
+## @file
+#  Component description file for SmmOemSvcKernelLib instance.
+#
+#******************************************************************************
+#* Copyright (c) 2012-2014, Insyde Software Corp. All Rights Reserved.
+#*
+#* You may not reproduce, distribute, publish, display, perform, modify, adapt,
+#* transmit, broadcast, present, recite, release, license or otherwise exploit
+#* any part of this publication in any form, by any means, without the prior
+#* written permission of Insyde Software Corporation.
+#*
+#******************************************************************************
+
+[Defines]
+  INF_VERSION                    = 0x00010005
+  BASE_NAME                      = SmmOemSvcKernelLib
+  FILE_GUID                      = 9B96DBDD-979D-4cfa-AEC2-0D3730FA68EF
+  MODULE_TYPE                    = DXE_SMM_DRIVER
+  VERSION_STRING                 = 1.0
+  LIBRARY_CLASS                  = SmmOemSvcKernelLib|DXE_SMM_DRIVER SMM_CORE
+  
+[Sources]
+  OemSvcVariablePreservedTable.c
+  OemSvcSmmInstallPnpStringTable.c
+  OemSvcIhisiGetWholeBiosRomMap.c
+#[-start-190220-IB07401083-add]#
+  OemSvcIhisiS12HookGetOemFlashMap.c
+#[-end-190220-IB07401083-add]#
+
+[Packages]
+  MdePkg/MdePkg.dec
+  InsydeModulePkg/InsydeModulePkg.dec
+  InsydeOemServicesPkg/InsydeOemServicesPkg.dec
+  MdeModulePkg/MdeModulePkg.dec
+  $(CHIPSET_PKG)/$(CHIPSET_PKG).dec
+#[-start-190220-IB07401083-add]#
+  $(PLATFORM_RC_PACKAGE)/$(PLATFORM_RC_PACKAGE).dec
+#[-end-190220-IB07401083-add]#
+
+[LibraryClasses]
+#[-start-160809-IB11270161-add]#
+  FlashRegionLib
+#[-end-160809-IB11270161-add]#
+#[-start-190220-IB07401083-add]#
+  BootMediaLib
+#[-end-190220-IB07401083-add]#
+
+#[-start-190220-IB07401083-add]#
+[Guids]
+  gH2OFlashMapRegionFlashMapGuid
+  gH2OFlashMapRegionFtwBackupGuid
+  gH2OFlashMapRegionFtwStateGuid
+  gH2OFlashMapRegionBvdtGuid
+  gH2OFlashMapRegionMsdmGuid
+#  gH2OFlashMapRegionVarDefaultGuid
+  gH2OFlashMapRegionSmbiosUpdateGuid
+#[-end-190220-IB07401083-add]#
+  
+[Pcd]
+  gEfiMdeModulePkgTokenSpaceGuid.PcdFlashNvStorageVariableBase
+  gEfiMdeModulePkgTokenSpaceGuid.PcdFlashNvStorageVariableSize
+  gEfiMdeModulePkgTokenSpaceGuid.PcdFlashNvStorageFtwWorkingBase
+  gEfiMdeModulePkgTokenSpaceGuid.PcdFlashNvStorageFtwWorkingSize
+  gEfiMdeModulePkgTokenSpaceGuid.PcdFlashNvStorageFtwSpareBase
+  gEfiMdeModulePkgTokenSpaceGuid.PcdFlashNvStorageFtwSpareSize
+  gInsydeTokenSpaceGuid.PcdFlashFvMainBase
+  gInsydeTokenSpaceGuid.PcdFlashFvMainSize
+  gInsydeTokenSpaceGuid.PcdFlashNvStorageMicrocodeBase
+  gInsydeTokenSpaceGuid.PcdFlashNvStorageMicrocodeSize
+  gInsydeTokenSpaceGuid.PcdFlashNvStorageDmiBase
+  gInsydeTokenSpaceGuid.PcdFlashNvStorageDmiSize
+  gInsydeTokenSpaceGuid.PcdFlashNvStorageMsdmDataBase
+  gInsydeTokenSpaceGuid.PcdFlashNvStorageMsdmDataSize
+  gInsydeTokenSpaceGuid.PcdFlashNvStorageBvdtBase
+  gInsydeTokenSpaceGuid.PcdFlashNvStorageBvdtSize
+  gInsydeTokenSpaceGuid.PcdFlashNvStorageFactoryCopyBase
+  gInsydeTokenSpaceGuid.PcdFlashNvStorageFactoryCopySize
+  gInsydeTokenSpaceGuid.PcdFlashFvRecoveryBase
+  gInsydeTokenSpaceGuid.PcdFlashFvRecoverySize
+  gChipsetPkgTokenSpaceGuid.PcdFlashFvRecovery2Base
+  gChipsetPkgTokenSpaceGuid.PcdFlashFvRecovery2Size    
+#[-start-190220-IB07401083-add]#
+  gChipsetPkgTokenSpaceGuid.PcdFlashDeviceExpansionBase
+  gChipsetPkgTokenSpaceGuid.PcdFlashDeviceExpansionSize
+  gChipsetPkgTokenSpaceGuid.PcdFlashIfwiRegionBase
+  gChipsetPkgTokenSpaceGuid.PcdFlashIfwiRegionSize
+  gChipsetPkgTokenSpaceGuid.PcdFlashBootPartition2Base
+#  gChipsetPkgTokenSpaceGuid.PcdSpiRomComponentSize
+#  gChipsetPkgTokenSpaceGuid.PcdBp2MemoryAddress
+  gChipsetPkgTokenSpaceGuid.PcdH2OFlashDeviceMapBp2Start
+  gChipsetPkgTokenSpaceGuid.PcdFlashSpiRomSize
+#[-end-190220-IB07401083-add]#

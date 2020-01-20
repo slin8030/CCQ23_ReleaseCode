@@ -452,6 +452,40 @@ BOOLEAN
   OUT  UINT8        *DerivedKey
   );
 
+
+//[-start-190320-IB07401093-add]//
+/**
+  Derive key data using HMAC-SHAxxx based KDF.
+
+  @param[in]   HashAlgorithm    Specify hash algorithm. The GUID is defined in UEFI spec.
+  @param[in]   Key              Pointer to the user-supplied key.
+  @param[in]   KeySize          Key size in bytes.
+  @param[in]   Salt             Pointer to the salt(non-secret) value.
+  @param[in]   SaltSize         Salt size in bytes.
+  @param[in]   Info             Pointer to the application specific info.
+  @param[in]   InfoSize         Info size in bytes.
+  @param[Out]  Out              Pointer to buffer to receive hkdf value.
+  @param[in]   OutSize          Size of hkdf bytes to generate.
+
+  @retval TRUE   Hkdf generated successfully.
+  @retval FALSE  Hkdf generation failed.
+
+**/
+typedef
+BOOLEAN
+(EFIAPI *CRYPTO_SERVICE_HKDF_EXTRACT_AND_EXPAND) (
+  IN   EFI_GUID     *HashAlgorithm,
+  IN   CONST UINT8  *Key,
+  IN   UINTN        KeySize,
+  IN   CONST UINT8  *Salt,    OPTIONAL
+  IN   UINTN        SaltSize,
+  IN   CONST UINT8  *Info,    OPTIONAL
+  IN   UINTN        InfoSize,
+  OUT  UINT8        *Out,
+  IN   UINTN        OutSize
+  );
+//[-end-190320-IB07401093-add]//
+
 //
 // Crypto Service Protocol Structure.
 //
@@ -526,6 +560,9 @@ struct _CRYPTO_SERVICES_PROTOCOL {
   CRYPTO_SERVICES_FINAL                         HmacSha256Final;
   CRYPTO_SERVICE_PKCS7_GET_CERTIFICATES_LIST    Pkcs7GetCertificatesList;
   CRYPTO_SERVICES_PBKDF2_CREATE_KEY             Pbkdf2CreateKey;
+//[-start-190320-IB07401093-add]//
+  CRYPTO_SERVICE_HKDF_EXTRACT_AND_EXPAND        HkdfExtractAndExpand;
+//[-end-190320-IB07401093-add]//
 };
 
 extern EFI_GUID gCryptoServicesProtocolGuid;

@@ -1,0 +1,63 @@
+## @file
+#  Component description file for PeiOemSvcKernelLib instance.
+#
+#******************************************************************************
+#* Copyright (c) 2014, Insyde Software Corp. All Rights Reserved.
+#*
+#* You may not reproduce, distribute, publish, display, perform, modify, adapt,
+#* transmit, broadcast, present, recite, release, license or otherwise exploit
+#* any part of this publication in any form, by any means, without the prior
+#* written permission of Insyde Software Corporation.
+#*
+#******************************************************************************
+
+[Defines]
+  INF_VERSION                    = 0x00010005
+  BASE_NAME                      = PeiOemSvcKernelLib
+  FILE_GUID                      = BFCAACD2-EAC7-479b-800D-850E4D185893
+  MODULE_TYPE                    = PEIM
+  VERSION_STRING                 = 1.0
+  LIBRARY_CLASS                  = PeiOemSvcKernelLib|PEI_CORE PEIM
+  
+[Sources]
+  #
+  # In order to make a dummy library. At lease one source file need to be feed
+  # to the build system. If there is function need to override default, please
+  # copy the proto type from corresponding file from OemServicesPkg and do the 
+  # modification. After it, add it in the sources. 
+  #
+  OemSvcGetVerbTable.c
+#[-start-151216-IB07220025-add]#
+  OemSvcSetRecoveryRequest.c
+#[-end-151216-IB07220025-add]#
+  OemSvcGetWaitTimerAfterHdaInit.c
+  OemSvcDetectRecoveryRequest.c
+#[-start-151216-IB07220025-add]#
+  OemSvcPeiCrisisRecoveryReset.c
+#[-end-151216-IB07220025-add]#
+
+[Packages]
+  MdePkg/MdePkg.dec
+#[-start-170103-IB07250262-modify]#
+  $(CHIPSET_PKG)/$(CHIPSET_PKG).dec
+  InsydeModulePkg/InsydeModulePkg.dec
+  InsydeOemServicesPkg/InsydeOemServicesPkg.dec
+  MdeModulePkg/MdeModulePkg.dec
+  $(PLATFORM_RC_PACKAGE)/$(PLATFORM_RC_PACKAGE).dec
+#[-end-170103-IB07250262-modify]#
+
+[LibraryClasses]
+  CmosLib
+#[-start-160907-IB07400780-add]#
+  PlatformCmosLib
+#[-end-160907-IB07400780-add]#
+
+[Guids]
+  
+[Ppis]
+
+[Pcd]
+#[-start-160126-IB07220038-add]#
+  gEfiBxtTokenSpaceGuid.PcdPmcSsramBaseAddress0      ## CONSUMES
+#[-end-160126-IB07220038-add]#
+  
