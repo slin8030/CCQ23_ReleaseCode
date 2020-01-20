@@ -1,0 +1,196 @@
+## @file
+#  Component description file for platform DXE driver
+#
+#******************************************************************************
+#* Copyright (c) 2014 - 2016, Insyde Software Corp. All Rights Reserved.
+#*
+#* You may not reproduce, distribute, publish, display, perform, modify, adapt,
+#* transmit, broadcast, present, recite, release, license or otherwise exploit
+#* any part of this publication in any form, by any means, without the prior
+#* written permission of Insyde Software Corporation.
+#*
+#******************************************************************************
+
+[defines]
+  INF_VERSION                    = 0x00010005
+  BASE_NAME                      = DxePlatform
+  FILE_GUID                      = 056E7324-A718-465b-9A84-228F06642B4F
+  MODULE_TYPE                    = DXE_DRIVER
+  VERSION_STRING                 = 1.0
+  PI_SPECIFICATION_VERSION       = 0x0001000A
+  ENTRY_POINT                    = InitializePlatform
+
+[sources.common]
+#[-start-160216-IB03090424-add]#
+  SiPolicy.c
+#[-end-160216-IB03090424-add]#
+  Platform.c
+  Ps2PlatformPolicy.c
+  PciDevice.c
+  UsbLegacy.c
+  IchTcoReset.c
+  SaPlatformPolicy.c
+#[-start-170329-IB07400852-add]#
+  PlatformChipset2.c
+#[-end-170329-IB07400852-add]#
+
+[Packages]
+  MdePkg/MdePkg.dec
+  SecurityPkg/SecurityPkg.dec
+  MdeModulePkg/MdeModulePkg.dec
+  IntelFrameworkPkg/IntelFrameworkPkg.dec
+  IntelFrameworkModulePkg/IntelFrameworkModulePkg.dec
+  $(CHIPSET_PKG)/$(CHIPSET_PKG).dec
+  $(PLATFORM_RC_PACKAGE)/$(PLATFORM_RC_PACKAGE).dec
+  $(PLATFORM_RC_PACKAGE)/BroxtonSiPrivate.dec
+  InsydeModulePkg/InsydeModulePkg.dec
+#[-start-151126-IB02950555-modify]#
+  ClientSiliconPkg/ClientSiliconPkg.dec
+#[-end-151126-IB02950555-modify]#
+  
+[LibraryClasses]
+  BaseLib
+  BaseMemoryLib
+  MemoryAllocationLib
+  UefiBootServicesTableLib
+  UefiDriverEntryPoint
+  UefiRuntimeServicesTableLib
+  DebugLib
+  UefiLib
+  S3BootScriptLib
+  ReportStatusCodeLib
+  HobLib
+  I2cLib
+  DxeOemSvcChipsetLibDefault
+  DxeInsydeChipsetLib
+  PostCodeLib
+  DxeServicesTableLib  
+  DxeKscLib
+  SideBandLib
+  EcMiscLib
+#  KernelConfigLib
+#[-start-160628-IB07400749-remove]#
+#  PlatformCmosLib
+#[-end-160628-IB07400749-remove]#
+#[-start-160803-IB07220122-remove]#
+#   PlatformConfigDataLib
+#[-end-160803-IB07220122-remove]#
+  ConfigBlockLib
+  DxePolicyUpdateLib
+  DxeSaPolicyLib
+#[-start-160720-IB03090429-add]#
+  HeciMsgLib
+#[-end-160720-IB03090429-add]#
+#[-start-160628-IB07400749-add]#
+  SteppingLib
+#[-end-160628-IB07400749-add]#
+#[-start-160809-IB07400769-add]#
+  CmosLib
+#[-end-160809-IB07400769-add]#
+#[-start-160914-IB07400784-add]#
+  MultiPlatformBaseLib
+#[-end-160914-IB07400784-add]#
+[Guids]
+  gEfiBiosIdGuid
+  gEfiPlatformBootModeGuid
+  gEfiBoardFeaturesGuid
+  gDmiDataGuid
+  gIdccDataHubGuid
+  gEfiPciLanInfoGuid
+  gSystemConfigurationGuid               
+  gEfiGlobalVariableGuid
+  gEfiEventExitBootServicesGuid   
+  gScPolicyHobGuid
+  gEfiBootMediaHobGuid
+  gEfiSetupVariableGuid
+#[-start-160704-IB07220105-add]#
+  gEfiEventLegacyBootGuid
+#[-end-160704-IB07220105-add]#
+#[-start-160914-IB07400784-add]#
+  gEfiPlatformInfoGuid
+#[-end-160914-IB07400784-add]#
+#[-start-161208-IB07400824-add]#
+  gChipsetPkgTokenSpaceGuid
+#[-end-161208-IB07400824-add]#
+#[-start-190322-IB07401094-add]#
+  gEfiEndOfDxeEventGroupGuid
+#[-end-190322-IB07401094-add]#
+
+[Protocols]
+  gDxeSiPolicyProtocolGuid           # PRODUCES
+  gEfiPciRootBridgeIoProtocolGuid    # CONSUMES  ## GUID
+  gEfiVariableArchProtocolGuid
+  gEfiVariableWriteArchProtocolGuid
+  gEfiBootScriptSaveProtocolGuid
+  gEfiCpuIo2ProtocolGuid
+  gEfiDevicePathProtocolGuid
+  gEfiDiskInfoProtocolGuid
+  gEfiPs2PolicyProtocolGuid
+  gEfiIsaAcpiProtocolGuid
+  gEfiPciIoProtocolGuid
+  gSaPolicyProtocolGuid
+  gEfiGopDisplayBrightnessProtocolGuid
+  gEfiUsbLegacyPlatformProtocolGuid
+  gEfiTcoResetProtocolGuid
+  gEfiWatchdogTimerDriverProtocolGuid
+  gEfiGlobalNvsAreaProtocolGuid
+  gDxePlatformSeCPolicyGuid
+  gEfiSeCOperationProtocolGuid
+  gEfiCRPolicyProtocolGuid
+!if $(ENBDT_PF_BUILD) == YES
+  gExitPmAuthProtocolGuid
+!endif  
+  gEfiUsb2HcProtocolGuid
+#[-start-160923-IB07400789-add]#
+  gEfiSetupUtilityProtocolGuid
+#[-end-160923-IB07400789-add]#
+#[-start-170329-IB07400852-add]#
+  gEfiSysPasswordServiceProtocolGuid
+#[-end-170329-IB07400852-add]#
+
+[Pcd.common]
+  gEfiMdePkgTokenSpaceGuid.PcdPciExpressBaseAddress
+  gEfiIntelFrameworkModulePkgTokenSpaceGuid.PcdFastPS2Detection
+  
+[Pcd]
+  gChipsetPkgTokenSpaceGuid.PcdPBTNDisableInterval
+  gChipsetPkgTokenSpaceGuid.PcdSetupConfigSize
+  gInsydeTokenSpaceGuid.PcdPlatformKeyList
+  gChipsetPkgTokenSpaceGuid.PcdDnxFastboot
+#[-start-160801-IB03090430-modify]#
+  gEfiBxtTokenSpaceGuid.PcdPmcIpc1BaseAddress0
+#[-end-160801-IB03090430-modify]#
+  gEfiBxtTokenSpaceGuid.PcdScAcpiIoPortBaseAddress
+  gEfiBxtTokenSpaceGuid.PcdPmcSsramBaseAddress0
+#[-start-160531-IB08450347-add]#
+  gEfiIntelFrameworkModulePkgTokenSpaceGuid.PcdFastPS2Detection
+#[-end-160531-IB08450347-add]#
+#[-start-160826-IB03090433-add]#
+  gChipsetPkgTokenSpaceGuid.PcdCsePttEnable
+#[-end-160826-IB03090433-add]#
+#[-start-161205-IB07400822-add]#
+#[-start-170111-IB07400832-remove]#
+#  gChipsetPkgTokenSpaceGuid.PcdKscSupport
+#[-end-170111-IB07400832-remove]#
+#[-end-161205-IB07400822-add]#
+#[-start-170109-IB07400830-add]#
+  gInsydeTokenSpaceGuid.PcdPreserveMemoryTable
+#[-end-170109-IB07400830-add]#
+#[-start-170327-IB07400850-add]#
+  gEfiBxtTokenSpaceGuid.PcdFDOState
+#[-end-170327-IB07400850-add]#
+
+[FeaturePcd]
+#[-start-151124-IB07220021-remove]#
+#   gInsydeTokenSpaceGuid.PcdH2OConsoleRedirectionSupported
+#[-end-151124-IB07220021-remove]#
+  gChipsetPkgTokenSpaceGuid.PcdEnableSmiEnableAcpi
+
+[Depex]
+  gEfiPciRootBridgeIoProtocolGuid     AND
+  gEfiVariableArchProtocolGuid        AND
+  gEfiVariableWriteArchProtocolGuid   AND
+  gEfiBootScriptSaveProtocolGuid      AND
+  gEfiCpuIo2ProtocolGuid               AND
+  gEfiGlobalNvsAreaProtocolGuid
+

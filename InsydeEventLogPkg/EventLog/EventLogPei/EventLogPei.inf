@@ -1,0 +1,65 @@
+## @file
+#  Implement the PEIM of Pei EventLog
+#  
+#  ***************************************************************************
+#  * Copyright (c) 2014, Insyde Software Corp. All Rights Reserved.
+#  *
+#  * You may not reproduce, distribute, publish, display, perform, modify, adapt,
+#  * transmit, broadcast, present, recite, release, license or otherwise exploit
+#  * any part of this publication in any form, by any means, without the prior
+#  * written permission of Insyde Software Corporation.
+#  *
+#  ******************************************************************************
+#  
+##
+
+[Defines]
+  INF_VERSION               = 0x00010005
+  BASE_NAME                 = EventLogPei
+  FILE_GUID                 = 4D1EFB42-6A65-4C9C-81A7-FE2A6B885DA8
+  MODULE_TYPE               = PEIM
+  VERSION_STRING            = 1.0
+  ENTRY_POINT               = EventLogPeiEntryPoint
+
+
+[Packages]
+  MdePkg/MdePkg.dec
+  InsydeModulePkg/InsydeModulePkg.dec
+  $(INSYDE_EVENTLOG_PKG)/$(INSYDE_EVENTLOG_PKG).dec
+#[-start-171207-IB08400539-add]#
+  SegFeaturePkg/SegFeaturePkg.dec
+#[-end-171207-IB08400539-add]#
+  
+[Sources]
+  EventLogPei.c
+  EventLogPei.h
+	
+[LibraryClasses]
+  PeimEntryPoint
+  PeiServicesLib
+  BaseLib
+  DebugLib
+  HobLib
+  MemoryAllocationLib
+  EventLogGetTimeFromCmosLib
+
+[Ppis]
+#[-start-171212-IB08400542-modify]#
+  gH2OEventLogPpiGuid                  #CONSUMED
+  gH2OBmcSelStoragePpiGuid             #CONSUMED  
+#[-end-171212-IB08400542-modify]#
+  gEfiPeiReadOnlyVariable2PpiGuid      #CONSUMED  
+  
+[Guids]
+  gH2OPeiEventLogHobGuid               #PRODUCED
+  
+[Pcd]
+#[-start-171212-IB08400542-modify]#
+  gH2OEventLogPkgTokenSpaceGuid.PcdH2OEventLogTarget
+  gH2OEventLogPkgTokenSpaceGuid.PcdH2OEventLogFullOption
+#[-end-171212-IB08400542-modify]#
+  
+[BuildOptions]
+
+[Depex]
+  TRUE

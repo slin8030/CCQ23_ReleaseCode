@@ -1,0 +1,190 @@
+## @file
+#  Component description file for AcpiPlatformDxe driver.
+#
+#******************************************************************************
+#* Copyright (c) 2012 - 2014, Insyde Software Corp. All Rights Reserved.
+#*
+#* You may not reproduce, distribute, publish, display, perform, modify, adapt,
+#* transmit, broadcast, present, recite, release, license or otherwise exploit
+#* any part of this publication in any form, by any means, without the prior
+#* written permission of Insyde Software Corporation.
+#*
+#******************************************************************************
+#
+#  Module Name:
+#
+#   AcpiPlatform.inf
+#
+#  Abstract:
+#
+#
+--*/
+
+
+[defines]
+  INF_VERSION                    = 0x00010005
+  BASE_NAME                      = AcpiPlatform
+#[-start-160216-IB03090424-modify]#
+  FILE_GUID                      = 1DFFE9F3-7B5F-4B44-8EBD-39A739EBA903
+#[-end-160216-IB03090424-modify]#
+  MODULE_TYPE                    = DXE_DRIVER
+  VERSION_STRING                 = 1.0
+  ENTRY_POINT                    = AcpiPlatformEntryPoint
+
+[sources.common]
+#[-start-160216-IB03090424-modify]#
+  AcpiPlatformHooks.c
+  AcpiPlatform.c
+#[-start-160422-IB03090426-add]#
+  AcpiHrot.c
+#[-end-160422-IB03090426-add]#
+  FacsUpdateCommon.c
+  SlicUpdateCommon.c
+  FacpUpdateCommon.c
+#[-end-160216-IB03090424-modify]#
+
+[Packages]
+#[-start-160216-IB03090424-modify]#
+  MdePkg/MdePkg.dec
+  IntelFrameworkPkg/IntelFrameworkPkg.dec
+  MdeModulePkg/MdeModulePkg.dec
+  $(CHIPSET_PKG)/$(CHIPSET_PKG).dec
+#[-start-171225-IB07400935-add]#
+  $(PROJECT_PKG)/Project.dec
+#[-end-171225-IB07400935-add]#
+  BroxtonSiPkg/BroxtonSiPkg.dec
+  ClientSiliconPkg/ClientSiliconPkg.dec
+  IntelFrameworkModulePkg/IntelFrameworkModulePkg.dec
+  $(PLATFORM_RC_PACKAGE)/$(PLATFORM_RC_PACKAGE).dec
+  InsydeModulePkg/InsydeModulePkg.dec
+  InsydeOemServicesPkg/InsydeOemServicesPkg.dec
+#[-end-160216-IB03090424-modify]#
+
+[LibraryClasses]
+#[-start-160216-IB03090424-modify]#
+  HobLib
+  UefiRuntimeServicesTableLib
+  UefiDriverEntryPoint
+  BaseMemoryLib
+  DebugLib
+  HobLib
+  IoLib
+  BaseLib
+  DxeOemSvcKernelLibDefault
+  PciExpressLib
+  DxeServicesLib
+  DxeOemSvcChipsetLibDefault  
+  PcdLib
+  MemoryAllocationLib
+  SeCLib
+  DxeOemSvcChipsetLibDefault
+  SideBandLib
+  DxeVtdLib
+#[-start-160803-IB07220122-remove]#
+#   PlatformConfigDataLib
+#[-end-160803-IB07220122-remove]#
+  SteppingLib
+#[-end-160216-IB03090424-modify]#
+#[-start-160509-IB03090427-add]#
+  SeCLib
+#[-end-160509-IB03090427-add]#
+  DxeInsydeChipsetLib
+#[-start-160914-IB07400784-add]#
+  MultiPlatformBaseLib
+#[-end-160914-IB07400784-add]#
+#[-start-160923-IB07400789-add]#
+  CmosLib
+#[-end-160923-IB07400789-add]#
+
+[Guids]
+#[-start-160216-IB03090424-modify]#
+  gACPIOSFRMfgStringVariableGuid
+  gEfiAcpiTableStorageGuid
+  gACPIOSFRMfgStringVariableGuid
+  gEfiBoardFeaturesGuid
+  gSLP20EncryptedOEMPublicKeyVariableGuid
+  gEfiPlatformInfoGuid
+  gSystemConfigurationGuid
+  gSLP20MarkerVariableGuid
+  gSLP20OEMPublicKeyVariableGuid
+  gACPIOSFRRefDataBlockVariableGuid
+  gACPIOSFRModelStringVariableGuid
+  gEfiPlatformCpuInfoGuid
+  gPramAddrDataGuid
+  gEfiNorthPeakGuid
+  gEfiBxtVariableGuid
+  gEfiAcpiTableStorageWin7Guid
+  gReservedNvsAcpiTableStorageGuid
+  gIsctPersistentDataGuid
+  gEfiPramConfGuid
+  gPlatformSsdtImageGuid
+  gIrmtAcpiTableStorageGuid
+#[-end-160216-IB03090424-modify]#
+  
+[Protocols]
+  gEfiAcpiTableProtocolGuid                     # PROTOCOL ALWAYS_CONSUMED
+  gEnhancedSpeedstepProtocolGuid
+  gEfiPlatformCpuProtocolGuid
+#[-start-160216-IB03090424-add]#
+  gEfiAcpiSupportProtocolGuid
+#[-end-160216-IB03090424-add]#
+  gEfiAcpiS3SaveProtocolGuid
+  gEfiCpuIo2ProtocolGuid
+  gEfiPs2PolicyProtocolGuid
+  gEfiFirmwareVolume2ProtocolGuid
+  gEfiMpServiceProtocolGuid
+  gEfiGlobalNvsAreaProtocolGuid
+  gPublishAcpiTableDoneProtocolGuid
+!if $(TABLET_PF_BUILD) == YES  
+  gScSpiProtocolGuid  
+!endif  
+!if $(ENBDT_PF_BUILD) == YES    
+  gIgdOpRegionProtocolGuid
+  gEfiAcpiSupportProtocolGuid
+  gEfiReservedNvsAreaProtocolGuid
+!endif  
+  gEfiAcpiSdtProtocolGuid
+  gEfiHeciProtocolGuid
+#[-start-160216-IB03090424-remove]#
+#[-start-160506-IB07400723-modify]#
+  gEfiSeCOperationProtocolGuid
+#[-end-160506-IB07400723-modify]#
+#[-end-160216-IB03090424-remove]#
+#[-start-161027-IB07400806-add]#
+  gCpuGlobalNvsAreaProtocolGuid
+#[-end-161027-IB07400806-add]#
+[FeaturePcd]
+#[-start-170227-IB15550024-add]#
+  gInsydeTokenSpaceGuid.PcdH2OCsmSupported      
+#[-end-170227-IB15550024-add]#
+  
+[Pcd]
+  gEfiMdePkgTokenSpaceGuid.PcdPciExpressBaseAddress  ## CONSUMES
+#[-start-151228-IB03090424-modify]#
+  gEfiBxtTokenSpaceGuid.PcdScAcpiIoPortBaseAddress
+#[-start-160802-IB03090430-modify]#
+  gEfiBxtTokenSpaceGuid.PcdPmcIpc1BaseAddress0
+#[-end-160802-IB03090430-modify]#
+#[-end-151228-IB03090424-modify]#
+  gInsydeTokenSpaceGuid.PcdSoftwareSmiPort
+  gChipsetPkgTokenSpaceGuid.PcdSetupConfigSize
+#[-start-161111-IB07400811-add]#
+  gChipsetPkgTokenSpaceGuid.PcdMaxCpuCoreNumber
+#[-end-161111-IB07400811-add]#
+      
+[Depex]
+  gEfiAcpiTableProtocolGuid AND
+  gEfiAcpiSupportProtocolGuid AND
+  gEfiMpServiceProtocolGuid AND
+!if $(TABLET_PF_BUILD) == YES    
+  gScSpiProtocolGuid       AND
+!endif  
+  gEfiCpuIo2ProtocolGuid      AND
+#[-start-160920-IB07220137-modify]#
+#[-start-151230-IB03090424-add]#
+  gEfiVariableWriteArchProtocolGuid AND
+  gEfiVariableArchProtocolGuid AND
+#[-end-151230-IB03090424-add]#
+  gEfiSmmBase2ProtocolGuid
+#[-end-160920-IB07220137-modify]#
+

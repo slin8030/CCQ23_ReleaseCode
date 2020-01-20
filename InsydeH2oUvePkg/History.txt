@@ -1,0 +1,220 @@
+#;*************************************************************************************************
+#;* Copyright (c) 1983-2016, Insyde Software Corporation. All Rights Reserved.
+#;*
+#;* You may not reproduce, distribute, publish, display, perform, modify, adapt,
+#;* transmit, broadcast, present, recite, release, license or otherwise exploit
+#;* any part of this publication in any form, by any means, without the prior
+#;* written permission of Insyde Software Corporation.
+#;*
+#;*************************************************************************************************
+#; Revision History:
+#; 
+#; Label#: 05.21.48
+#; Status: Tag version update
+#; 
+#;------------------------------------------------------------------------------
+#; Label#: 05.21.42
+#; Status: Support default password feature
+#; 
+#; Tag#: 05.21.42
+#; Issue#: IB12340007
+#; Severity: Feature
+#; Category: H2ouvePkg
+#; Symptom: (New Feature)
+#; RootCause: (New Feature)
+#; Description: Support Adding default password on image by H2OUVE.
+#; Solution: (New Feature)
+#; SolutionDependency: None
+#; Reviewer: IB12340000
+#; RelatedFiles:
+#; Modified:
+#;   1. Include\Guid\H2oUveConfigUtilHii.h
+#;   2. VariableEditDxe\VariableEditDxe.c
+#;   3. VariableEditDxe\VariableEditDxe.inf
+#; 
+#;------------------------------------------------------------------------------
+#; Label#: 05.21.41
+#; Status: Compatibility correction for SetupNvData.
+#; 
+#; Tag#: 05.21.41
+#; Issue#: IB12340006
+#; Severity: Feature
+#; Category: H2ouvePkg
+#; Symptom: (New Feature)
+#; RootCause: (New Feature)
+#; Description: H2oUveSampleFormUtility is driver which is used to verify/debug/check H2OUVE tool.
+#; Solution: (New Feature)
+#; SolutionDependency: None
+#; Reviewer: IB12340000
+#; RelatedFiles:
+#; Added:
+#;   1. ConfigUtility\H2oUveSampleFormUtility\
+#;   2. ConfigUtility\H2oUveSampleFormUtility\H2oUveSampleFormUtil.c
+#;   3. ConfigUtility\H2oUveSampleFormUtility\H2oUveSampleFormUtil.h
+#;   4. ConfigUtility\H2oUveSampleFormUtility\H2oUveSampleFormUtil.inf
+#;   5. ConfigUtility\H2oUveSampleFormUtility\H2oUveSampleFormUtilPageVfr.vfr
+#;   6. ConfigUtility\H2oUveSampleFormUtility\H2oUveSampleFormUtilSetupConfig.h
+#;   7. ConfigUtility\H2oUveSampleFormUtility\H2oUveSampleFormUtilStr.uni
+#;   8. H2OUVE_Shell_100.00.08.02_default.txt
+#;   9. H2OUVE_Shell_100.00.08.02_runtime.txt
+#;   10. H2oUveSampleForm_ReadMe.doc
+#;   11. Include\Guid\H2oUveSampleFormUtilHii.h
+#; Modified:
+#;   1. InsydeH2oUvePkg.dec
+#;   2. Package.dsc
+#;   3. Package.fdf
+#; 
+#; Tag#: 05.21.41
+#; Issue#: IB12340005
+#; Severity: Tweak
+#; Category: H2ouvePkg
+#; Symptom: Build failed, because SetupNvData is not exist.
+#; RootCause: The SetupNvData has been remove by IB07240447
+#; Description: SetupNvData should be same as Setup variable, so the data update is deleted.
+#; Solution: Remove the data update.
+#; SolutionDependency: None
+#; Reviewer: IB12340000
+#; RelatedFiles:
+#; Modified:
+#;   1. VariableEditDxe\VariableEditDxe.c
+#; 
+#;------------------------------------------------------------------------------
+#; Label#: 05.21.40
+#; Status: Tag version update
+#; 
+#;------------------------------------------------------------------------------
+#; Label#: 05.21.36
+#; Status: Structural adjustment & Password feature update
+#; 
+#; Tag#: 05.21.36
+#; Issue#: IB12340004
+#; Severity: Medium
+#; Category: H2ouvePkg
+#; Symptom: Password feature can't work correctly.
+#; RootCause: The code is removed at initial version, and now it has added back with some necessary modification.
+#; Description: 1.Remove the password request at POST when power on password is disabled.
+#;              2.When PcdSysPasswordInCmos = NO, it should work normally.
+#;              3.When PcdSecureSysPasswordSupported = YES, It should work normally. 
+#; Solution: 1. Add hook function.
+#;           2. Add EfiGetSystemConfigurationTable2() to get the data of hob, and change DXE service to SMM service.
+#;           3. Add UnlockPassword() & LockPassword(), and UnlockPassword() will release access right to modify password.
+#; SolutionDependency: None
+#; Reviewer: IB12340000
+#; RelatedFiles:
+#; Modified:
+#;   1. Library\SmmOemSvcH2oUveLib\SmmOemSvcH2oUveLib.c
+#;   2. Library\SmmOemSvcH2oUveLib\SmmOemSvcH2oUveLib.inf
+#;   3. Library\SmmOemSvcH2oUveLib\SysPasswordSmm.c
+#;   4. Library\SmmOemSvcH2oUveLib\SysPasswordSmm.h
+#;   5. VariableEditDxe\VariableEditDxe.c
+#; 
+#; Tag#: 05.21.35
+#; Issue#: IB12340003
+#; Severity: Tweak
+#; Category: H2ouvePkg
+#; Symptom: Code adjustment
+#; RootCause: None
+#; Description: None
+#; Solution: Remove unused code & correct error message level.
+#; SolutionDependency: None
+#; Reviewer: IB12340000
+#; RelatedFiles:
+#; Modified:
+#;   1. VariableEditDxe\VariableEditDxe.c
+#; 
+#; Tag#: 05.21.35
+#; Issue#: IB12340002
+#; Severity: Medium
+#; Category: H2ouvePkg
+#; Symptom: Timeout can't be changed by H2OUVE.
+#; RootCause: Timeout variable always sets to 0 when executing H2OUVE to modify SCU setting.
+#; Description: None
+#; Solution: Sync Setup->Timeout to Timeout variable.
+#; SolutionDependency: None
+#; Reviewer: IB12340000
+#; RelatedFiles:
+#; Modified:
+#;   1. Library\SmmOemSvcH2oUveLib\SmmOemSvcH2oUveLib.c
+#; 
+#; Tag#: 05.21.35
+#; Issue#: IB12340001
+#; Severity: Serious
+#; Category: H2ouvePkg
+#; Symptom: Monitor won't show in legacy mode when H2OUVE support is enabled.
+#; RootCause: Install Hii data too early to cause some side effect
+#; Description: VBIOS can't work normally when H2OUVE support is enabled.
+#; Solution: Adjust the the behavior of install Hii data to ready to boot phase.
+#; SolutionDependency: None
+#; Reviewer: IB12340000
+#; RelatedFiles:
+#; Modified:
+#;   1. VariableEditDxe\VariableEditDxe.c
+#;   2. VariableEditDxe\VariableEditDxe.h
+#;   3. VariableEditDxe\VariableEditDxe.inf
+#; 
+#;------------------------------------------------------------------------------
+#; Label#: 05.21.32
+#; Status: Tag version update
+#; 
+#;------------------------------------------------------------------------------
+#; Label#: 05.21.30
+#; Status: Initial code
+#; 
+#; Tag#: 05.21.30.0001
+#; Issue#: IB12340000
+#; Severity: Feature
+#; Category: H2ouvePkg
+#; Symptom: None
+#; RootCause: None
+#; Description: Initial code base.
+#; Solution: None
+#; SolutionDependency: None
+#; Reviewer: IB12340000
+#; RelatedFiles:
+#; Added:
+#;   1. ConfigUtility\
+#;   2. ConfigUtility\H2oUveConfigUtilDxe\
+#;   3. ConfigUtility\H2oUveConfigUtilDxe\H2oUveConfigUtil.c
+#;   4. ConfigUtility\H2oUveConfigUtilDxe\H2oUveConfigUtil.h
+#;   5. ConfigUtility\H2oUveConfigUtilDxe\H2oUveConfigUtilConfigPageVfr.vfr
+#;   6. ConfigUtility\H2oUveConfigUtilDxe\H2oUveConfigUtilDxe.inf
+#;   7. ConfigUtility\H2oUveConfigUtilDxe\H2oUveConfigUtilSetupConfig.h
+#;   8. ConfigUtility\H2oUveConfigUtilDxe\H2oUveConfigUtilStr.uni
+#;   9. Include\
+#;   10. Include\Guid\
+#;   11. Include\Guid\H2oUveConfigUtilHii.h
+#;   12. Include\Library\
+#;   13. Include\Library\SmmOemSvcH2oUveLib.h
+#;   14. Include\Protocol\
+#;   15. Include\Protocol\VariableEditBootTypeInfo.h
+#;   16. InsydeH2oUvePkg.dec
+#;   17. Library\
+#;   18. Library\SmmOemSvcH2oUveLib\
+#;   19. Library\SmmOemSvcH2oUveLib\SmmOemSvcH2oUveLib.c
+#;   20. Library\SmmOemSvcH2oUveLib\SmmOemSvcH2oUveLib.inf
+#;   21. Library\SmmOemSvcH2oUveLib\SysPasswordSmm.c
+#;   22. Library\SmmOemSvcH2oUveLib\SysPasswordSmm.h
+#;   23. Library\SmmOemSvcH2oUveLib\VariableEditPwd.h
+#;   24. Package.dsc
+#;   25. Package.fdf
+#;   26. VariableEditDxe\
+#;   27. VariableEditDxe\VariableEditDxe.c
+#;   28. VariableEditDxe\VariableEditDxe.h
+#;   29. VariableEditDxe\VariableEditDxe.inf
+#;   30. VariableEditSmm\
+#;   31. VariableEditSmm\VariableEditSmm.c
+#;   32. VariableEditSmm\VariableEditSmm.h
+#;   33. VariableEditSmm\VariableEditSmm.inf
+#; 
+#; Tag#: 05.21.30
+#; Issue#: IB12340000
+#; Severity: Trivial
+#; Category: H2ouvePkg
+#; Symptom: None
+#; RootCause: None
+#; Description: History.txt auto update test
+#; Solution: None
+#; SolutionDependency: None
+#; Reviewer: IB12340000
+#; RelatedFiles:
+#; 

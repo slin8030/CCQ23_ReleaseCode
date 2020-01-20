@@ -1,0 +1,76 @@
+## @file
+# Component description file for OBB verify PEIM.
+#
+#@copyright
+# Copyright (c) 1999 - 2016 Intel Corporation. All rights reserved
+# This software and associated documentation (if any) is furnished
+# under a license and may only be used or copied in accordance
+# with the terms of the license. Except as permitted by the
+# license, no part of this software or documentation may be
+# reproduced, stored in a retrieval system, or transmitted in any
+# form or by any means without the express written consent of
+# Intel Corporation.
+# This file contains a 'Sample Driver' and is licensed as such
+# under the terms of your license agreement with Intel or your
+# vendor. This file may be modified by the user, subject to
+# the additional terms of the license agreement.
+#
+#@par Specification Reference:
+#
+##
+
+[Defines]
+  INF_VERSION                    = 0x00010005
+  BASE_NAME                      = OBBVerifyEntry
+  FILE_GUID                      = CE2E796F-C268-4ce3-95C5-B6DA05D1798C
+  MODULE_TYPE                    = PEIM
+  VERSION_STRING                 = 1.0
+  ENTRY_POINT                    = OBBVerifyEntry
+
+[Sources]
+  OBBVerifyPei.c
+  OBBAnalyzerPei.c
+
+[Packages]
+  MdePkg/MdePkg.dec
+  MdeModulePkg/MdeModulePkg.dec
+  IntelFrameworkModulePkg/IntelFrameworkModulePkg.dec
+  CryptoPkg/CryptoPkg.dec
+  BroxtonSiPkg/BroxtonSiPkg.dec
+  Platform/BxtPlatformPkg/PlatformPkg.dec
+
+[LibraryClasses]
+  IoLib
+  PcdLib
+  BaseMemoryLib
+  PeimEntryPoint
+  DebugLib
+  RecoveryLoaderLibPeim
+  BaseCryptLib
+  HeciMsgLib
+  PeiSpiInitLib
+  BaseIpcLib
+  ScPlatformLib
+  
+
+[Guids]
+  gRecoveryOnFatIdeDiskGuid
+  gRecoveryOnFatFloppyDiskGuid
+  gRecoveryOnDataCdGuid
+  gRecoveryOnFatUsbDiskGuid
+  gEfiBootMediaHobGuid
+  gUfsBootLunIdHobGuid
+  gEfiPlatformInfoGuid
+ 
+
+
+[Ppis]  
+  gPeiDeviceRecoveryLoaderPpiGuid
+ 
+ 
+[Depex]
+TRUE
+ 
+ 
+  
+  

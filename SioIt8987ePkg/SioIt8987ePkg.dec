@@ -1,0 +1,52 @@
+## @file
+#
+#  Platform Package Declaration file
+#
+#******************************************************************************
+#* Copyright (c) 2015, Insyde Software Corporation. All Rights Reserved.
+#*
+#* You may not reproduce, distribute, publish, display, perform, modify, adapt,
+#* transmit, broadcast, present, recite, release, license or otherwise exploit
+#* any part of this publication in any form, by any means, without the prior
+#* written permission of Insyde Software Corporation.
+#*
+#******************************************************************************
+#
+##
+
+[Defines]
+  DEC_SPECIFICATION              = 0x00010005
+  PACKAGE_NAME                   = SioIt8987ePkg
+  PACKAGE_GUID                   = 465ED1FA-28FA-4A28-B0D8-7F6E17E8C810
+  PACKAGE_VERSION                = 00.00.01.12
+
+[Includes]
+  Include
+
+[LibraryClasses]
+  SioLib|Include/Library/SioLib.h
+  IoDecodeLib|Include/Library/SioIoDecodeLib.h
+
+[Guids]
+  gSioIt8987eSetup00FormSetGuid = { 0x40f107fc, 0x6aee, 0x40f4, { 0xa1, 0xc9, 0x9f, 0x53, 0x63, 0x36, 0x74, 0xa9 } }
+
+[Protocols]
+
+[PcdsFeatureFlag]
+  gSioGuid.PcdSioIt8987eSetup|FALSE|BOOLEAN|0x37E00580
+  gSioGuid.PcdSioIt8987eUpdateAsl|FALSE|BOOLEAN|0x37E00581
+  gSioGuid.PcdSioIt8987eSupported|FALSE|BOOLEAN|0x37E00582
+
+[PcdsFixedAtBuild]
+  gSioGuid.PcdSioIt8987eCfg|{0}|VOID*|0x37E00583
+  gSioGuid.PcdSioIt8987eSetupStr|L""|VOID*|0x37E00584
+  # @PcdTypeStruct EFI_SIO_TABLE {UINT8 Register; UINT8 Value;}
+  gSioGuid.PcdSioIt8987ePeiCustomizeSettingTable|{0}|VOID*|0x37E00585
+  # @PcdTypeStruct EFI_SIO_TABLE {UINT8 Register; UINT8 Value;}
+  gSioGuid.PcdSioIt8987eDxeCustomizeSettingTable|{0}|VOID*|0x37E00586
+
+[PcdsPatchableInModule,PcdsDynamic]
+  gSioGuid.PcdSioIt8987eExtensiveCfg|{0}|VOID*|0x37E00587
+
+[PcdsDynamicEx]
+  gLinkAdvancedTokenSpaceGuid.SioIt8987eSetup00FormSet|{0}|VOID*|0x37E00588

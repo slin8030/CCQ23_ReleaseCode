@@ -1,0 +1,63 @@
+#/** @file
+#
+#  Component description file for Variable Editor Smm
+#  
+#;******************************************************************************
+#;* Copyright (c) 2016, Insyde Software Corporation. All Rights Reserved.
+#;*
+#;* You may not reproduce, distribute, publish, display, perform, modify, adapt,
+#;* transmit, broadcast, present, recite, release, license or otherwise exploit
+#;* any part of this publication in any form, by any means, without the prior
+#;* written permission of Insyde Software Corporation.
+#;*
+#;******************************************************************************
+#*/
+[Defines]
+  INF_VERSION               = 0x00010005
+  BASE_NAME                 = VariableEditSmm
+  FILE_GUID                 = 84945A3D-49C8-4059-8F34-6A4532D32A47
+  MODULE_TYPE               = DXE_SMM_DRIVER
+  PI_SPECIFICATION_VERSION  = 0x0001000A
+  VERSION_STRING            = 1.0
+  ENTRY_POINT               = SetupCallbackSyncEntryPoint
+
+[Packages]
+  MdePkg/MdePkg.dec
+  MdeModulePkg/MdeModulePkg.dec
+  IntelFrameworkPkg/IntelFrameworkPkg.dec
+  InsydeModulePkg/InsydeModulePkg.dec
+  $(INSYDE_H2OUVE_PKG)/$(INSYDE_H2OUVE_PKG).dec
+
+[Sources]
+  VariableEditSmm.h
+  VariableEditSmm.c
+
+[LibraryClasses]
+  UefiBootServicesTableLib
+  UefiDriverEntryPoint
+  SmmServicesTableLib
+  MemoryAllocationLib
+  PrintLib
+  VariableLib
+  DebugLib
+  SmmOemSvcH2oUveLib
+
+[Protocols]
+  gEfiSmmVariableProtocolGuid       #always consume
+  gH2OIhisiProtocolGuid
+
+[Pcd]
+  gH2oUvePkgTokenSpaceGuid.PcdH2oUveIhisiRegisterTable
+
+[Guids]
+  gSystemConfigurationGuid
+  gH2oUveVarstoreGuid
+
+[Depex]
+  gEfiSmmBase2ProtocolGuid            AND
+  gEfiSmmAccess2ProtocolGuid          AND
+  gEfiSmmVariableProtocolGuid         AND
+  gEfiSetupUtilityProtocolGuid        AND
+  gH2OIhisiProtocolGuid
+
+[BuildOptions]

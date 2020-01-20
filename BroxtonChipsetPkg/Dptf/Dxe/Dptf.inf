@@ -1,0 +1,97 @@
+## @file
+#  Component description file for Dptf module
+#
+# @copyright
+# Copyright (c) 2006 - 2016 Intel Corporation. All rights reserved
+# This software and associated documentation (if any) is furnished
+# under a license and may only be used or copied in accordance
+# with the terms of the license. Except as permitted by the
+# license, no part of this software or documentation may be
+# reproduced, stored in a retrieval system, or transmitted in any
+# form or by any means without the express written consent of
+# Intel Corporation.
+# This file contains a 'Sample Driver' and is licensed as such
+# under the terms of your license agreement with Intel or your
+# vendor. This file may be modified by the user, subject to
+# the additional terms of the license agreement.
+#
+#@par Specification Reference:
+##
+
+[Defines]
+  INF_VERSION                    = 0x00010005
+  BASE_NAME                      = Dptf
+  FILE_GUID                      = 1D000AE9-756B-4937-B736-1F3D96A5A8F0
+  MODULE_TYPE                    = DXE_DRIVER
+  VERSION_STRING                 = 1.0
+  ENTRY_POINT                    = DptfDriverEntry
+
+[Sources.common]
+  Dptf.c
+  Dptf.h
+
+[Packages]
+  MdePkg/MdePkg.dec
+  MdeModulePkg/MdeModulePkg.dec
+  IntelFrameworkPkg/IntelFrameworkPkg.dec
+#[-start-151210-IB03090424-remove]#
+#  Platform/BxtPlatformPkg/PlatformPkg.dec
+#[-end-151210-IB03090424-remove]#
+  BroxtonSiPkg/BroxtonSiPkg.dec
+  InsydeModulePkg/InsydeModulePkg.dec
+  $(CHIPSET_PKG)/$(CHIPSET_PKG).dec
+  
+[LibraryClasses]
+  UefiLib
+  UefiBootServicesTableLib
+  UefiRuntimeServicesTableLib
+#[-start-160506-IB03090427-add]#
+  S3BootScriptLib
+#[-end-160506-IB03090427-add]#
+  BaseLib
+  BaseMemoryLib
+  MemoryAllocationLib
+  UefiDriverEntryPoint
+  DebugLib
+  DevicePathLib
+  IoLib
+  PcdLib
+#[-start-160803-IB07220122-remove]#
+#   PlatformConfigDataLib
+#[-end-160803-IB07220122-remove]#
+#[-start-151228-IB03090424-add]#
+  ScPlatformLib
+  MmPciLib
+  SteppingLib
+#[-end-151228-IB03090424-add]#
+  DxeInsydeChipsetLib
+
+[Protocols]
+  gEfiAcpiSupportProtocolGuid   # CONSUMED
+  gEfiGlobalNvsAreaProtocolGuid # CONSUMED
+
+#[-start-160803-IB07220122-add]#
+[Guids]
+  gSystemConfigurationGuid
+#[-end-160803-IB07220122-add]#
+  
+[Pcd]
+  gEfiMdePkgTokenSpaceGuid.PcdPciExpressBaseAddress
+#[-start-160517-IB03090427-add]#
+  gEfiBxtTokenSpaceGuid.PcdP2SBBaseAddress
+#[-end-160517-IB03090427-add]#
+#[-start-151210-IB03090424-add]#
+  gChipsetPkgTokenSpaceGuid.PcdSetupConfigSize
+#[-end-151210-IB03090424-add]#
+
+
+[Depex]
+#[-start-151210-IB03090424-remove]#
+#  gEfiVariableArchProtocolGuid        AND
+#  gEfiVariableWriteArchProtocolGuid   AND
+#[-end-151210-IB03090424-remove]#
+  gEfiAcpiSupportProtocolGuid         AND
+#[-start-151210-IB03090424-remove]#
+#  gEfiGraphicsOutputProtocolGuid      AND
+#[-end-151210-IB03090424-remove]#
+  gSaPolicyProtocolGuid

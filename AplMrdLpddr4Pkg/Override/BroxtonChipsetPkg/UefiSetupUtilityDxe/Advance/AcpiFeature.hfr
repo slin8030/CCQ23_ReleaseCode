@@ -1,0 +1,60 @@
+#if (ENBDT_PF_ENABLE==1)
+    //
+    //  Form 0x51: ACPI Table/Feature Control
+    //
+    form
+      formid = ACPI_FEATURE_FORM_ID, title = STRING_TOKEN(STR_ACPI_TABLE_STRING);
+      subtitle  text = STRING_TOKEN(STR_ACPI_TABLE_STRING);
+      subtitle  text = STRING_TOKEN(STR_BLANK_STRING);
+      grayoutif
+        ideqval SystemConfig.IsctConfiguration == 1
+        OR
+        ideqval SystemConfig.UserAccessLevel == 2
+        AND
+        ideqval SystemConfig.SetUserPass == 1;
+        oneof
+          varid       = SystemConfig.FacpRTCS4Wakeup,
+          prompt      = STRING_TOKEN(STR_FACP_RTC_S4_STRING),
+          help        = STRING_TOKEN(STR_FACP_RTC_S4__HELP),
+          option text = STRING_TOKEN(STR_DISABLED_TEXT), value = 0, flags = 0;
+          option text = STRING_TOKEN(STR_ENABLED_TEXT),  value = 1, flags = DEFAULT;
+        endoneof;
+      endif;
+      grayoutif
+        ideqval SystemConfig.UserAccessLevel == 2
+        AND
+        ideqval SystemConfig.SetUserPass == 1;
+
+        oneof
+          varid       = SystemConfig.IoApicMode,
+          prompt      = STRING_TOKEN(STR_IO_APIC_MODE_STRING),
+          help        = STRING_TOKEN(STR_IO_APIC_MODE_HELP),
+          option text = STRING_TOKEN(STR_DISABLED_TEXT),  value = 0, flags = 0;
+          option text = STRING_TOKEN(STR_ENABLED_TEXT),   value = 1, flags = DEFAULT;
+        endoneof;
+      endif;
+      
+//[-start-171225-IB07400935-add]//
+      grayoutif
+        ideqval SystemConfig.UserAccessLevel == 2
+        AND
+        ideqval SystemConfig.SetUserPass == 1;
+        
+        oneof varid   = SystemConfig.EcAslCodeSupport,
+          prompt      = STRING_TOKEN(STR_EC_ASL_CODE_SUPPORT),
+          help        = STRING_TOKEN(STR_EC_ASL_CODE_SUPPORT_HELP),
+          option text = STRING_TOKEN(STR_DISABLE), value = 0, flags = RESET_REQUIRED;
+          option text = STRING_TOKEN(STR_ENABLE),  value = 1, flags = DEFAULT | MANUFACTURING | RESET_REQUIRED;
+        endoneof;
+
+      endif;
+//[-end-171225-IB07400935-add]//
+
+    //
+    // Jump to  11)ACPI Configuration Form
+    //
+    goto ACPI_SETUP_FORM_ID,
+      prompt = STRING_TOKEN(STR_ACPI_SETUP_TITLE),
+      help   = STRING_TOKEN(STR_ACPI_SETUP_HELP);
+    endform;
+#endif

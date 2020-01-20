@@ -1,0 +1,89 @@
+## @file
+#
+#  Component description file for OemBadgingSupportDxe driver.
+#
+#******************************************************************************
+#* Copyright (c) 2014-2015, Insyde Software Corporation. All Rights Reserved.
+#*
+#* You may not reproduce, distribute, publish, display, perform, modify, adapt,
+#* transmit, broadcast, present, recite, release, license or otherwise exploit
+#* any part of this publication in any form, by any means, without the prior
+#* written permission of Insyde Software Corporation.
+#*
+#******************************************************************************
+#
+##
+
+[Defines]
+  INF_VERSION                    = 0x00010005
+  BASE_NAME                      = SioIt8987eDxe
+  FILE_GUID                      = FBC9396E-E7EE-49FB-AD47-54BBB097F19F
+  MODULE_TYPE                    = DXE_DRIVER
+  VERSION_STRING                 = 1.0
+
+  ENTRY_POINT                    = SioDriverEntryPoint
+
+[Sources]
+  SioMainDxe.c
+  SioInitDxe.c
+  Uart1.c
+  Uart2.c
+  Ps2K.c
+  Ps2M.c
+  Cir.c
+  ProgramExtensiveDevice.c
+  SioInitDxe.h
+  SioHiiResource/SioHiiResource.c
+  SioHiiResource/SioHiiResource.h
+  SioHiiResource/SioHiiResourceStrings.uni
+  SioHiiResource/SioHiiResourceNvData.h
+  SioHiiResource/SioHiiResourceVfr.vfr
+  SioAsl/SioIt8987e.asl
+
+[Packages]
+  MdePkg/MdePkg.dec
+  SioIt8987ePkg/SioIt8987ePkg.dec
+  InsydeModulePkg/InsydeModulePkg.dec
+  MdeModulePkg/MdeModulePkg.dec
+
+[Guids]
+  gSioIt8987eSetup00FormSetGuid
+  gEfiIfrTianoGuid
+
+[LibraryClasses]
+  SioLib
+  AcpiPlatformLib
+  BaseLib
+  BaseMemoryLib
+  DxeServicesLib
+  MemoryAllocationLib
+  UefiDriverEntryPoint
+  UefiBootServicesTableLib
+  HiiLib
+  HiiExLib
+
+[Protocols]
+  gEfiIsaPnp303DeviceProtocolGuid
+  gEfiIsaPnp501DeviceProtocolGuid
+  gEfiIsaPnp510DeviceProtocolGuid
+  gEfiHiiConfigRoutingProtocolGuid
+  gEfiHiiConfigAccessProtocolGuid
+  gEfiSetupUtilityProtocolGuid
+  gEfiSetupUtilityBrowserProtocolGuid
+  gEfiAcpiTableProtocolGuid
+  gEfiAcpiSdtProtocolGuid
+
+[FixedPcd]
+
+[Pcd]
+  gSioGuid.PcdSioIt8987eSetup
+  gSioGuid.PcdSioIt8987eCfg
+  gSioGuid.PcdSioIt8987eSetupStr
+  gSioGuid.PcdSioIt8987eUpdateAsl
+  gSioGuid.PcdSioIt8987eExtensiveCfg
+  gSioGuid.PcdSioIt8987eDxeCustomizeSettingTable
+
+[Depex]
+  gEfiCpuIo2ProtocolGuid AND
+  gEfiVariableArchProtocolGuid AND
+  gEfiSetupUtilityProtocolGuid

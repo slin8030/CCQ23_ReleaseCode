@@ -1,0 +1,85 @@
+#/** @file
+#
+#  Component description file for BIOS Event Log Config Utility DXE driver.
+#
+#;******************************************************************************
+#;* Copyright (c) 2016, Insyde Software Corporation. All Rights Reserved.
+#;*
+#;* You may not reproduce, distribute, publish, display, perform, modify, adapt,
+#;* transmit, broadcast, present, recite, release, license or otherwise exploit
+#;* any part of this publication in any form, by any means, without the prior
+#;* written permission of Insyde Software Corporation.
+#;*
+#;******************************************************************************
+#*/
+
+[Defines]
+  INF_VERSION                    = 0x00010005
+  BASE_NAME                      = BiosEventLogConfigUtilDxe
+  FILE_GUID                      = B162D432-E339-4316-862D-00280AB6A07E
+  MODULE_TYPE                    = DXE_DRIVER
+  VERSION_STRING                 = 1.0
+  ENTRY_POINT                    = BiosEventLogConfigUtilDxeInitialize
+  
+[Sources]
+  BiosEventLogConfigUtil.c
+  BiosEventLogConfigUtil.h
+  BiosEventLogConfigUtilConfigPageVfr.vfr
+  BiosEventLogConfigUtilEventAndMessagePageVfr.vfr
+  BiosEventLogConfigUtilStr.uni
+  BiosEventLogConfigUtilSetupConfig.h
+  
+[Packages]
+  InsydeEventLogPkg/InsydeEventLogPkg.dec
+  InsydeModulePkg/InsydeModulePkg.dec  
+#[-start-171207-IB08400539-remove]#
+#  IntelFrameworkPkg/IntelFrameworkPkg.dec
+#[-end-171207-IB08400539-remove]#
+#[-start-171207-IB08400539-add]#
+  SegFeaturePkg/SegFeaturePkg.dec
+#[-end-171207-IB08400539-add]# 
+  MdePkg/MdePkg.dec
+  MdeModulePkg/MdeModulePkg.dec
+  
+[LibraryClasses]
+  UefiDriverEntryPoint
+  UefiBootServicesTableLib
+  UefiRuntimeServicesTableLib
+  DebugLib
+  DevicePathLib
+  BaseLib
+  BaseMemoryLib
+  UefiLib
+  HiiLib
+  VariableLib
+
+[Guids]
+  gEfiIfrTianoGuid                                     ## PRODUCES
+  gH2OBiosEventLogConfigUtilConfigFormsetGuid          ## PRODUCES
+  gH2OBiosEventLogConfigUtilEventAndMessageFormsetGuid ## PRODUCES
+  gH2OBiosEventLogConfigUtilVarstoreGuid               ## PRODUCES
+  
+[Protocols]
+  gEfiHiiConfigAccessProtocolGuid               ## PRODUCES
+  
+  gEfiVariableArchProtocolGuid                  ## CONSUMES
+  gEfiHiiDatabaseProtocolGuid                   ## CONSUMES
+  gEfiHiiStringProtocolGuid                     ## CONSUMES
+  gEfiFormBrowser2ProtocolGuid                  ## CONSUMES
+  gEfiHiiConfigRoutingProtocolGuid              ## CONSUMES
+  gEdkiiFormBrowserEx2ProtocolGuid              ## CONSUMES
+  gH2ODialogProtocolGuid                        ## CONSUMES
+  gEdkiiVariableLockProtocolGuid                ## CONSUMES 
+  gH2OEventLogStringProtocolGuid                ## CONSUMES
+  gH2OEventLogStringOverwriteProtocolGuid       ## CONSUMES
+  gEfiSimpleFileSystemProtocolGuid              ## CONSUMES
+  gEfiBlockIoProtocolGuid                       ## CONSUMES
+  gH2OEventLogProtocolGuid                      ## CONSUMES
+  
+[Pcd]
+
+[Depex]
+  gEfiVariableArchProtocolGuid      AND
+  gEfiVariableWriteArchProtocolGuid AND
+  gEfiHiiDatabaseProtocolGuid       
+ 

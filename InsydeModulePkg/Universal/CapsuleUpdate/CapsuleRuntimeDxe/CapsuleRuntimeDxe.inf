@@ -1,0 +1,68 @@
+## @file
+#  
+#******************************************************************************
+#* Copyright (c) 2012 - 2015, Insyde Software Corp. All Rights Reserved.
+#*
+#* You may not reproduce, distribute, publish, display, perform, modify, adapt,
+#* transmit, broadcast, present, recite, release, license or otherwise exploit
+#* any part of this publication in any form, by any means, without the prior
+#* written permission of Insyde Software Corporation.
+#*
+#******************************************************************************
+
+[Defines]
+  INF_VERSION                    = 0x00010005
+  BASE_NAME                      = CapsuleRuntimeDxe
+  FILE_GUID                      = 42857F0A-13F2-4B21-8A23-53D3F714B840
+  MODULE_TYPE                    = DXE_RUNTIME_DRIVER
+  VERSION_STRING                 = 1.0
+  ENTRY_POINT                    = CapsuleServiceInitialize
+
+#
+# The following information is for reference only and not required by the build tools.
+#
+#  VALID_ARCHITECTURES           = IA32 X64 IPF EBC
+#
+
+[Sources]
+  CapsuleRuntimeDxe.c
+  TianoCompress.c
+  TianoCompress.h
+  TianoDecompress.c
+  TianoDecompress.h
+
+[Packages]
+  MdePkg/MdePkg.dec
+  MdeModulePkg/MdeModulePkg.dec
+  InsydeModulePkg/InsydeModulePkg.dec
+
+[LibraryClasses]
+  BaseLib
+  UefiBootServicesTableLib
+  UefiRuntimeServicesTableLib
+  UefiDriverEntryPoint
+  PcdLib
+  DebugLib
+  BaseMemoryLib
+  MemoryAllocationLib
+  UefiRuntimeLib
+  CapsuleLib
+
+PostCodeLib
+
+[Guids]
+  gEfiFmpCapsuleGuid
+  gEfiCrashDumpCapsuleGuid
+
+[Protocols]
+  gEfiCapsuleArchProtocolGuid                   ## PRODUCED
+
+[FeaturePcd]
+  gEfiMdeModulePkgTokenSpaceGuid.PcdSupportUpdateCapsuleReset
+
+[Pcd]
+  gEfiMdeModulePkgTokenSpaceGuid.PcdMaxSizeNonPopulateCapsule
+  gEfiMdeModulePkgTokenSpaceGuid.PcdMaxSizePopulateCapsule || gEfiMdeModulePkgTokenSpaceGuid.PcdSupportUpdateCapsuleReset  ## Populate Image requires reset support.
+
+[Depex]
+  gEfiVariableWriteArchProtocolGuid             ## Depends on variable write functionality to produce capsule data variable

@@ -1,0 +1,55 @@
+## @file
+#  Component description file for MultiPlatformSetupLib
+#
+#******************************************************************************
+#* Copyright (c) 2015, Insyde Software Corp. All Rights Reserved.
+#*
+#* You may not reproduce, distribute, publish, display, perform, modify, adapt,
+#* transmit, broadcast, present, recite, release, license or otherwise exploit
+#* any part of this publication in any form, by any means, without the prior
+#* written permission of Insyde Software Corporation.
+#*
+#******************************************************************************
+
+[defines]
+  INF_VERSION                    = 0x00010005
+  BASE_NAME                      = MultiPlatformBaseLib
+  FILE_GUID                      = 9531B450-A854-466E-9178-546E7F6CD6ED
+  MODULE_TYPE                    = BASE
+  VERSION_STRING                 = 1.0
+  LIBRARY_CLASS                  = MultiPlatformBaseLib
+  PI_SPECIFICATION_VERSION       = 0x0001000A
+
+[sources]
+  MultiPlatformBaseLib.c
+  
+[Packages]
+  MdePkg/MdePkg.dec
+  MdeModulePkg/MdeModulePkg.dec
+  $(CHIPSET_PKG)/$(CHIPSET_PKG).dec
+  $(PLATFORM_RC_PACKAGE)/$(PLATFORM_RC_PACKAGE).dec
+  InsydeModulePkg/InsydeModulePkg.dec
+
+[LibraryClasses]
+  IoLib
+  DebugLib
+#[-start-160913-IB07400784-add]#
+!if $(APOLLOLAKE_CRB) == YES || $(USE_CRB_HW_CONFIG) == YES
+  EcMiscLib
+  GpioLib
+  BaseMemoryLib
+!endif  
+#[-end-160913-IB07400784-add]#
+
+[Pcd]
+  gChipsetPkgTokenSpaceGuid.PcdDynamicBoardPlatformType
+#[-start-160914-IB07400784-add]#
+  gChipsetPkgTokenSpaceGuid.PcdBuildPlatformType
+  gInsydeTokenSpaceGuid.PcdSecureFlashSupported
+#[-end-160914-IB07400784-add]#
+#[-start-161206-IB07400822-add]#
+#[-start-170111-IB07400832-remove]#
+#  gChipsetPkgTokenSpaceGuid.PcdKscSupport
+#[-end-170111-IB07400832-remove]#
+#[-end-161206-IB07400822-add]#
+  

@@ -1,0 +1,73 @@
+## @file
+#  H2O Console Redirection package Flash Description File
+#
+#******************************************************************************
+#* Copyright (c) 2013 - 2016, Insyde Software Corporation. All Rights Reserved.
+#*
+#* You may not reproduce, distribute, publish, display, perform, modify, adapt,
+#* transmit, broadcast, present, recite, release, license or otherwise exploit
+#* any part of this publication in any form, by any means, without the prior
+#* written permission of Insyde Software Corporation.
+#*
+#******************************************************************************
+
+[FV.DXEFV]
+!if gInsydeCrTokenSpaceGuid.PcdH2OConsoleRedirectionSupported == 1 || gInsydeCrTokenSpaceGuid.PcdH2OAdvanceConsoleRedirectionSupported == 1
+
+  !disable InsydeModulePkg/Bus/Isa/IsaSerialDxe/IsaSerialDxe.inf
+
+  INF InsydeCrPkg/CrServiceDxe/CrServiceDxe.inf
+  INF InsydeCrPkg/CrServiceSmm/CrServiceSmm.inf
+  INF InsydeCrPkg/ConfigUtility/CrConfigUtilDxe/CrConfigUtil.inf
+  INF InsydeCrPkg/Uart16550SerialDxe/Uart16550SerialDxe.inf
+#[-start-160826-IB07400773-modify]#
+!if $(INSYDE_DEBUGGER) == YES AND $(H2O_DDT_DEBUG_IO) == Com
+!else
+  INF InsydeCrPkg/Uart16550Devices/IsaUartDxe/IsaUartDxe.inf
+!endif  
+#[-end-160826-IB07400773-modify]#
+
+  !if gInsydeCrTokenSpaceGuid.PcdH2OCRHsuSerialSupported == 1
+    INF InsydeCrPkg/Uart16550Devices/PciHsUartDxe/PciHsUartDxe.inf
+    INF InsydeCrPkg/Uart16550Devices/PchHsUartDxe/PchHsUartDxe.inf
+  !endif
+
+  !if gInsydeCrTokenSpaceGuid.PcdH2OCRPciSerialSupported == 1
+    INF InsydeCrPkg/Uart16550Devices/PciUartDxe/PciUartDxe.inf
+  !endif
+
+  !if gInsydeCrTokenSpaceGuid.PcdH2OCRUsbSerialSupported == 1 || gInsydeCrTokenSpaceGuid.PcdH2OAdvanceConsoleRedirectionSupported == 1
+    INF InsydeCrPkg/UsbSerialDxe/UsbSerialDxe.inf
+    INF InsydeCrPkg/UsbDevices/CrPl2303Dxe/CrPl2303Dxe.inf
+
+    !if gInsydeTokenSpaceGuid.PcdH2ODdtSupported == 0
+      INF InsydeCrPkg/UsbDevices/CrDdtCableDxe/CrDdtCableDxe.inf
+    !endif
+  !endif
+
+  !if gInsydeCrTokenSpaceGuid.PcdH2OCRTelnetSupported == 1 ||  gInsydeCrTokenSpaceGuid.PcdH2OAdvanceConsoleRedirectionSupported == 1
+    INF InsydeCrPkg/AdvanceTerminalDxe/AdvanceTerminalDxe.inf
+    INF InsydeCrPkg/SolDxe/SolDxe.inf
+    INF InsydeCrPkg/ConfigUtility/SolConfigUtility/SolConfigUtil.inf
+    INF InsydeCrPkg/TelnetDxe/TelnetDxe.inf
+
+    !if gInsydeTokenSpaceGuid.PcdH2ONetworkIscsiSupported == 0
+      INF InsydeNetworkPkg/Drivers/TcpDxe/TcpDxe.inf
+    !endif
+
+  !else
+    INF InsydeCrPkg/TerminalDxe/TerminalDxe.inf
+  !endif
+
+  !if gInsydeCrTokenSpaceGuid.PcdH2OCRSrvManagerSupported == 1 || gInsydeCrTokenSpaceGuid.PcdH2OAdvanceConsoleRedirectionSupported == 1
+    INF InsydeCrPkg/CrSrvManagerDxe/CrSrvManagerDxe.inf
+    INF InsydeCrPkg/CrBiosFlashDxe/CrBiosFlashDxe.inf
+    INF InsydeCrPkg/CrFileTransferDxe/CrFileTransferDxe.inf
+    INF InsydeCrPkg/FileSelectUIDxe/FileSelectUIDxe.inf
+  !endif
+
+  FILE FREEFORM = PCD (gInsydeCrTokenSpaceGuid.PcdConsoleRedirectionOpRomFile) {
+    SECTION RAW = InsydeCrPkg/Csm/CrRom/CrRom.bin
+  }
+
+!endif

@@ -1,0 +1,41 @@
+## @file
+#  Platform Package Declaration file
+#
+#******************************************************************************
+#* Copyright (c) 2014, Insyde Software Corp. All Rights Reserved.
+#*
+#* You may not reproduce, distribute, publish, display, perform, modify, adapt,
+#* transmit, broadcast, present, recite, release, license or otherwise exploit
+#* any part of this publication in any form, by any means, without the prior
+#* written permission of Insyde Software Corporation.
+#*
+#******************************************************************************
+
+[Defines]
+  DEC_VERSION                    = 0x00010005
+  PACKAGE_NAME                   = PlatformPkg
+  PACKAGE_GUID                   = 00804A41-A178-4bf3-A7E0-185528586E0D
+
+  PACKAGE_VERSION                = 0.1
+
+[Includes]
+  Include
+
+[Guids]
+
+  gEsrtSystemFirmwareGuid                = {0xffd4675e, 0xff47, 0x46d9, {0xac, 0x24, 0x8b, 0x33, 0x1f, 0x93, 0x77, 0x37}}
+  gProjectPkgTokenSpaceGuid              = {0x0fb76d37, 0x93bb, 0x4c48, {0xbe, 0xf0, 0xfd, 0xe9, 0x7c, 0x6a, 0x35, 0x28}}
+
+[Protocols]
+
+[PcdsFeatureFlag]
+  
+[PcdsFixedAtBuild]
+#[-start-170509-IB07400866-remove]#
+#  gProjectPkgTokenSpaceGuid.PcdProjectSvid|0x00008086|UINT16|0x60000001
+#  gProjectPkgTokenSpaceGuid.PcdProjectSsid|0x00007270|UINT16|0x60000002
+#[-end-170509-IB07400866-remove]#
+
+[PcdsDynamic]
+
+[LibraryClasses]

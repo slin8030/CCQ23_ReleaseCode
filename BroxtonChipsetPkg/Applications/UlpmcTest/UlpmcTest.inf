@@ -1,0 +1,51 @@
+## @file
+#  BatteryInfo Application Module.
+#
+#  Copyright (c) 2007 - 2012, Intel Corporation. All rights reserved.<BR>
+#  This program and the accompanying materials
+#  are licensed and made available under the terms and conditions of the BSD License
+#  which accompanies this distribution. The full text of the license may be found at
+#  http://opensource.org/licenses/bsd-license.php
+#  THE PROGRAM IS DISTRIBUTED UNDER THE BSD LICENSE ON AN "AS IS" BASIS,
+#  WITHOUT WARRANTIES OR REPRESENTATIONS OF ANY KIND, EITHER EXPRESS OR IMPLIED.
+#
+##
+[Defines]
+  INF_VERSION                = 0x00010005 
+  BASE_NAME                  = ULPMCTest
+  FILE_GUID                  = 60A1CB74-4CFC-49a8-9DAB-BBD732320095
+  MODULE_TYPE                = UEFI_APPLICATION
+  VERSION_STRING             = 1.0
+  ENTRY_POINT                = ULPMCTestEntry
+
+[Sources]
+  UlpmcTest.c
+  Screen.c
+  WriteFile.c
+  Print.c  
+  KbInput.c
+  Monitor.c
+
+[Packages]
+  MdePkg/MdePkg.dec
+  ShellPkg/ShellPkg.dec
+  $(CHIPSET_PKG)/$(CHIPSET_PKG).dec
+  $(PLATFORM_RC_PACKAGE)/$(PLATFORM_RC_PACKAGE).dec
+
+[LibraryClasses]
+  UefiApplicationEntryPoint
+  UefiLib
+  BaseLib
+  DebugLib  
+  MemoryAllocationLib
+  PrintLib 
+  I2cLib  
+
+[Pcd.common]  
+
+[Protocols]
+  gEfiShellInterfaceGuid
+  gEfiShellParametersProtocolGuid
+  gEfiLoadedImageProtocolGuid
+  gEfiSimpleFileSystemProtocolGuid
+  

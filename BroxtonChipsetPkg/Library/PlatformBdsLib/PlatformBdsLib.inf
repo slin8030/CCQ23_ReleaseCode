@@ -1,0 +1,228 @@
+## @file
+#  PlatformBdsLib
+#
+#******************************************************************************
+#* Copyright (c) 2012 - 2016, Insyde Software Corp. All Rights Reserved.
+#*
+#* You may not reproduce, distribute, publish, display, perform, modify, adapt,
+#* transmit, broadcast, present, recite, release, license or otherwise exploit
+#* any part of this publication in any form, by any means, without the prior
+#* written permission of Insyde Software Corporation.
+#*
+#******************************************************************************
+
+
+[Defines]
+  INF_VERSION                    = 0x00010005
+  BASE_NAME                      = PlatformBdsLib
+  FILE_GUID                      = 143B5044-7C1B-4904-9778-EA16F1F3D554
+  MODULE_TYPE                    = DXE_DRIVER
+  VERSION_STRING                 = 1.0
+  LIBRARY_CLASS                  = PlatformBdsLib|DXE_DRIVER   
+  CONSTRUCTOR                    = PlatformBdsLibConstructor
+
+
+#
+# The following information is for reference only and not required by the build tools.
+#
+#  VALID_ARCHITECTURES           = IA32 X64 IPF EBC
+#
+
+[Sources]
+  Images/Animation.ani
+  Images/GraphicsContinue.gif
+  Images/GraphicsSCU.gif
+  Images/GraphicsBootManager.gif
+  Images/GraphicsDeviceManagement.gif
+  Images/GraphicsBootFromFile.gif
+  Images/GraphicsBackground.gif
+  Images/GraphicsSecureBootOption.gif
+  Images/Continue.gif
+  Images/SCU.gif
+  Images/BootManager.gif
+  Images/DeviceManagement.gif
+  Images/BootFromFile.gif
+  Images/SecureBootOption.gif
+  Images/MEBx.gif
+  Images/PlatformAnimation.ani
+  Images/Image.idf
+  Images/PlatformImage.idf
+
+  Strings.uni
+  BootDevicesDisplayStrings.uni
+  BdsPlatform.h
+
+  BdsPlatform.c
+  PlatformData.c
+  OemHotKey.c
+  BootDevicesDisplay.c
+  VideoOutputPortSelection.c
+  String.c
+
+  FrontPage.c
+  FrontPage.h
+  FrontPageVfr.Vfr
+  FrontPageStrings.uni
+  
+!if $(TABLET_PF_BUILD) == YES    
+  AutoFwUpdate.c
+  WindowsUxSupport.c
+  BdsBeforeReadyBoot.c
+!endif
+
+[Packages]
+  $(CHIPSET_PKG)/$(CHIPSET_PKG).dec
+  $(PLATFORM_RC_PACKAGE)/$(PLATFORM_RC_PACKAGE).dec
+#[-start-160216-IB03090424-add]#
+  ClientSiliconPkg/ClientSiliconPkg.dec
+#[-end-160216-IB03090424-add]#
+  InsydeModulePkg/InsydeModulePkg.dec
+  MdePkg/MdePkg.dec
+  MdeModulePkg/MdeModulePkg.dec
+  InsydeOemServicesPkg/InsydeOemServicesPkg.dec
+  IntelFrameworkModulePkg/IntelFrameworkModulePkg.dec
+  IntelFrameworkPkg/IntelFrameworkPkg.dec
+  ShellPkg/ShellPkg.dec
+
+[LibraryClasses]
+  IoLib
+  BaseLib
+  MemoryAllocationLib
+  UefiBootServicesTableLib
+  UefiRuntimeServicesTableLib
+  DxeServicesTableLib
+  BaseMemoryLib
+  DebugLib
+  PcdLib
+  GenericBdsLib
+  GenericUtilityLib
+  UefiLib
+  HiiLib
+  ReportStatusCodeLib
+  PrintLib
+  PerformanceLib
+  HobLib
+  DevicePathLib
+  OemGraphicsLib
+  PostCodeLib
+  DxeOemSvcChipsetLibDefault
+  DxeOemSvcKernelLibDefault
+  DxeInsydeChipsetLib
+  FlashDevicesLib
+  S3BootScriptLib
+  BdsCpLib
+  HeciMsgLib
+#[-start-160920-IB07400786-add]#
+  GpioLib
+  SideBandLib
+#[-end-160920-IB07400786-add]#
+#[-start-160923-IB07400788-add]#
+  CmosLib
+#[-end-160923-IB07400788-add]#
+  
+[Guids] 
+  gFrontPageFormSetGuid
+  gEfiIfrTianoGuid
+  gBootMaintFormSetGuid
+  gFileExploreFormSetGuid
+  gEfiGlobalVariableGuid
+  gEfiGenericVariableGuid
+  gEfiCapsuleVendorGuid
+  gEfiRecoveryFileAddressGuid
+  gEfiPartTypeSystemPartGuid
+  gWindowsUxCapsuleGuid
+  gAndroidCapsuleGuid
+  gH2OBdsCpDisplayBeforeProtocolGuid
+#[-start-151124-IB07220021-remove]#
+#   gConsoleRedirectionSupportGuid
+#[-end-151124-IB07220021-remove]#
+
+#[-start-160308-IB10860193-add]#
+  gCustomVariableGuid
+#[-end-160308-IB10860193-add]/#
+  
+[Protocols]
+  gEfiLegacyRegion2ProtocolGuid
+  gEfiLegacyBiosProtocolGuid
+  gEfiHiiConfigAccessProtocolGuid
+  gEfiSmbiosProtocolGuid
+  gEfiGraphicsOutputProtocolGuid
+  gEfiBootLogoProtocolGuid
+  gEfiSetupUtilityProtocolGuid
+  gConOutDevStartedProtocolGuid
+  gExitPmAuthProtocolGuid
+  gEfiPciIoProtocolGuid
+  gEfiPciRootBridgeIoProtocolGuid
+  gPlatformGOPPolicyGuid
+  gEfiOEMBadgingSupportProtocolGuid
+  gEfiUgaSplashProtocolGuid
+  gEfiConsoleControlProtocolGuid
+  gEfiSimpleTextInputExProtocolGuid
+  gH2ODialogProtocolGuid
+  gEfiSkipScanRemovableDevProtocolGuid
+  gEfiSimpleFileSystemProtocolGuid
+  gEfiIsaAcpiProtocolGuid
+  gEfiMsioIsaAcpiProtocolGuid
+  gEfiSerialIoProtocolGuid
+  gTerminalEscCodeProtocolGuid
+  gEfiAlertStandardFormatProtocolGuid
+  gEfiFirmwareVolume2ProtocolGuid
+  gEfiSimpleNetworkProtocolGuid
+  gEfiLoadFileProtocolGuid
+  gEfiBlockIoProtocolGuid
+  gEfiDiskInfoProtocolGuid
+  gEfiAcpiS3SaveProtocolGuid
+  gEfiDeferredImageLoadProtocolGuid
+  gEfiSmmAccess2ProtocolGuid
+  gEfiDxeSmmReadyToLockProtocolGuid
+  gEfiSeCOperationProtocolGuid                  ## PROTOCOL CONSUMES
+  gScSpiProtocolGuid                           ## PROTOCOL CONSUMES
+  gEfiHeciProtocolGuid
+  gCRBdsHookProtocolGuid
+  gEfiDFUResultGuid
+  gH2OSwitchableGraphicsEventProtocolGuid
+#[-start-151124-IB07220021-add]#
+  gConsoleRedirectionServiceProtocolGuid
+#[-end-151124-IB07220021-add]#
+
+[FeaturePcd]
+  gInsydeTokenSpaceGuid.PcdBootLogoOnlyEnable
+  gInsydeTokenSpaceGuid.PcdFrontPageSupported
+#[-start-151124-IB07220021-remove]#
+#   gInsydeTokenSpaceGuid.PcdH2OConsoleRedirectionSupported
+#[-end-151124-IB07220021-remove]#
+  gChipsetPkgTokenSpaceGuid.PcdSwitchableGraphicsSupported
+  gChipsetPkgTokenSpaceGuid.PcdFotaManualSupport
+  gChipsetPkgTokenSpaceGuid.PcdFotaFeatureSupport
+  gInsydeTokenSpaceGuid.PcdGraphicsSetupSupported
+  gInsydeTokenSpaceGuid.PcdH2OFormBrowserSupported
+  gInsydeTokenSpaceGuid.PcdH2OFormBrowserLocalMetroDESupported  
+  gInsydeTokenSpaceGuid.PcdH2OSecureBootSupported
+
+[Pcd]
+  gEfiMdeModulePkgTokenSpaceGuid.PcdFirmwareRevision
+  gEfiMdePkgTokenSpaceGuid.PcdUefiVariableDefaultPlatformLangCodes
+  gEfiIntelFrameworkModulePkgTokenSpaceGuid.PcdShellFile
+  gInsydeTokenSpaceGuid.PcdFirmwareVendor
+  gEfiMdePkgTokenSpaceGuid.PcdUefiVariableDefaultPlatformLang
+  gInsydeTokenSpaceGuid.PcdUseFastCrisisRecovery
+  gInsydeTokenSpaceGuid.PcdPortNumberMapTable
+  gInsydeTokenSpaceGuid.PcdFlashFvMainBase
+  gInsydeTokenSpaceGuid.PcdFlashFvRecoveryBase
+  gChipsetPkgTokenSpaceGuid.PcdIFWISigBaseAddress
+  gChipsetPkgTokenSpaceGuid.PcdCheckPmicComplianceSupport
+  gInsydeTokenSpaceGuid.PcdFlashAreaBaseAddress
+  gInsydeTokenSpaceGuid.PcdFlashAreaSize
+  gChipsetPkgTokenSpaceGuid.PcdFotaProcessOffset
+  gChipsetPkgTokenSpaceGuid.PcdSetupConfigSize
+  gInsydeTokenSpaceGuid.PcdCapsuleImageFolder
+  gChipsetPkgTokenSpaceGuid.PcdFotaCapsuleUpdateBinary
+  gEfiMdePkgTokenSpaceGuid.PcdPciExpressBaseAddress
+
+[FixedPcd]
+  gInsydeTokenSpaceGuid.PcdFirmwareResourceMaximum
+
+[BuildOptions]
+  MSFT:*_*_*_VFRPP_FLAGS = /FI$(MODULE_NAME)IdfDefs.h /FI$(MODULE_NAME)AniDefs.h
+  GCC:*_*_*_VFRPP_FLAGS  = --include $(DEST_DIR_DEBUG)/$(MODULE_NAME)IdfDefs.h --include $(DEST_DIR_DEBUG)/$(MODULE_NAME)AniDefs.h
+

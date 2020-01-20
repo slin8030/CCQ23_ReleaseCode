@@ -1,0 +1,199 @@
+## @file
+#  Package declaration file for EventLogPkg
+#
+#******************************************************************************
+#* Copyright (c) 2016, Insyde Software Corp. All Rights Reserved.
+#*
+#* You may not reproduce, distribute, publish, display, perform, modify, adapt,
+#* transmit, broadcast, present, recite, release, license or otherwise exploit
+#* any part of this publication in any form, by any means, without the prior
+#* written permission of Insyde Software Corporation.
+#*
+#******************************************************************************
+
+[Defines]
+  DEC_SPECIFICATION              = 0x00010005
+  PACKAGE_NAME                   = EventLogPkg
+  PACKAGE_GUID                   = D8B7B92D-6EDD-4D47-A115-8923CB7DE846
+  PACKAGE_VERSION                = 1.0
+
+[Includes]
+  Include
+
+[LibraryClasses]
+  
+[Guids]
+  ## Include\Guid\EventLogPkgTokenSpace.h  
+  gH2OEventLogPkgTokenSpaceGuid          = { 0xD1B99B46, 0xE509, 0x4EDA, {0x89, 0xAC, 0x7A, 0x67, 0x38, 0xBB, 0x82, 0x1A}}
+ 
+  gH2OMemoryStorageVariableGuid          = { 0x7a6b5c4d, 0x7571, 0x4182, {0x83, 0x84, 0xc5, 0xc6, 0x57, 0xb8,  0x9, 0x4a}}
+  gH2OPeiEventLogHobGuid                 = { 0XFF7FBD39, 0x8445, 0x4943, {0xB4, 0xCD, 0x1A, 0xFF, 0x90, 0x6E, 0x34, 0xC6}}
+  gH2OPeiPostMessageHobGuid              = { 0x097FBD39, 0x8DD5, 0xB543, {0xAB, 0xC3, 0x12,  0x9, 0x4E, 0x6E, 0x34, 0x7A}}
+  gH2OPostMessageVariableGuid            = { 0x60711ECF, 0xADCA, 0x4F3D, {0xB1, 0x88, 0x63, 0x34, 0x67, 0xA8, 0x38, 0x1A}}
+#[-start-171212-IB08400542-modify]#
+  gH2OBiosEventLogHobGuid                = { 0x5106ba40, 0x59a7, 0x4bf6, {0x97, 0xfc, 0xa7, 0xde, 0x16, 0x75, 0xcb, 0x86}}  
+#[-end-171212-IB08400542-modify]#
+  gH2OBiosStorageVariableGuid            = { 0x37C90D23, 0x7E67, 0x4E16, {0xB0, 0xBA, 0x04, 0xF1, 0x62, 0x7B, 0x92, 0x5E}}
+  gH2OBiosStorageCommunicationGuid       = { 0x3AB6FB92, 0xA37A, 0x4F1E, {0x8B, 0x2A, 0xB3, 0xF7, 0x4C, 0x50, 0xD9, 0x93}}
+  gH2ODebugMessageVariableGuid           = { 0xB5513151, 0x18A0, 0x4C80, {0x99, 0x03, 0x49, 0x65, 0x08, 0x80, 0x3A, 0x31}}
+  gH2OEventStorageVariableGuid           = { 0xF4C84671, 0xA875, 0x4C75, {0x84, 0xAE, 0x24, 0xBE, 0x2A, 0xBA, 0x15, 0xC0}}
+  gH2OEventLogPostDisplayDxeVariableGuid = { 0x658870D7, 0x4A36, 0x43FA, {0x96, 0x36, 0xD7, 0xE9, 0xB8, 0x92, 0x10, 0x67}}
+  gH2OEventLogConfigManagerFormsetGuid   = { 0x236A7970, 0x5B07, 0x442B, {0x93, 0xDB, 0x32, 0x74, 0x00, 0xE9, 0x6C, 0xFA}}
+  gH2OBiosEventLogConfigUtilConfigFormsetGuid          = { 0xC71DE1B4, 0x25EF, 0x4F31, {0xA7, 0x26, 0xAA, 0x10, 0x50, 0x56, 0x8C, 0x23}}
+  gH2OBiosEventLogConfigUtilEventAndMessageFormsetGuid = { 0xB24056AB, 0x8970, 0x427A, {0x8D, 0x7D, 0xA3, 0xC4, 0x9C, 0xB7, 0x04, 0xEE}}
+  gH2OBiosEventLogConfigUtilVarstoreGuid = { 0xC0E1B3E7, 0x7C82, 0x4A26, {0xA6, 0x03, 0xCB, 0x05, 0xCC, 0xB7, 0x05, 0xB2}}
+  gH2OPostMessageConfigUtilConfigFormsetGuid = { 0xDFD67CFE, 0xCEA9, 0x4777, {0x90, 0x0F, 0x04, 0x47, 0x87, 0x79, 0x8D, 0x43}}
+  gH2OPostMessageConfigUtilVarstoreGuid  = { 0x73B169AF, 0xBB78, 0x40E4, {0xA6, 0x10, 0x24, 0xF5, 0x44, 0x8C, 0xF1, 0x4C}}
+  gH2OSetupChangeConfigUtilEventAndMessageFormsetGuid = { 0x7478B246, 0xFB05, 0x42D9, {0x9E, 0x8C, 0x72, 0x6F, 0x30, 0x15, 0xD0, 0x9E}}
+  gH2ODebugMessageConfigUtilConfigFormsetGuid = {0xFCCFE602, 0xE062, 0x482F, {0x93, 0xAB, 0x2D, 0xD3, 0xB3, 0x94, 0xF1, 0x5C}}
+  gH2ODebugMessageConfigUtilEventAndMessageFormsetGuid = {0x22CB6743, 0xC6AB, 0x4479, {0xBC, 0x72, 0x9F, 0x8E, 0x62, 0x67, 0xF3, 0xBB}}
+  gH2ODebugMessageConfigUtilVarstoreGuid = {0x091AAE73, 0x6D75, 0x479E, {0x8D, 0x16, 0x8E, 0x38, 0xD8, 0xC8, 0x58, 0xC6}}
+#[-start-170413-IB08400444-add]#
+  gH2ODebugMessageStatusCodeCommunicationGuid  = { 0x36105BBA, 0x4889, 0x4522, {0xAC, 0xA8, 0xCA, 0x98, 0xF9, 0xCB, 0x13, 0xF3}}
+#[-end-170413-IB08400444-add]#
+
+[Ppis]
+#[-start-171212-IB08400542-modify]#
+  gH2OEventLogPpiGuid                    = { 0x30EA2672, 0x8BF9, 0x489B, {0x9E, 0xA8, 0x90, 0xB2, 0x04, 0xC4, 0x7B, 0xAF}}
+  gH2OPostMessagePpiGuid                 = { 0x56bf50c2, 0xd734, 0x42d3, {0xde, 0x24, 0xea, 0xc9, 0xde, 0x5f, 0xbc, 0x9a}}
+  gH2OBiosStoragePpiGuid                 = { 0xac7f30c2, 0xf774, 0x47d3, {0x8c, 0x24, 0xe9, 0xc9, 0x94, 0x5f, 0x3c, 0x49}}
+  gH2OBmcSelStoragePpiGuid               = { 0xB98A1937, 0x5AD4, 0x4018, {0x87, 0xFF, 0xE1, 0x40, 0xF9, 0x9A, 0x02, 0x86}}
+#[-end-171212-IB08400542-modify]#
+  
+[Protocols]
+  gH2OMemoryStorageProtocolGuid           = { 0x95E369B1, 0x5F21, 0x4CE1, {0x98, 0xA3, 0x14, 0x0F, 0x42, 0xD6, 0xEB, 0x5D} }
+  gH2OSmmMemoryStorageProtocolGuid        = { 0x9B64555E, 0x6C2E, 0x4442, {0xAC, 0xCA, 0xEB, 0xF2, 0x16, 0x36, 0x0D, 0x7D} }
+  
+  gH2OEventLogProtocolGuid                = { 0xE5361BDC, 0xBDEE, 0x490C, {0x97, 0x94, 0x10, 0x7D, 0x47, 0x0A, 0xAB, 0xF0} }
+  gH2OSmmEventLogProtocolGuid             = { 0xACD76141, 0x2B7E, 0x4D6C, {0xAC, 0x03, 0xD7, 0xF4, 0x47, 0xF8, 0x2A, 0x4A} }
+  
+  gH2OEventStorageProtocolGuid            = { 0xC2FF1063, 0xAA0B, 0x461D, {0xB9, 0x11, 0x41, 0x2A, 0xEE, 0x1E, 0xD7, 0x65} }
+  gH2OSmmEventStorageProtocolGuid         = { 0x94EE1761, 0xD587, 0x4D02, {0x94, 0x01, 0x41, 0x41, 0x35, 0x35, 0x0A, 0x68} }
+  gH2OEventLogStringProtocolGuid          = { 0x708102B1, 0x4A58, 0x4DF5, {0x9F, 0xB7, 0x2A, 0x08, 0x5D, 0x2D, 0x01, 0xFE} }             
+  gH2OEventLogStringOverwriteProtocolGuid = { 0xBD6E4EA7, 0xD4F0, 0x40B6, {0xAC, 0xDF, 0x4A, 0x31, 0xF5, 0x93, 0x14, 0x8C} }
+
+  gH2OPostMessageProtocolGuid             = { 0x164486DC, 0xAE05, 0x4BA2, {0x83, 0x28, 0xDC, 0x2D, 0x2E, 0xC8, 0xF2, 0x32} }
+  gH2OSmmPostMessageProtocolGuid          = { 0xCBD042FF, 0xB52C, 0x4C9A, {0xAC, 0x99, 0xEB, 0x52, 0x46, 0x65, 0x7F, 0x61} }
+
+#[-start-171212-IB08400542-modify]#
+  gH2OBiosEventLogProtocolGuid            = { 0x6a73deeb, 0x63c0, 0x49c6, {0xa5, 0xd4, 0x94, 0xcf, 0xe0, 0x10, 0xf, 0xe3} }
+  gH2OBiosSmmEventLogProtocolGuid         = { 0x5BB70807, 0xA645, 0x4C43, {0x86, 0xB5, 0x9D, 0x72, 0xE1, 0x45, 0x35, 0xEF} }
+#[-end-171212-IB08400542-modify]#
+  gH2OBiosEventLogUseVariableProtocolGuid    = {0xF119C8C2, 0xC139, 0x43E7, {0xBA, 0x0E, 0x98, 0x74, 0xE1, 0x9A, 0x65, 0x9C}}
+  gH2OSmmBiosEventLogUseVariableProtocolGuid = {0x3E3707C2, 0xC935, 0x416D, {0xBD, 0x09, 0xF2, 0x66, 0x1C, 0x70, 0x26, 0xA5}}
+
+#
+# EventLogPkg PCD Summary
+#
+# 0x000AXXXX : EventLog
+#
+# 0x000001XX : Feature Flag
+# 0x000003XX : Dynamic Flag
+[PcdsFeatureFlag]
+
+#[-start-171212-IB08400542-modify]#
+  gH2OEventLogPkgTokenSpaceGuid.PcdH2OEventLogSupported|TRUE|BOOLEAN|0x000A0101  
+  gH2OEventLogPkgTokenSpaceGuid.PcdH2OPostMessageSupported|TRUE|BOOLEAN|0x000A0102
+  gH2OEventLogPkgTokenSpaceGuid.PcdH2OPostBeepSupported|TRUE|BOOLEAN|0x000A0103
+  #
+  # Store DEBUG() Messages which generating by the DebugLib of IntelFrameworkModulePkg.
+  # The mechanism is to register a status code handler.
+  #
+  # - If Enabled: Store the DEBUG() messages in Reserved memory region.
+  gH2OEventLogPkgTokenSpaceGuid.PcdH2OStoreDebugMsgSupported|TRUE|BOOLEAN|0x000A0104
+  # - Memory Size for storing the DEBUG() messages.
+#[-start-180510-IB08400592-remove]#
+#  gH2OEventLogPkgTokenSpaceGuid.PcdH2OStoreDebugMsgSize|0x200000|UINT32|0x000A0105 
+#[-end-180510-IB08400592-remove]#
+  # - The maximux memory size for storing DEBUG() messages.
+  gH2OEventLogPkgTokenSpaceGuid.PcdH2OMaxStoreDebugMsgSize|0x200000|UINT32|0x000A0106
+  
+  # - If Enable: Store PEI DEBUG messages in Bootservice memory region.
+  # - If Disable: Don't Store PEI DEBUG messages.
+  gH2OEventLogPkgTokenSpaceGuid.PcdH2OStoreDebugMsgPeiSupported|TRUE|BOOLEAN|0x000A0107
+  # - PEI DEBUG Memory Size for storing the DEBUG() messages.
+  gH2OEventLogPkgTokenSpaceGuid.PcdH2OPeiStoreDebugMsgSize|0x80000|UINT32|0x000A0108 
+
+  gH2OEventLogPkgTokenSpaceGuid.PcdH2OBiosEventStorageSupported|TRUE|BOOLEAN|0x000A0109
+  gH2OEventLogPkgTokenSpaceGuid.PcdH2OBmcSelEventStorageSupported|TRUE|BOOLEAN|0x000A010A
+  gH2OEventLogPkgTokenSpaceGuid.PcdH2OShowEventsOnPostDisplaySupported|TRUE|BOOLEAN|0x000A010B
+  gH2OEventLogPkgTokenSpaceGuid.PcdH2OEventLogConfigManagerSupported|TRUE|BOOLEAN|0x000A010D
+  gH2OEventLogPkgTokenSpaceGuid.PcdH2OEfiDebugMsgSupported|TRUE|BOOLEAN|0x000A010E
+#[-end-171212-IB08400542-modify]#
+  # 
+  # Determine storage type for BIOS Event Storage.
+  #  TRUE:  Use UEFI variable to as Event Storage. 
+  #  FALSE: Use GPNV region to as Event Storage.
+  #
+  gH2OEventLogPkgTokenSpaceGuid.PcdH2OBiosEventStorageUseVariableStorageSupported|TRUE|BOOLEAN|0x000A010F
+  gH2OEventLogPkgTokenSpaceGuid.PcdH2OBiosEventStorageUseGpnvRegionStorageSupported|FALSE|BOOLEAN|0x000A0110
+
+[PcdsFixedAtBuild]
+  #
+  # Please refer to \MdePkg\Include\Library\DebugLib.h to find declare bits information.
+  #
+  gH2OEventLogPkgTokenSpaceGuid.PcdH2OEfiDebugMsgDefaultPrintErrorLevel|0x8000004F|UINT32|0x000A0201
+  #
+  # Control the feature of print Status Code Serial message.
+  #
+  gH2OEventLogPkgTokenSpaceGuid.PcdH2OShowStatusCodeSerialMsgControl|TRUE|BOOLEAN|0x000A0202
+  # 
+  # Determine if needing to clear all events by deleting all variables.
+  #  TRUE:  Clear events by deleting the "BiosElXXXX" variables from "BiosElOrder" variable.
+  #  FALSE: Clear events by deleting the "BiosElXXXX" variables from "BiosElViewOrder" variable. 
+  #
+  gH2OEventLogPkgTokenSpaceGuid.PcdH2OBiosEventStorageUseVariableClearEventByAllOrders|TRUE|BOOLEAN|0x000A0203
+#[-start-180530-IB08400600-add]#
+  gH2OEventLogPkgTokenSpaceGuid.PcdH2OEventLogManagerFormsetClassGuid|{0}|VOID*|0x000A0204
+#[-end-180530-IB08400600-add]#
+
+[PcdsDynamic, PcdsDynamicEx]
+  #
+  # For Event Log driver and module.
+  #
+#[-start-171212-IB08400542-modify]#
+  gH2OEventLogPkgTokenSpaceGuid.PcdH2OEventLogTarget|1|UINT8|0x000A0301
+  gH2OEventLogPkgTokenSpaceGuid.PcdH2OEventLogFullOption|2|UINT8|0x000A0302
+
+  #
+  # For POST Message.
+  #
+  gH2OEventLogPkgTokenSpaceGuid.PcdH2OPostMessageEnable|FALSE|BOOLEAN|0x000A0303
+  gH2OEventLogPkgTokenSpaceGuid.PcdH2OPostMessageProgressCodeEnable|FALSE|BOOLEAN|0x000A0304
+  gH2OEventLogPkgTokenSpaceGuid.PcdH2OPostMessageErrorCodeEnable|FALSE|BOOLEAN|0x000A0305
+  gH2OEventLogPkgTokenSpaceGuid.PcdH2OPostMessageDebugCodeEnable|FALSE|BOOLEAN|0x000A0306
+  gH2OEventLogPkgTokenSpaceGuid.PcdH2OPostMessageLogPostMsgEnable|FALSE|BOOLEAN|0x000A0307
+  gH2OEventLogPkgTokenSpaceGuid.PcdH2OPostMessageShowPostMsgEnable|FALSE|BOOLEAN|0x000A0308
+  gH2OEventLogPkgTokenSpaceGuid.PcdH2OPostMessageBeepPostMsgEnable|FALSE|BOOLEAN|0x000A0309
+
+  #
+  # Set as FALSE will use not only Hook function for OEM, but also use BIOS original log function for POST Message.
+  #
+  gH2OEventLogPkgTokenSpaceGuid.PcdH2OPostMessageOemHookEnable|FALSE|BOOLEAN|0x000A030A
+
+  #
+  # Base address for BIOS Event Storage.
+  #
+  gH2OEventLogPkgTokenSpaceGuid.PcdH2OBiosEventStorageBase|0x00000000|UINT32|0x000A030B
+  gH2OEventLogPkgTokenSpaceGuid.PcdH2OBiosEventStorageSize|0x00000000|UINT32|0x000A030C
+
+  # - PEI DEBUG Memory Entry.
+  gH2OEventLogPkgTokenSpaceGuid.PcdH2OPeiStoreDebugMsgEntry|0xFFFFFFFF|UINT32|0x000A030D 
+  # - TRUE: There are available related services and memory space to store the DEBUG messages.
+  # - FALSE: The related services or memory space are not available.
+  gH2OEventLogPkgTokenSpaceGuid.PcdH2OPeiStoreDebugMsgEntryEnable|FALSE|BOOLEAN|0x000A030E 
+#[-start-180503-IB08400586-modify]#
+  gH2OEventLogPkgTokenSpaceGuid.PcdH2OStoreDebugMsgMemAddressPtr|0xFFFFFFFF|UINT32|0x000A030F
+#[-end-180503-IB08400586-modify]#
+  gH2OEventLogPkgTokenSpaceGuid.PcdH2OShowProgressCodeSerialMsgEnable|FALSE|BOOLEAN|0x000A0311
+  gH2OEventLogPkgTokenSpaceGuid.PcdH2OShowErrorCodeSerialMsgEnable|FALSE|BOOLEAN|0x000A0312
+  gH2OEventLogPkgTokenSpaceGuid.PcdH2OShowDebugCodeSerialMsgEnable|FALSE|BOOLEAN|0x000A0313
+  gH2OEventLogPkgTokenSpaceGuid.PcdH2OShowStatusCodeSerialMsgReady|FALSE|BOOLEAN|0x000A0314
+  gH2OEventLogPkgTokenSpaceGuid.PcdH2OSmmBiosStorageSupportReady|FALSE|BOOLEAN|0x000A0315
+#[-end-171212-IB08400542-modify]#
+
+[PcdsFixedAtBuild,PcdsPatchableInModule,PcdsDynamic, PcdsDynamicEx]
+#[-start-171212-IB08400542-modify]#
+  gH2OEventLogPkgTokenSpaceGuid.PcdH2OEventsOnPostDisplayFilterList|{0}|VOID*|0x000A0401
+#[-end-171212-IB08400542-modify]#
+

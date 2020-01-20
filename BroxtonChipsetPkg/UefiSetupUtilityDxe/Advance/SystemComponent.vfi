@@ -1,0 +1,210 @@
+// *++
+//
+// Copyright (c)  1999 - 2016 Intel Corporation. All rights reserved
+// This software and associated documentation (if any) is furnished
+// under a license and may only be used or copied in accordance
+// with the terms of the license. Except as permitted by such
+// license, no part of this software or documentation may be
+// reproduced, stored in a retrieval system, or transmitted in any
+// form or by any means without the express written consent of
+// Intel Corporation.
+//
+//
+// Module Name:
+//
+//   SystemComponent.vfr
+//
+// Abstract:
+//
+//   Driver Setup formset.
+//
+// Revision History:
+//   ------------------------------------------------------------------------------
+//   Rev   Date<MM/DD/YYYY>    Name    Description
+//   ------------------------------------------------------------------------------
+
+// --*/
+
+form formid = SYSTEM_COMPONENT_FORM_ID,
+
+  title  = STRING_TOKEN(STR_SYSTEM_COMPONENT_TITLE);
+//[-start-170322-IB07400848-add]//
+  subtitle text = STRING_TOKEN(STR_SYSTEM_COMPONENT_TITLE);
+//[-end-170322-IB07400848-add]//
+
+  oneof   varid   = SystemConfig.CRIDSettings,
+    prompt      = STRING_TOKEN(STR_CRID_PROMPT),
+    help        = STRING_TOKEN(STR_CRID_SETTING_HELP),
+    option text = STRING_TOKEN(STR_DISABLE), value = 0, flags = MANUFACTURING | DEFAULT | RESET_REQUIRED;
+    option text = STRING_TOKEN(STR_CRID_0_STRING),  value = 1, flags = RESET_REQUIRED;
+    option text = STRING_TOKEN(STR_CRID_1_STRING),  value = 2, flags = RESET_REQUIRED;
+    option text = STRING_TOKEN(STR_CRID_2_STRING),  value = 3, flags = RESET_REQUIRED;
+  endoneof;
+
+//[-start-170322-IB07400848-modify]//
+  //
+  // Unused, this is for Whiskey Cove PMIC in SIC code.
+  //
+  suppressif TRUE;
+    oneof   varid   = SystemConfig.PmicEnable,
+      prompt      = STRING_TOKEN(STR_PMIC_ACPI_OBJECT_PROMPT),
+      help        = STRING_TOKEN(STR_PMIC_ACPI_OBJECT_HELP),
+  //[-start-160406-IB07400715-modify]//
+  //[-start-160914-IB07400784-modify]//
+  //#if !BXTI_PF_ENABLE    
+#ifdef BUILD_CCG_CRB
+      option text = STRING_TOKEN(STR_DISABLE), value = 0, flags = RESET_REQUIRED;
+      option text = STRING_TOKEN(STR_ENABLE),  value = 1, flags = MANUFACTURING | DEFAULT  | RESET_REQUIRED;
+#else
+      option text = STRING_TOKEN(STR_DISABLE), value = 0, flags = MANUFACTURING | DEFAULT  | RESET_REQUIRED;
+      option text = STRING_TOKEN(STR_ENABLE),  value = 1, flags = RESET_REQUIRED;
+#endif    
+  //[-end-160914-IB07400784-modify]//
+  //[-end-160406-IB07400715-modify]//
+    endoneof;
+  endif;
+//[-end-170322-IB07400848-modify]//
+
+//[-start-170322-IB07400848-modify]//
+  //
+  // Unused
+  //
+  suppressif TRUE;
+    oneof   varid   = SystemConfig.PnpSettings,
+      prompt      = STRING_TOKEN(STR_PNP_SETTING_PROMPT),
+      help        = STRING_TOKEN(STR_PNP_SETTING_HELP),
+      option text = STRING_TOKEN(STR_DISABLE), value = 0, flags = RESET_REQUIRED;
+#if (PNP_DEBUG == 1) 
+      option text = STRING_TOKEN(STR_PNP_POWER_STRING),  value = 1, flags = RESET_REQUIRED;
+      option text = STRING_TOKEN(STR_PNP_PERFORMANCE_STRING),  value = 2, flags = RESET_REQUIRED;
+#endif
+      option text = STRING_TOKEN(STR_PNP_POWER_PERFORMANCE_STRING), value = 3, flags = MANUFACTURING | DEFAULT | RESET_REQUIRED;
+    endoneof;
+  endif;
+//[-end-170322-IB07400848-modify]//
+
+//[-start-160216-IB03090424-modify]//
+  oneof varid   = SystemConfig.ResetSelect,
+    prompt      = STRING_TOKEN(STR_RESET_SELECT),
+    help        = STRING_TOKEN(STR_RESET_SELECT_HELP),
+//[-start-160406-IB07400715-modify]//
+//[-start-160914-IB07400784-modify]//
+//#if !BXTI_PF_ENABLE	
+#if defined(BUILD_CCG_CRB) || FeaturePcdGet(PcdSecureFlashSupported)
+    option text = STRING_TOKEN(STR_WARM_RESET), value = 0x6, flags = DEFAULT | MANUFACTURING | RESET_REQUIRED;
+    option text = STRING_TOKEN(STR_COLD_RESET), value = 0xE, flags = RESET_REQUIRED;
+#else
+    option text = STRING_TOKEN(STR_WARM_RESET), value = 0x6, flags = RESET_REQUIRED;
+    option text = STRING_TOKEN(STR_COLD_RESET), value = 0xE, flags = DEFAULT | MANUFACTURING | RESET_REQUIRED;
+#endif
+//[-end-160914-IB07400784-modify]//
+//[-end-160406-IB07400715-modify]//
+  endoneof;
+
+//[-start-170322-IB07400848-modify]//
+  //
+  // Only used on Apollo Lake RVP
+  //
+  suppressif ideqval SystemConfig.IsIOTGBoardIds == 1;
+    // Embedded Power Instrumentation
+    oneof   varid   = SystemConfig.EPIEnable,
+      prompt      = STRING_TOKEN(STR_EPI_ENABLE_PROMPT),
+      help        = STRING_TOKEN(STR_EPI_ENABLE_HELP),
+      option text = STRING_TOKEN(STR_DISABLE), value = 0, flags = MANUFACTURING | DEFAULT | RESET_REQUIRED;
+      option text = STRING_TOKEN(STR_ENABLE),  value = 1, flags = RESET_REQUIRED;
+    endoneof;
+
+    oneof   varid   = SystemConfig.TypeCEnable,
+      prompt      = STRING_TOKEN(STR_TYPEC_ENABLE_PROMPT),
+      help        = STRING_TOKEN(STR_TYPEC_ENABLE_HELP),
+      option text = STRING_TOKEN(STR_DISABLE), value = 0, flags = RESET_REQUIRED;
+      option text = STRING_TOKEN(STR_ENABLE),  value = 1, flags = RESET_REQUIRED;
+      option text = STRING_TOKEN(STR_AUTO),    value = 2, flags = MANUFACTURING | DEFAULT | RESET_REQUIRED;
+    endoneof;
+  endif;  
+//[-end-170322-IB07400848-modify]//
+
+//[-start-160719-IB03090429-add]//
+//  oneof varid   = SystemConfig.Ps2KbMsEnable,
+//    prompt      = STRING_TOKEN (STR_PS2_PROFILE),
+//    help        = STRING_TOKEN (STR_PS2_PROFILE_HELP),
+//    option text = STRING_TOKEN (STR_DISABLE), value = 0, flags = RESET_REQUIRED;
+//    option text = STRING_TOKEN (STR_ENABLE),  value = 1, flags = RESET_REQUIRED;
+//    option text = STRING_TOKEN (STR_AUTO),    value = 2, flags = MANUFACTURING | DEFAULT | RESET_REQUIRED;
+//  endoneof;
+//[-end-160719-IB03090429-add]//
+
+//SSC
+  subtitle text = STRING_TOKEN(STR_NULL_STRING);
+  subtitle text = STRING_TOKEN(STR_SSC_SETTING_SUBTITLE);
+
+  oneof   varid   = SystemConfig.DDRSSCEnable,
+    prompt      = STRING_TOKEN(STR_DDR_SSC_ENABLE_PROMPT),
+    help        = STRING_TOKEN(STR_DDR_SSC_ENABLE_HELP),
+//[-start-160506-IB03090427-modify]//
+    option text = STRING_TOKEN(STR_DISABLE), value = 0, flags = RESET_REQUIRED;
+    option text = STRING_TOKEN(STR_ENABLE),  value = 1, flags = MANUFACTURING | DEFAULT | RESET_REQUIRED;
+//[-end-160506-IB03090427-modify]//
+  endoneof;
+
+  suppressif ideqval SystemConfig.DDRSSCEnable == 0;
+    oneof   varid   = SystemConfig.DDRSSCSelection,
+      prompt      = STRING_TOKEN(STR_DDR_SSC_SELECTION_TABLE_PROMPT),
+      help        = STRING_TOKEN(STR_DDR_SSC_SELECTION_TABLE_HELP),
+      option text = STRING_TOKEN(STR_SSC_SELECTION_TABLE_0),    value = 0,  flags = RESET_REQUIRED;
+      option text = STRING_TOKEN(STR_SSC_SELECTION_TABLE_M01),  value = 1,  flags = RESET_REQUIRED;
+      option text = STRING_TOKEN(STR_SSC_SELECTION_TABLE_M02),  value = 2,  flags = RESET_REQUIRED;
+      option text = STRING_TOKEN(STR_SSC_SELECTION_TABLE_M03),  value = 3,  flags = RESET_REQUIRED; 
+      option text = STRING_TOKEN(STR_SSC_SELECTION_TABLE_M04),  value = 4,  flags = RESET_REQUIRED;
+      option text = STRING_TOKEN(STR_SSC_SELECTION_TABLE_M05),  value = 5,  flags = RESET_REQUIRED | DEFAULT | MANUFACTURING;
+    endoneof;
+  endif;
+  
+  oneof   varid   = SystemConfig.DDRCLKBending,
+    prompt      = STRING_TOKEN(STR_DDR_CLK_BENDING_SELECTION_TABLE_PROMPT),
+    help        = STRING_TOKEN(STR_DDR_CLK_BENDING_SELECTION_TABLE_HELP),
+    option text = STRING_TOKEN(STR_CLK_BENDING_SELECTION_TABLE_13),  value = 0,  flags = RESET_REQUIRED;
+    option text = STRING_TOKEN(STR_CLK_BENDING_SELECTION_TABLE_06),  value = 1,  flags = RESET_REQUIRED;
+    option text = STRING_TOKEN(STR_CLK_BENDING_SELECTION_TABLE_0),   value = 2,  flags = RESET_REQUIRED | DEFAULT | MANUFACTURING;
+    option text = STRING_TOKEN(STR_CLK_BENDING_SELECTION_TABLE_M09), value = 3,  flags = RESET_REQUIRED; 
+  endoneof;
+  
+  oneof   varid   = SystemConfig.HSSIOSSCEnable,
+    prompt      = STRING_TOKEN(STR_HSSIO_SSC_ENABLE_PROMPT),
+    help        = STRING_TOKEN(STR_HSSIO_SSC_ENABLE_HELP),
+    option text = STRING_TOKEN(STR_DISABLE), value = 0, flags = RESET_REQUIRED;
+    option text = STRING_TOKEN(STR_ENABLE),  value = 1, flags = MANUFACTURING | DEFAULT | RESET_REQUIRED;
+  endoneof;
+
+  suppressif ideqval SystemConfig.HSSIOSSCEnable == 0;
+    oneof   varid   = SystemConfig.HSSIOSSCSelection,
+      prompt      = STRING_TOKEN(STR_HSSIO_SSC_SELECTION_TABLE_PROMPT),
+      help        = STRING_TOKEN(STR_HSSIO_SSC_SELECTION_TABLE_HELP),
+      option text = STRING_TOKEN(STR_SSC_SELECTION_TABLE_0),    value = 0,  flags = RESET_REQUIRED;
+      option text = STRING_TOKEN(STR_SSC_SELECTION_TABLE_M01),  value = 1,  flags = RESET_REQUIRED;
+      option text = STRING_TOKEN(STR_SSC_SELECTION_TABLE_M02),  value = 2,  flags = RESET_REQUIRED;
+      option text = STRING_TOKEN(STR_SSC_SELECTION_TABLE_M03),  value = 3,  flags = RESET_REQUIRED; 
+      option text = STRING_TOKEN(STR_SSC_SELECTION_TABLE_M04),  value = 4,  flags = RESET_REQUIRED;
+      option text = STRING_TOKEN(STR_SSC_SELECTION_TABLE_M05),  value = 5,  flags = RESET_REQUIRED | DEFAULT | MANUFACTURING;
+    endoneof;
+  endif;
+  
+//[-start-150506-IB10860198-add]//
+//[-start-161215-IB08450359-remove]//
+//  subtitle text = STRING_TOKEN(STR_NULL_STRING);
+//
+//  oneof   varid   = SystemConfig.H2OUVESupport,
+//    prompt      = STRING_TOKEN(STR_H2OUVE_SUPPORT_STRING),
+//    help        = STRING_TOKEN(STR_H2OUVE_SUPPORT_HELP),
+//    option text = STRING_TOKEN(STR_DISABLED_TEXT), value = 0, flags = DEFAULT;
+//    option text = STRING_TOKEN(STR_ENABLED_TEXT),  value = 1, flags = 0;
+//  endoneof;
+//
+//[-end-161215-IB08450359-remove]//
+//[-end-150506-IB10860198-add]//
+  
+//[-end-160216-IB03090424-modify]//
+endform;
+
+
+

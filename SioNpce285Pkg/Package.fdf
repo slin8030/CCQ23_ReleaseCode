@@ -1,0 +1,25 @@
+## @file
+#
+#  SIO Package Flash Description File
+#
+#******************************************************************************
+#* Copyright (c) 2015, Insyde Software Corp. All Rights Reserved.
+#*
+#* You may not reproduce, distribute, publish, display, perform, modify, adapt,
+#* transmit, broadcast, present, recite, release, license or otherwise exploit
+#* any part of this publication in any form, by any means, without the prior
+#* written permission of Insyde Software Corporation.
+#*
+#******************************************************************************
+
+[FV.RECOVERYFV]
+!if gSioGuid.PcdSioNpce285Supported
+INF APRIORI=0xC001 SioNpce285Pkg/SioNpce285Pei/SioNpce285Pei.inf
+!endif
+
+[FV.DXEFV]
+!if gSioGuid.PcdSioNpce285Supported
+INF RuleOverride=ACPITABLE SioNpce285Pkg/SioNpce285Dxe/SioNpce285Dxe.inf
+!endif
+
+

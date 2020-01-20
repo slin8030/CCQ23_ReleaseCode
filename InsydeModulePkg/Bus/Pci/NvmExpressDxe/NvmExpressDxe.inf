@@ -1,0 +1,39 @@
+## @file
+#  Component description file for NVM Express Host Controller Driver Module.
+#
+#******************************************************************************
+#* Copyright (c) 2015 - 2016, Insyde Software Corporation. All Rights Reserved.
+#*
+#* You may not reproduce, distribute, publish, display, perform, modify, adapt,
+#* transmit, broadcast, present, recite, release, license or otherwise exploit
+#* any part of this publication in any form, by any means, without the prior
+#* written permission of Insyde Software Corporation.
+#*
+#******************************************************************************
+
+[Defines]
+  INF_VERSION                    = 0x00010005
+  BASE_NAME                      = NvmExpressDxe
+  FILE_GUID                      = 5BE3BDF4-53CF-46a3-A6A9-73C34A6E5EE3
+  MODULE_TYPE                    = COMBINED_SMM_DXE
+  BINARY_VERSION                 = 01.01.51.1219.00
+
+[Binaries.Ia32]
+  PE32|Ia32/NvmExpressDxe.efi|*
+
+[Binaries.X64]
+  PE32|X64/NvmExpressDxe.efi|*
+
+[Binaries.Arm]
+  PE32|Arm/NvmExpressDxe.efi|*
+
+[Binaries.Aarch64]
+  PE32|Aarch64/NvmExpressDxe.efi|*
+
+[Packages]
+  InsydeModulePkg/InsydeModulePkg.dec
+
+[Depex]
+  <SMM_DEPEX>
+   TRUE
+

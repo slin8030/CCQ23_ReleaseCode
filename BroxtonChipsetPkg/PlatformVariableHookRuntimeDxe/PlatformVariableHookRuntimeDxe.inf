@@ -1,0 +1,94 @@
+## @file
+#  Component description file for PlatformVariableHookRuntimeDxe module.
+#
+#******************************************************************************
+#* Copyright (c) 2016, Insyde Software Corp. All Rights Reserved.
+#*
+#* You may not reproduce, distribute, publish, display, perform, modify, adapt,
+#* transmit, broadcast, present, recite, release, license or otherwise exploit
+#* any part of this publication in any form, by any means, without the prior
+#* written permission of Insyde Software Corporation.
+#*
+#******************************************************************************
+
+[Defines]
+  INF_VERSION                    = 0x00010005
+  BASE_NAME                      = PlatformVariableHookRuntimeDxe
+  FILE_GUID                      = 6340DF52-4D5E-4FD1-AC65-B91444D66BA0
+  MODULE_TYPE                    = COMBINED_SMM_DXE
+  PI_SPECIFICATION_VERSION       = 0x0001000A
+  VERSION_STRING                 = 1.0
+  ENTRY_POINT                    = PlatformVariableHookInitialize
+
+[Sources]
+  PlatformVariableHookRuntimeDxe.c
+
+[Packages]
+  MdePkg/MdePkg.dec
+  MdeModulePkg/MdeModulePkg.dec
+  InsydeModulePkg/InsydeModulePkg.dec
+  IntelFrameworkPkg/IntelFrameworkPkg.dec
+  IntelFrameworkModulePkg/IntelFrameworkModulePkg.dec
+  $(CHIPSET_PKG)/$(CHIPSET_PKG).dec
+  SecurityPkg/SecurityPkg.dec
+  $(PLATFORM_RC_PACKAGE)/$(PLATFORM_RC_PACKAGE).dec
+
+[LibraryClasses]
+  BaseLib
+  BaseMemoryLib
+  UefiDriverEntryPoint
+  MemoryAllocationLib
+  UefiBootServicesTableLib
+  UefiRuntimeServicesTableLib
+  DxeServicesTableLib
+  DebugLib
+  UefiLib
+  PcdLib
+  HobLib
+  PostCodeLib
+  ImageRelocationLib
+  DxeOemSvcKernelLibDefault
+  IoLib
+  PcdLib
+  HeciMsgLib
+  PlatformConfigDataLib
+
+[Guids]
+  gEfiEventVirtualAddressChangeGuid             ## PRODUCES ## Event
+  gEfiEventExitBootServicesGuid
+  gSystemConfigurationGuid
+  gEfiMemoryOverwriteControlDataGuid
+  gEfiTrEEPhysicalPresenceGuid
+  gEfiMemoryConfigDataGuid
+  gEfiMemoryOverwriteControlDataGuid
+  gEfiTcg2PhysicalPresenceGuid
+#[-start-160308-IB10860193-add]#
+  gCustomVariableGuid
+#[-end-160308-IB10860193-add]#
+#[-start-160803-IB07220122-add]#
+  gEfiMemoryConfigVariableGuid
+#[-end-160803-IB07220122-add]#
+[Pcd]
+
+[FeaturePcd]
+
+[Protocols]
+  gEfiSmmBase2ProtocolGuid
+  gEfiSmmRuntimeProtocolGuid
+  gEfiVariableWriteArchProtocolGuid             ## ALWAYS_PRODUCES
+  gEfiVariableArchProtocolGuid                  ## ALWAYS_PRODUCES
+  gEfiSmmVariableProtocolGuid
+  gEfiHeciSmmProtocolGuid
+  gEfiHeciProtocolGuid
+
+[Depex]
+  <DXE_DEPEX>
+  TRUE
+
+  <SMM_DEPEX>
+  gEfiHeciSmmProtocolGuid 
+
+
+[BuildOptions]
+  MSFT:*_*_*_DLINK_FLAGS = /ALIGN:4096 /FILEALIGN:4096
+  GCC:*_*_*_DLINK_FLAGS  = --script=$(WORKSPACE)/BaseTools/Bin/Linux/gcc-4K-align-ld-script

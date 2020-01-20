@@ -1,0 +1,51 @@
+#/** @file
+#
+#  Component description file for H2O SMM Debug Print Error Level Library.
+#
+#;******************************************************************************
+#;* Copyright (c) 2016 - 2018, Insyde Software Corporation. All Rights Reserved.
+#;*
+#;* You may not reproduce, distribute, publish, display, perform, modify, adapt,
+#;* transmit, broadcast, present, recite, release, license or otherwise exploit
+#;* any part of this publication in any form, by any means, without the prior
+#;* written permission of Insyde Software Corporation.
+#;*
+#;******************************************************************************
+#*/
+
+[Defines]
+  INF_VERSION                    = 0x00010005
+  BASE_NAME                      = H2OSmmDebugPrintErrorLevelLib
+  FILE_GUID                      = A7A49679-695A-4957-9A9C-C83E3F6A8DBD
+  MODULE_TYPE                    = DXE_SMM_DRIVER
+  VERSION_STRING                 = 1.0
+  LIBRARY_CLASS                  = DebugPrintErrorLevelLib|DXE_SMM_DRIVER SMM_CORE COMBINED_SMM_DXE
+  CONSTRUCTOR                    = SmmDebugPrintErrorLevelLibConstructor
+
+#
+#  VALID_ARCHITECTURES           = IA32 X64 IPF EBC
+#
+
+[Sources]
+  H2OSmmDebugPrintErrorLevelLib.c
+
+[Packages]
+  MdePkg/MdePkg.dec
+  MdeModulePkg/MdeModulePkg.dec
+  InsydeEventLogPkg/InsydeEventLogPkg.dec
+
+[LibraryClasses]
+  PcdLib
+  DebugCfgToErrLevelLib
+  
+[Protocols]
+  gEfiSmmVariableProtocolGuid
+  
+[Guids]
+  gH2ODebugMessageConfigUtilVarstoreGuid  
+
+[Pcd]
+#[-start-180518-IB08400596-modify]#
+  gEfiMdePkgTokenSpaceGuid.PcdDebugPrintErrorLevel
+#[-end-180518-IB08400596-modify]#
+

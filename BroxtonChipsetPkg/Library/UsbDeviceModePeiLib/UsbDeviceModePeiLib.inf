@@ -1,0 +1,86 @@
+## @file
+#  Component description file for UsbDeviceModePeiLib
+#
+#******************************************************************************
+#* Copyright (c) 2014, Insyde Software Corp. All Rights Reserved.
+#*
+#* You may not reproduce, distribute, publish, display, perform, modify, adapt,
+#* transmit, broadcast, present, recite, release, license or otherwise exploit
+#* any part of this publication in any form, by any means, without the prior
+#* written permission of Insyde Software Corporation.
+#*
+#******************************************************************************
+
+
+[Defines]
+  INF_VERSION               = 0x00010005
+  BASE_NAME                 = UsbDeviceModePeiLib
+  FILE_GUID                 = 0264199C-AA88-4ecd-A66C-A5D07E91CD4D
+  MODULE_TYPE               = PEIM
+  VERSION_STRING            = 1.0
+  LIBRARY_CLASS             = UsbDeviceModePeiLib
+
+[Packages]
+  MdePkg/MdePkg.dec
+  $(PLATFORM_RC_PACKAGE)/$(PLATFORM_RC_PACKAGE).dec
+  $(CHIPSET_PKG)/$(CHIPSET_PKG).dec
+  InsydeModulePkg/InsydeModulePkg.dec
+  
+[Sources]
+  ./usb_stack/usb.h
+  ./usb_stack/usb_device_if/udci.h
+  ./usb_stack/usb_device_if/udci.c
+  ./usb_stack/usb_common/usb_common.h
+  ./usb_stack/usb_device/usb_dcd_if.h
+  ./usb_stack/usb_device/usb_device.c
+  ./usb_stack/usb_device/usb_dwc_xdci.h
+  ./usb_stack/usb_device_app/usbd.h
+  ./usb_stack/usb_device/usb_dwc_xdci.c
+  ./usb_stack/usb_device/usb_device.c
+  ./usb_stack/usb_device/usb_dcd_tbl.c
+
+  ./usb_stack/usb_device_app/usb_fb.h
+  ./usb_stack/usb_device_app/usb_fb.c
+#  ./usb_stack/usb_device_app/usb_fb_app.c
+#  ./usb_stack/usb_device_app/usb_fb_app.h
+  ./usb_stack/usb_device_app/usbd.c
+  ./usb_stack/usb_device_app/usbd_util.h
+  ./usb_stack/usb_device_app/usbd_util.c
+  ./Include/Library/UdmWrapperPeiLib.h
+
+[LibraryClasses]
+  BaseLib
+  BaseMemoryLib
+  DebugLib
+  MemoryAllocationLib
+  IoLib
+  UdmWrapperPeiLib
+  EfiFastBootPeiLib
+  
+[Ppis]  
+  gEfiPeiVirtualBlockIoPpiGuid
+  gEfiPeiRecoveryModulePpiGuid
+  #gPeiSha256HashPpiGuid
+
+[Pcd]
+
+ 
+[Pcd.common]
+  gEfiMdePkgTokenSpaceGuid.PcdPciExpressBaseAddress
+  #gPlatformModuleTokenSpaceGuid.PcdFlashFvMainBase
+  #gPlatformModuleTokenSpaceGuid.PcdFlashFvMainSize
+  #gPlatformModuleTokenSpaceGuid.PcdFlashFvRecovery2Base
+  #gPlatformModuleTokenSpaceGuid.PcdFlashFvRecovery2Size
+  #gPlatformModuleTokenSpaceGuid.PcdFlashMicroCodeAddress
+  #gPlatformModuleTokenSpaceGuid.PcdFlashMicroCodeSize
+  #gPlatformModuleTokenSpaceGuid.PcdFlashFvShellBase
+  #gPlatformModuleTokenSpaceGuid.PcdFlashFvShellSize
+  gChipsetPkgTokenSpaceGuid.PcdFlashArea2Size
+
+[Guids]
+  #gEfiNormalSetupGuid
+  #gEfiVlv2VariableGuid
+  #gEfiFastbootHobGuid
+
+[Depex]
+  gPeiSdhcPpiGuid

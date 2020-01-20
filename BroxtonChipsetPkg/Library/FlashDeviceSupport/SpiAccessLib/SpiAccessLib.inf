@@ -1,0 +1,64 @@
+## @file
+#  Flash Device Support Library Class
+#
+#******************************************************************************
+#* Copyright (c) 2014 - 2015, Insyde Software Corp. All Rights Reserved.
+#*
+#* You may not reproduce, distribute, publish, display, perform, modify, adapt,
+#* transmit, broadcast, present, recite, release, license or otherwise exploit
+#* any part of this publication in any form, by any means, without the prior
+#* written permission of Insyde Software Corporation.
+#*
+#******************************************************************************
+
+[Defines]
+  INF_VERSION                    = 0x00010005
+  BASE_NAME                      = SpiAccessLib
+  FILE_GUID                      = BE0248D7-A861-4FF8-B7E9-878945CBDEDE
+  MODULE_TYPE                    = BASE
+  LIBRARY_CLASS                  = SpiAccessLib
+  CONSTRUCTOR                    = SpiAccessLibInit
+  DESTRUCTOR                     = SpiAccessLibDestruct
+
+[Sources]
+  SpiAccessLib.c
+
+[Packages]
+  MdePkg/MdePkg.dec
+  InsydeModulePkg/InsydeModulePkg.dec
+  $(CHIPSET_PKG)/$(CHIPSET_PKG).dec
+  $(PLATFORM_RC_PACKAGE)/$(PLATFORM_RC_PACKAGE).dec
+
+[LibraryClasses]
+  BaseLib
+  BaseMemoryLib
+  PcdLib
+  TimerLib
+  FdSupportLib
+  SpiAccessInitLib
+  IrsiRegistrationLib
+
+[Pcd]
+  gEfiMdePkgTokenSpaceGuid.PcdPciExpressBaseAddress
+#[-start-151124-IB08450330-remove]#
+#  gInsydeTokenSpaceGuid.PcdFlashAreaBaseAddress
+#[-end-151124-IB08450330-remove]#
+#[-start-161021-IB07400801-add]#
+  gEfiBxtTokenSpaceGuid.PcdFDOState
+#[-end-161021-IB07400801-add]#
+#[-start-170214-IB07400840-add]#
+  gChipsetPkgTokenSpaceGuid.PcdFlashDeviceExpansionBase
+  gChipsetPkgTokenSpaceGuid.PcdFlashDeviceExpansionSize
+  gChipsetPkgTokenSpaceGuid.PcdFlashIfwiRegionBase
+  gChipsetPkgTokenSpaceGuid.PcdFlashIfwiRegionSize
+  gChipsetPkgTokenSpaceGuid.PcdFlashBootPartition2Base
+  gChipsetPkgTokenSpaceGuid.PcdFlashSpiRomSize
+#[-end-170214-IB07400840-add]#
+#[-start-181001-IB07401020-add]#
+  gChipsetPkgTokenSpaceGuid.PcdFlashPdrRegionBase
+  gChipsetPkgTokenSpaceGuid.PcdFlashPdrRegionSize
+#[-end-181001-IB07401020-add]#
+[Guids]
+
+
+

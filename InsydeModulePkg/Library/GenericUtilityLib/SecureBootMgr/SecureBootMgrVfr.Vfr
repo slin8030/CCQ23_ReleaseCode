@@ -1,0 +1,420 @@
+/** @file
+
+;******************************************************************************
+;* Copyright (c) 2012 - 2016, Insyde Software Corp. All Rights Reserved.
+;*
+;* You may not reproduce, distribute, publish, display, perform, modify, adapt,
+;* transmit, broadcast, present, recite, release, license or otherwise exploit
+;* any part of this publication in any form, by any means, without the prior
+;* written permission of Insyde Software Corporation.
+;*
+;******************************************************************************
+*/
+
+/*++
+//
+// Module Name:
+//
+//   SecureBootMgr.vfr
+//
+// Abstract:
+//
+//   Secure Boot Manager Utility Formset
+//
+// Revision History:
+//
+// --*/
+
+#include "GenericUtilityLibStrDefs.h"
+#include "SecureBootFormGuid.h"
+
+formset
+  guid = SECURE_BOOT_FORMSET_GUID,
+  title = STRING_TOKEN(STR_ADMINISTER_SECURE_BOOT_TITLE),
+  help = STRING_TOKEN(STR_SB_NULL_STRING),
+  classguid = SECURE_BOOT_FORMSET_GUID,
+  class = SECURE_BOOT_CLASS,
+  subclass = SECURE_BOOT_SUBCLASS,
+#if FeaturePcdGet(PcdH2OFormBrowserLocalMetroDESupported)
+  image     = IMAGE_TOKEN(IMAGE_SECURE_BOOT_MENU);
+#endif
+
+
+  varstore SECURE_BOOT_NV_DATA,
+    varid = SECURE_BOOT_FORM_ID,
+    name  = SecureBootData,
+    guid  = SECURE_BOOT_FORMSET_GUID;
+
+  form formid = SECURE_BOOT_FORM_ID,
+       title = STRING_TOKEN(STR_ADMINISTER_SECURE_BOOT_TITLE);
+
+
+    subtitle text = STRING_TOKEN(STR_SYSTEM_STATUS_BANNER);
+    subtitle text = STRING_TOKEN(STR_SB_NULL_STRING);
+
+    grayoutif  TRUE;
+      //
+      // According to SetupMode variable to display secure boot data base is installed or not
+      //
+      suppressif
+        ideqval SecureBootData.SetupMode == 0;
+        text
+          help   = STRING_TOKEN(STR_SB_NULL_STRING),
+          text   = STRING_TOKEN(STR_SECURE_BOOT_DATABASE),
+          text   = STRING_TOKEN(STR_UNLOCKED);
+      endif;
+
+      suppressif
+        ideqval SecureBootData.SetupMode == 1;
+        text
+          help   = STRING_TOKEN(STR_SB_NULL_STRING),
+          text   = STRING_TOKEN(STR_SECURE_BOOT_DATABASE),
+          text   = STRING_TOKEN(STR_INSTALLED_AND_LOCKED);
+      endif;
+
+      //
+      // According to SecureBoot variable to display seucre boot is disabled or enabled
+      //
+      suppressif
+        ideqval SecureBootData.SecureBoot == 0;
+        text
+          help   = STRING_TOKEN(STR_SB_NULL_STRING),
+          text   = STRING_TOKEN(STR_SECURE_BOOT_STATUS),
+          text   = STRING_TOKEN(STR_SB_ENABLED_TEXT);
+      endif;
+
+      suppressif
+        ideqval SecureBootData.SecureBoot == 1;
+        text
+          help   = STRING_TOKEN(STR_SB_NULL_STRING),
+          text   = STRING_TOKEN(STR_SECURE_BOOT_STATUS),
+          text   = STRING_TOKEN(STR_SB_DISABLED_TEXT);
+      endif;
+
+#if FeaturePcdGet(PcdH2OCustomizedSecureBootSupported)
+      //
+      // According to SetupMode, DeployedMode and AuditMode variable to display seucre boot mode
+      //
+      suppressif
+        ideqval SecureBootData.SetupMode == 0
+        OR
+        ideqval SecureBootData.AuditMode == 1
+        OR
+        ideqval SecureBootData.DeployedMode == 1;
+        text
+          help   = STRING_TOKEN(STR_SB_NULL_STRING),
+          text   = STRING_TOKEN(STR_SECURE_BOOT_MODE),
+          text   = STRING_TOKEN(STR_SETUP_MODE);
+      endif;
+
+      suppressif
+        ideqval SecureBootData.SetupMode == 1
+        OR
+        ideqval SecureBootData.AuditMode == 1
+        OR
+        ideqval SecureBootData.DeployedMode == 1;
+        text
+          help   = STRING_TOKEN(STR_SB_NULL_STRING),
+          text   = STRING_TOKEN(STR_SECURE_BOOT_MODE),
+          text   = STRING_TOKEN(STR_USER_MODE);
+      endif;
+
+      suppressif
+        ideqval SecureBootData.SetupMode == 0
+        OR
+        ideqval SecureBootData.AuditMode == 0
+        OR
+        ideqval SecureBootData.DeployedMode == 1;
+        text
+          help   = STRING_TOKEN(STR_SB_NULL_STRING),
+          text   = STRING_TOKEN(STR_SECURE_BOOT_MODE),
+          text   = STRING_TOKEN(STR_AUDIT_MODE);
+      endif;
+
+      suppressif
+        ideqval SecureBootData.SetupMode == 1
+        OR
+        ideqval SecureBootData.AuditMode == 1
+        OR
+        ideqval SecureBootData.DeployedMode == 0;
+        text
+          help   = STRING_TOKEN(STR_SB_NULL_STRING),
+          text   = STRING_TOKEN(STR_SECURE_BOOT_MODE),
+          text   = STRING_TOKEN(STR_DEPLOYED_MODE);
+      endif;
+#endif
+      //
+      // According to CustomSecurity variable to display user customized security or not
+      //
+      suppressif
+        ideqval SecureBootData.CustomSecurity == 0;
+        text
+          help   = STRING_TOKEN(STR_SB_NULL_STRING),
+          text   = STRING_TOKEN(STR_CUSTOM_SECURITY),
+          text   = STRING_TOKEN(STR_YES);
+      endif;
+
+      suppressif
+        ideqval SecureBootData.CustomSecurity == 1;
+        text
+          help   = STRING_TOKEN(STR_SB_NULL_STRING),
+          text   = STRING_TOKEN(STR_CUSTOM_SECURITY),
+          text   = STRING_TOKEN(STR_NO);
+      endif;
+
+    endif;
+
+    subtitle text = STRING_TOKEN(STR_SB_NULL_STRING);
+    subtitle text = STRING_TOKEN(STR_SB_OPTIONS_STRING);
+    subtitle text = STRING_TOKEN(STR_SB_NULL_STRING);
+    grayoutif
+      ideqval SecureBootData.SetupMode == 1;
+      //
+      // enroll hash image reference op code
+      //
+      goto FORM_ENROLL_HASH_ID,
+           prompt = STRING_TOKEN(STR_ENROLL_HASH_STRING),
+           help = STRING_TOKEN(STR_ENROLL_HASH_HELP),
+           flags = INTERACTIVE,
+           key = KEY_ENROLL_HASH;
+      //
+      // In setup mode, always disabled enforce secure boot
+      //
+    suppressif
+      ideqval SecureBootData.SetupMode == 0;
+      oneof
+        varid       = SecureBootData.EnforceSecureBoot,
+        prompt      = STRING_TOKEN(STR_SECURE_BOOT_STRING),
+        help        = STRING_TOKEN(STR_SECURE_BOOT_HELP),
+        option text = STRING_TOKEN(STR_SB_DISABLED_TEXT), value = 0, flags = 0;
+        option text = STRING_TOKEN(STR_SB_DISABLED_TEXT), value = 1, flags = DEFAULT;
+      endoneof;
+    endif;
+    endif;
+
+    suppressif
+      ideqval SecureBootData.SetupMode == 1;
+      //
+      // one of option for Enroll Secure Boot Opiton
+      //
+      oneof
+        varid       = SecureBootData.EnforceSecureBoot,
+        prompt      = STRING_TOKEN(STR_SECURE_BOOT_STRING),
+        help        = STRING_TOKEN(STR_SECURE_BOOT_HELP),
+        option text = STRING_TOKEN(STR_SB_DISABLED_TEXT), value = 0, flags = 0;
+        option text = STRING_TOKEN(STR_SB_ENABLED_TEXT),  value = 1, flags = DEFAULT;
+      endoneof;
+    endif;
+
+    oneof
+      varid       = SecureBootData.ClearSecureSettings,
+      prompt      = STRING_TOKEN(STR_CLEAR_SECURE_SETTINGS_STRING),
+      help        = STRING_TOKEN(STR_CLEAR_SECURE_SETTINGS_HELP),
+      option text = STRING_TOKEN(STR_SB_DISABLED_TEXT), value = 0, flags = DEFAULT;
+      option text = STRING_TOKEN(STR_SB_ENABLED_TEXT),  value = 1, flags = 0;
+    endoneof;
+
+    //
+    // Only add option for restore factory settings and restore backup settings.
+    // We need implement functionality later.
+    //
+    oneof
+      varid       = SecureBootData.ResotreFactorySettings,
+      prompt      = STRING_TOKEN(STR_FACTORY_SETTINGS_STRING),
+      help        = STRING_TOKEN(STR_FACTORY_SETTINGS_HELP),
+      option text = STRING_TOKEN(STR_SB_DISABLED_TEXT), value = 0, flags = DEFAULT;
+      option text = STRING_TOKEN(STR_SB_ENABLED_TEXT),  value = 1, flags = 0;
+    endoneof;
+
+#if FeaturePcdGet(PcdH2OCustomizedSecureBootSupported)
+    suppressif
+      ideqval SecureBootData.DeployedMode == 0;
+      oneof
+        varid       = SecureBootData.ClearDeployedMode,
+        prompt      = STRING_TOKEN(STR_CLEAR_DEPLOYED_MODE_STRING),
+        help        = STRING_TOKEN(STR_CLEAR_DEPLOYED_MODE_HELP),
+        option text = STRING_TOKEN(STR_SB_DISABLED_TEXT), value = 0, flags = DEFAULT;
+        option text = STRING_TOKEN(STR_SB_ENABLED_TEXT), value = 1, flags = 0;
+      endoneof;
+    endif;
+#endif
+
+#if FeaturePcdGet(PcdBackupSecureBootSettingsSupported)
+    oneof
+      varid       = SecureBootData.ResotreBackupSettings,
+      prompt      = STRING_TOKEN(STR_BACKUP_SETTINGS_STRING),
+      help        = STRING_TOKEN(STR_BACKUP_SETTINGS_HELP),
+      option text = STRING_TOKEN(STR_SB_DISABLED_TEXT), value = 0, flags = DEFAULT;
+      option text = STRING_TOKEN(STR_SB_ENABLED_TEXT),  value = 1, flags = 0;
+    endoneof;
+#endif
+
+#if FeaturePcdGet(PcdUpdateSecureBootVariablesSupported)
+    subtitle text = STRING_TOKEN(STR_SB_NULL_STRING);
+    goto FORM_ID_PK,
+      prompt = STRING_TOKEN(STR_SECURE_BOOT_VAR_PK_OPTION),
+      help   = STRING_TOKEN(STR_SECURE_BOOT_VAR_PK_OPTION_HELP),
+      flags  = INTERACTIVE,
+      key    = KEY_PK_FORM;
+
+    goto FORM_ID_KEK,
+      prompt = STRING_TOKEN(STR_SECURE_BOOT_VAR_KEK_OPTION),
+      help   = STRING_TOKEN(STR_SECURE_BOOT_VAR_KEK_OPTION_HELP),
+      flags  = INTERACTIVE,
+      key    = KEY_KEK_FORM;
+
+    goto FORM_ID_DB,
+      prompt = STRING_TOKEN(STR_SECURE_BOOT_VAR_DB_OPTION),
+      help   = STRING_TOKEN(STR_SECURE_BOOT_VAR_DB_OPTION_HELP),
+      flags  = INTERACTIVE,
+      key    = KEY_DB_FORM;
+
+    goto FORM_ID_DBX,
+      prompt = STRING_TOKEN(STR_SECURE_BOOT_VAR_DBX_OPTION),
+      help   = STRING_TOKEN(STR_SECURE_BOOT_VAR_DBX_OPTION_HELP),
+      flags  = INTERACTIVE,
+      key    = KEY_DBX_FORM;
+    subtitle text = STRING_TOKEN(STR_SB_NULL_STRING);
+#endif
+  endform;
+
+  form formid = FORM_ENROLL_HASH_ID,
+       title  = STRING_TOKEN(STR_ENROLL_HASH_STRING);
+       label FORM_ENROLL_FILE_ID;
+       label FORM_ENROLL_FILE_END_ID;
+  endform;
+
+  //
+  // Form: PK Options
+  //
+  form formid = FORM_ID_PK,
+       title  = STRING_TOKEN(STR_SECURE_BOOT_VAR_PK_OPTION);
+    goto FORM_ID_PK_ENROLL_SIGNATURE,
+      prompt = STRING_TOKEN(STR_SECURE_BOOT_VAR_ENROLL_PK),
+      help   = STRING_TOKEN(STR_SECURE_BOOT_VAR_ENROLL_PK_HELP),
+      flags  = INTERACTIVE,
+      key    = KEY_ENROLL_PK;
+
+
+    goto FORM_ID_PK_DELETE_SIGNATURE,
+      prompt = STRING_TOKEN(STR_SECURE_BOOT_VAR_DELETE_PK),
+      help   = STRING_TOKEN(STR_SECURE_BOOT_VAR_DELETE_PK_HELP),
+      flags  = INTERACTIVE,
+      key    = KEY_DELETE_PK;
+
+    subtitle text = STRING_TOKEN(STR_SB_NULL_STRING);
+    subtitle text = STRING_TOKEN(STR_SECURE_BOOT_VAR_PK_BANNER);
+    label LABEL_ID_SIGNATURE_LIST_START;
+    label LABEL_ID_SIGNATURE_LIST_END;
+  endform;
+
+  form formid = FORM_ID_PK_ENROLL_SIGNATURE,
+       title  = STRING_TOKEN(STR_SECURE_BOOT_VAR_ENROLL_PK);
+       label FORM_ENROLL_FILE_ID;
+       label FORM_ENROLL_FILE_END_ID;
+  endform;
+
+  form formid = FORM_ID_PK_DELETE_SIGNATURE,
+       title  = STRING_TOKEN(STR_SECURE_BOOT_VAR_DELETE_PK);
+    label LABEL_ID_DELETE_SIGNATURE_LIST_START;
+    label LABEL_ID_DELETE_SIGNATURE_LIST_END;
+  endform;
+
+  //
+  // Form: KEK Options
+  //
+  form formid = FORM_ID_KEK,
+       title  = STRING_TOKEN(STR_SECURE_BOOT_VAR_KEK_OPTION);
+    goto FORM_ID_KEK_ENROLL_SIGNATURE,
+      prompt = STRING_TOKEN(STR_SECURE_BOOT_VAR_ENROLL_KEK),
+      help   = STRING_TOKEN(STR_SECURE_BOOT_VAR_ENROLL_KEK_HELP),
+      flags  = INTERACTIVE,
+      key    = KEY_ENROLL_KEK;
+
+    goto FORM_ID_KEK_DELETE_SIGNATURE,
+      prompt = STRING_TOKEN(STR_SECURE_BOOT_VAR_DELETE_KEK),
+      help   = STRING_TOKEN(STR_SECURE_BOOT_VAR_DELETE_KEK_HELP);
+
+    subtitle text = STRING_TOKEN(STR_SB_NULL_STRING);
+    subtitle text = STRING_TOKEN(STR_SECURE_BOOT_VAR_KEK_BANNER);
+    label LABEL_ID_SIGNATURE_LIST_START;
+    label LABEL_ID_SIGNATURE_LIST_END;
+  endform;
+
+  form formid = FORM_ID_KEK_ENROLL_SIGNATURE,
+       title  = STRING_TOKEN(STR_SECURE_BOOT_VAR_ENROLL_KEK);
+       label FORM_ENROLL_FILE_ID;
+       label FORM_ENROLL_FILE_END_ID;
+  endform;
+
+  form formid = FORM_ID_KEK_DELETE_SIGNATURE,
+       title  = STRING_TOKEN(STR_SECURE_BOOT_VAR_DELETE_KEK);
+    label LABEL_ID_DELETE_SIGNATURE_LIST_START;
+    label LABEL_ID_DELETE_SIGNATURE_LIST_END;
+  endform;
+
+  //
+  // Form: DB Options
+  //
+  form formid = FORM_ID_DB,
+       title  = STRING_TOKEN(STR_SECURE_BOOT_VAR_DB_OPTION);
+    goto FORM_ID_DB_ENROLL_SIGNATURE,
+      prompt = STRING_TOKEN(STR_SECURE_BOOT_VAR_ENROLL_SIGNATURE),
+      help   = STRING_TOKEN(STR_SECURE_BOOT_VAR_ENROLL_SIGNATURE),
+      flags  = INTERACTIVE,
+      key    = KEY_ENROLL_DB;
+
+    goto FORM_ID_DB_DELETE_SIGNATURE,
+      prompt = STRING_TOKEN(STR_SECURE_BOOT_VAR_DELETE_SIGNATURE),
+      help   = STRING_TOKEN(STR_SECURE_BOOT_VAR_DELETE_SIGNATURE);
+
+    subtitle text = STRING_TOKEN(STR_SB_NULL_STRING);
+    subtitle text = STRING_TOKEN(STR_SECURE_BOOT_VAR_DB_BANNER);
+    label LABEL_ID_SIGNATURE_LIST_START;
+    label LABEL_ID_SIGNATURE_LIST_END;
+  endform;
+
+  form formid = FORM_ID_DB_ENROLL_SIGNATURE,
+       title  = STRING_TOKEN(STR_SECURE_BOOT_VAR_ENROLL_SIGNATURE);
+       label FORM_ENROLL_FILE_ID;
+       label FORM_ENROLL_FILE_END_ID;
+  endform;
+
+  form formid = FORM_ID_DB_DELETE_SIGNATURE,
+       title  = STRING_TOKEN(STR_SECURE_BOOT_VAR_DELETE_SIGNATURE);
+    label LABEL_ID_DELETE_SIGNATURE_LIST_START;
+    label LABEL_ID_DELETE_SIGNATURE_LIST_END;
+  endform;
+
+  //
+  // Form: DBX Options
+  //
+  form formid = FORM_ID_DBX,
+       title  = STRING_TOKEN(STR_SECURE_BOOT_VAR_DBX_OPTION);
+    goto FORM_ID_DBX_ENROLL_SIGNATURE,
+      prompt = STRING_TOKEN(STR_SECURE_BOOT_VAR_ENROLL_SIGNATURE),
+      help   = STRING_TOKEN(STR_SECURE_BOOT_VAR_ENROLL_SIGNATURE),
+      flags  = INTERACTIVE,
+      key    = KEY_ENROLL_DBX;
+    goto FORM_ID_DBX_DELETE_SIGNATURE,
+      prompt = STRING_TOKEN(STR_SECURE_BOOT_VAR_DELETE_SIGNATURE),
+      help   = STRING_TOKEN(STR_SECURE_BOOT_VAR_DELETE_SIGNATURE);
+
+    subtitle text = STRING_TOKEN(STR_SB_NULL_STRING);
+    subtitle text = STRING_TOKEN(STR_SECURE_BOOT_VAR_DBX_BANNER);
+    label LABEL_ID_SIGNATURE_LIST_START;
+    label LABEL_ID_SIGNATURE_LIST_END;
+  endform;
+
+  form formid = FORM_ID_DBX_ENROLL_SIGNATURE,
+       title  = STRING_TOKEN(STR_SECURE_BOOT_VAR_ENROLL_SIGNATURE);
+       label FORM_ENROLL_FILE_ID;
+       label FORM_ENROLL_FILE_END_ID;
+  endform;
+
+  form formid = FORM_ID_DBX_DELETE_SIGNATURE,
+       title  = STRING_TOKEN(STR_SECURE_BOOT_VAR_DELETE_SIGNATURE);
+    label LABEL_ID_DELETE_SIGNATURE_LIST_START;
+    label LABEL_ID_DELETE_SIGNATURE_LIST_END;
+  endform;
+endformset;

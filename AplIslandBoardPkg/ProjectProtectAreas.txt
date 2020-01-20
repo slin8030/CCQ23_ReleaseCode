@@ -1,0 +1,57 @@
+//;******************************************************************************
+//;* Copyright (c) 2015, Insyde Software Corporation. All Rights Reserved.
+//;*
+//;* You may not reproduce, distribute, publish, display, perform, modify, adapt,
+//;* transmit, broadcast, present, recite, release, license or otherwise exploit
+//;* any part of this publication in any form, by any means, without the prior
+//;* written permission of Insyde Software Corporation.
+//;*
+//;******************************************************************************
+
+  //
+  // BVDT Protect Area Structure Data.
+  //
+
+/*++
+  Todo:
+    Add project specific protect area in here.
+      
+    Fields of ProtectArea:
+    
+      Type     - Byte, same with IHISI FBTS 0x12 
+      Address  - UINT32
+      Size     - UINT32
+      Action   - Byte
+    
+      The Action byte value:
+        Action = 0   InsydeFlash pop up error.
+        Action = 1   InsydeFlash copy the binary from current area to new area.
+        Action = 2   Do not protect it, flash the area
+
+  Example: 
+    //
+    // To protect NV_VARIABLE_STORE area 
+    //
+    PROTECT_AREA_01 =
+    {  
+      0x02,
+      0xFFFB0000,
+      0x00004000,
+      0x00,
+    },
+    PROTECT_AREA_02 =
+    {  
+      0x02,
+      0xFFF10000,
+      0x00002000,
+      0x00,
+    }        
+--*/
+
+    PROTECT_AREA_01 =
+    {  
+      0x02,
+      0xFFFB0000,
+      0x00004000,
+      0x00,
+    }

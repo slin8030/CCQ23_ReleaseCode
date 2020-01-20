@@ -1,0 +1,65 @@
+## @file
+#  Component description file for VariableRuntimeCmos Module
+#
+#******************************************************************************
+#* Copyright (c) 2014, Insyde Software Corp. All Rights Reserved.
+#*
+#* You may not reproduce, distribute, publish, display, perform, modify, adapt,
+#* transmit, broadcast, present, recite, release, license or otherwise exploit
+#* any part of this publication in any form, by any means, without the prior
+#* written permission of Insyde Software Corporation.
+#*
+#******************************************************************************
+
+
+[Defines]
+  INF_VERSION                    = 0x00010005
+  BASE_NAME                      = VariableRuntimeCmos
+  FILE_GUID                      = F52F0522-9AEF-4851-92D2-706D60E7D46C
+  MODULE_TYPE                    = DXE_RUNTIME_DRIVER
+  VERSION_STRING                 = 1.0
+  ENTRY_POINT                    = VariableCmosFilterInit
+
+
+[Sources]
+  VariableRuntimeCmos.c
+
+[Packages]
+  MdePkg/MdePkg.dec
+  MdeModulePkg/MdeModulePkg.dec
+  $(CHIPSET_PKG)/$(CHIPSET_PKG).dec
+  InsydeModulePkg/InsydeModulePkg.dec
+[LibraryClasses]
+  MemoryAllocationLib
+  BaseLib
+  SynchronizationLib
+  UefiLib
+  UefiBootServicesTableLib
+  BaseMemoryLib
+  DebugLib
+  UefiRuntimeLib
+  DxeServicesTableLib
+  UefiDriverEntryPoint
+#  CmosAccessLib
+  CmosLib
+[Protocols]
+  gEfiVariableWriteArchProtocolGuid             ## ALWAYS_PRODUCES
+  gEfiVariableArchProtocolGuid                  ## ALWAYS_PRODUCES
+
+[Guids]
+  gEfiEventVirtualAddressChangeGuid
+  gAndroidVariableGuid
+
+[Pcd]
+
+[Depex]
+  gEfiVariableArchProtocolGuid
+
+# [Event]
+#   ##
+#   # Event will be signaled for VIRTUAL_ADDRESS_CHANGE event.
+#   #
+#   EVENT_TYPE_NOTIFY_SIGNAL                    ## PRODUCES
+#
+#
+    

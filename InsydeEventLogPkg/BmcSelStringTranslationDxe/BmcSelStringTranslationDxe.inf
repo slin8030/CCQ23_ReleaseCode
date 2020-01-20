@@ -1,0 +1,64 @@
+#/** @file
+#
+#  Component description file for BmcSelStringTranslation driver.
+#
+#;******************************************************************************
+#;* Copyright (c) 2016, Insyde Software Corporation. All Rights Reserved.
+#;*
+#;* You may not reproduce, distribute, publish, display, perform, modify, adapt,
+#;* transmit, broadcast, present, recite, release, license or otherwise exploit
+#;* any part of this publication in any form, by any means, without the prior
+#;* written permission of Insyde Software Corporation.
+#;*
+#;******************************************************************************
+#*/
+
+[Defines]
+  INF_VERSION                    = 0x00010005
+  BASE_NAME                      = BmcSelStringTranslation
+  FILE_GUID                      = 04FF74B4-FB2E-42CD-8930-CFB576839653
+  MODULE_TYPE                    = DXE_DRIVER
+  PI_SPECIFICATION_VERSION       = 0x0001000A
+  VERSION_STRING                 = 1.0
+  ENTRY_POINT                    = BmcSelStringTranslationInitEntry
+  
+[Sources]
+  BmcSelStringTranslation.c
+  BmcSelStringTranslation.h
+
+[Packages]
+  MdePkg/MdePkg.dec
+  $(INSYDE_EVENTLOG_PKG)/$(INSYDE_EVENTLOG_PKG).dec
+#[-start-171207-IB08400539-remove]#
+#  IntelFrameworkPkg/IntelFrameworkPkg.dec
+#[-end-171207-IB08400539-remove]#
+  InsydeModulePkg/InsydeModulePkg.dec
+#[-start-170929-IB08400459-modify]#
+  SegFeaturePkg/SegFeaturePkg.dec
+#[-end-170929-IB08400459-modify]#
+  
+[LibraryClasses]
+  BaseLib
+  IoLib
+  UefiBootServicesTableLib
+  UefiRuntimeServicesTableLib
+  MemoryAllocationLib
+  UefiDriverEntryPoint
+  BaseMemoryLib
+#[-start-170929-IB08400459-add]#
+  IpmiSelInfoLib
+#[-end-170929-IB08400459-add]#
+
+[Protocols]
+#[-start-170929-IB08400459-remove]#
+#  gH2OIpmiInterfaceProtocolGuid                # CONSUMED
+#  gH2OIpmiSelInfoProtocolGuid                  # CONSUMED
+#[-end-170929-IB08400459-remove]#
+  gH2OEventLogStringProtocolGuid               # PRODUCED
+
+[Guids]
+  
+[Depex]
+#[-start-170929-IB08400459-modify]#
+  TRUE
+#[-end-170929-IB08400459-modify]#

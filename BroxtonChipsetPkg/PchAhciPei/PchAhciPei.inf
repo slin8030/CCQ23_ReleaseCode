@@ -1,0 +1,54 @@
+## @file
+#  Component Description File For AHCI Host Controller Pei Module.
+#
+#******************************************************************************
+#* Copyright (c) 2013 - 2015, Insyde Software Corp. All Rights Reserved.
+#*
+#* You may not reproduce, distribute, publish, display, perform, modify, adapt,
+#* transmit, broadcast, present, recite, release, license or otherwise exploit
+#* any part of this publication in any form, by any means, without the prior
+#* written permission of Insyde Software Corporation.
+#*
+#******************************************************************************
+
+[Defines]
+  INF_VERSION                    = 0x00010005
+  BASE_NAME                      = PchAhciPei
+  FILE_GUID                      = CE248B77-1179-4bc6-B324-9D2EDC4B976E
+  MODULE_TYPE                    = PEIM
+  VERSION_STRING                 = 1.0
+
+  ENTRY_POINT                    = InitializePchAhci
+
+#
+# The following information is for reference only and not required by the build tools.
+#
+#  VALID_ARCHITECTURES           = IA32 X64 IPF EBC
+#
+
+[Sources]
+  PchAhci.c
+  PchAhci.h
+
+[Packages]
+  MdePkg/MdePkg.dec
+  MdeModulePkg/MdeModulePkg.dec
+  InsydeModulePkg/InsydeModulePkg.dec
+
+[LibraryClasses]
+  PciLib
+  DebugLib
+  BaseMemoryLib
+  MemoryAllocationLib
+  PeimEntryPoint
+
+[Ppis]
+  gPeiAhciControllerPpiGuid                     # PPI ALWAYS_PRODUCED
+  gEfiPeiStallPpiGuid                           # PPI ALWAYS_CONSUMED
+  gEfiEndOfPeiSignalPpiGuid                     # PPI ALWAYS_CONSUMED
+
+[Depex]
+  gEfiPeiMemoryDiscoveredPpiGuid AND gEfiPeiBootInRecoveryModePpiGuid
+
+# [BuildOptions]
+#   MSFT:*_*_*_CC_FLAGS = /Od

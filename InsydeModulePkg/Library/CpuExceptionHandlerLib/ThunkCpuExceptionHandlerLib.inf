@@ -1,0 +1,59 @@
+## @file
+# Instance of CPU Exception Handler Library
+#
+#******************************************************************************
+#* Copyright (c) 2015, Insyde Software Corporation. All Rights Reserved.
+#*
+#* You may not reproduce, distribute, publish, display, perform, modify, adapt,
+#* transmit, broadcast, present, recite, release, license or otherwise exploit
+#* any part of this publication in any form, by any means, without the prior
+#* written permission of Insyde Software Corporation.
+#*
+#******************************************************************************
+
+[Defines]
+  INF_VERSION                    = 0x00010005
+  BASE_NAME                      = ThunkCpuExceptionHandlerLib
+  FILE_GUID                      = D1C6B847-6EDA-463b-B857-17BD7A964301
+  MODULE_TYPE                    = DXE_CORE
+  VERSION_STRING                 = 1.0
+  LIBRARY_CLASS                  = CpuExceptionHandlerLib|DXE_CORE
+
+#
+# The following information is for reference only and not required by the build tools.
+#
+#  VALID_ARCHITECTURES           = X64 IA32
+#
+  
+[Sources.X64]
+  ThunkCpuExceptionHandlerLib.c
+  X64/ThunkCpuExceptionHandlerLib.asm   | MSFT
+  X64/ThunkCpuExceptionHandlerLib.asm   | INTEL
+  X64/ThunkCpuExceptionHandlerLib.S		| GCC
+
+[Sources.Ia32]
+  ThunkCpuExceptionHandlerLib.c
+  IA32/ThunkCpuExceptionHandlerLib.asm	| MSFT
+  IA32/ThunkCpuExceptionHandlerLib.asm	| INTEL  
+  IA32/ThunkCpuExceptionHandlerLib.S	| GCC
+  
+[Sources.Arm, Sources.AArch64]
+  Arm/ThunkCpuExceptionHandlerLib.c
+
+[Packages]
+  MdePkg/MdePkg.dec
+  MdeModulePkg/MdeModulePkg.dec
+  InsydeModulePkg/InsydeModulePkg.dec
+
+[LibraryClasses]
+  HobLib
+  BaseLib
+  Thunk64To32Lib
+  CpuExceptionHandlerLib  
+
+[Guids]
+  gH2OPeiTimerDataHobGuid
+  
+
+[FeaturePcd]
+  gInsydeTokenSpaceGuid.PcdH2OPeiTimerSupported

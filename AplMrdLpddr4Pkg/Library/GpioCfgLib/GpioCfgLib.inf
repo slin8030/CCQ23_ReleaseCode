@@ -1,0 +1,35 @@
+## @file
+#  Component description file for GpioCfgLib instance.
+#
+#******************************************************************************
+#* Copyright (c) 2017, Insyde Software Corp. All Rights Reserved.
+#*
+#* You may not reproduce, distribute, publish, display, perform, modify, adapt,
+#* transmit, broadcast, present, recite, release, license or otherwise exploit
+#* any part of this publication in any form, by any means, without the prior
+#* written permission of Insyde Software Corporation.
+#*
+#******************************************************************************
+
+[Defines]
+  INF_VERSION                    = 0x00010005
+  BASE_NAME                      = GpioCfgLib
+  FILE_GUID                      = c6b57539-2df4-40f7-a1c6-91a2bae359e7
+  MODULE_TYPE                    = PEIM
+  VERSION_STRING                 = 1.0
+  LIBRARY_CLASS                  = GpioCfgLib
+
+[Sources]
+# The file name is GPIO_xxxx.gpio, where xxxx matches [Skuids] in Project.dsc
+  GPIO_DEFAULT.gpio
+  GPIO_AplRvp1.gpio
+  GPIO_AplIOxbowHill.gpio
+  
+[Packages]
+  MdeModulePkg/MdeModulePkg.dec
+  MdePkg/MdePkg.dec
+  $(PLATFORM_RC_PACKAGE)/$(PLATFORM_RC_PACKAGE).dec
+  $(CHIPSET_PKG)/$(CHIPSET_PKG).dec
+
+[LibraryClasses]
+

@@ -1,0 +1,72 @@
+/** @file
+
+  H2oUve Config utility DXE VFR implementation for Config page.
+  
+;******************************************************************************
+;* Copyright (c) 2016, Insyde Software Corporation. All Rights Reserved.
+;*
+;* You may not reproduce, distribute, publish, display, perform, modify, adapt,
+;* transmit, broadcast, present, recite, release, license or otherwise exploit
+;* any part of this publication in any form, by any means, without the prior
+;* written permission of Insyde Software Corporation.
+;*
+;******************************************************************************
+*/
+
+#include "H2oUveConfigUtilSetupConfig.h"
+
+formset
+  guid      = H2OUVE_FORMSET_GUID,
+  title     = STRING_TOKEN(STR_H2OUVE_CONFIG_PAGE_FORMSET),
+  help      = STRING_TOKEN(STR_H2OUVE_CONFIG_PAGE_FORMSET_HELP),
+  classguid = {PcdGetPtr (PcdH2oUveClassGuid)},
+  
+  //
+  // Define a Buffer Storage (EFI_IFR_VARSTORE)
+  //
+  varstore VARIABLE_EDIT_FUNCTION_DISABLE_SETTING,                          // This is the data structure type
+    varid = H2OUVE_VARSTORE_ID,                           // Optional VarStore ID
+    name  = VarEditFunDis,                                 // Define referenced name in vfr
+    guid  = H2OUVE_CONFIGURATION_VARSTORE_GUID;           // GUID of this buffer storage
+
+  namevaluevarstore H2OUVE_CONFIG_UTIL_NAME_VALUE_CONFIGURATION,
+    name = STRING_TOKEN(STR_NAME_VALUE_VAR_NAME0),
+    guid = H2OUVE_CONFIGURATION_VARSTORE_GUID;
+
+  //
+  // ========Form H2OUVE_CONFIGURATION_PAGE==========
+  //
+  form
+    formid = VFR_FORMID_H2OUVE_CONFIG_PAGE, title = STRING_TOKEN(STR_H2OUVE_CONFIG_PAGE);
+  
+    subtitle text = STRING_TOKEN(STR_H2OUVE_CONFIG_PAGE);
+    subtitle text = STRING_TOKEN(STR_BLANK_STRING);   
+  
+    oneof
+      varid       = VarEditFunDis.VariableEditFunDis,
+      prompt      = STRING_TOKEN ( STR_H2OUVE_SUPPORT_STRING ),
+      help        = STRING_TOKEN ( STR_H2OUVE_SUPPORT_HELP   ),
+      option text = STRING_TOKEN ( STR_DISABLED_TEXT ), value = 1, flags = 0;
+      option text = STRING_TOKEN ( STR_ENABLED_TEXT ),  value = 0, flags = DEFAULT;
+    endoneof;
+  
+    //
+    // This Opcode is for F9 load default.
+    //
+    suppressif
+      TRUE;
+  
+      numeric varid   = H2OUVE_CONFIG_UTIL_NAME_VALUE_CONFIGURATION[0],     // This numeric take NameValueVar0 as storage
+        questionid  = KEY_LOAD_DEFAULT,
+        prompt  = STRING_TOKEN(STR_NAME_VALUE_VAR_NAME0),
+        help    = STRING_TOKEN(STR_NAME_VALUE_VAR_NAME0),
+        flags   = NUMERIC_SIZE_1 | INTERACTIVE,        // Size of this numeric is 1 byte
+        minimum = 0,
+        maximum = 0xff,
+        step    = 0,
+        default = 0,
+      endnumeric;
+    endif;
+  endform;// end of form VFR_FORMID_POST_MESSAGE_CONFIG_PAGE
+endformset;
+

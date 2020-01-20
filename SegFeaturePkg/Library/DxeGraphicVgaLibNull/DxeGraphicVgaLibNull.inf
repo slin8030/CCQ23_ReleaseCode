@@ -1,0 +1,29 @@
+## @file
+#  NULL DxeGraphicVgaLib library instance
+#
+#******************************************************************************
+#* Copyright (c) 2017, Insyde Software Corp. All Rights Reserved.
+#*
+#* You may not reproduce, distribute, publish, display, perform, modify, adapt,
+#* transmit, broadcast, present, recite, release, license or otherwise exploit
+#* any part of this publication in any form, by any means, without the prior
+#* written permission of Insyde Software Corporation.
+#*
+#******************************************************************************
+
+[Defines]
+  INF_VERSION               = 0x00010005
+  BASE_NAME                 = DxeGraphicVgaLib
+  FILE_GUID                 = 593F8D3D-07C8-4cf8-96F1-63F6E04261FF
+  MODULE_TYPE               = DXE_DRIVER
+  VERSION_STRING            = 1.0
+  LIBRARY_CLASS             = DxeGraphicVgaLib
+
+[Sources]
+  DxeGraphicVgaLibNull.c
+  
+[Packages]
+  MdePkg/MdePkg.dec
+  MdeModulePkg/MdeModulePkg.dec
+  SegFeaturePkg/SegFeaturePkg.dec
+  

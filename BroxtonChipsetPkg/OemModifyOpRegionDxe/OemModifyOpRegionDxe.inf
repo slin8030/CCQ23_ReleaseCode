@@ -1,0 +1,45 @@
+## @file
+#
+#******************************************************************************
+#* Copyright (c) 2012 - 2013, Insyde Software Corporation. All Rights Reserved.
+#*
+#* You may not reproduce, distribute, publish, display, perform, modify, adapt,
+#* transmit, broadcast, present, recite, release, license or otherwise exploit
+#* any part of this publication in any form, by any means, without the prior
+#* written permission of Insyde Software Corporation.
+#*
+#******************************************************************************
+
+[Defines]
+  INF_VERSION                    = 0x00010005
+  BASE_NAME                      = OemModifyOpRegion
+  FILE_GUID                      = 346B093A-9002-4e99-A2F2-27A16C3DCD89 
+  MODULE_TYPE                    = DXE_DRIVER
+  ENTRY_POINT                    = OemModifyOpRegionInit   
+
+[Sources]
+  OemModifyOpRegion.c
+
+[Packages]
+  MdePkg/MdePkg.dec
+  $(PLATFORM_RC_PACKAGE)/$(PLATFORM_RC_PACKAGE).dec
+#[-start-160216-IB03090424-add]#
+  ClientSiliconPkg/ClientSiliconPkg.dec
+#[-end-160216-IB03090424-add]#
+  $(CHIPSET_PKG)/$(CHIPSET_PKG).dec
+  InsydeModulePkg/InsydeModulePkg.dec
+  $(PROJECT_PKG)/Project.dec
+  
+[LibraryClasses]
+  UefiDriverEntryPoint
+  UefiBootServicesTableLib
+  DxeOemSvcChipsetLibDefault
+  BaseOemSvcChipsetLibDefault
+  
+[Protocols]
+  gIgdOpRegionProtocolGuid      # CONSUMED
+
+[Pcd]
+
+[Depex]
+  TRUE

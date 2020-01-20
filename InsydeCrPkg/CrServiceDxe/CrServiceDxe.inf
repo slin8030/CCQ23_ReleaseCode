@@ -1,0 +1,92 @@
+## @file
+# Component description file for CrServiceDxe module
+#******************************************************************************
+#* Copyright (c) 2012 - 2013, Insyde Software Corp. All Rights Reserved.
+#*
+#* You may not reproduce, distribute, publish, display, perform, modify, adapt,
+#* transmit, broadcast, present, recite, release, license or otherwise exploit
+#* any part of this publication in any form, by any means, without the prior
+#* written permission of Insyde Software Corporation.
+#*
+#******************************************************************************
+
+[Defines]
+  INF_VERSION                    = 0x00010005
+  BASE_NAME                      = CrServiceDxe
+  FILE_GUID                      = 149E1CBD-A263-46db-895C-4B0201D242B1
+  MODULE_TYPE                    = DXE_DRIVER
+  VERSION_STRING                 = 1.0
+  ENTRY_POINT                    = CrServiceEntryPoint
+
+[Sources]
+  CrServiceDxe.c
+  CrBdaMemManager.c
+  CrLegacySupport.c
+  CrVariableUpdate.c
+  CrServiceMisc.c
+
+[Packages]
+  MdePkg/MdePkg.dec
+  MdeModulePkg/MdeModulePkg.dec
+  IntelFrameworkPkg/IntelFrameworkPkg.dec
+  IntelFrameworkModulePkg/IntelFrameworkModulePkg.dec
+  InsydeCrPkg/InsydeCrPkg.dec
+  InsydeModulePkg/InsydeModulePkg.dec
+  InsydeOemServicesPkg/InsydeOemServicesPkg.dec
+#[-start-160712-IB07400756-add]#
+  $(CHIPSET_PKG)/$(CHIPSET_PKG).dec
+#[-end-160712-IB07400756-add]#
+
+[LibraryClasses]
+  BaseLib
+  UefiLib
+  BaseMemoryLib
+  UefiDriverEntryPoint
+  CrDeviceVariableLib
+  MemoryAllocationLib
+  UefiBootServicesTableLib
+  UefiRuntimeServicesTableLib
+  DxeServicesTableLib
+  DxeServicesLib
+  DxeChipsetSvcLib
+  DxeOemSvcKernelLibDefault
+  DevicePathLib
+  DebugLib
+  VariableLib
+  BdsCpLib
+
+[Guids]
+  gEfiGlobalVariableGuid
+  gCrConfigurationGuid
+  gH2OBdsCpConOutConnectBeforeProtocolGuid
+  gH2OBdsCpConInConnectBeforeProtocolGuid
+  gH2OBdsCpConOutConnectAfterProtocolGuid
+  gH2OBdsCpConnectAllAfterProtocolGuid
+
+[Protocols]
+  gEfiPciRootBridgeIoProtocolGuid
+  gEfiLegacyBiosProtocolGuid
+  gEfiLegacyBiosPlatformProtocolGuid
+  gEfiSmmAccess2ProtocolGuid
+  gConsoleRedirectionServiceProtocolGuid
+  gEfiPciIoProtocolGuid
+  gH2OUart16550AccessProtocolGuid
+  gCROpROMInfoProtocolGuid
+  gTerminalEscCodeProtocolGuid
+  gUsbSerialControllerIoProtocolGuid
+
+[FeaturePcd]
+
+[Pcd]
+  gInsydeCrTokenSpaceGuid.PcdConsoleRedirectionOpRomFile
+  gInsydeTokenSpaceGuid.PcdDevNullScreenPtr
+  gInsydeTokenSpaceGuid.PcdDevNullAttributes
+  gInsydeTokenSpaceGuid.PcdSoftwareSmiPort
+  gInsydeCrTokenSpaceGuid.PcdH2OCrSoftwareSmi
+#[-start-160712-IB07400756-add]#
+  gChipsetPkgTokenSpaceGuid.PcdIsHeadlessMode
+#[-end-160712-IB07400756-add]#
+
+[Depex]
+  TRUE
+

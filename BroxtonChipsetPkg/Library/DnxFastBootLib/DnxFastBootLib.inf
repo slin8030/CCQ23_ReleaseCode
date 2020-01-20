@@ -1,0 +1,72 @@
+## @file
+#  Component description file for DnxFastBootLib Module
+#
+#******************************************************************************
+#* Copyright (c) 2014, Insyde Software Corp. All Rights Reserved.
+#*
+#* You may not reproduce, distribute, publish, display, perform, modify, adapt,
+#* transmit, broadcast, present, recite, release, license or otherwise exploit
+#* any part of this publication in any form, by any means, without the prior
+#* written permission of Insyde Software Corporation.
+#*
+#******************************************************************************
+ 
+
+[Defines]
+  INF_VERSION                    = 0x00010005
+  BASE_NAME                      = DnxFastBootLib
+  FILE_GUID                      = B8925880-14D0-4064-8DF0-A05453EF6504
+  MODULE_TYPE                    = BASE
+  VERSION_STRING                 = 1.0
+  LIBRARY_CLASS                  = DnxFastBootLib
+
+[Sources.common]
+  DnxFastBootLib.c
+
+  Boot/EfiBootStub.c
+  Boot/EfiBootStub.h
+  Boot/OsipAcpi.c
+  Boot/OsipPartitionDxe.c
+  Boot/OsipPrivate.h
+  Boot/OsipUtil.c
+
+  Usbd/Usbd.c
+
+[Sources.IA32]
+  Boot/Ia32/JumpToVector.Asm
+  Boot/Ia32/JumpToVector.S
+  Boot/Ia32/StartKernel.Asm
+
+[Packages]
+  MdePkg/MdePkg.dec
+  MdeModulePkg/MdeModulePkg.dec
+  IntelFrameworkPkg/IntelFrameworkPkg.dec
+  IntelFrameworkModulePkg/IntelFrameworkModulePkg.dec
+  ShellPkg/ShellPkg.dec  
+  $(PLATFORM_RC_PACKAGE)/$(PLATFORM_RC_PACKAGE).dec
+  $(PROJECT_PKG)/Project.dec
+  $(CHIPSET_PKG)/$(CHIPSET_PKG).dec 
+
+[LibraryClasses]
+  BaseLib
+  BaseMemoryLib
+  UefiLib
+  UefiBootServicesTableLib
+  IoLib
+  DebugLib
+  PcdLib
+  UefiRuntimeServicesTableLib
+  MemoryAllocationLib
+  DxeServicesLib
+  UsbDeviceModeLib
+  PupdrPlatformLib
+  HobLib
+  I2cLib
+  
+[Protocols]
+  gEfiBlockIoProtocolGuid
+
+[Guids]
+
+  gEfiAcpi20TableGuid
+  gEfiAcpi10TableGuid

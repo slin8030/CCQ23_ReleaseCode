@@ -1,0 +1,44 @@
+## @file
+#  Library Instance of Post Code Library
+#
+#******************************************************************************
+#* Copyright (c) 2016, Insyde Software Corp. All Rights Reserved.
+#*
+#* You may not reproduce, distribute, publish, display, perform, modify, adapt,
+#* transmit, broadcast, present, recite, release, license or otherwise exploit
+#* any part of this publication in any form, by any means, without the prior
+#* written permission of Insyde Software Corporation.
+#*
+#******************************************************************************
+
+[Defines]
+  INF_VERSION                    = 0x00010005
+  BASE_NAME                      = UartPostCodeLib
+  FILE_GUID                      = E68BF5CE-56F0-44F0-9FB3-CB384688E4AE
+  MODULE_TYPE                    = BASE
+  VERSION_STRING                 = 1.0
+  LIBRARY_CLASS                  = PostCodeLib 
+
+#[-start-160819-IB07400772-modify]#
+[Sources]
+  PostCode.c
+
+[Packages]
+  MdePkg/MdePkg.dec
+  InsydeModulePkg/InsydeModulePkg.dec
+  $(CHIPSET_PKG)/$(CHIPSET_PKG).dec
+  
+[LibraryClasses]
+  PcdLib
+  DebugLib
+  IoLib  
+  PrintLib
+  SerialPortLib
+  
+[Pcd]
+  gEfiMdePkgTokenSpaceGuid.PcdPostCodePropertyMask
+  gInsydeTokenSpaceGuid.PcdH2ODebugPort
+  gInsydeTokenSpaceGuid.PcdPostCodeRedirectedToReportStatusCode
+  gChipsetPkgTokenSpaceGuid.PcdUartPostCodeSupport
+#[-end-160819-IB07400772-modify]#
+  

@@ -1,0 +1,60 @@
+## @file
+#  Implement the driver of BiosStorageKerneUseVariablelSmm.
+#  
+#  ***************************************************************************
+#  * Copyright (c) 2014, Insyde Software Corp. All Rights Reserved.
+#  *
+#  * You may not reproduce, distribute, publish, display, perform, modify, adapt,
+#  * transmit, broadcast, present, recite, release, license or otherwise exploit
+#  * any part of this publication in any form, by any means, without the prior
+#  * written permission of Insyde Software Corporation.
+#  *
+#  ******************************************************************************
+#  
+##
+
+[Defines]
+  INF_VERSION               = 0x00010005
+  BASE_NAME                 = BiosStorageKernelUseVariableSmm
+  FILE_GUID                 = 79885D15-7209-4B3D-80CC-C1239AFE22BA
+  MODULE_TYPE               = DXE_SMM_DRIVER  
+  PI_SPECIFICATION_VERSION  = 0x0001000A
+  VERSION_STRING            = 1.0
+  ENTRY_POINT               = BiosStorageKernelUseVariableEntryPoint
+
+[Packages]
+  MdePkg/MdePkg.dec
+  MdeModulePkg/MdeModulePkg.dec
+  $(INSYDE_EVENTLOG_PKG)/$(INSYDE_EVENTLOG_PKG).dec
+  InsydeModulePkg/InsydeModulePkg.dec
+
+[Sources]
+  BiosStorageKernelUseVariableSmm.c
+
+[LibraryClasses]
+  UefiDriverEntryPoint
+  UefiBootServicesTableLib
+  UefiRuntimeServicesTableLib
+  MemoryAllocationLib
+  BaseMemoryLib
+  BaseLib
+  UefiLib
+  VariableLib
+  EventLogGetTimeFromCmosLib
+
+[Protocols]
+  gH2OSmmBiosEventLogUseVariableProtocolGuid
+  
+[Guids]
+  gH2OBiosStorageVariableGuid
+    
+[Pcd]
+  gH2OEventLogPkgTokenSpaceGuid.PcdH2OBiosEventStorageUseVariableClearEventByAllOrders
+#[-start-171212-IB08400542-modify]#
+  gH2OEventLogPkgTokenSpaceGuid.PcdH2OEventLogFullOption
+#[-end-171212-IB08400542-modify]#
+  
+[Depex]
+  gEfiSmmBase2ProtocolGuid        AND
+  gEfiSmmSwDispatch2ProtocolGuid
+  

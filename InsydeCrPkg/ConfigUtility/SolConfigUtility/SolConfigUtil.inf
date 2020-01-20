@@ -1,0 +1,83 @@
+#/** @file
+#
+#  Component description file for H2O Console Redirection Config DXE driver.
+#
+#;******************************************************************************
+#;* Copyright (c) 2015, Insyde Software Corporation. All Rights Reserved.
+#;*
+#;* You may not reproduce, distribute, publish, display, perform, modify, adapt,
+#;* transmit, broadcast, present, recite, release, license or otherwise exploit
+#;* any part of this publication in any form, by any means, without the prior
+#;* written permission of Insyde Software Corporation.
+#;*
+#;******************************************************************************
+#*/
+
+[Defines]
+  INF_VERSION                    = 0x00010005
+  BASE_NAME                      = SolConfigUtil
+  FILE_GUID                      = DB271753-7C03-43F8-9703-0DD3055541E9
+  MODULE_TYPE                    = DXE_DRIVER
+  VERSION_STRING                 = 1.0
+  ENTRY_POINT                    = SolConfigUtilEntry
+
+[Sources]
+  SolConfigUtil.c
+  SolConfigUtil.h
+  SolConfigUtilMisc.c
+  SolConfigUtilDialog.c
+  SolConfigUtilVfr.vfr
+  SolConfigUtilStr.uni
+
+[Packages]
+  InsydeCrPkg/InsydeCrPkg.dec
+  InsydeModulePkg/InsydeModulePkg.dec
+  IntelFrameworkPkg/IntelFrameworkPkg.dec
+  MdePkg/MdePkg.dec
+  MdeModulePkg/MdeModulePkg.dec
+
+[LibraryClasses]
+  BaseMemoryLib
+  DebugLib
+  DevicePathLib
+  HiiLib
+  HiiExLib
+  UefiLib
+  UefiDriverEntryPoint
+  UefiBootServicesTableLib
+  UefiRuntimeServicesTableLib
+  VariableLib
+
+[Guids]
+  gEfiIfrTianoGuid
+  gSolFormsetGuid
+  gSolConfigUtilVarstoreGuid
+
+[Protocols]
+  gEfiHiiConfigAccessProtocolGuid               ## PRODUCES
+
+  gEfiVariableArchProtocolGuid                  ## CONSUMES
+  gEfiHiiDatabaseProtocolGuid                   ## CONSUMES
+  gEfiHiiStringProtocolGuid                     ## CONSUMES
+  gEfiFormBrowser2ProtocolGuid                  ## CONSUMES
+  gEfiHiiConfigRoutingProtocolGuid              ## CONSUMES
+  gEdkiiFormBrowserEx2ProtocolGuid              ## CONSUMES
+  gH2ODialogProtocolGuid                        ## CONSUMES
+  gEdkiiVariableLockProtocolGuid                ## CONSUMES
+  gEfiSetupUtilityApplicationProtocolGuid       ## CONSUMES
+
+[Pcd]
+#[-start-160406-IB14090058-add]#
+  gInsydeCrTokenSpaceGuid.PcdH2OSolDefaultSetting
+#[-end-160406-IB14090058-add]#
+
+[Depex]
+  gEfiVariableArchProtocolGuid      AND
+  gEfiVariableWriteArchProtocolGuid AND
+  gEfiHiiDatabaseProtocolGuid
+
+#[-start-160406-IB14090058-remove]#
+#[BuildOptions]
+#*_*_*_CC_FLAGS = /Od
+#[-end-160406-IB14090058-remove]#
+

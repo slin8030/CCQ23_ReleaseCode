@@ -1,0 +1,40 @@
+## @file
+# H2O IPMI BMC Feature library module build description file for PEI phase.
+#
+#******************************************************************************
+#* Copyright (c) 2016 - 2017, Insyde Software Corporation. All Rights Reserved.
+#*
+#* You may not reproduce, distribute, publish, display, perform, modify, adapt,
+#* transmit, broadcast, present, recite, release, license or otherwise exploit
+#* any part of this publication in any form, by any means, without the prior
+#* written permission of Insyde Software Corporation.
+#*
+#******************************************************************************
+#
+
+[Defines]
+  INF_VERSION                    = 0x00010005
+  BASE_NAME                      = PeiIpmiBmcFeatureLib
+  FILE_GUID                      = 69036E70-D92A-4399-A553-ABEC5898FD2C
+  MODULE_TYPE                    = PEIM
+  VERSION_STRING                 = 1.0
+  LIBRARY_CLASS                  = PeiIpmiBmcFeatureLib|PEI_CORE PEIM
+
+[Sources]
+  PeiIpmiBmcFeatureLibNull.c
+
+[Packages]
+  MdePkg/MdePkg.dec
+  SegFeaturePkg/SegFeaturePkg.dec
+#[-start-161216-IB09330325-remove]#
+# InsydeIpmiPkg/InsydeIpmiPkg.dec
+# InsydeIpmiOemPkg/InsydeIpmiOemPkg.dec
+#[-end-161216-IB09330325-remove]#
+
+[LibraryClasses]
+
+[Ppis]
+  
+[Depex]
+  TRUE
+  

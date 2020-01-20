@@ -1,0 +1,92 @@
+// *++
+//
+// Copyright (c)  1999 - 2014 Intel Corporation. All rights reserved
+// This software and associated documentation (if any) is furnished
+// under a license and may only be used or copied in accordance
+// with the terms of the license. Except as permitted by such
+// license, no part of this software or documentation may be
+// reproduced, stored in a retrieval system, or transmitted in any
+// form or by any means without the express written consent of
+// Intel Corporation.
+//
+//
+// Module Name:
+//
+//   UncoreConfiguration.vfi
+//
+// Abstract:
+//
+//   Driver Setup formset.
+//
+
+
+// --*/
+
+form formid = MEMORY_SYSTEM_FORM_ID,
+  title    = STRING_TOKEN(STR_MEMORY_SYSTEM_CONFIGURATION_TITLE);
+  
+  //
+  // Memory Configuration
+  //
+  subtitle text = STRING_TOKEN(STR_MEMORY_CONFIGURATION_TITLE);
+
+  oneof varid  = SystemConfig.ScramblerSupport,
+    prompt   = STRING_TOKEN (STR_MEMORY_SCRAMBLER_PROMPT),
+    help     = STRING_TOKEN (STR_MEMORY_SCRAMBLER_HELP),
+    option text = STRING_TOKEN (STR_ENABLE),  value = 1, flags = DEFAULT | MANUFACTURING | RESET_REQUIRED;
+    option text = STRING_TOKEN (STR_DISABLE), value = 0, flags = RESET_REQUIRED;
+  endoneof;
+
+  numeric varid = SystemConfig.ChannelHashMask,
+      prompt   = STRING_TOKEN(STR_SYSTEM_MEMORY_CHANNEL_HASH_PROMPT),
+      help     = STRING_TOKEN(STR_SYSTEM_MEMORY_CHANNEL_HASH_HELP),
+      flags   = RESET_REQUIRED,
+      minimum     = 0,
+      maximum     = 0x7fff,
+      step        = 0,    // Manually enter value
+      default     = 0x36,    // Default Value
+  endnumeric;
+
+  numeric varid = SystemConfig.SliceHashMask,
+      prompt   = STRING_TOKEN(STR_SYSTEM_MEMORY_SLICE_HASH_PROMPT),
+      help     = STRING_TOKEN(STR_SYSTEM_MEMORY_SLICE_HASH_HELP),
+      flags   = RESET_REQUIRED,
+      minimum     = 0,
+      maximum     = 0x7fff,
+      step        = 0,    // Manually enter value
+      default     = 0x9,    // Default Value
+  endnumeric;
+
+  numeric varid = SystemConfig.InterleavedMode,
+      prompt   = STRING_TOKEN(STR_SYSTEM_MEMORY_INTERLEAVED_MODE_PROMPT),
+      help     = STRING_TOKEN(STR_SYSTEM_MEMORY_INTERLEAVED_MODE_HELP),
+      flags   = RESET_REQUIRED,
+      minimum     = 0,
+      maximum     = 0x2,
+      step        = 1,
+      default     = 0x2,    // Default Value
+  endnumeric; 
+  
+  oneof varid  = SystemConfig.ChannelsSlicesEnabled,
+    prompt   = STRING_TOKEN (STR_SYSTEM_MEMORY_CH_SL_ENABLED_PROMPT),
+    help     = STRING_TOKEN (STR_SYSTEM_MEMORY_CH_SL_ENABLED_HELP),
+    option text = STRING_TOKEN (STR_SYSTEM_MEMORY_CH_SL_ENABLED_2S2C),  value = 0, flags = DEFAULT | MANUFACTURING | RESET_REQUIRED;
+    option text = STRING_TOKEN (STR_SYSTEM_MEMORY_CH_SL_ENABLED_1S2C),  value = 2, flags = RESET_REQUIRED;
+    option text = STRING_TOKEN (STR_SYSTEM_MEMORY_CH_SL_ENABLED_1S1C),  value = 3, flags = RESET_REQUIRED;
+  endoneof;
+  
+  oneof varid  = SystemConfig.MinRefRate2xEnabled,
+    prompt   = STRING_TOKEN (STR_SYSTEM_MEMORY_MIN_REFRESH_RATE_2X_PROMPT),
+    help     = STRING_TOKEN (STR_SYSTEM_MEMORY_MIN_REFRESH_RATE_2X_HELP),
+    option text = STRING_TOKEN (STR_ENABLE),  value = 1, flags = RESET_REQUIRED;
+    option text = STRING_TOKEN (STR_DISABLE), value = 0, flags = DEFAULT | MANUFACTURING | RESET_REQUIRED;
+  endoneof;
+
+  oneof varid  = SystemConfig.DualRankSupportEnabled,
+    prompt   = STRING_TOKEN (STR_SYSTEM_MEMORY_DUAL_RANK_SUPPORT_PROMPT),
+    help     = STRING_TOKEN (STR_SYSTEM_MEMORY_DUAL_RANK_SUPPORT_HELP),
+    option text = STRING_TOKEN (STR_ENABLE),  value = 1, flags = DEFAULT | MANUFACTURING | RESET_REQUIRED;
+    option text = STRING_TOKEN (STR_DISABLE), value = 0, flags = RESET_REQUIRED;
+  endoneof;
+
+endform;

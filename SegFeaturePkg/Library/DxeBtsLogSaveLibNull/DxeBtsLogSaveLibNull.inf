@@ -1,0 +1,37 @@
+#/** @file
+#
+#  Component description file for the Dxe Bts Log Save Lib
+#
+#;******************************************************************************
+#;* Copyright (c) 2015, Insyde Software Corporation. All Rights Reserved.
+#;*
+#;* You may not reproduce, distribute, publish, display, perform, modify, adapt,
+#;* transmit, broadcast, present, recite, release, license or otherwise exploit
+#;* any part of this publication in any form, by any means, without the prior
+#;* written permission of Insyde Software Corporation.
+#;*
+#;******************************************************************************
+#*/
+
+[Defines]
+  INF_VERSION                    = 0x00010005
+  BASE_NAME                      = DxeBtsLogSaveLib
+  FILE_GUID                      = 6C3B6E20-496C-4767-B7EC-4F11E5B1BF70
+  MODULE_TYPE                    = DXE_DRIVER
+  LIBRARY_CLASS                  = DxeBtsLogSaveLib
+
+[Sources]
+  DxeBtsLogSaveLibNull.c
+
+[Packages]
+  MdePkg/MdePkg.dec
+  MdeModulePkg/MdeModulePkg.dec
+  
+[LibraryClasses]
+  
+[Pcd]
+  
+[Guids]
+
+[Protocols]
+  

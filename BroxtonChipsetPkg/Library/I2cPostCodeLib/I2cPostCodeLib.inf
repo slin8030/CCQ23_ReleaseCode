@@ -1,0 +1,41 @@
+## @file
+#  Component description file for I2cPostCodeLib
+#
+#******************************************************************************
+#* Copyright (c) 2014, Insyde Software Corp. All Rights Reserved.
+#*
+#* You may not reproduce, distribute, publish, display, perform, modify, adapt,
+#* transmit, broadcast, present, recite, release, license or otherwise exploit
+#* any part of this publication in any form, by any means, without the prior
+#* written permission of Insyde Software Corporation.
+#*
+#******************************************************************************
+ 
+
+[Defines]
+  INF_VERSION                    = 0x00010005
+  BASE_NAME                      = I2cPostCodeLib
+  FILE_GUID                      = 9EFC3BD0-9026-411d-AD5F-0F86C373A1E5
+  MODULE_TYPE                    = BASE
+  VERSION_STRING                 = 1.0
+  LIBRARY_CLASS                  = PostCodeLib
+
+[Sources]
+  I2cPostCodeLib.c
+
+[Packages]
+  MdePkg/MdePkg.dec
+  $(PLATFORM_RC_PACKAGE)/$(PLATFORM_RC_PACKAGE).dec
+  $(CHIPSET_PKG)/$(CHIPSET_PKG).dec
+  InsydeModulePkg/InsydeModulePkg.dec
+
+[LibraryClasses]
+  PcdLib
+  DebugLib
+  I2cLib
+  
+[Pcd]
+  gEfiMdePkgTokenSpaceGuid.PcdPostCodePropertyMask
+  gInsydeTokenSpaceGuid.PcdH2ODebugPort
+  gInsydeTokenSpaceGuid.PcdPostCodeRedirectedToReportStatusCode
+  gChipsetPkgTokenSpaceGuid.PcdBoardId

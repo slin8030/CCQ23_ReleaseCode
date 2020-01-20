@@ -1,0 +1,45 @@
+## @file
+# Platform Package Flash Description File
+#
+#******************************************************************************
+#* Copyright (c) 2012 - 2015, Insyde Software Corp. All Rights Reserved.
+#*
+#* You may not reproduce, distribute, publish, display, perform, modify, adapt,
+#* transmit, broadcast, present, recite, release, license or otherwise exploit
+#* any part of this publication in any form, by any means, without the prior
+#* written permission of Insyde Software Corporation.
+#*
+#******************************************************************************
+#
+[FV.DXEFV]
+
+!if gInsydeTokenSpaceGuid.PcdH2OFormBrowserSupported
+FILE FREEFORM = gH2OHiiLayoutFileGuid {
+    SECTION RAW = $(WORKSPACE)/$(OUTPUT_DIRECTORY)/$(TARGET)_$(TOOL_CHAIN_TAG)/FV/Layout.hpk
+}
+!endif
+
+!if gInsydeTokenSpaceGuid.PcdH2OFormBrowserLocalMetroDESupported
+FILE FREEFORM = gTtfFontFileGuid {
+   SECTION RAW = InsydeModulePkg/Universal/UserInterface/Fonts/TtfDxe/DFPSc_Sans.TTF
+}
+!endif
+
+!if gInsydeTokenSpaceGuid.PcdH2OFormBrowserSupported
+INF InsydeSetupPkg/Drivers/DisplayTypeDxe/DisplayTypeDxe.inf
+INF InsydeSetupPkg/Drivers/HiiLayoutPkgDxe/HiiLayoutPkgDxe.inf
+INF InsydeSetupPkg/Drivers/H2OFormBrowserDxe/H2OFormBrowserDxe.inf
+!if gInsydeTokenSpaceGuid.PcdH2OSetupChangeDisplaySupported
+INF InsydeSetupPkg/Drivers/H2OSetupChangeDxe/H2OSetupChangeDxe.inf
+INF InsydeSetupPkg/Drivers/H2OSetupChangeSmm/H2OSetupChangeSmm.inf
+!endif
+
+!if gInsydeTokenSpaceGuid.PcdH2OFormBrowserLocalTextDESupported
+INF InsydeSetupPkg/Drivers/H2ODisplayEngineLocalTextDxe/H2ODisplayEngineLocalTextDxe.inf
+!endif
+
+!if gInsydeTokenSpaceGuid.PcdH2OFormBrowserLocalMetroDESupported
+INF InsydeModulePkg/Universal/UserInterface/MicrowindowsDxe/MicrowindowsDxe.inf
+INF InsydeSetupPkg/Drivers/H2ODisplayEngineLocalMetroDxe/H2ODisplayEngineLocalMetroDxe.inf
+!endif
+!endif

@@ -1,0 +1,95 @@
+/** @file
+
+  BIOS Event Log Config utility DXE VFR implementation for Config Page.
+
+;******************************************************************************
+;* Copyright (c) 2016, Insyde Software Corporation. All Rights Reserved.
+;*
+;* You may not reproduce, distribute, publish, display, perform, modify, adapt,
+;* transmit, broadcast, present, recite, release, license or otherwise exploit
+;* any part of this publication in any form, by any means, without the prior
+;* written permission of Insyde Software Corporation.
+;*
+;******************************************************************************
+*/
+
+#include <Guid/H2OEventLogConfigManagerHii.h>
+#include "BiosEventLogConfigUtilSetupConfig.h"
+
+formset
+  guid      = H2O_BIOS_EVENT_LOG_CONFIG_UTIL_CONFIG_PAGE_FORMSET_GUID,
+  title     = STRING_TOKEN(STR_BIOS_EVENT_LOG_CONFIG_PAGE),
+  help      = STRING_TOKEN(STR_BIOS_EVENT_LOG_CONFIG_PAGE_HELP),
+  classguid = LINK_INCLUDE_H2O_EVENT_LOG_CONFIG_PAGE_CLASS_GUID,
+  
+  //
+  // Define a Buffer Storage (EFI_IFR_VARSTORE)
+  //
+  varstore BIOS_EVENT_LOG_CONFIG_UTIL_CONFIGURATION,      // This is the data structure type
+    varid = BIOS_EVENT_LOG_CONFIG_UTIL_VARSTORE_ID,       // Optional VarStore ID
+    name  = BiosEventLogConfig,                           // Define referenced name in vfr
+    guid  = H2O_BIOS_EVENT_LOG_CONFIG_UTIL_VARSTORE_GUID; // GUID of this buffer storage
+
+  namevaluevarstore BIOS_EVENT_LOG_CONFIG_UTIL_NAME_VALUE_CONFIGURATION,
+    name = STRING_TOKEN(STR_NAME_VALUE_VAR_NAME0),
+    guid = H2O_BIOS_EVENT_LOG_CONFIG_UTIL_VARSTORE_GUID;
+
+  //
+  // Form VFR_FORMID_BIOS_EVENT_LOG_CONFIG_PAGE
+  //
+  form
+    formid = VFR_FORMID_BIOS_EVENT_LOG_CONFIG_PAGE, title = STRING_TOKEN(STR_BIOS_EVENT_LOG_CONFIG_PAGE);
+  
+    subtitle text = STRING_TOKEN(STR_BIOS_EVENT_LOG_CONFIG_PAGE);
+    subtitle text = STRING_TOKEN(STR_BLANK_STRING);
+     
+    //
+    // Log Event To
+    //
+    oneof
+      varid       = BiosEventLogConfig.LogEventTo,
+      questionid  = KEY_LOG_EVENT_TO,
+      prompt      = STRING_TOKEN(STR_LOG_EVENT_TO_STRING),
+      help        = STRING_TOKEN(STR_LOG_EVENT_TO_HELP),
+      option text = STRING_TOKEN(STR_ALL_TXT),           value = 0, flags = INTERACTIVE;
+      option text = STRING_TOKEN(STR_BIOS_TXT),          value = 1, flags = INTERACTIVE | DEFAULT;
+//[-start-180824-IB07400999-remove]//
+//      option text = STRING_TOKEN(STR_BMC_SEL_TXT),       value = 2, flags = INTERACTIVE;
+//      option text = STRING_TOKEN(STR_MEMORY_TXT),        value = 4, flags = INTERACTIVE;
+//[-end-180824-IB07400999-remove]//
+      option text = STRING_TOKEN(STR_DISABLED_TEXT),     value = 0xFF, flags = INTERACTIVE;      
+    endoneof;      
+  
+    //
+    // Event Log Full
+    //
+    oneof
+      varid       = BiosEventLogConfig.EventLogFullOption,
+      questionid  = KEY_EVENT_LOG_FULL_OPTION,
+      prompt      = STRING_TOKEN(STR_EVENT_LOG_FULL_OPTION_STRING),
+      help        = STRING_TOKEN(STR_EVENT_LOG_FULL_OPTION_HELP),
+      option text = STRING_TOKEN(STR_OVERWRITE_TEXT),             value = 0, flags = INTERACTIVE;
+      option text = STRING_TOKEN(STR_CLEAR_ALL_TEXT),             value = 1, flags = INTERACTIVE;
+      option text = STRING_TOKEN(STR_STOP_LOGGING_TEXT),          value = 2, flags = INTERACTIVE | DEFAULT;
+    endoneof;  
+   
+    //
+    // This Opcode is for F9 load default.
+    //
+    suppressif
+      TRUE;
+  
+      numeric varid   = BIOS_EVENT_LOG_CONFIG_UTIL_NAME_VALUE_CONFIGURATION[0],     // This numeric take NameValueVar0 as storage
+        questionid  = KEY_LOAD_DEFAULT,
+        prompt  = STRING_TOKEN(STR_NAME_VALUE_VAR_NAME0),
+        help    = STRING_TOKEN(STR_NAME_VALUE_VAR_NAME0),
+        flags   = NUMERIC_SIZE_1 | INTERACTIVE,        // Size of this numeric is 1 byte
+        minimum = 0,
+        maximum = 0xff,
+        step    = 0,
+        default = 0,
+      endnumeric;
+    endif;
+  endform;// end of form VFR_FORMID_BIOS_EVENT_LOG_CONFIG_PAGE
+endformset;
+

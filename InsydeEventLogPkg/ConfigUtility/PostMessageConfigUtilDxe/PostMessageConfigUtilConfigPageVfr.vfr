@@ -1,0 +1,149 @@
+/** @file
+
+  POST Message Config utility DXE VFR implementation for Config page.
+  
+;******************************************************************************
+;* Copyright (c) 2016, Insyde Software Corporation. All Rights Reserved.
+;*
+;* You may not reproduce, distribute, publish, display, perform, modify, adapt,
+;* transmit, broadcast, present, recite, release, license or otherwise exploit
+;* any part of this publication in any form, by any means, without the prior
+;* written permission of Insyde Software Corporation.
+;*
+;******************************************************************************
+*/
+
+#include <Guid/H2OEventLogConfigManagerHii.h>
+#include "PostMessageConfigUtilSetupConfig.h"
+
+formset
+  guid      = H2O_POST_MESSAGE_CONFIG_UTIL_CONFIG_PAGE_FORMSET_GUID,
+  title     = STRING_TOKEN(STR_POST_MESSAGE_CONFIG_PAGE_FORMSET),
+  help      = STRING_TOKEN(STR_POST_MESSAGE_CONFIG_PAGE_FORMSET_HELP),
+  classguid = LINK_INCLUDE_H2O_EVENT_LOG_CONFIG_PAGE_CLASS_GUID,
+  
+  //
+  // Define a Buffer Storage (EFI_IFR_VARSTORE)
+  //
+  varstore POST_MESSAGE_CONFIG_UTIL_CONFIGURATION,        // This is the data structure type
+    varid = POST_MESSAGE_CONFIG_UTIL_VARSTORE_ID,         // Optional VarStore ID
+    name  = PostMessageConfig,                            // Define referenced name in vfr
+    guid  = H2O_POST_MESSAGE_CONFIG_UTIL_VARSTORE_GUID;   // GUID of this buffer storage
+
+  namevaluevarstore POST_MESSAGE_CONFIG_UTIL_NAME_VALUE_CONFIGURATION,
+    name = STRING_TOKEN(STR_NAME_VALUE_VAR_NAME0),
+    guid = H2O_POST_MESSAGE_CONFIG_UTIL_VARSTORE_GUID;
+
+  //
+  // Form VFR_FORMID_POST_MESSAGE_CONFIG_PAGE
+  //
+  form
+    formid = VFR_FORMID_POST_MESSAGE_CONFIG_PAGE, title = STRING_TOKEN(STR_POST_MESSAGE_CONFIG_PAGE);
+  
+    subtitle text = STRING_TOKEN(STR_POST_MESSAGE_CONFIG_PAGE);
+    subtitle text = STRING_TOKEN(STR_BLANK_STRING);   
+  
+    //
+    // Post Message Enable setting
+    //    
+    oneof
+      varid       = PostMessageConfig.PostMessageEn,    
+      questionid  = KEY_POST_MESSAGE_EN,
+      prompt      = STRING_TOKEN(STR_POST_MESSAGE_CONFIG_STRING),
+      help        = STRING_TOKEN(STR_POST_MESSAGE_CONFIG_HELP),
+      option text = STRING_TOKEN(STR_DISABLED_TEXT),           value = 0, flags = DEFAULT;
+      option text = STRING_TOKEN(STR_ENABLED_TEXT),            value = 1, flags = 0;
+    endoneof;
+
+    //
+    // Progress Code
+    //
+    suppressif
+      ideqvallist PostMessageConfig.PostMessageEn == 0;
+      oneof
+        varid       = PostMessageConfig.ProgressCodeEn,
+        prompt      = STRING_TOKEN(STR_PROGRESS_CODE_MESSAGE_STRING),
+        help        = STRING_TOKEN(STR_PROGRESS_CODE_MESSAGE_HELP),
+        option text = STRING_TOKEN(STR_DISABLED_TEXT),           value = 0, flags = DEFAULT;
+        option text = STRING_TOKEN(STR_ENABLED_TEXT),            value = 1, flags = 0;
+      endoneof;
+    endif;
+
+    //
+    // Error Code
+    //
+    suppressif
+      ideqvallist PostMessageConfig.PostMessageEn == 0;
+      oneof
+        varid       = PostMessageConfig.ErrorCodeEn,
+        prompt      = STRING_TOKEN(STR_ERROR_CODE_MESSAGE_STRING),
+        help        = STRING_TOKEN(STR_ERROR_CODE_MESSAGE_HELP),
+        option text = STRING_TOKEN(STR_DISABLED_TEXT),           value = 0, flags = DEFAULT;
+        option text = STRING_TOKEN(STR_ENABLED_TEXT),            value = 1, flags = 0;
+      endoneof;
+    endif;
+    
+    //
+    // Debug Code
+    //
+    suppressif
+      ideqvallist PostMessageConfig.PostMessageEn == 0;
+      oneof
+        varid       = PostMessageConfig.DebugCodeEn,
+        prompt      = STRING_TOKEN(STR_DEBUG_CODE_MESSAGE_STRING),
+        help        = STRING_TOKEN(STR_DEBUG_CODE_MESSAGE_HELP),
+        option text = STRING_TOKEN(STR_DISABLED_TEXT),                        value = 0, flags = DEFAULT;
+        option text = STRING_TOKEN(STR_ENABLED_TEXT),                         value = 1, flags = 0;
+      endoneof;
+    endif;
+
+    subtitle text = STRING_TOKEN(STR_BLANK_STRING);   
+    
+    //
+    // Log Post Message
+    //
+    suppressif
+      ideqvallist PostMessageConfig.PostMessageEn == 0;
+      oneof
+        varid       = PostMessageConfig.LogPostMsgEn,
+        prompt      = STRING_TOKEN(STR_LOG_POST_MESSAGE_STRING),
+        help        = STRING_TOKEN(STR_LOG_POST_MESSAGE_HELP),
+        option text = STRING_TOKEN(STR_DISABLED_TEXT),                        value = 0, flags = DEFAULT;
+        option text = STRING_TOKEN(STR_ENABLED_TEXT),                         value = 1, flags = 0;
+      endoneof;
+    endif;
+
+    //
+    // Show Post Message
+    //
+    suppressif
+      ideqvallist PostMessageConfig.PostMessageEn == 0;
+      oneof
+        varid       = PostMessageConfig.ShowPostMsgEn,
+        prompt      = STRING_TOKEN(STR_SHOW_POST_MESSAGE_STRING),
+        help        = STRING_TOKEN(STR_SHOW_POST_MESSAGE_HELP),
+        option text = STRING_TOKEN(STR_DISABLED_TEXT),                        value = 0, flags = DEFAULT;
+        option text = STRING_TOKEN(STR_ENABLED_TEXT),                         value = 1, flags = 0;
+      endoneof;
+    endif;
+    
+    //
+    // This Opcode is for F9 load default.
+    //
+    suppressif
+      TRUE;
+  
+      numeric varid   = POST_MESSAGE_CONFIG_UTIL_NAME_VALUE_CONFIGURATION[0],     // This numeric take NameValueVar0 as storage
+        questionid  = KEY_LOAD_DEFAULT,
+        prompt  = STRING_TOKEN(STR_NAME_VALUE_VAR_NAME0),
+        help    = STRING_TOKEN(STR_NAME_VALUE_VAR_NAME0),
+        flags   = NUMERIC_SIZE_1 | INTERACTIVE,        // Size of this numeric is 1 byte
+        minimum = 0,
+        maximum = 0xff,
+        step    = 0,
+        default = 0,
+      endnumeric;
+    endif;
+  endform;// end of form VFR_FORMID_POST_MESSAGE_CONFIG_PAGE
+endformset;
+

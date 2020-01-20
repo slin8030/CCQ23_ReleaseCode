@@ -1,0 +1,84 @@
+#
+# Copyright (c) 2012 - 2013 Intel Corporation. All rights reserved
+# This software and associated documentation (if any) is furnished
+# under a license and may only be used or copied in accordance
+# with the terms of the license. Except as permitted by such
+# license, no part of this software or documentation may be
+# reproduced, stored in a retrieval system, or transmitted in any
+# form or by any means without the express written consent of
+# Intel Corporation.
+#
+#
+# Module Name:
+#
+#   UsbDeviceMode.inf
+#
+# Abstract:
+#
+#   Usb Device Mode
+#
+#
+
+[Defines]
+  INF_VERSION               = 0x00010005
+  BASE_NAME                 = UsbDeviceModeLib
+  FILE_GUID                 = 3a3de11c-E93f-98e1-835e-386077f11e9d
+  MODULE_TYPE               = BASE
+  VERSION_STRING            = 1.0
+  LIBRARY_CLASS             = UsbDeviceModeLib
+
+[Packages]
+  MdePkg/MdePkg.dec
+   $(PLATFORM_RC_PACKAGE)/$(PLATFORM_RC_PACKAGE).dec
+  $(PROJECT_PKG)/Project.dec
+  $(CHIPSET_PKG)/$(CHIPSET_PKG).dec 
+  
+[Sources]
+  usb.h
+  usb_device_if/udci.h
+  usb_device_if/udci.c
+  usb_common/usb_common.h
+  usb_device/usb_dcd_if.h
+  usb_device/usb_device.c
+  usb_device/usb_dwc_xdci.h
+  usb_device_app/usbd.h
+  usb_device/usb_dwc_xdci.c
+  usb_device/usb_device.c
+  usb_device/usb_dcd_tbl.c
+
+
+  usb_device_app/usb_fb.h
+  usb_device_app/usb_fb.c
+#  usb_device_app/usb_fb_app.c
+#  usb_device_app/usb_fb_app.h
+  usb_device_app/usbd.c
+  usb_device_app/usbd_util.h
+  usb_device_app/usbd_util.c
+  UdmWarpper/UdmWrapperLib.h
+
+
+[LibraryClasses]
+  BaseLib
+  BaseMemoryLib
+  DebugLib
+  DevicePathLib
+  MemoryAllocationLib
+  UefiLib
+  UefiBootServicesTableLib
+  UefiRuntimeServicesTableLib
+  UefiDriverEntryPoint
+  I2cDriverLib
+  IoLib
+  UdmWrapperLib
+  DnxFastBootLib
+  
+[Protocols]
+
+[Pcd]
+
+
+[Guids]
+  gEfiBxtVariableGuid
+
+[Depex]
+  TRUE

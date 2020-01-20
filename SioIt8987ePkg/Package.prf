@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Feature name="SioIt8987e" version="00.00.01.12" description="Sio Feature for ITE It8987e">
+  <Repository type="SVN" url="http://svn.insydesw.com/H2O-SEG-Feature/SEG_H2O-5.0_SIO/Tag/%Version%"/>
+  <Package dir="SioIt8987ePkg"/>
+</Feature>

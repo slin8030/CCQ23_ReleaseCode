@@ -1,0 +1,57 @@
+## @file
+# Variable FV Creation
+#
+#******************************************************************************
+#* Copyright (c) 2013 - 2015, Insyde Software Corp. All Rights Reserved.
+#*
+#* You may not reproduce, distribute, publish, display, perform, modify, adapt,
+#* transmit, broadcast, present, recite, release, license or otherwise exploit
+#* any part of this publication in any form, by any means, without the prior
+#* written permission of Insyde Software Corporation.
+#*
+#******************************************************************************
+
+[Defines]
+  INF_VERSION                    = 0x00010005
+  BASE_NAME                      = GenVariableFvs
+  FILE_GUID                      = 5C2A9A21-EEE2-4DFE-A3C6-F5A3B72E7430
+  MODULE_TYPE                    = USER_DEFINED
+  VERSION_STRING                 = 1.0
+
+  MODULE_AUTORUN_TOOL            = "$(MODULE_DIR)/$(BASE_NAME)"
+  AUTORUN_PARAM                  = "$(BUILD_DIR)/FV/NvStore.bin" "$(BUILD_DIR)/FV/FtwWork.bin" "$(BUILD_DIR)/FV/FactoryCopy.bin"
+
+[Sources]
+  Dummy.c
+
+[Packages]
+  MdePkg/MdePkg.dec
+  MdeModulePkg/MdeModulePkg.dec
+  InsydeModulePkg/InsydeModulePkg.dec
+
+[LibraryClasses]
+
+[Ppis]
+
+
+[Protocols]
+
+[Guids]
+  gEfiSystemNvDataFvGuid
+  gEfiVariableGuid
+
+[Pcd]
+  #
+  # Do not remove the following PCDs
+  #
+  gInsydeTokenSpaceGuid.PcdUseEcpVariableStoreHeader
+  gEfiMdeModulePkgTokenSpaceGuid.PcdFlashNvStorageVariableSize
+  gEfiMdeModulePkgTokenSpaceGuid.PcdFlashNvStorageFtwWorkingSize
+  gEfiMdeModulePkgTokenSpaceGuid.PcdFlashNvStorageFtwSpareSize
+  gInsydeTokenSpaceGuid.PcdFlashNvStorageFactoryCopySize
+
+[FeaturePcd]
+  gInsydeTokenSpaceGuid.PcdBuildActivatesSecureBoot
+
+[BuildOptions]
+  MSFT:*_*_IA32_DLINK_FLAGS == /out:"$(BIN_DIR)\$(BASE_NAME).exe" /base:0x10000000 /NOLOGO /SUBSYSTEM:CONSOLE /IGNORE:4086 /IGNORE:4001 /MAP /OPT:REF /MACHINE:I386 /ENTRY:main /LTCG

@@ -1,0 +1,463 @@
+/** @file
+;******************************************************************************
+;* Copyright (c) 2012 - 2016, Insyde Software Corp. All Rights Reserved.
+;*
+;* You may not reproduce, distribute, publish, display, perform, modify, adapt,
+;* transmit, broadcast, present, recite, release, license or otherwise exploit
+;* any part of this publication in any form, by any means, without the prior
+;* written permission of Insyde Software Corporation.
+;*
+;******************************************************************************
+*/
+
+//
+//  VBT Hook Setup
+//
+  
+//[-start-160821-IB07400772-modify]//
+//[-start-160913-IB07400784-modify]//
+form formid = VBT_HOOK_FORM_ID,
+  title         = STRING_TOKEN(STR_VBT_HOOK_CONFIGURATION);
+  subtitle text = STRING_TOKEN(STR_VBT_HOOK_CONFIGURATION);
+  subtitle text = STRING_TOKEN(STR_BLANK_STRING);  
+
+  grayoutif
+    ideqval SystemConfig.UserAccessLevel == 2
+    AND
+    ideqval SystemConfig.SetUserPass == 1;
+
+    oneof 
+      varid         = SystemConfig.VbtLfpType,
+      prompt        = STRING_TOKEN(STR_VBT_LFP1_DEV_TYPE),
+      help          = STRING_TOKEN(STR_VBT_DEV_TYPE_HELP),
+      option text   = STRING_TOKEN(STR_VBT_DEFAULT),      value = SCU_VBT_DEFAULT,    flags = DEFAULT | RESET_REQUIRED;
+      option text   = STRING_TOKEN(STR_VBT_EDP),          value = SCU_VBT_LFP_EDP,    flags = RESET_REQUIRED;
+      option text   = STRING_TOKEN(STR_VBT_MIPI),         value = SCU_VBT_LFP_MIPI,   flags = RESET_REQUIRED;
+      option text   = STRING_TOKEN(STR_VBT_NO_DEVICE),    value = SCU_VBT_NO_DEVICE,  flags = RESET_REQUIRED;
+    endoneof;
+    
+    suppressif
+      ideqval SystemConfig.VbtLfpType == SCU_VBT_NO_DEVICE
+      OR
+      ideqval SystemConfig.VbtLfpType == SCU_VBT_DEFAULT;
+    
+      oneof 
+        varid       = SystemConfig.VbtLfpPort,
+        prompt      = STRING_TOKEN(STR_VBT_OUTPUT_PORT),
+        help        = STRING_TOKEN(STR_VBT_OUTPUT_PORT_HELP),
+        option text = STRING_TOKEN(STR_VBT_DEFAULT),      value = SCU_VBT_DEFAULT,        flags = DEFAULT | RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_VBT_EDP_PORTA),    value = SCU_VBT_LFP_EDP_PORTA,  flags = RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_VBT_MIPI_PORTA),   value = SCU_VBT_LFP_MIPI_PORTA, flags = RESET_REQUIRED;
+      endoneof;
+      
+      oneof 
+        varid       = SystemConfig.VbtLfpAux,
+        prompt      = STRING_TOKEN(STR_VBT_AUX_CHANNEL),
+        help        = STRING_TOKEN(STR_VBT_AUX_CHANNEL_HELP),
+        option text = STRING_TOKEN(STR_VBT_DEFAULT),      value = SCU_VBT_DEFAULT,  flags = DEFAULT | RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_VBT_DP_PORTA),     value = SCU_VBT_DP_PORTA, flags = RESET_REQUIRED;
+      endoneof;
+      
+      oneof 
+        varid       = SystemConfig.VbtLfpPanel,
+        prompt      = STRING_TOKEN(STR_VBT_LFP_PANEL_NUMBER),
+        help        = STRING_TOKEN(STR_VBT_LFP_PANEL_NUMBER_HELP),
+        option text = STRING_TOKEN(STR_VBT_DEFAULT),      value = SCU_VBT_DEFAULT,  flags = DEFAULT | RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_1_TEXT),           value = 1,                flags = RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_2_TEXT),           value = 2,                flags = RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_3_TEXT),           value = 3,                flags = RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_4_TEXT),           value = 4,                flags = RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_5_TEXT),           value = 5,                flags = RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_6_TEXT),           value = 6,                flags = RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_7_TEXT),           value = 7,                flags = RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_8_TEXT),           value = 8,                flags = RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_9_TEXT),           value = 9,                flags = RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_10_TEXT),          value = 10,               flags = RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_11_TEXT),          value = 11,               flags = RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_12_TEXT),          value = 12,               flags = RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_13_TEXT),          value = 13,               flags = RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_14_TEXT),          value = 14,               flags = RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_15_TEXT),          value = 15,               flags = RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_16_TEXT),          value = 16,               flags = RESET_REQUIRED;
+      endoneof;
+    
+      oneof 
+        varid    = SystemConfig.VbtLfpEdid,
+        prompt = STRING_TOKEN(STR_VBT_EDID_SUPPORT),
+        help   = STRING_TOKEN(STR_VBT_EDID_SUPPORT_HELP),
+        option text = STRING_TOKEN(STR_VBT_DEFAULT),      value = SCU_VBT_DEFAULT,  flags = DEFAULT | RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_ENABLED_TEXT),     value = SCU_VBT_ENABLE,   flags = RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_DISABLED_TEXT),    value = SCU_VBT_DISABLE,  flags = RESET_REQUIRED;
+      endoneof;
+      
+      oneof 
+        varid    = SystemConfig.VbtLfpHpdInversion,
+        prompt = STRING_TOKEN(STR_VBT_HPD_INVERSION),
+        help   = STRING_TOKEN(STR_VBT_HPD_INVERSION_HELP),
+        option text = STRING_TOKEN(STR_VBT_DEFAULT),      value = SCU_VBT_DEFAULT,  flags = DEFAULT | RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_ENABLED_TEXT),     value = SCU_VBT_ENABLE,   flags = RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_DISABLED_TEXT),    value = SCU_VBT_DISABLE,  flags = RESET_REQUIRED;
+      endoneof;
+
+      oneof 
+        varid    = SystemConfig.VbtLfpDdiLaneReversal,
+        prompt = STRING_TOKEN(STR_VBT_DDI_LANE_REVERSAL),
+        help   = STRING_TOKEN(STR_VBT_DDI_LANE_REVERSAL_HELP),
+        option text = STRING_TOKEN(STR_VBT_DEFAULT),      value = SCU_VBT_DEFAULT,  flags = DEFAULT | RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_ENABLED_TEXT),     value = SCU_VBT_ENABLE,   flags = RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_DISABLED_TEXT),    value = SCU_VBT_DISABLE,  flags = RESET_REQUIRED;
+      endoneof;
+
+    endif;
+
+    oneof 
+      varid         = SystemConfig.VbtEfpType[0],
+      prompt        = STRING_TOKEN(STR_VBT_EFP1_DEV_TYPE),
+      help          = STRING_TOKEN(STR_VBT_DEV_TYPE_HELP),
+      option text   = STRING_TOKEN(STR_VBT_DEFAULT),      value = SCU_VBT_DEFAULT,      flags = DEFAULT | RESET_REQUIRED;
+      option text   = STRING_TOKEN(STR_VBT_DP),           value = SCU_VBT_DP,           flags = RESET_REQUIRED;
+      option text   = STRING_TOKEN(STR_VBT_HDMI_DVI),     value = SCU_VBT_HDMI_DVI,     flags = RESET_REQUIRED;
+      option text   = STRING_TOKEN(STR_VBT_DVI_ONLY),     value = SCU_VBT_DVI_ONLY,     flags = RESET_REQUIRED;
+      option text   = STRING_TOKEN(STR_VBT_DP_HDMI_DVI),  value = SCU_VBT_DP_HDMI_DVI,  flags = RESET_REQUIRED;
+      option text   = STRING_TOKEN(STR_VBT_NO_DEVICE),    value = SCU_VBT_NO_DEVICE,    flags = RESET_REQUIRED;
+    endoneof;
+    
+    suppressif
+      ideqval SystemConfig.VbtEfpType[0] == SCU_VBT_NO_DEVICE
+      OR
+      ideqval SystemConfig.VbtEfpType[0] == SCU_VBT_DEFAULT;
+    
+      oneof 
+        varid       = SystemConfig.VbtEfpPort[0],
+        prompt      = STRING_TOKEN(STR_VBT_OUTPUT_PORT),
+        help        = STRING_TOKEN(STR_VBT_OUTPUT_PORT_HELP),
+        option text = STRING_TOKEN(STR_VBT_DEFAULT),      value = SCU_VBT_DEFAULT,      flags = DEFAULT | RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_VBT_HDMI_PORTB),   value = SCU_VBT_HDMI_PORTB,   flags = RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_VBT_HDMI_PORTC),   value = SCU_VBT_HDMI_PORTC,   flags = RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_VBT_DP_PORTA),     value = SCU_VBT_DP_PORTA,     flags = RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_VBT_DP_PORTB),     value = SCU_VBT_DP_PORTB,     flags = RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_VBT_DP_PORTC),     value = SCU_VBT_DP_PORTC,     flags = RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_VBT_NONE),         value = SCU_VBT_NO_DEVICE,    flags = RESET_REQUIRED;
+      endoneof;
+      
+      oneof 
+        varid       = SystemConfig.VbtEfpDdc[0],
+        prompt      = STRING_TOKEN(STR_VBT_DDC_BUS_PIN),
+        help        = STRING_TOKEN(STR_VBT_DDC_BUS_PIN_HELP),
+        option text = STRING_TOKEN(STR_VBT_DEFAULT),      value = SCU_VBT_DEFAULT,      flags = DEFAULT | RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_VBT_HDMI_PORTB),   value = SCU_VBT_HDMI_PORTB,   flags = RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_VBT_HDMI_PORTC),   value = SCU_VBT_HDMI_PORTC,   flags = RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_VBT_NONE),         value = SCU_VBT_NO_DEVICE,    flags = RESET_REQUIRED;
+      endoneof;
+      
+      oneof 
+        varid       = SystemConfig.VbtEfpAux[0],
+        prompt      = STRING_TOKEN(STR_VBT_AUX_CHANNEL),
+        help        = STRING_TOKEN(STR_VBT_AUX_CHANNEL_HELP),
+        option text = STRING_TOKEN(STR_VBT_DEFAULT),      value = SCU_VBT_DEFAULT,      flags = DEFAULT | RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_VBT_DP_PORTA),     value = SCU_VBT_DP_PORTA,     flags = RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_VBT_DP_PORTB),     value = SCU_VBT_DP_PORTB,     flags = RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_VBT_DP_PORTC),     value = SCU_VBT_DP_PORTC,     flags = RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_VBT_NONE),         value = SCU_VBT_NO_DEVICE,    flags = RESET_REQUIRED;
+      endoneof;
+      
+      oneof 
+        varid       = SystemConfig.VbtEfpHdmiLevelShifter[0],
+        prompt      = STRING_TOKEN(STR_VBT_HDMI_LEVEL_SHIFTER),
+        help        = STRING_TOKEN(STR_VBT_HDMI_LEVEL_SHIFTER_HELP),
+        option text = STRING_TOKEN(STR_VBT_DEFAULT),        value = SCU_VBT_DEFAULT,        flags = DEFAULT | RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_VBT_400MV_0P0_DB),   value = SCU_VBT_400MV_0P0_DB,   flags = RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_VBT_400MV_3P5_DB),   value = SCU_VBT_400MV_3P5_DB,   flags = RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_VBT_400MV_6P0_DB),   value = SCU_VBT_400MV_6P0_DB,   flags = RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_VBT_400MV_9P5_DB),   value = SCU_VBT_400MV_9P5_DB,   flags = RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_VBT_600MV_0P0_DB),   value = SCU_VBT_600MV_0P0_DB,   flags = RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_VBT_600MV_3P5_DB),   value = SCU_VBT_600MV_3P5_DB,   flags = RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_VBT_600MV_6P0_DB),   value = SCU_VBT_600MV_6P0_DB,   flags = RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_VBT_800MV_0P0_DB),   value = SCU_VBT_800MV_0P0_DB,   flags = RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_VBT_800MV_3P5_DB),   value = SCU_VBT_800MV_3P5_DB,   flags = RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_VBT_1200MV_0P0_DB),  value = SCU_VBT_1200MV_0P0_DB,  flags = RESET_REQUIRED;
+      endoneof;
+      
+      oneof 
+        varid       = SystemConfig.VbtEfpOnboardLspcon[0],
+        prompt      = STRING_TOKEN(STR_VBT_ONBOARD_LSPCON),
+        help        = STRING_TOKEN(STR_VBT_ONBOARD_LSPCON_HELP),
+        option text = STRING_TOKEN(STR_VBT_DEFAULT),      value = SCU_VBT_DEFAULT,  flags = DEFAULT | RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_ENABLED_TEXT),     value = SCU_VBT_ENABLE,   flags = RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_DISABLED_TEXT),    value = SCU_VBT_DISABLE,  flags = RESET_REQUIRED;
+      endoneof;
+      
+      oneof 
+        varid       = SystemConfig.VbtEfpHpdInversion[0],
+        prompt      = STRING_TOKEN(STR_VBT_HPD_INVERSION),
+        help        = STRING_TOKEN(STR_VBT_HPD_INVERSION_HELP),
+        option text = STRING_TOKEN(STR_VBT_DEFAULT),      value = SCU_VBT_DEFAULT,  flags = DEFAULT | RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_ENABLED_TEXT),     value = SCU_VBT_ENABLE,   flags = RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_DISABLED_TEXT),    value = SCU_VBT_DISABLE,  flags = RESET_REQUIRED;
+      endoneof;
+
+      oneof 
+        varid       = SystemConfig.VbtEfpDdiLaneReversal[0],
+        prompt      = STRING_TOKEN(STR_VBT_DDI_LANE_REVERSAL),
+        help        = STRING_TOKEN(STR_VBT_DDI_LANE_REVERSAL_HELP),
+        option text = STRING_TOKEN(STR_VBT_DEFAULT),      value = SCU_VBT_DEFAULT,  flags = DEFAULT | RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_ENABLED_TEXT),     value = SCU_VBT_ENABLE,   flags = RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_DISABLED_TEXT),    value = SCU_VBT_DISABLE,  flags = RESET_REQUIRED;
+      endoneof;
+      
+      oneof 
+        varid       = SystemConfig.VbtEfpUsbTypeC[0],
+        prompt      = STRING_TOKEN(STR_VBT_USB_TYPC_SUPPORT),
+        help        = STRING_TOKEN(STR_VBT_USB_TYPC_SUPPORT_HELP),
+        option text = STRING_TOKEN(STR_VBT_DEFAULT),      value = SCU_VBT_DEFAULT,  flags = DEFAULT | RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_ENABLED_TEXT),     value = SCU_VBT_ENABLE,   flags = RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_DISABLED_TEXT),    value = SCU_VBT_DISABLE,  flags = RESET_REQUIRED;
+      endoneof;
+      
+      oneof 
+        varid       = SystemConfig.VbtEfpDockablePort[0],
+        prompt      = STRING_TOKEN(STR_VBT_DOCKABLE_PORT),
+        help        = STRING_TOKEN(STR_VBT_DOCKABLE_PORT_HELP),
+        option text = STRING_TOKEN(STR_VBT_DEFAULT),      value = SCU_VBT_DEFAULT,  flags = DEFAULT | RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_ENABLED_TEXT),     value = SCU_VBT_ENABLE,   flags = RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_DISABLED_TEXT),    value = SCU_VBT_DISABLE,  flags = RESET_REQUIRED;
+      endoneof;
+      
+    endif; 
+    
+    oneof 
+      varid         = SystemConfig.VbtEfpType[1],
+      prompt        = STRING_TOKEN(STR_VBT_EFP2_DEV_TYPE),
+      help          = STRING_TOKEN(STR_VBT_DEV_TYPE_HELP),
+      option text   = STRING_TOKEN(STR_VBT_DEFAULT),      value = SCU_VBT_DEFAULT,      flags = DEFAULT | RESET_REQUIRED;
+      option text   = STRING_TOKEN(STR_VBT_DP),           value = SCU_VBT_DP,           flags = RESET_REQUIRED;
+      option text   = STRING_TOKEN(STR_VBT_HDMI_DVI),     value = SCU_VBT_HDMI_DVI,     flags = RESET_REQUIRED;
+      option text   = STRING_TOKEN(STR_VBT_DVI_ONLY),     value = SCU_VBT_DVI_ONLY,     flags = RESET_REQUIRED;
+      option text   = STRING_TOKEN(STR_VBT_DP_HDMI_DVI),  value = SCU_VBT_DP_HDMI_DVI,  flags = RESET_REQUIRED;
+      option text   = STRING_TOKEN(STR_VBT_NO_DEVICE),    value = SCU_VBT_NO_DEVICE,    flags = RESET_REQUIRED;
+    endoneof;
+    
+    suppressif
+      ideqval SystemConfig.VbtEfpType[1] == SCU_VBT_NO_DEVICE
+      OR
+      ideqval SystemConfig.VbtEfpType[1] == SCU_VBT_DEFAULT;
+    
+      oneof 
+        varid       = SystemConfig.VbtEfpPort[1],
+        prompt      = STRING_TOKEN(STR_VBT_OUTPUT_PORT),
+        help        = STRING_TOKEN(STR_VBT_OUTPUT_PORT_HELP),
+        option text = STRING_TOKEN(STR_VBT_DEFAULT),      value = SCU_VBT_DEFAULT,      flags = DEFAULT | RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_VBT_HDMI_PORTB),   value = SCU_VBT_HDMI_PORTB,   flags = RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_VBT_HDMI_PORTC),   value = SCU_VBT_HDMI_PORTC,   flags = RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_VBT_DP_PORTA),     value = SCU_VBT_DP_PORTA,     flags = RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_VBT_DP_PORTB),     value = SCU_VBT_DP_PORTB,     flags = RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_VBT_DP_PORTC),     value = SCU_VBT_DP_PORTC,     flags = RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_VBT_NONE),         value = SCU_VBT_NO_DEVICE,    flags = RESET_REQUIRED;
+      endoneof;
+      
+      oneof 
+        varid       = SystemConfig.VbtEfpDdc[1],
+        prompt      = STRING_TOKEN(STR_VBT_DDC_BUS_PIN),
+        help        = STRING_TOKEN(STR_VBT_DDC_BUS_PIN_HELP),
+        option text = STRING_TOKEN(STR_VBT_DEFAULT),      value = SCU_VBT_DEFAULT,      flags = DEFAULT | RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_VBT_HDMI_PORTB),   value = SCU_VBT_HDMI_PORTB,   flags = RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_VBT_HDMI_PORTC),   value = SCU_VBT_HDMI_PORTC,   flags = RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_VBT_NONE),         value = SCU_VBT_NO_DEVICE,    flags = RESET_REQUIRED;
+      endoneof;
+      
+      oneof 
+        varid       = SystemConfig.VbtEfpAux[1],
+        prompt      = STRING_TOKEN(STR_VBT_AUX_CHANNEL),
+        help        = STRING_TOKEN(STR_VBT_AUX_CHANNEL_HELP),
+        option text = STRING_TOKEN(STR_VBT_DEFAULT),      value = SCU_VBT_DEFAULT,      flags = DEFAULT | RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_VBT_DP_PORTA),     value = SCU_VBT_DP_PORTA,     flags = RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_VBT_DP_PORTB),     value = SCU_VBT_DP_PORTB,     flags = RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_VBT_DP_PORTC),     value = SCU_VBT_DP_PORTC,     flags = RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_VBT_NONE),         value = SCU_VBT_NO_DEVICE,    flags = RESET_REQUIRED;
+      endoneof;
+      
+      oneof 
+        varid       = SystemConfig.VbtEfpHdmiLevelShifter[1],
+        prompt      = STRING_TOKEN(STR_VBT_HDMI_LEVEL_SHIFTER),
+        help        = STRING_TOKEN(STR_VBT_HDMI_LEVEL_SHIFTER_HELP),
+        option text = STRING_TOKEN(STR_VBT_DEFAULT),        value = SCU_VBT_DEFAULT,        flags = DEFAULT | RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_VBT_400MV_0P0_DB),   value = SCU_VBT_400MV_0P0_DB,   flags = RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_VBT_400MV_3P5_DB),   value = SCU_VBT_400MV_3P5_DB,   flags = RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_VBT_400MV_6P0_DB),   value = SCU_VBT_400MV_6P0_DB,   flags = RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_VBT_400MV_9P5_DB),   value = SCU_VBT_400MV_9P5_DB,   flags = RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_VBT_600MV_0P0_DB),   value = SCU_VBT_600MV_0P0_DB,   flags = RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_VBT_600MV_3P5_DB),   value = SCU_VBT_600MV_3P5_DB,   flags = RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_VBT_600MV_6P0_DB),   value = SCU_VBT_600MV_6P0_DB,   flags = RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_VBT_800MV_0P0_DB),   value = SCU_VBT_800MV_0P0_DB,   flags = RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_VBT_800MV_3P5_DB),   value = SCU_VBT_800MV_3P5_DB,   flags = RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_VBT_1200MV_0P0_DB),  value = SCU_VBT_1200MV_0P0_DB,  flags = RESET_REQUIRED;
+      endoneof;
+      
+      oneof 
+        varid       = SystemConfig.VbtEfpOnboardLspcon[1],
+        prompt      = STRING_TOKEN(STR_VBT_ONBOARD_LSPCON),
+        help        = STRING_TOKEN(STR_VBT_ONBOARD_LSPCON_HELP),
+        option text = STRING_TOKEN(STR_VBT_DEFAULT),      value = SCU_VBT_DEFAULT,  flags = DEFAULT | RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_ENABLED_TEXT),     value = SCU_VBT_ENABLE,   flags = RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_DISABLED_TEXT),    value = SCU_VBT_DISABLE,  flags = RESET_REQUIRED;
+      endoneof;
+      
+      oneof 
+        varid       = SystemConfig.VbtEfpHpdInversion[1],
+        prompt      = STRING_TOKEN(STR_VBT_HPD_INVERSION),
+        help        = STRING_TOKEN(STR_VBT_HPD_INVERSION_HELP),
+        option text = STRING_TOKEN(STR_VBT_DEFAULT),      value = SCU_VBT_DEFAULT,  flags = DEFAULT | RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_ENABLED_TEXT),     value = SCU_VBT_ENABLE,   flags = RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_DISABLED_TEXT),    value = SCU_VBT_DISABLE,  flags = RESET_REQUIRED;
+      endoneof;
+
+      oneof 
+        varid       = SystemConfig.VbtEfpDdiLaneReversal[1],
+        prompt      = STRING_TOKEN(STR_VBT_DDI_LANE_REVERSAL),
+        help        = STRING_TOKEN(STR_VBT_DDI_LANE_REVERSAL_HELP),
+        option text = STRING_TOKEN(STR_VBT_DEFAULT),      value = SCU_VBT_DEFAULT,  flags = DEFAULT | RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_ENABLED_TEXT),     value = SCU_VBT_ENABLE,   flags = RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_DISABLED_TEXT),    value = SCU_VBT_DISABLE,  flags = RESET_REQUIRED;
+      endoneof;
+      
+      oneof 
+        varid       = SystemConfig.VbtEfpUsbTypeC[1],
+        prompt      = STRING_TOKEN(STR_VBT_USB_TYPC_SUPPORT),
+        help        = STRING_TOKEN(STR_VBT_USB_TYPC_SUPPORT_HELP),
+        option text = STRING_TOKEN(STR_VBT_DEFAULT),      value = SCU_VBT_DEFAULT,  flags = DEFAULT | RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_ENABLED_TEXT),     value = SCU_VBT_ENABLE,   flags = RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_DISABLED_TEXT),    value = SCU_VBT_DISABLE,  flags = RESET_REQUIRED;
+      endoneof;
+      
+      oneof 
+        varid       = SystemConfig.VbtEfpDockablePort[1],
+        prompt      = STRING_TOKEN(STR_VBT_DOCKABLE_PORT),
+        help        = STRING_TOKEN(STR_VBT_DOCKABLE_PORT_HELP),
+        option text = STRING_TOKEN(STR_VBT_DEFAULT),      value = SCU_VBT_DEFAULT,  flags = DEFAULT | RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_ENABLED_TEXT),     value = SCU_VBT_ENABLE,   flags = RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_DISABLED_TEXT),    value = SCU_VBT_DISABLE,  flags = RESET_REQUIRED;
+      endoneof;
+      
+    endif; 
+    
+    oneof 
+      varid         = SystemConfig.VbtEfpType[2],
+      prompt        = STRING_TOKEN(STR_VBT_EFP3_DEV_TYPE),
+      help          = STRING_TOKEN(STR_VBT_DEV_TYPE_HELP),
+      option text   = STRING_TOKEN(STR_VBT_DEFAULT),      value = SCU_VBT_DEFAULT,      flags = DEFAULT | RESET_REQUIRED;
+      option text   = STRING_TOKEN(STR_VBT_DP),           value = SCU_VBT_DP,           flags = RESET_REQUIRED;
+      option text   = STRING_TOKEN(STR_VBT_HDMI_DVI),     value = SCU_VBT_HDMI_DVI,     flags = RESET_REQUIRED;
+      option text   = STRING_TOKEN(STR_VBT_DVI_ONLY),     value = SCU_VBT_DVI_ONLY,     flags = RESET_REQUIRED;
+      option text   = STRING_TOKEN(STR_VBT_DP_HDMI_DVI),  value = SCU_VBT_DP_HDMI_DVI,  flags = RESET_REQUIRED;
+      option text   = STRING_TOKEN(STR_VBT_NO_DEVICE),    value = SCU_VBT_NO_DEVICE,    flags = RESET_REQUIRED;
+    endoneof;
+    
+    suppressif
+      ideqval SystemConfig.VbtEfpType[2] == SCU_VBT_NO_DEVICE
+      OR
+      ideqval SystemConfig.VbtEfpType[2] == SCU_VBT_DEFAULT;
+    
+      oneof 
+        varid       = SystemConfig.VbtEfpPort[2],
+        prompt      = STRING_TOKEN(STR_VBT_OUTPUT_PORT),
+        help        = STRING_TOKEN(STR_VBT_OUTPUT_PORT_HELP),
+        option text = STRING_TOKEN(STR_VBT_DEFAULT),      value = SCU_VBT_DEFAULT,      flags = DEFAULT | RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_VBT_HDMI_PORTB),   value = SCU_VBT_HDMI_PORTB,   flags = RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_VBT_HDMI_PORTC),   value = SCU_VBT_HDMI_PORTC,   flags = RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_VBT_DP_PORTA),     value = SCU_VBT_DP_PORTA,     flags = RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_VBT_DP_PORTB),     value = SCU_VBT_DP_PORTB,     flags = RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_VBT_DP_PORTC),     value = SCU_VBT_DP_PORTC,     flags = RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_VBT_NONE),         value = SCU_VBT_NO_DEVICE,    flags = RESET_REQUIRED;
+      endoneof;
+      
+      oneof 
+        varid       = SystemConfig.VbtEfpDdc[2],
+        prompt      = STRING_TOKEN(STR_VBT_DDC_BUS_PIN),
+        help        = STRING_TOKEN(STR_VBT_DDC_BUS_PIN_HELP),
+        option text = STRING_TOKEN(STR_VBT_DEFAULT),      value = SCU_VBT_DEFAULT,      flags = DEFAULT | RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_VBT_HDMI_PORTB),   value = SCU_VBT_HDMI_PORTB,   flags = RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_VBT_HDMI_PORTC),   value = SCU_VBT_HDMI_PORTC,   flags = RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_VBT_NONE),         value = SCU_VBT_NO_DEVICE,    flags = RESET_REQUIRED;
+      endoneof;
+      
+      oneof 
+        varid       = SystemConfig.VbtEfpAux[2],
+        prompt      = STRING_TOKEN(STR_VBT_AUX_CHANNEL),
+        help        = STRING_TOKEN(STR_VBT_AUX_CHANNEL_HELP),
+        option text = STRING_TOKEN(STR_VBT_DEFAULT),      value = SCU_VBT_DEFAULT,      flags = DEFAULT | RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_VBT_DP_PORTA),     value = SCU_VBT_DP_PORTA,     flags = RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_VBT_DP_PORTB),     value = SCU_VBT_DP_PORTB,     flags = RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_VBT_DP_PORTC),     value = SCU_VBT_DP_PORTC,     flags = RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_VBT_NONE),         value = SCU_VBT_NO_DEVICE,    flags = RESET_REQUIRED;
+      endoneof;
+      
+      oneof 
+        varid       = SystemConfig.VbtEfpHdmiLevelShifter[2],
+        prompt      = STRING_TOKEN(STR_VBT_HDMI_LEVEL_SHIFTER),
+        help        = STRING_TOKEN(STR_VBT_HDMI_LEVEL_SHIFTER_HELP),
+        option text = STRING_TOKEN(STR_VBT_DEFAULT),        value = SCU_VBT_DEFAULT,        flags = DEFAULT | RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_VBT_400MV_0P0_DB),   value = SCU_VBT_400MV_0P0_DB,   flags = RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_VBT_400MV_3P5_DB),   value = SCU_VBT_400MV_3P5_DB,   flags = RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_VBT_400MV_6P0_DB),   value = SCU_VBT_400MV_6P0_DB,   flags = RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_VBT_400MV_9P5_DB),   value = SCU_VBT_400MV_9P5_DB,   flags = RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_VBT_600MV_0P0_DB),   value = SCU_VBT_600MV_0P0_DB,   flags = RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_VBT_600MV_3P5_DB),   value = SCU_VBT_600MV_3P5_DB,   flags = RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_VBT_600MV_6P0_DB),   value = SCU_VBT_600MV_6P0_DB,   flags = RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_VBT_800MV_0P0_DB),   value = SCU_VBT_800MV_0P0_DB,   flags = RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_VBT_800MV_3P5_DB),   value = SCU_VBT_800MV_3P5_DB,   flags = RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_VBT_1200MV_0P0_DB),  value = SCU_VBT_1200MV_0P0_DB,  flags = RESET_REQUIRED;
+      endoneof;
+      
+      oneof 
+        varid       = SystemConfig.VbtEfpOnboardLspcon[2],
+        prompt      = STRING_TOKEN(STR_VBT_ONBOARD_LSPCON),
+        help        = STRING_TOKEN(STR_VBT_ONBOARD_LSPCON_HELP),
+        option text = STRING_TOKEN(STR_VBT_DEFAULT),      value = SCU_VBT_DEFAULT,  flags = DEFAULT | RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_ENABLED_TEXT),     value = SCU_VBT_ENABLE,   flags = RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_DISABLED_TEXT),    value = SCU_VBT_DISABLE,  flags = RESET_REQUIRED;
+      endoneof;
+      
+      oneof 
+        varid       = SystemConfig.VbtEfpHpdInversion[2],
+        prompt      = STRING_TOKEN(STR_VBT_HPD_INVERSION),
+        help        = STRING_TOKEN(STR_VBT_HPD_INVERSION_HELP),
+        option text = STRING_TOKEN(STR_VBT_DEFAULT),      value = SCU_VBT_DEFAULT,  flags = DEFAULT | RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_ENABLED_TEXT),     value = SCU_VBT_ENABLE,   flags = RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_DISABLED_TEXT),    value = SCU_VBT_DISABLE,  flags = RESET_REQUIRED;
+      endoneof;
+
+      oneof 
+        varid       = SystemConfig.VbtEfpDdiLaneReversal[2],
+        prompt      = STRING_TOKEN(STR_VBT_DDI_LANE_REVERSAL),
+        help        = STRING_TOKEN(STR_VBT_DDI_LANE_REVERSAL_HELP),
+        option text = STRING_TOKEN(STR_VBT_DEFAULT),      value = SCU_VBT_DEFAULT,  flags = DEFAULT | RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_ENABLED_TEXT),     value = SCU_VBT_ENABLE,   flags = RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_DISABLED_TEXT),    value = SCU_VBT_DISABLE,  flags = RESET_REQUIRED;
+      endoneof;
+      
+      oneof 
+        varid       = SystemConfig.VbtEfpUsbTypeC[2],
+        prompt      = STRING_TOKEN(STR_VBT_USB_TYPC_SUPPORT),
+        help        = STRING_TOKEN(STR_VBT_USB_TYPC_SUPPORT_HELP),
+        option text = STRING_TOKEN(STR_VBT_DEFAULT),      value = SCU_VBT_DEFAULT,  flags = DEFAULT | RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_ENABLED_TEXT),     value = SCU_VBT_ENABLE,   flags = RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_DISABLED_TEXT),    value = SCU_VBT_DISABLE,  flags = RESET_REQUIRED;
+      endoneof;
+      
+      oneof 
+        varid       = SystemConfig.VbtEfpDockablePort[2],
+        prompt      = STRING_TOKEN(STR_VBT_DOCKABLE_PORT),
+        help        = STRING_TOKEN(STR_VBT_DOCKABLE_PORT_HELP),
+        option text = STRING_TOKEN(STR_VBT_DEFAULT),      value = SCU_VBT_DEFAULT,  flags = DEFAULT | RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_ENABLED_TEXT),     value = SCU_VBT_ENABLE,   flags = RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_DISABLED_TEXT),    value = SCU_VBT_DISABLE,  flags = RESET_REQUIRED;
+      endoneof;
+      
+    endif; 
+    
+  endif;
+  
+endform;
+//[-end-160913-IB07400784-modify]//
+//[-end-160821-IB07400772-modify]//
+

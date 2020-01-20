@@ -1,0 +1,96 @@
+#/** @file
+#
+#  Component description file for DEBUG Message Config Utility DXE driver.
+#
+#;******************************************************************************
+#;* Copyright (c) 2016 - 2018, Insyde Software Corporation. All Rights Reserved.
+#;*
+#;* You may not reproduce, distribute, publish, display, perform, modify, adapt,
+#;* transmit, broadcast, present, recite, release, license or otherwise exploit
+#;* any part of this publication in any form, by any means, without the prior
+#;* written permission of Insyde Software Corporation.
+#;*
+#;******************************************************************************
+#*/
+
+[Defines]
+  INF_VERSION                    = 0x00010005
+  BASE_NAME                      = DebugMessageConfigUtilDxe
+  FILE_GUID                      = 191A9DE3-BAF2-4F59-BF0E-0D1E3193EDC0
+  MODULE_TYPE                    = DXE_DRIVER
+  VERSION_STRING                 = 1.0
+  ENTRY_POINT                    = DebugMessageConfigUtilDxeInitialize
+  
+[Sources]
+  DebugMessageConfigUtil.c
+  DebugMessageConfigUtil.h
+  DebugMessageConfigUtilConfigPageVfr.vfr
+  DebugMessageConfigUtilEventAndMessagePageVfr.vfr
+  DebugMessageConfigUtilStr.uni
+  DebugMessageConfigUtilSetupConfig.h
+  
+[Packages]
+  InsydeEventLogPkg/InsydeEventLogPkg.dec
+  InsydeModulePkg/InsydeModulePkg.dec  
+#[-start-171207-IB08400539-remove]#
+#  IntelFrameworkPkg/IntelFrameworkPkg.dec
+#[-end-171207-IB08400539-remove]#
+  MdePkg/MdePkg.dec
+  MdeModulePkg/MdeModulePkg.dec
+#[-start-180518-IB08400595-add]#
+  SegFeaturePkg/SegFeaturePkg.dec
+#[-end-180518-IB08400595-add]#  
+  
+[LibraryClasses]
+  UefiDriverEntryPoint
+  UefiBootServicesTableLib
+  UefiRuntimeServicesTableLib
+  DebugLib
+  DevicePathLib
+  BaseLib
+  BaseMemoryLib
+  UefiLib
+  HiiLib
+  VariableLib
+  DebugPrintErrorLevelLib
+  PcdLib
+#[-start-180518-IB08400595-add]#
+  EventLogDebugMsgLib
+#[-end-180518-IB08400595-add]#
+
+[Guids]
+  gEfiIfrTianoGuid                                     ## PRODUCES
+  gH2ODebugMessageConfigUtilConfigFormsetGuid          ## PRODUCES
+  gH2ODebugMessageConfigUtilEventAndMessageFormsetGuid ## PRODUCES
+  gH2ODebugMessageConfigUtilVarstoreGuid               ## PRODUCES
+  gH2ODebugMessageVariableGuid                         ## CONSUMES 
+  
+[Protocols]
+  gEfiHiiConfigAccessProtocolGuid               ## PRODUCES
+  gEfiVariableArchProtocolGuid                  ## CONSUMES
+  gEfiHiiDatabaseProtocolGuid                   ## CONSUMES
+  gEfiHiiStringProtocolGuid                     ## CONSUMES
+  gEfiFormBrowser2ProtocolGuid                  ## CONSUMES
+  gEfiHiiConfigRoutingProtocolGuid              ## CONSUMES
+  gEdkiiFormBrowserEx2ProtocolGuid              ## CONSUMES
+  gH2ODialogProtocolGuid                        ## CONSUMES
+  gEdkiiVariableLockProtocolGuid                ## CONSUMES 
+  gH2OEventLogStringProtocolGuid                ## CONSUMES
+  gH2OEventLogStringOverwriteProtocolGuid       ## CONSUMES
+  gEfiSimpleFileSystemProtocolGuid              ## CONSUMES
+  gEfiBlockIoProtocolGuid                       ## CONSUMES
+  gH2OEventLogProtocolGuid                      ## CONSUMES
+  
+[Pcd]
+#[-start-171212-IB08400542-modify]#
+#[-start-160317-IB08400337-add]#
+  gH2OEventLogPkgTokenSpaceGuid.PcdH2OStoreDebugMsgPeiSupported
+  gH2OEventLogPkgTokenSpaceGuid.PcdH2OStoreDebugMsgSupported
+#[-end-160317-IB08400337-add]#
+#[-end-171212-IB08400542-modify]#
+
+[Depex]
+  gEfiVariableArchProtocolGuid      AND
+  gEfiVariableWriteArchProtocolGuid AND
+  gEfiHiiDatabaseProtocolGuid       
+

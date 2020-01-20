@@ -1,0 +1,36 @@
+## @file
+#  This module provides the default logo bitmap picture shown on setup screen,
+#  which is corresponding to gEfiDefaultBmpLogoGuid.
+#
+#  Copyright (c) 2006 - 2010, Intel Corporation. All rights reserved.<BR>
+#
+#  This program and the accompanying materials
+#  are licensed and made available under the terms and conditions of the BSD License
+#  which accompanies this distribution. The full text of the license may be found at
+#  http://opensource.org/licenses/bsd-license.php
+#  THE PROGRAM IS DISTRIBUTED UNDER THE BSD LICENSE ON AN "AS IS" BASIS,
+#  WITHOUT WARRANTIES OR REPRESENTATIONS OF ANY KIND, EITHER EXPRESS OR IMPLIED.
+#
+#
+##
+
+
+[Defines]
+  INF_VERSION                    = 0x00010005
+  BASE_NAME                      = SmscUsbNetDriver
+  FILE_GUID                      = EA30CF96-90B4-452c-A6BF-EABCA43885A4
+  MODULE_TYPE                    = UEFI_DRIVER
+  VERSION_STRING                 = 1.0
+
+#
+# The following information is for reference only and not required by the build tools.
+#
+#  VALID_ARCHITECTURES           = IA32
+#
+[Binaries.Ia32]
+  PE32|Ia32/SmscUsbNetDriver.efi|*
+
+[Binaries.X64]
+  PE32|X64/SmscUsbNetDriver.efi|*
+[Depex]
+  TRUE

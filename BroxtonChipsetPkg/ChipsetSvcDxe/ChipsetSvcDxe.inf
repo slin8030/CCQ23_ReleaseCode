@@ -1,0 +1,98 @@
+## @file
+#  Implement the driver of DxeChipsetSvc.
+#  
+#  ***************************************************************************
+#  * Copyright (c) 2014, Insyde Software Corp. All Rights Reserved.
+#  *
+#  * You may not reproduce, distribute, publish, display, perform, modify, adapt,
+#  * transmit, broadcast, present, recite, release, license or otherwise exploit
+#  * any part of this publication in any form, by any means, without the prior
+#  * written permission of Insyde Software Corporation.
+#  *
+#  ******************************************************************************
+#  
+##
+
+[Defines]
+  INF_VERSION               = 0x00010005
+  BASE_NAME                 = ChipsetSvcDxe
+  FILE_GUID                 = 9b0ff2c0-e245-11e1-8eff-d0df9a35c106
+  MODULE_TYPE               = DXE_DRIVER
+  VERSION_STRING            = 1.0
+  ENTRY_POINT               = ChipsetSvcDxeEntryPoint
+  UNLOAD_IMAGE              = ChipsetSvcDxeUnload
+
+[Packages]
+  MdePkg/MdePkg.dec
+  MdeModulePkg/MdeModulePkg.dec
+  $(PLATFORM_RC_PACKAGE)/$(PLATFORM_RC_PACKAGE).dec
+  $(CHIPSET_PKG)/$(CHIPSET_PKG).dec
+#[-start-160216-IB03090424-add]#
+  ClientSiliconPkg/ClientSiliconPkg.dec
+#[-end-160216-IB03090424-add]#
+  InsydeModulePkg/InsydeModulePkg.dec
+  IntelFrameworkPkg/IntelFrameworkPkg.dec
+  IntelFrameworkModulePkg/IntelFrameworkModulePkg.dec
+[Sources]
+  ChipsetSvcDxe.c
+  ComponentName.c
+  ComponentName.h
+!if $(ENBDT_PF_BUILD) == YES  
+  SataComReset.c
+  IrqRoutingInformation.c  
+  InstallPciRomSwitchTextMode.c
+  SkipGetPciRom.c  
+!endif  
+  ProgramChipsetSsid.c
+  FvRecoveryInfo.c
+  SetIsaInfo.c
+  GetBiosProtectTable.c
+  UpdateAcpiVariableSet.c
+  
+[LibraryClasses]
+  UefiDriverEntryPoint
+  UefiBootServicesTableLib
+  MemoryAllocationLib
+  BaseMemoryLib
+  BaseLib
+  UefiLib
+  DevicePathLib
+  DebugLib
+  PcdLib
+  IoLib
+  S3BootScriptLib
+  PciExpressLib
+  DxeOemSvcChipsetLibDefault
+  HobLib
+
+[Protocols]
+  gEfiDriverSupportedEfiVersionProtocolGuid
+  gEfiComponentName2ProtocolGuid
+  gEfiComponentNameProtocolGuid
+  gH2OChipsetServicesProtocolGuid
+  gEfiPciIoProtocolGuid
+  gEfiSetupUtilityProtocolGuid
+  gFrameworkEfiMpServiceProtocolGuid
+  
+[Guids]
+  gEfiAcpiVariableCompatiblityGuid
+
+[Pcd]
+  gEfiMdePkgTokenSpaceGuid.PcdPciExpressBaseAddress  ## CONSUMES
+  gInsydeTokenSpaceGuid.PcdFlashFvRecoveryBase
+  gInsydeTokenSpaceGuid.PcdFlashFvRecoverySize
+  gChipsetPkgTokenSpaceGuid.PcdFlashFvRecovery2Base
+  gChipsetPkgTokenSpaceGuid.PcdFlashFvRecovery2Size
+  gInsydeTokenSpaceGuid.PcdPortNumberMapTable
+  gChipsetPkgTokenSpaceGuid.PcdVirtualBusTable  
+#  gChipsetPkgTokenSpaceGuid.PcdBackupFvBase
+#  gChipsetPkgTokenSpaceGuid.PcdBackupFvSize
+  gChipsetPkgTokenSpaceGuid.PcdControllerDeviceIrqRoutingEntry
+  gChipsetPkgTokenSpaceGuid.PcdPirqPriorityTable
+  gChipsetPkgTokenSpaceGuid.PcdIrqPoolTable
+  gChipsetPkgTokenSpaceGuid.PcdPirqLinkValueArray
+  gInsydeTokenSpaceGuid.PcdFlashFvMainBase
+  gInsydeTokenSpaceGuid.PcdFlashFvMainSize
+
+[Depex]
+  TRUE

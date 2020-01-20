@@ -1,0 +1,254 @@
+/** @file
+  Driver Setup formset.
+
+@copyright
+  Copyright (c) 1999 - 2017 Intel Corporation. All rights reserved
+  This software and associated documentation (if any) is furnished
+  under a license and may only be used or copied in accordance
+  with the terms of the license. Except as permitted by the
+  license, no part of this software or documentation may be
+  reproduced, stored in a retrieval system, or transmitted in any
+  form or by any means without the express written consent of
+  Intel Corporation.
+  This file contains a 'Sample Driver' and is licensed as such
+  under the terms of your license agreement with Intel or your
+  vendor. This file may be modified by the user, subject to
+  the additional terms of the license agreement.
+**/
+
+//
+// Security Configuration Form
+//
+
+form formid = SECURITY_CONFIGURATION_FORM_ID,
+  title    = STRING_TOKEN(STR_SECURITY_CONFIGURATION_TITLE);
+
+  //
+  // SeC related
+  //
+  subtitle text = STRING_TOKEN(STR_SEC_CONFIGURATION_SUBTITLE);
+
+//[-start-170322-IB07400848-modify]//
+  grayoutif TRUE;
+  
+    text
+      help   = STRING_TOKEN(STR_NULL_STRING),
+      text   = STRING_TOKEN(STR_SEC_VERSION_STRING),
+  //[-start-160216-IB03090424-modify]//
+      text   = STRING_TOKEN(STR_TXE_FW_VALUE),
+  //[-end-160216-IB03090424-modify]//
+      flags  = 0,
+      key    = 0;
+
+
+    text
+      help   = STRING_TOKEN(STR_NULL_STRING),
+      text   = STRING_TOKEN(STR_SEC_CAPABILITY_STRING),
+      text   = STRING_TOKEN(STR_SEC_CAPABILITY_VALUE),
+      flags  = 0,
+      key    = 0;
+
+    text
+      help   = STRING_TOKEN(STR_NULL_STRING),
+      text   = STRING_TOKEN(STR_SEC_FEATURE_STRING),
+      text   = STRING_TOKEN(STR_SEC_FEATURE_VALUE),
+      flags  = 0,
+      key    = 0;
+
+    text
+      help   = STRING_TOKEN(STR_NULL_STRING),
+      text   = STRING_TOKEN(STR_SEC_OEMTAG_STRING),
+      text   = STRING_TOKEN(STR_SEC_OEMTAG_VALUE),
+      flags  = 0,
+      key    = 0;
+
+    text
+      help   = STRING_TOKEN(STR_SEC_TEMP_DISABLE_HELP),
+      text   = STRING_TOKEN(STR_SEC_TEMP_DISABLE_STRING),
+      text   = STRING_TOKEN(STR_SEC_TEMP_DISABLE_PROMPT),
+      flags  = 0,
+      key    = 0;
+      
+  endif;
+//[-end-170322-IB07400848-modify]//
+
+  subtitle text = STRING_TOKEN(STR_NULL_STRING);
+
+  suppressif  ideqval SystemConfig.SeCModeEnable == 0x00;
+//[-start-151231-IB03090424-modify]//
+  grayoutif ideqval SystemConfig.SeCEOPEnable == 1;
+//[-end-151231-IB03090424-modify]//
+  oneof   varid   = SystemConfig.SecEnable,
+    prompt      = STRING_TOKEN(STR_SEC_SETTING_PROMPT),
+    help        = STRING_TOKEN(STR_SEC_SETTING_HELP),
+    option text = STRING_TOKEN(STR_DISABLED), value=0x00, flags=RESET_REQUIRED;
+    option text = STRING_TOKEN(STR_ENABLED), value=0x01,  flags=DEFAULT | RESET_REQUIRED;
+  endoneof;
+  endif;
+  endif;
+
+  suppressif  ideqval SystemConfig.SeCOpEnable == 0x00;
+//[-start-151231-IB03090424-modify]//
+  grayoutif ideqval SystemConfig.SeCEOPEnable == 1;
+//[-end-151231-IB03090424-modify]//
+  oneof   varid   = SystemConfig.SecFlashUpdate,
+    prompt      = STRING_TOKEN(STR_SEC_FLASH_UPDATE_PROMPT),
+    help        = STRING_TOKEN(STR_SEC_FLASH_UPDATE_HELP),
+    option text = STRING_TOKEN(STR_DISABLED), value=0x00, flags=DEFAULT | RESET_REQUIRED;
+    option text = STRING_TOKEN(STR_ENABLED), value=0x01, flags=RESET_REQUIRED;
+  endoneof;
+
+  oneof   varid   = SystemConfig.SecFirmwareUpdate,
+    prompt      = STRING_TOKEN(STR_SEC_FIRMWARE_UPDATE_PROMPT),
+    help        = STRING_TOKEN(STR_SEC_FIRMWARE_UPDATE_HELP),
+    option text = STRING_TOKEN(STR_DISABLED), value=0x00, flags=DEFAULT | RESET_REQUIRED;
+    option text = STRING_TOKEN(STR_ENABLED), value=0x01, flags=RESET_REQUIRED;
+  endoneof;
+  endif;
+
+  oneof   varid   = SystemConfig.SeCEOPEnable,
+    prompt      = STRING_TOKEN(STR_SEC_EOP_PROMPT),
+    help        = STRING_TOKEN(STR_SEC_EOP_HELP),
+    option text = STRING_TOKEN(STR_DISABLED), value=0x00, flags = RESET_REQUIRED;
+    option text = STRING_TOKEN(STR_ENABLED), value=0x01, flags = DEFAULT | RESET_REQUIRED;
+  endoneof;
+
+//[-start-151231-IB03090424-modify]//
+  grayoutif ideqval SystemConfig.SeCEOPEnable == 1;
+//[-end-151231-IB03090424-modify]//
+  text
+    help   = STRING_TOKEN(STR_SEC_TEMP_DISABLE_HELP),
+    text   = STRING_TOKEN(STR_SEC_UNCONFIGURATION_PROMPT),
+    flags  = INTERACTIVE,
+    key    = 0x1234;
+  endif;
+  endif;
+
+//[-start-151211-IB03090424-remove]//
+//  subtitle text = STRING_TOKEN(STR_NULL_STRING);
+//  suppressif ideqval SystemConfig.NfcAvailable == 0;
+//    text
+//      help  = STRING_TOKEN(STR_NFC_HELP),
+//      text  = STRING_TOKEN(STR_NFC_PROMPT),
+//      text  = STRING_TOKEN(STR_NFC_STATE_VALUE),
+//      flags = 0,
+//      key   = 0;
+//
+//    oneof varid   = SystemConfig.NfcState,
+//      prompt      = STRING_TOKEN (STR_NFC_STATE_PROMPT),
+//      help        = STRING_TOKEN (STR_NFC_STATE_HELP),
+//      option text = STRING_TOKEN (STR_DISABLED), value = 0, flags = RESET_REQUIRED;
+//      option text = STRING_TOKEN (STR_ENABLED), value = 1, flags = DEFAULT | MANUFACTURING | RESET_REQUIRED;
+//    endoneof;
+//  endif; // suppressif
+//[-end-151211-IB03090424-remove]//
+    //
+    // Control by Front Page -> Administer Secure Boot
+    //
+//[-start-170322-IB07400848-remove]//
+//  subtitle text = STRING_TOKEN(STR_NULL_STRING);
+//
+//
+//    subtitle text = STRING_TOKEN(STR_NULL_STRING);
+//
+//    text
+//      help   = STRING_TOKEN(STR_CLEAR_ALL_KEYS_HELP),
+//      text   = STRING_TOKEN(STR_CLEAR_ALL_KEYS),
+//      text   = STRING_TOKEN(STR_NULL_STRING),
+//      flags  = INTERACTIVE,
+//      key    = 0x1237; //KEY_CLEAR_KEK_AND_PK;
+//
+//    text
+//      help   = STRING_TOKEN(STR_LOAD_DEFAULTS_KEYS_HELP),
+//      text   = STRING_TOKEN(STR_LOAD_DEFAULTS_KEYS),
+//      text   = STRING_TOKEN(STR_NULL_STRING),
+//      flags  = INTERACTIVE,
+//      key    = 0x1238; //KEY_LOAD_DEFAULTS_KEYS;
+//
+//  subtitle text = STRING_TOKEN(STR_NULL_STRING);
+//[-end-170322-IB07400848-remove]//
+/*
+  //
+  //PTT related
+  //
+  subtitle text = STRING_TOKEN(STR_PTT_SUBTITLE);
+
+  //
+  // Define action button (EFI_IFR_ACTION) about PTT Disable
+  //
+  text
+    help   = STRING_TOKEN(STR_PTT_DISABLE_HELP),
+    text   = STRING_TOKEN(STR_PTT_DISABLE_PROMPT),
+    text   = STRING_TOKEN(STR_PTT_DISABLE_PROMPT),
+    flags  = INTERACTIVE,
+    key    = 0x1235;
+
+  //
+  // Define action button (EFI_IFR_ACTION) about Revoke Trust
+  //
+  text
+    help   = STRING_TOKEN(STR_REVOKE_TRUST_HELP),
+    text   = STRING_TOKEN(STR_REVOKE_TRUST_PROMPT),
+    text   = STRING_TOKEN(STR_REVOKE_TRUST_PROMPT),
+    flags  = INTERACTIVE,
+    key    = 0x1236;
+
+  subtitle text = STRING_TOKEN(STR_NULL_STRING);
+*/
+
+  //
+  //TPM related
+  //
+//[-start-171002-IB07400914-modify]//
+#if FeaturePcdGet(FtpmSupport)
+  subtitle text = STRING_TOKEN(STR_TPM_CONFIGURATION_PROMPT);
+
+//[-start-160421-IB08450341-remove]//
+//  oneof   varid   = SystemConfig.TPM,
+//    prompt      = STRING_TOKEN(STR_TPM_PROMPT),
+//    help        = STRING_TOKEN(STR_TPM_HELP),
+//    option text = STRING_TOKEN(STR_DISABLE), value = 0x00, flags = DEFAULT | MANUFACTURING | RESET_REQUIRED;
+//    option text = STRING_TOKEN(STR_TPM_PTT), value = 0x01, flags = RESET_REQUIRED;
+//    option text = STRING_TOKEN(STR_TPM_DTPM_1_2), value = 0x02, flags = RESET_REQUIRED;
+//    option text = STRING_TOKEN(STR_TPM_DTPM_2_0), value = 0x03, flags = RESET_REQUIRED;
+//  endoneof;
+//[-end-160421-IB08450341-remove]//
+
+//[-start-160421-IB08450341-add]//
+#if FeaturePcdGet(PcdRuntimeFtpmDtpmSwitch)
+    oneof varid = SystemConfig.TargetTPM,
+      prompt      = STRING_TOKEN(STR_TARGET_TPM_PROMPT),
+//[-start-170322-IB07400848-modify]//
+      help        = STRING_TOKEN(STR_TARGET_TPM_HELP),
+//[-end-170322-IB07400848-modify]//
+      option text = STRING_TOKEN(STR_TARGET_TPM_FTPM), value = 0, flags = DEFAULT | RESET_REQUIRED;
+      option text = STRING_TOKEN(STR_TARGET_TPM_DTPM),  value = 1, flags = RESET_REQUIRED;
+    endoneof;
+#endif
+#endif
+//[-end-160421-IB08450341-add]//
+//[-end-171002-IB07400914-modify]//
+
+//[-start-151211-IB03090424-modify]//
+/*
+  oneof   varid   = SystemConfig.ETpm,
+    prompt      = STRING_TOKEN(STR_TPM_PROMPT),
+    help        = STRING_TOKEN(STR_TPM_HELP),
+    option text = STRING_TOKEN(STR_DISABLE), value=0x00, flags=DEFAULT | RESET_REQUIRED;
+    option text = STRING_TOKEN(STR_ENABLE), value=0x01, flags=RESET_REQUIRED;
+  endoneof;
+*/
+//  suppressif NOT ideqval Setup.TPM == 1; 
+//    oneof varid  = Setup.TPMSupportedBanks,
+//      prompt = STRING_TOKEN(STR_TPM2_PCR_ALLOCATE_PROMPT),
+//      help   = STRING_TOKEN(STR_TPM2_PCR_ALLOCATE_HELP),
+//      option text = STRING_TOKEN(STR_TPM2_PCR_ALLOCATE_NULL), value = TPM2_SUPPORTED_BANK_NULL, flags = RESET_REQUIRED;
+//      option text = STRING_TOKEN(STR_TPM2_PCR_ALLOCATE_SHA1), value = TPM2_SUPPORTED_BANK_SHA1, flags = DEFAULT | MANUFACTURING | RESET_REQUIRED;
+//      option text = STRING_TOKEN(STR_TPM2_PCR_ALLOCATE_SHA2), value = TPM2_SUPPORTED_BANK_SHA2, flags = RESET_REQUIRED;
+//      option text = STRING_TOKEN(STR_TPM2_PCR_ALLOCATE_BOTH), value = TPM2_SUPPORTED_BANK_BOTH, flags = RESET_REQUIRED;
+//    endoneof;
+//  endif;
+//[-end-151211-IB03090424-modify]//
+
+endform;
+

@@ -1,0 +1,15 @@
+Start (hex)    End (hex)    Length (hex)    Area Name
+-----------    ---------    ------------    ---------
+
+00000000       00379FFF     0037A000        Bios binary
+00001000       000E2FFF     000E2000        IBBP Sub-Partition
+00001088       00001373     000002EC            Manifest
+00001380       00001433     000000B4            BPM.met (BootPolicyManifest)
+00001440       0000243F     00001000            IBBL (DataModule)
+00002440       0006243F     00060000            IBB (DataModule)
+00062440       000E243F     00080000            IBBR (DataModule)
+000E3000       00379FFF     00297000        OBBP Sub-Partition
+000E3080       000E3FFF     00000F80            PAD (DataModule)
+000E4000       000E7FFF     00004000            NvCommon (DataModule)
+000E8000       00338FFF     00251000            OBB (DataModule)
+00339000       00379FFF     00041000            NvStorage (DataModule)

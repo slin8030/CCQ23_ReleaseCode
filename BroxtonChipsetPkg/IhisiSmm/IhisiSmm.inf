@@ -1,0 +1,82 @@
+## @file
+#  Component description file for IhisiSmm module
+#
+#******************************************************************************
+#* Copyright (c) 2012 - 2014, Insyde Software Corp. All Rights Reserved.
+#*
+#* You may not reproduce, distribute, publish, display, perform, modify, adapt,
+#* transmit, broadcast, present, recite, release, license or otherwise exploit
+#* any part of this publication in any form, by any means, without the prior
+#* written permission of Insyde Software Corporation.
+#*
+#******************************************************************************
+
+[Defines]
+  INF_VERSION                    = 0x00010005
+  BASE_NAME                      = IhisiSmm
+  FILE_GUID                      = 7B7B65B6-E350-4139-8FE4-665772D32A45
+  MODULE_TYPE                    = DXE_SMM_DRIVER
+  PI_SPECIFICATION_VERSION       = 0x0001000A
+  VERSION_STRING                 = 1.0
+  ENTRY_POINT                    = IhisiEntryPoint
+
+[Sources]
+  IhisiSmm.h
+  IhisiSmm.c
+  Fbts.h
+  Fbts.c
+#[-start-150506-IB10860198-add]#
+#[-start-161215-IB08450359-remove]#
+#  H2oUveSmi.c
+#  H2oUveSmi.h
+#[-end-161215-IB08450359-remove]#
+#[-end-150506-IB10860198-add]#
+
+[Packages]
+  MdePkg/MdePkg.dec
+  MdeModulePkg/MdeModulePkg.dec
+  InsydeModulePkg/InsydeModulePkg.dec
+  IntelFrameworkPkg/IntelFrameworkPkg.dec
+  $(CHIPSET_PKG)/$(CHIPSET_PKG).dec
+  InsydeOemServicesPkg/InsydeOemServicesPkg.dec
+
+[LibraryClasses]
+  IoLib
+  UefiLib
+  DebugLib
+  VariableLib
+  BaseMemoryLib
+  FlashDevicesLib
+  SmmServicesTableLib
+  UefiDriverEntryPoint
+  UefiBootServicesTableLib
+  BaseOemSvcKernelLibDefault
+  SmmOemSvcChipsetLibDefault
+  BaseLib
+  BaseMemoryLib
+  
+[Protocols]
+  gH2OIhisiProtocolGuid
+  gEfiSmmFwBlockServiceProtocolGuid
+#[-start-150506-IB10860198-add]#
+#[-start-161215-IB08450359-remove]#
+#  gH2oUveSmiHandlerProtocolGuid
+#[-end-161215-IB08450359-remove]#
+#[-end-150506-IB10860198-add]#
+
+[FeaturePcd]
+  gChipsetPkgTokenSpaceGuid.PcdAntiTheftSupported
+  gChipsetPkgTokenSpaceGuid.PcdEcSharedFlashSupport
+  gChipsetPkgTokenSpaceGuid.PcdEcIdlePerWriteBlock
+
+[Pcd]
+  gChipsetPkgTokenSpaceGuid.PcdSetupConfigSize
+  gEfiMdePkgTokenSpaceGuid.PcdPciExpressBaseAddress
+  gInsydeTokenSpaceGuid.PcdIhisiRegisterTable
+#[-start-170215-IB07400840-add]#
+  gChipsetPkgTokenSpaceGuid.PcdFlashSpiRomSize
+#[-end-170215-IB07400840-add]#
+
+[Depex]
+  gEfiSmmFwBlockServiceProtocolGuid AND
+  gH2OIhisiProtocolGuid

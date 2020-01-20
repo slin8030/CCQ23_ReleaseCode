@@ -1,0 +1,149 @@
+## @file
+#  Component description file for hob proces Lib
+#
+# @copyright
+#  INTEL CONFIDENTIAL
+#  Copyright 2014 - 2016 Intel Corporation.
+#
+#  The source code contained or described herein and all documents related to the
+#  source code ("Material") are owned by Intel Corporation or its suppliers or
+#  licensors. Title to the Material remains with Intel Corporation or its suppliers
+#  and licensors. The Material may contain trade secrets and proprietary and
+#  confidential information of Intel Corporation and its suppliers and licensors,
+#  and is protected by worldwide copyright and trade secret laws and treaty
+#  provisions. No part of the Material may be used, copied, reproduced, modified,
+#  published, uploaded, posted, transmitted, distributed, or disclosed in any way
+#  without Intel's prior express written permission.
+#
+#  No license under any patent, copyright, trade secret or other intellectual
+#  property right is granted to or conferred upon you by disclosure or delivery
+#  of the Materials, either expressly, by implication, inducement, estoppel or
+#  otherwise. Any license under such intellectual property rights must be
+#  express and approved by Intel in writing.
+#
+#  Unless otherwise agreed by Intel in writing, you may not remove or alter
+#  this notice or any other notice embedded in Materials by Intel or
+#  Intel's suppliers or licensors in any way.
+#
+#  This file contains a 'Sample Driver' and is licensed as such under the terms
+#  of your license agreement with Intel or your vendor. This file may be modified
+#  by the user, subject to the additional terms of the license agreement.
+#
+#@par Specification Reference:
+##
+
+################################################################################
+#
+# Defines Section - statements that will be processed to create a Makefile.
+#
+################################################################################
+[Defines]
+  INF_VERSION                    = 0x00010005
+  BASE_NAME                      = PeiFspHobProcessLib
+  MODULE_UNI_FILE                = PeiFspHobProcessLib.uni
+  FILE_GUID                      = C7B7070B-E5A8-4b86-9110-BDCA1095F496
+  MODULE_TYPE                    = PEIM
+  VERSION_STRING                 = 1.0
+  LIBRARY_CLASS                  = FspWrapperHobProcessLib
+
+#
+# The following information is for reference only and not required by the build tools.
+#
+#  VALID_ARCHITECTURES           = IA32 X64
+#
+
+################################################################################
+#
+# Sources Section - list of files that are required for the build to succeed.
+#
+################################################################################
+
+[Sources]
+  FspHobProcessLib.c
+
+
+################################################################################
+#
+# Package Dependency Section - list of Package files that are required for
+#                              this module.
+#
+################################################################################
+
+[Packages]
+  MdePkg/MdePkg.dec
+  MdeModulePkg/MdeModulePkg.dec
+  IntelFrameworkPkg/IntelFrameworkPkg.dec
+  IntelFrameworkModulePkg/IntelFrameworkModulePkg.dec
+  IntelFsp2Pkg/IntelFsp2Pkg.dec
+  IntelFsp2WrapperPkg/IntelFsp2WrapperPkg.dec
+#[-start-161123-IB07250310-modify]#
+#  Platform/BxtPlatformPkg/PlatformPkg.dec
+  BroxtonSiPkg/BroxtonSiPkg.dec    #for ScAccess.h
+  BroxtonSiPkg/BroxtonSiPrivate.dec
+#[-end-161123-IB07250310-modify]#
+  ClientSiliconPkg/ClientSiliconPkg.dec
+  BroxtonFspBinPkg/BroxtonFspBinPkg.dec
+#[-start-161123-IB07250310-add]#
+  $(CHIPSET_PKG)/$(CHIPSET_PKG).dec
+#[-end-161123-IB07250310-add]#
+
+[LibraryClasses]
+  BaseLib
+  BaseMemoryLib
+  HobLib
+  DebugLib
+  FspWrapperPlatformLib
+  PeiServicesLib
+  PeiServicesTablePointerLib
+  FspCommonLib
+
+[Pcd]
+  ## CONSUMES
+  gIntelFsp2WrapperTokenSpaceGuid.PcdPeiMinMemSize
+
+  ## CONSUMES
+  gIntelFsp2WrapperTokenSpaceGuid.PcdPeiRecoveryMinMemSize
+
+[Guids]
+  ## PRODUCES ## HOB
+  gFspReservedMemoryResourceHobGuid
+
+  ## SOMETIMES_CONSUMES
+  ## PRODUCES ## HOB
+  gEfiMemoryTypeInformationGuid
+
+  ## PRODUCES ## HOB
+  gEfiSmmPeiSmramMemoryReserveGuid
+
+  ## SOMETIMES_CONSUMES ## HOB
+  ## SOMETIMES_PRODUCES ## HOB
+  gCpuInitDataHobGuid
+
+  ## SOMETIMES_CONSUMES ## Guid
+  gEfiVariableGuid
+
+  ## SOMETIMES_CONSUMES ## Guid
+  gEfiAcpiVariableGuid
+
+  ## SOMETIMES_CONSUMES ## Guid
+  gFspNonVolatileStorageHobGuid
+  gFspVariableNvDataHobGuid
+
+  ## SOMETIMES_CONSUMES ## HOB
+  ## SOMETIMES_PRODUCES ## HOB
+  gScDeviceTableHobGuid
+  ## SOMETIMES_CONSUMES ## HOB
+  ## SOMETIMES_PRODUCES ## HOB
+  gScPolicyHobGuid
+  ## SOMETIMES_CONSUMES ## HOB
+  ## SOMETIMES_PRODUCES ## HOB
+  gSiPolicyHobGuid  ##
+  gPeiAcpiCpuDataGuid ## UNDEFINED
+  gEfiBootMediaHobGuid
+  gEfiIfwiDnxRequestHobGuid
+
+  ## PRODUCES ## HOB
+  gSmbiosProcessorInfoHobGuid
+  gSmbiosCacheInfoHobGuid
+  gSiMemoryInfoDataGuid
+  gEfiGraphicsInfoHobGuid

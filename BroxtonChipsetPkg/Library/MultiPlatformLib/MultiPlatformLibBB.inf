@@ -1,0 +1,119 @@
+## @file
+# Component Description file for Multiplatform library.
+#
+#@copyright
+# Copyright (c) 1999 - 2016 Intel Corporation. All rights reserved
+# This software and associated documentation (if any) is furnished
+# under a license and may only be used or copied in accordance
+# with the terms of the license. Except as permitted by the
+# license, no part of this software or documentation may be
+# reproduced, stored in a retrieval system, or transmitted in any
+# form or by any means without the express written consent of
+# Intel Corporation.
+# This file contains a 'Sample Driver' and is licensed as such
+# under the terms of your license agreement with Intel or your
+# vendor. This file may be modified by the user, subject to
+# the additional terms of the license agreement.
+#
+#@par Specification Reference:
+#
+##
+
+[Defines]
+  INF_VERSION                    = 0x00010005
+  BASE_NAME                      = MultiPlatformLib
+  FILE_GUID                      = AB83A52B-B44A-462c-B099-444CC0ED274D
+  MODULE_TYPE                    = PEIM
+  VERSION_STRING                 = 1.0
+  LIBRARY_CLASS                  = MultiPlatformLib
+  PI_SPECIFICATION_VERSION       = 0x0001000A
+
+[Sources]
+  MultiPlatformLib.c
+  BoardIdentify.c
+  PlatformInfoHob.c
+  
+#[-start-160603-IB06720411-modify]#
+  #GPIO
+  BoardGpiosAplk/BoardGpios.c
+  BoardGpiosAplk/BoardGpios.h
+
+  #ClkGen
+#[-start-170321-IB07400848-remove]#
+#  BoardClkGensAplk/BoardClkGens.c
+#  BoardClkGensAplk/BoardClkGens.h
+#[-end-170321-IB07400848-remove]#
+
+  #Jumper
+  BoardJumpersAplk/BoardJumpers.c
+  BoardJumpersAplk/BoardJumpers.h
+
+  #OemId
+  BoardOemIdsAplk/BoardOemIds.c
+  BoardOemIdsAplk/BoardOemIds.h
+
+  #SSIDSVID
+  BoardSsidSvidAplk/BoardSsidSvid.c
+  BoardSsidSvidAplk/BoardSsidSvid.h
+#[-end-160603-IB06720411-modify]#
+  
+[Guids]
+
+  gEfiPlatformInfoGuid                     # ALWAYS_CONSUMED
+
+[Packages]
+  MdePkg/MdePkg.dec
+  MdeModulePkg/MdeModulePkg.dec
+#AutoTrim  Platform/AplPlatSamplePkg/PlatformPkg.dec  
+#AutoTrim  Platform/BxtPlatformPkg/PlatformPkg.dec  
+#[-start-160427-IB07400720-add]#
+  $(PROJECT_PKG)/Project.dec
+#[-end-160427-IB07400720-add]#
+#[-start-160216-IB03090424-add]#
+  InsydeModulePkg/InsydeModulePkg.dec
+  $(CHIPSET_PKG)/$(CHIPSET_PKG).dec
+#[-end-160216-IB03090424-add]#
+  IntelFrameworkPkg/IntelFrameworkPkg.dec
+  BroxtonSiPkg/BroxtonSiPkg.dec
+  IA32FamilyCpuPkg/IA32FamilyCpuPkg.dec
+#[-start-151126-IB02950555-modify]#
+  ClientSiliconPkg/ClientSiliconPkg.dec
+#[-end-151126-IB02950555-modify]#
+  InsydeModulePkg/InsydeModulePkg.dec
+  $(CHIPSET_PKG)/$(CHIPSET_PKG).dec
+#[-start-151216-IB11270137-add]#
+  ClientSiliconPkg/ClientSiliconPkg.dec
+#[-end-151216-IB11270137-add]#
+
+[LibraryClasses]
+  DebugLib
+  HobLib
+  IoLib
+  PeiKscLib
+  SteppingLib
+  EcMiscLib
+  GpioLib
+#[-start-151216-IB11270137-add]#
+  PeiOemSvcChipsetLibDefault
+#[-end-151216-IB11270137-add]#
+#[-start-170511-IB07400866-add]#
+!if $(H2OIDE_GPIO_CONFIG_SUPPORT) == YES
+  GpioCfgLib
+!endif  
+#[-end-170511-IB07400866-add]#
+[Ppis]
+  gEfiPeiReadOnlyVariable2PpiGuid
+
+[Pcd]
+  gEfiMdePkgTokenSpaceGuid.PcdPciExpressBaseAddress
+  gEfiBxtTokenSpaceGuid.PcdPmcGcrBaseAddress
+  gChipsetPkgTokenSpaceGuid.PcdSetupConfigSize
+#[-start-161128-IB07400820-add]#
+  gChipsetPkgTokenSpaceGuid.PcdGpe0bGpioGroup
+  gChipsetPkgTokenSpaceGuid.PcdGpe0cGpioGroup
+  gChipsetPkgTokenSpaceGuid.PcdGpe0dGpioGroup
+#[-end-161128-IB07400820-add]#
+
+[Guids]
+  gEfiSetupVariableGuid
+

@@ -1,0 +1,75 @@
+#/** @file
+#
+#  Component description file for PostMessage SMM driver.
+#
+#;******************************************************************************
+#;* Copyright (c) 2014, Insyde Software Corporation. All Rights Reserved.
+#;*
+#;* You may not reproduce, distribute, publish, display, perform, modify, adapt,
+#;* transmit, broadcast, present, recite, release, license or otherwise exploit
+#;* any part of this publication in any form, by any means, without the prior
+#;* written permission of Insyde Software Corporation.
+#;*
+#;******************************************************************************
+#*/
+
+[Defines]
+  INF_VERSION                    = 0x00010005
+  BASE_NAME                      = PostMessageSmm
+  FILE_GUID                      = 9FE10324-D10E-4CF2-99C4-F1B5A0B4732A
+  MODULE_TYPE                    = DXE_SMM_DRIVER
+  PI_SPECIFICATION_VERSION       = 0x0001000A
+  VERSION_STRING                 = 1.0
+  ENTRY_POINT                    = PostMessageSmmEntryPoint
+
+[Sources]
+  PostMessageSmm.c
+  PostMessageSmm.h
+
+  PostMessageHookSmm.c
+  PostMessageHookSmm.h
+
+  PostMessageList.c
+
+[Packages]
+  MdePkg/MdePkg.dec
+  $(INSYDE_EVENTLOG_PKG)/$(INSYDE_EVENTLOG_PKG).dec
+  InsydeModulePkg/InsydeModulePkg.dec
+#[-start-171207-IB08400539-remove]#
+#  IntelFrameworkPkg/IntelFrameworkPkg.dec
+#[-end-171207-IB08400539-remove]#
+#[-start-171207-IB08400539-add]#
+  SegFeaturePkg/SegFeaturePkg.dec
+#[-end-171207-IB08400539-add]# 
+
+[LibraryClasses]
+  BaseLib
+  UefiDriverEntryPoint
+  BaseMemoryLib
+  UefiBootServicesTableLib
+  UefiRuntimeServicesTableLib
+  SmmServicesTableLib
+  
+[Protocols]
+  gH2OSmmEventLogProtocolGuid                  # CONSUMED
+  gH2OSmmPostMessageProtocolGuid               # PRODUCED
+  gEfiSmmRscHandlerProtocolGuid                # CONSUMED
+
+[Guids]
+  gH2OPostMessageVariableGuid                  # CONSUMED
+
+[Pcd]
+#[-start-171212-IB08400542-modify]#
+  gH2OEventLogPkgTokenSpaceGuid.PcdH2OEventLogSupported
+  gH2OEventLogPkgTokenSpaceGuid.PcdH2OPostMessageOemHookEnable
+  gH2OEventLogPkgTokenSpaceGuid.PcdH2OPostMessageEnable
+  gH2OEventLogPkgTokenSpaceGuid.PcdH2OPostMessageProgressCodeEnable
+  gH2OEventLogPkgTokenSpaceGuid.PcdH2OPostMessageErrorCodeEnable
+  gH2OEventLogPkgTokenSpaceGuid.PcdH2OPostMessageDebugCodeEnable
+  gH2OEventLogPkgTokenSpaceGuid.PcdH2OPostMessageLogPostMsgEnable
+  gH2OEventLogPkgTokenSpaceGuid.PcdH2OPostMessageShowPostMsgEnable
+  gH2OEventLogPkgTokenSpaceGuid.PcdH2OPostMessageBeepPostMsgEnable
+#[-end-171212-IB08400542-modify]#
+
+[Depex]
+  TRUE  

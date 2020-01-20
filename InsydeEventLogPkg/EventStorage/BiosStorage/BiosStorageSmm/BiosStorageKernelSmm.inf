@@ -1,0 +1,80 @@
+## @file
+#  Implement the driver of BiosStorageKernelSmm.
+#  
+#  ***************************************************************************
+#  * Copyright (c) 2014, Insyde Software Corp. All Rights Reserved.
+#  *
+#  * You may not reproduce, distribute, publish, display, perform, modify, adapt,
+#  * transmit, broadcast, present, recite, release, license or otherwise exploit
+#  * any part of this publication in any form, by any means, without the prior
+#  * written permission of Insyde Software Corporation.
+#  *
+#  ******************************************************************************
+#  
+##
+
+[Defines]
+  INF_VERSION               = 0x00010005
+  BASE_NAME                 = BiosStorageKernelSmm
+  FILE_GUID                 = 099E1F39-0102-43c3-8CEC-8E897B6562F7
+  MODULE_TYPE               = DXE_SMM_DRIVER  
+  PI_SPECIFICATION_VERSION  = 0x0001000A
+  VERSION_STRING            = 1.0
+  ENTRY_POINT               = BiosStorageKernelEntryPoint
+
+[Packages]
+  MdePkg/MdePkg.dec
+  $(INSYDE_EVENTLOG_PKG)/$(INSYDE_EVENTLOG_PKG).dec
+  $(CHIPSET_PKG)/$(CHIPSET_PKG).dec
+  InsydeModulePkg/InsydeModulePkg.dec
+  MdeModulePkg/MdeModulePkg.dec  
+  
+[Sources]
+  BiosStorageKernelSmm.c
+
+[LibraryClasses]
+  UefiDriverEntryPoint
+  UefiBootServicesTableLib
+  UefiRuntimeServicesTableLib
+  MemoryAllocationLib
+  BaseMemoryLib
+  BaseLib
+  UefiLib
+  HobLib
+  FlashDevicesLib
+  IoLib
+  EventLogGetTimeFromCmosLib
+
+[Protocols]
+#[-start-171212-IB08400542-modify]#
+  gH2OBiosEventLogProtocolGuid
+  gH2OBiosSmmEventLogProtocolGuid                
+#[-end-171212-IB08400542-modify]#
+  gEfiNonVolatileVariableProtocolGuid
+  gEfiSmmBase2ProtocolGuid
+  gEfiSmmSwDispatch2ProtocolGuid
+  gEfiSmmVariableProtocolGuid
+  gEfiSmmCpuProtocolGuid
+  gEfiSmmCommunicationProtocolGuid             # CONSUMED
+  
+[Guids]
+  gEfiHobListGuid
+  gEfiFlashMapHobGuid
+#[-start-171212-IB08400542-modify]#
+  gH2OBiosEventLogHobGuid
+#[-end-171212-IB08400542-modify]#
+  gH2OBiosStorageVariableGuid
+  gH2OBiosStorageCommunicationGuid             # PRODUCED
+
+[Pcd]
+#[-start-171212-IB08400542-modify]#
+  gH2OEventLogPkgTokenSpaceGuid.PcdH2OBiosEventStorageBase  
+  gH2OEventLogPkgTokenSpaceGuid.PcdH2OBiosEventStorageSize
+  gH2OEventLogPkgTokenSpaceGuid.PcdH2OSmmBiosStorageSupportReady
+#[-end-171212-IB08400542-modify]#
+
+[FeaturePcd]  
+  
+[Depex]
+  gEfiSmmBase2ProtocolGuid        AND
+  gEfiSmmSwDispatch2ProtocolGuid

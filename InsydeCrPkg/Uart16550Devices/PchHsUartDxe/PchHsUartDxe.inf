@@ -1,0 +1,59 @@
+## @file
+#  High speed uart driver for Only MMIO device
+#
+#******************************************************************************
+#* Copyright (c) 2013, Insyde Software Corp. All Rights Reserved.
+#*
+#* You may not reproduce, distribute, publish, display, perform, modify, adapt,
+#* transmit, broadcast, present, recite, release, license or otherwise exploit
+#* any part of this publication in any form, by any means, without the prior
+#* written permission of Insyde Software Corporation.
+#*
+#******************************************************************************
+
+[Defines]
+  INF_VERSION          = 0x00010005
+  BASE_NAME            = PchHsUartDxe
+  FILE_GUID            = 33195652-2C4F-4b55-B6CB-63D3C38598D3
+  MODULE_TYPE          = DXE_DRIVER
+  VERSION_STRING       = 1.0
+  ENTRY_POINT          = HsUartEntryPoint
+
+
+[Sources]
+  PchHsUartDxe.h
+  PchHsUartDxe.c
+
+[Packages]
+  InsydeCrPkg/InsydeCrPkg.dec
+  MdePkg/MdePkg.dec
+  MdeModulePkg/MdeModulePkg.dec
+  InsydeModulePkg/InsydeModulePkg.dec
+
+[LibraryClasses]
+  BaseLib
+  BaseMemoryLib
+  DebugLib
+  DevicePathLib
+  UefiLib
+  UefiDriverEntryPoint
+  UefiBootServicesTableLib
+  MemoryAllocationLib
+  IoLib
+  PrintLib
+
+[Guids]
+
+[Protocols]
+  gH2OUart16550AccessProtocolGuid
+[Pcd]
+  gInsydeCrTokenSpaceGuid.PcdH2OHsUartSerialClock
+  gInsydeCrTokenSpaceGuid.PcdH2OHsUartSampleRate
+  gInsydeCrTokenSpaceGuid.PcdH2OPchHsUartMmioAddress
+  gInsydeCrTokenSpaceGuid.PcdH2OSerialIoPchPcrAddress
+
+[FeaturePcd]
+
+[Depex]
+  TRUE
+

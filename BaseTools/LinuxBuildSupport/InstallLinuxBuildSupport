@@ -1,0 +1,65 @@
+## @file
+# Linux build support installation script file
+#
+#******************************************************************************
+#* Copyright (c) 2013 - 2016, Insyde Software Corp. All Rights Reserved.
+#*
+#* You may not reproduce, distribute, publish, display, perform, modify, adapt,
+#* transmit, broadcast, present, recite, release, license or otherwise exploit
+#* any part of this publication in any form, by any means, without the prior
+#* written permission of Insyde Software Corporation.
+#*
+#******************************************************************************
+
+InstallBuildToolsByAptGet() {
+  if ! command -v svn > /dev/null; then
+    sudo apt-get -y install subversion
+  fi
+  sudo apt-get -y install build-essential gcc-multilib uuid-dev p7zip-full nasm
+  
+  #
+  # PyInstaller
+  #
+  sudo apt-get -y install python-pip
+  sudo pip install pyinstaller
+  
+  #
+  # PIL
+  #
+  sudo apt-get -y install python-dev libjpeg-dev libfreetype6-dev zlib1g-dev  
+  if [ "`uname -m`" == "i686" ]; then
+    sudo ln -s /usr/lib/i386-linux-gnu/libjpeg.so /usr/lib/
+    sudo ln -s /usr/lib/i386-linux-gnu/libfreetype.so.6 /usr/lib/libfreetype.so
+    sudo ln -s /usr/lib/i386-linux-gnu/libz.so /usr/lib/
+  else
+    sudo ln -s /usr/lib/x86_64-linux-gnu/libjpeg.so /usr/lib
+    sudo ln -s /usr/lib/x86_64-linux-gnu/libfreetype.so /usr/lib
+    sudo ln -s /usr/lib/x86_64-linux-gnu/libz.so /usr/lib
+  fi
+  sudo ln -s /usr/include/freetype2 /usr/include/freetype
+  
+  if [ "`uname -m`" == "x86_64" ]; then
+    sudo apt-get -y install libc6-dev-i386 lib32stdc++6 lib32z1 
+  fi
+}
+
+InstallBuildToolsByYum() {
+  sudo yum install gcc gcc-c++ subversion libuuid-devel p7zip nasm
+  if [ "`uname -m`" == "x86_64" ]; then
+    sudo yum -y install libuuid-devel.i686 libstdc++.i686 glibc-devel.i686 libzip.i686
+  fi
+}
+
+InstallBuildToolsByUrpm() {
+  su -
+  yum install task-c++-devel glibc-devel subversion libuuid-devel p7zip nasm
+  exit
+}
+
+if command -v apt-get ; then
+  InstallBuildToolsByAptGet
+elif command -v yum ; then
+  InstallBuildToolsByYum
+elif command -v urpmi ; then
+  InstallBuildToolsByUrpm
+fi

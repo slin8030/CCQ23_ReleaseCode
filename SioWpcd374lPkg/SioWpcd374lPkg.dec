@@ -1,0 +1,44 @@
+## @file
+#
+#  Platform Package Declaration file.
+#
+#******************************************************************************
+#* Copyright (c) 2013, Insyde Software Corporation. All Rights Reserved.
+#*
+#* You may not reproduce, distribute, publish, display, perform, modify, adapt,
+#* transmit, broadcast, present, recite, release, license or otherwise exploit
+#* any part of this publication in any form, by any means, without the prior
+#* written permission of Insyde Software Corporation.
+#*
+#******************************************************************************
+#
+##
+
+[Defines]
+  DEC_SPECIFICATION              = 0x00010005
+  PACKAGE_NAME                   = SioWpcd374lPkg
+  PACKAGE_GUID                   = 3DC7AD45-0E3A-40dd-B2D0-D3947473686B
+  PACKAGE_VERSION                = 0.2
+
+[Includes]
+  Include
+
+[LibraryClasses]
+
+[Guids]
+  gSioWpcd374lSetup00FormSetGuid = { 0x2c221d35, 0x982e, 0x4e78, { 0xab, 0x1, 0x4a, 0x1, 0xdd, 0x39, 0xd0, 0xf8 } }
+
+[Protocols]
+
+[PcdsFeatureFlag]
+  gSioGuid.PcdSioWpcd374lSetup|FALSE|BOOLEAN|0x00480811
+  gSioGuid.PcdSioWpcd374lUpdateAsl|FALSE|BOOLEAN|0x00480812
+  gSioGuid.PcdSioWpcd374lSupported|FALSE|BOOLEAN|0x00480813
+
+[PcdsFixedAtBuild,PcdsPatchableInModule,PcdsDynamic]
+  gSioGuid.PcdSioWpcd374lCfg|{0}|VOID*|0x00480814
+  gSioGuid.PcdSioWpcd374lSetupStr|L""|VOID*|0x00480815
+  gSioGuid.PcdSioWpcd374lDmi|{0}|VOID*|0x00480816
+
+[PcdsDynamicEx]
+  gLinkAdvancedTokenSpaceGuid.SioWpcd374lSetup00FormSet|{0}|VOID*|0x00480817

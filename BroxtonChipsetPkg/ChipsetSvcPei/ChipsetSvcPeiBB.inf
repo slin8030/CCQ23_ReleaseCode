@@ -1,0 +1,146 @@
+## @file
+#  Implement the PEIM of PeiChipsetSvc.
+#  
+#  ***************************************************************************
+#  * Copyright (c) 2014 - 2015, Insyde Software Corp. All Rights Reserved.
+#  *
+#  * You may not reproduce, distribute, publish, display, perform, modify, adapt,
+#  * transmit, broadcast, present, recite, release, license or otherwise exploit
+#  * any part of this publication in any form, by any means, without the prior
+#  * written permission of Insyde Software Corporation.
+#  *
+#  ******************************************************************************
+#  
+##
+
+[Defines]
+  INF_VERSION               = 0x00010005
+  BASE_NAME                 = ChipsetSvcPeiBB
+  FILE_GUID                 = FB3D20EE-CB5D-45ee-BBAE-C5AAA9C0FDFA
+  MODULE_TYPE               = PEIM
+  VERSION_STRING            = 1.0
+  ENTRY_POINT               = ChipsetSvcPeiEntryPoint
+
+[Packages]
+  MdePkg/MdePkg.dec
+  MdeModulePkg/MdeModulePkg.dec
+  $(CHIPSET_PKG)/$(CHIPSET_PKG).dec
+  $(PLATFORM_RC_PACKAGE)/$(PLATFORM_RC_PACKAGE).dec
+  InsydeModulePkg/InsydeModulePkg.dec
+  IntelFrameworkPkg/IntelFrameworkPkg.dec
+  UefiCpuPkg/UefiCpuPkg.dec
+  IA32FamilyCpuPkg/IA32FamilyCpuPkg.dec
+  SecurityPkg/SecurityPkg.dec
+#[-start-151126-IB02950555-modify]#
+  ClientSiliconPkg/ClientSiliconPkg.dec
+#[-end-151126-IB02950555-modify]#
+  
+[Sources]
+  ChipsetSvcPeiBB.c
+  PlatformStage1Init.c
+  Stage1MemoryDiscoverCallback.c
+  GetSleepState.c
+
+[LibraryClasses]
+  PeimEntryPoint
+  MemoryAllocationLib
+  BaseLib
+  IoLib
+  BaseMemoryLib
+  DebugLib
+  PeiServicesTablePointerLib
+  HobLib
+  MtrrLib
+  SeCUmaLib
+  BaseCryptLib
+  CmosLib
+  Stage2HashLib
+  PostCodeLib
+  MultiPlatformLib
+!if $(TABLET_PF_BUILD) == YES    
+  I2CLibPei
+  IshInitLib
+!endif  
+  PreSiliconLib
+#[-start-160517-IB03090427-remove]#
+#  PmicLib
+#[-end-160517-IB03090427-remove]#
+  ScPlatformLib
+#[-start-160803-IB07220122-remove]#
+#   PlatformConfigDataLib
+#[-end-160803-IB07220122-remove]#
+
+[Ppis]
+  gH2OChipsetServicesPpiGuid
+  gEfiPeiStallPpiGuid
+  gEfiPeiMemoryDiscoveredPpiGuid
+  gEfiPeiReadOnlyVariable2PpiGuid
+#[-start-161123-IB07250310-modify]#
+!if $(FSP_ENABLE) == NO
+  gEmuPeiPpiGuid
+!endif
+#[-end-161123-IB07250310-modify]#
+  gEfiPeiBootInTxeRecoveryModePpiGuid
+  gTargetTpmSelectDtpmPpiGuid
+  gDramPolicyPpiGuid
+
+[Guids]
+  gEfiPlatformInfoGuid
+  gEfiPlatformBootModeGuid
+  gSystemConfigurationGuid
+  gMtrrDataInfoGuid
+  gEfiBxtVariableGuid
+
+[Pcd]
+  gInsydeTokenSpaceGuid.PcdFlashFvMainBase
+  gInsydeTokenSpaceGuid.PcdFlashFvMainSize
+  gChipsetPkgTokenSpaceGuid.PcdFlashFvRecovery2Base
+  gChipsetPkgTokenSpaceGuid.PcdFlashFvRecovery2Size
+  gInsydeTokenSpaceGuid.PcdFlashFvRecoverySize
+  gChipsetPkgTokenSpaceGuid.PcdFlashFvIBBLSize
+  gEfiMdePkgTokenSpaceGuid.PcdPciExpressBaseAddress
+  gInsydeTokenSpaceGuid.PcdFlashAreaBaseAddress
+  gInsydeTokenSpaceGuid.PcdFlashAreaSize
+  gInsydeTokenSpaceGuid.PcdFlashFvRecoveryBase
+#[-start-180504-IB07400964-remove]#
+#  gChipsetPkgTokenSpaceGuid.SecureBootStage2Check
+#[-end-180504-IB07400964-remove]#
+  gChipsetPkgTokenSpaceGuid.FtpmSupport
+  gChipsetPkgTokenSpaceGuid.PcdBackupFvBase
+  gChipsetPkgTokenSpaceGuid.PcdBackupFvSize
+#[-start-180504-IB07400964-remove]#
+#  gChipsetPkgTokenSpaceGuid.SecureBootStage1Check
+#[-end-180504-IB07400964-remove]#
+  gChipsetPkgTokenSpaceGuid.PcdSetupConfigSize
+  gChipsetPkgTokenSpaceGuid.PcdSusPwrFlrReset
+  gChipsetPkgTokenSpaceGuid.PcdFlashAreaBase2Address
+  gChipsetPkgTokenSpaceGuid.PcdFlashArea2Size
+  gChipsetPkgTokenSpaceGuid.PcdFlashFvBiosLoaderBase
+  gChipsetPkgTokenSpaceGuid.PcdFlashFvBiosLoaderSize
+!if $(BIOS_2MB_BUILD) == YES    
+  gChipsetPkgTokenSpaceGuid.PcdSpi2mSupport
+!endif  
+  gInsydeTokenSpaceGuid.PcdFlashNvStorageMicrocodeSize
+!if $(TABLET_PF_BUILD) == YES
+  gChipsetPkgTokenSpaceGuid.PcdPmicId
+  gChipsetPkgTokenSpaceGuid.PcdBoardId
+!endif
+  gChipsetPkgTokenSpaceGuid.PcdPlatformFlavor
+  gInsydeTokenSpaceGuid.PcdUseFastCrisisRecovery
+  gEfiBxtTokenSpaceGuid.PcdPmcGcrBaseAddress
+  gEfiBxtTokenSpaceGuid.PcdPlatformIdRegisterOffset
+  gEfiBxtTokenSpaceGuid.PcdPmcSsramBaseAddress0
+  gEfiBxtTokenSpaceGuid.PcdPmcSsramBaseAddress1
+  gEfiBxtTokenSpaceGuid.PcdP2SBBaseAddress
+  gEfiBxtTokenSpaceGuid.PcdScAcpiIoPortBaseAddress
+  gEfiBxtTokenSpaceGuid.PcdPmcIpc1BaseAddress0
+  gEfiBxtTokenSpaceGuid.PcdPmcIpc1BaseAddress1
+  gEfiBxtTokenSpaceGuid.PcdIafwPlatformInfo              ## PRODUCES
+  gChipsetPkgTokenSpaceGuid.PcdSvBiosKnobs
+
+
+[FeaturePcd]
+  gChipsetPkgTokenSpaceGuid.PcdRuntimeFtpmDtpmSwitch
+
+[Depex]
+  gEfiPeiReadOnlyVariable2PpiGuid

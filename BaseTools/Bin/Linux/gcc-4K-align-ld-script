@@ -1,0 +1,50 @@
+/* OUTPUT_FORMAT(efi-bsdrv-x86_64) */
+SECTIONS
+{
+  /*
+   * The PE/COFF binary consists of DOS and PE/COFF headers, and a sequence of
+   * section headers adding up to PECOFF_HEADER_SIZE bytes (which differs
+   * between 32-bit and 64-bit builds). The actual start of the .text section
+   * will be rounded up based on its actual alignment.
+  */
+  /* . = 0 + SIZEOF_HEADERS; */
+  . = PECOFF_HEADER_SIZE;
+  .text : ALIGN(0x1000)
+  {
+    *(.text .stub .text.* .gnu.linkonce.t.*)
+    . = ALIGN(0x20);
+  }
+  .data : ALIGN(0x1000)
+  {
+    *(
+      .rodata .rodata.* .gnu.linkonce.r.*
+      .data .data.* .gnu.linkonce.d.*
+      .bss .bss.*
+      *COM*
+    )
+    . = ALIGN(0x20);
+  }
+  .eh_frame : ALIGN(0x1000)
+  {
+    KEEP (*(.eh_frame))
+  }
+  .got : ALIGN(0x1000)
+  {
+    *(.got .got.*)
+    . = ALIGN(0x20);
+  }
+  .rela : ALIGN(0x1000)
+  {
+    *(.rela .rela.*)
+  }
+  /DISCARD/ : {
+    *(.note.GNU-stack) *(.gnu_debuglink)
+    *(.interp)
+    *(.dynsym)
+    *(.dynstr)
+    *(.dynamic)
+    *(.hash)
+    *(.comment)
+  }
+}
+

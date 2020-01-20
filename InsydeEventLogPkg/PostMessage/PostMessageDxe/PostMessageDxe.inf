@@ -1,0 +1,92 @@
+#/** @file
+#
+#  Component description file for PostMessage DXE driver.
+#
+#;******************************************************************************
+#;* Copyright (c) 2014, Insyde Software Corporation. All Rights Reserved.
+#;*
+#;* You may not reproduce, distribute, publish, display, perform, modify, adapt,
+#;* transmit, broadcast, present, recite, release, license or otherwise exploit
+#;* any part of this publication in any form, by any means, without the prior
+#;* written permission of Insyde Software Corporation.
+#;*
+#;******************************************************************************
+#*/
+
+[Defines]
+  INF_VERSION                    = 0x00010005
+  BASE_NAME                      = PostMessageDxe
+  FILE_GUID                      = 60C83BC9-89FB-48D5-8962-A5DCE1D4C0FE
+  MODULE_TYPE                    = DXE_DRIVER
+  PI_SPECIFICATION_VERSION       = 0x0001000A
+  VERSION_STRING                 = 1.0
+  ENTRY_POINT                    = PostMessageDxeEntryPoint
+
+[Sources]
+  PostMessageDxe.c
+  PostMessageDxe.h
+
+  PostMessageHookDxe.c
+  PostMessageHookDxe.h
+
+  PostMessageList.c
+
+[Packages]
+  MdePkg/MdePkg.dec
+  $(INSYDE_EVENTLOG_PKG)/$(INSYDE_EVENTLOG_PKG).dec
+  InsydeModulePkg/InsydeModulePkg.dec
+#[-start-171207-IB08400539-remove]#
+#  IntelFrameworkPkg/IntelFrameworkPkg.dec
+#[-end-171207-IB08400539-remove]#
+#[-start-171207-IB08400539-add]#
+  SegFeaturePkg/SegFeaturePkg.dec
+#[-end-171207-IB08400539-add]# 
+  
+[LibraryClasses]
+  BaseLib
+  UefiDriverEntryPoint
+  BaseMemoryLib
+  UefiBootServicesTableLib
+  UefiRuntimeServicesTableLib
+  HobLib
+  UefiLib
+  DevicePathLib
+  
+[Protocols]
+#[-start-171207-IB08400539-modify]#
+  gEfiLegacyRegion2ProtocolGuid                # CONSUMED
+#[-end-171207-IB08400539-modify]#
+  gEfiLegacyBiosProtocolGuid                   # CONSUMED
+  gEfiVariableWriteArchProtocolGuid            # CONSUMED
+  gEfiConsoleControlProtocolGuid               # CONSUMED
+  gEfiSpeakerInterfaceProtocolGuid             # CONSUMED
+  gH2OEventLogProtocolGuid                     # CONSUMED
+  gH2OPostMessageProtocolGuid                  # PRODUCED
+  gH2OEventLogStringProtocolGuid               # PRODUCED
+  gEfiRscHandlerProtocolGuid                   # CONSUMED
+  gEfiFirmwareVolume2ProtocolGuid              # CONSUMED
+
+[Guids]
+  gH2OPeiPostMessageHobGuid                    # CONSUMED
+  gH2OPostMessageVariableGuid                  # PRODUCED
+  gEfiEventExitBootServicesGuid                # CONSUMED
+
+[Pcd]
+#[-start-171212-IB08400542-modify]#
+  gH2OEventLogPkgTokenSpaceGuid.PcdH2OEventLogSupported
+  gH2OEventLogPkgTokenSpaceGuid.PcdH2OPostMessageOemHookEnable
+  gH2OEventLogPkgTokenSpaceGuid.PcdH2OPostMessageEnable
+  gH2OEventLogPkgTokenSpaceGuid.PcdH2OPostMessageProgressCodeEnable
+  gH2OEventLogPkgTokenSpaceGuid.PcdH2OPostMessageErrorCodeEnable
+  gH2OEventLogPkgTokenSpaceGuid.PcdH2OPostMessageDebugCodeEnable
+  gH2OEventLogPkgTokenSpaceGuid.PcdH2OPostMessageLogPostMsgEnable
+  gH2OEventLogPkgTokenSpaceGuid.PcdH2OPostMessageShowPostMsgEnable
+  gH2OEventLogPkgTokenSpaceGuid.PcdH2OPostMessageBeepPostMsgEnable
+  gH2OEventLogPkgTokenSpaceGuid.PcdH2OPostBeepSupported
+#[-start-171006-IB08400522-add]#
+  gH2OEventLogPkgTokenSpaceGuid.PcdH2OEventLogTarget
+#[-end-171006-IB08400522-add]#
+#[-end-171212-IB08400542-modify]#
+  
+[Depex]
+  TRUE

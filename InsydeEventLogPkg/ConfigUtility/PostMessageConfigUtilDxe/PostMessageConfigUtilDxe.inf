@@ -1,0 +1,72 @@
+#/** @file
+#
+#  Component description file for POST Message Config Utility DXE driver.
+#
+#;******************************************************************************
+#;* Copyright (c) 2016, Insyde Software Corporation. All Rights Reserved.
+#;*
+#;* You may not reproduce, distribute, publish, display, perform, modify, adapt,
+#;* transmit, broadcast, present, recite, release, license or otherwise exploit
+#;* any part of this publication in any form, by any means, without the prior
+#;* written permission of Insyde Software Corporation.
+#;*
+#;******************************************************************************
+#*/
+
+[Defines]
+  INF_VERSION                    = 0x00010005
+  BASE_NAME                      = PostMessageConfigUtilDxe
+  FILE_GUID                      = 4BEB3357-F146-4E10-9F60-E4797906AFDA
+  MODULE_TYPE                    = DXE_DRIVER
+  VERSION_STRING                 = 1.0
+  ENTRY_POINT                    = PostMessageConfigUtilDxeInitialize
+  
+[Sources]
+  PostMessageConfigUtil.c
+  PostMessageConfigUtil.h
+  PostMessageConfigUtilConfigPageVfr.vfr
+  PostMessageConfigUtilStr.uni
+  PostMessageConfigUtilSetupConfig.h
+  
+[Packages]
+  InsydeEventLogPkg/InsydeEventLogPkg.dec
+  InsydeModulePkg/InsydeModulePkg.dec  
+#[-start-171207-IB08400539-remove]#
+#  IntelFrameworkPkg/IntelFrameworkPkg.dec
+#[-end-171207-IB08400539-remove]#
+  MdePkg/MdePkg.dec
+  MdeModulePkg/MdeModulePkg.dec
+  
+[LibraryClasses]
+  UefiDriverEntryPoint
+  UefiBootServicesTableLib
+  UefiRuntimeServicesTableLib
+  DebugLib
+  DevicePathLib
+  BaseLib
+  BaseMemoryLib
+  UefiLib
+  HiiLib
+  VariableLib
+
+[Guids]
+  gEfiIfrTianoGuid                              ## PRODUCES
+  gH2OPostMessageConfigUtilConfigFormsetGuid    ## PRODUCES
+  gH2OPostMessageConfigUtilVarstoreGuid         ## PRODUCES
+  
+[Protocols]
+  gEfiHiiConfigAccessProtocolGuid               ## PRODUCES
+  gEfiVariableArchProtocolGuid                  ## CONSUMES
+  gEfiHiiDatabaseProtocolGuid                   ## CONSUMES
+  gEfiHiiStringProtocolGuid                     ## CONSUMES
+  gEfiFormBrowser2ProtocolGuid                  ## CONSUMES
+  gEfiHiiConfigRoutingProtocolGuid              ## CONSUMES
+  gEdkiiFormBrowserEx2ProtocolGuid              ## CONSUMES
+  
+[Pcd]
+
+[Depex]
+  gEfiVariableArchProtocolGuid      AND
+  gEfiVariableWriteArchProtocolGuid AND
+  gEfiHiiDatabaseProtocolGuid       
+

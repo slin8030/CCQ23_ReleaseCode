@@ -1,0 +1,183 @@
+## @file
+# Module Infomation file for PEI PeiPolicyUpdateLib Library
+#
+# @copyright
+#  INTEL CONFIDENTIAL
+#  Copyright 2011 - 2016 Intel Corporation.
+#
+#  The source code contained or described herein and all documents related to the
+#  source code ("Material") are owned by Intel Corporation or its suppliers or
+#  licensors. Title to the Material remains with Intel Corporation or its suppliers
+#  and licensors. The Material may contain trade secrets and proprietary and
+#  confidential information of Intel Corporation and its suppliers and licensors,
+#  and is protected by worldwide copyright and trade secret laws and treaty
+#  provisions. No part of the Material may be used, copied, reproduced, modified,
+#  published, uploaded, posted, transmitted, distributed, or disclosed in any way
+#  without Intel's prior express written permission.
+#
+#  No license under any patent, copyright, trade secret or other intellectual
+#  property right is granted to or conferred upon you by disclosure or delivery
+#  of the Materials, either expressly, by implication, inducement, estoppel or
+#  otherwise. Any license under such intellectual property rights must be
+#  express and approved by Intel in writing.
+#
+#  Unless otherwise agreed by Intel in writing, you may not remove or alter
+#  this notice or any other notice embedded in Materials by Intel or
+#  Intel's suppliers or licensors in any way.
+#
+#  This file contains a 'Sample Driver' and is licensed as such under the terms
+#  of your license agreement with Intel or your vendor. This file may be modified
+#  by the user, subject to the additional terms of the license agreement.
+#
+# @par Specification Reference:
+#
+##
+
+
+#[-start-151228-IB03090424-modify]#
+[Defines]
+  INF_VERSION = 0x00010017
+  BASE_NAME = PeiPolicyUpdateLib
+  FILE_GUID = D8E9897A-5B25-4f90-A8FA-93131D2FA6A1
+  VERSION_STRING = 1.0
+  MODULE_TYPE = PEIM
+  LIBRARY_CLASS = PeiPolicyUpdateLib|PEIM PEI_CORE SEC
+
+
+[Sources]
+  PeiScPolicyUpdate.c
+  PeiCpuPolicyUpdatePreMem.c
+  PeiCpuPolicyUpdate.c
+  #PeiSaPolicyUpdate.c
+  PeiSiPolicyUpdate.c
+  HdaVerbTables.c
+
+[Packages]
+  MdePkg/MdePkg.dec
+#[-start-151126-IB02950555-modify]#
+  ClientSiliconPkg/ClientSiliconPkg.dec
+#[-end-151126-IB02950555-modify]#
+  MdeModulePkg/MdeModulePkg.dec
+  IntelFrameworkPkg/IntelFrameworkPkg.dec
+  IntelFrameworkModulePkg/IntelFrameworkModulePkg.dec
+#AutoTrim  Platform/AplPlatSamplePkg/PlatformPkg.dec
+#AutoTrim  Platform/BxtPlatformPkg/PlatformPkg.dec
+#  ClientCommonPkg/ClientCommonPkg.dec
+#[-start-161228-IB04530802-modify]#
+  $(CHIPSET_PKG)/$(CHIPSET_PKG).dec
+  InsydeModulePkg/InsydeModulePkg.dec
+#[-end-161228-IB04530802-modify]#
+  BroxtonSiPkg/BroxtonSiPkg.dec
+#[-start-151123-IB08450329-add]#
+  InsydeOemServicesPkg/InsydeOemServicesPkg.dec
+#[-end-151123-IB08450329-add]#
+
+[LibraryClasses]
+  #PeiSaPolicyLib
+  ConfigBlockLib
+  PcdLib
+  PeiScPolicyLib
+#[-start-160803-IB07220122-remove]#
+#   PlatformConfigDataLib
+#[-end-160803-IB07220122-remove]#
+  SteppingLib
+  ScPlatformLib
+#[-start-160413-IB03090426-add]#
+  MmPciLib
+#[-end-160413-IB03090426-add]#
+#[-start-160509-IB03090427-add]#
+  BpdtLib
+#[-end-160509-IB03090427-add]#
+#[-start-160817-IB03090432-add]#
+  BootMediaLib
+#[-end-160817-IB03090432-add]#
+#[-start-151123-IB08450329-add]#
+  PeiOemSvcKernelLibDefault
+  MemoryAllocationLib
+  BaseMemoryLib
+#[-end-151123-IB08450329-add]#
+#[-start-160914-IB07400784-add]#
+  MultiPlatformBaseLib
+#[-end-160914-IB07400784-add]#
+
+[Ppis]
+  gEfiPeiReadOnlyVariable2PpiGuid ## CONSUMES
+  gScPolicyPpiGuid
+  #gSiCpuPolicyPpiGuid
+#[-start-160317-IB03090425-remove]#
+#  gHdaVerbTablePpiGuid
+#[-end-160317-IB03090425-remove]#
+  gSaMiscConfigGuid
+  gGraphicsConfigGuid
+  gIpuConfigGuid
+  gScSpiPpiGuid
+#[-start-160301-IB07220042-add]#
+#[-start-161123-IB07250310-modify]#
+!if $(FSP_ENABLE) == NO
+  gEmuPeiPpiGuid
+!endif
+#[-end-161123-IB07250310-modify]#
+#[-end-160301-IB07220042-add]#
+
+[Guids]
+  gEfiSetupVariableGuid
+  gEfiPlatformInfoGuid
+  gPlatformEmmcHs400TuningInfoGuid
+  gVbtInfoGuid
+  gEfiBootMediaHobGuid
+  gScGeneralConfigGuid
+  gPcieRpConfigGuid
+  gSataConfigGuid
+  gHpetConfigGuid
+  gUsbConfigGuid
+  gIoApicConfigGuid
+  gHdAudioConfigGuid
+  gPmConfigGuid
+  gLockDownConfigGuid
+  gLpssConfigGuid
+  gScsConfigGuid
+  gVtdConfigGuid
+  gIshConfigGuid
+  gFlashProtectionConfigGuid
+#[-start-160413-IB03090426-add]#
+  gDciConfigGuid
+#[-end-160413-IB03090426-add]#
+#[-start-160812-IB11270159-add]#
+  gSecureFlashInfoGuid
+#[-end-160812-IB11270159-add]#
+[Pcd.common]
+  gEfiBxtTokenSpaceGuid.PcdScAcpiIoPortBaseAddress
+  gEfiBxtTokenSpaceGuid.PcdP2SBBaseAddress
+#[-start-160801-IB03090430-modify]#
+  gEfiBxtTokenSpaceGuid.PcdPmcIpc1BaseAddress0
+#[-end-160801-IB03090430-modify]#
+#[-start-161228-IB04530802-add]#
+  gPlatformHardwareSwitchGuid
+#[-end-161228-IB04530802-add]#
+
+#[-start-160301-IB07220042-add]#
+[FeaturePcd]
+  gInsydeTokenSpaceGuid.PcdUseFastCrisisRecovery
+#[-end-160301-IB07220042-add]#
+
+[Pcd]
+  gChipsetPkgTokenSpaceGuid.PcdSetupConfigSize
+#[-start-160509-IB03090427-add]#
+  gEfiBxtTokenSpaceGuid.PcdFDOState
+#[-end-160509-IB03090427-add]#
+#[-start-170119-IB07401072-add]#
+!if $(PCI_64BITS_MMIO_DECODE_SUPPORT) == YES
+  gChipsetPkgTokenSpaceGuid.PcdMmioMem64Enable
+  gChipsetPkgTokenSpaceGuid.PcdMmioMem64SkipOnboard
+!endif  
+#[-end-170119-IB07401072-add]#
+
+[FixedPcd]
+  gChipsetPkgTokenSpaceGuid.PcdSpiFlashSize
+  gChipsetPkgTokenSpaceGuid.PcdSpiFlashBase
+#[-end-151228-IB03090424-modify]#
+  
+#[-start-160817-IB03090432-add]#
+[Pcd]
+  gEfiIntelFrameworkModulePkgTokenSpaceGuid.PcdBootState
+#[-end-160817-IB03090432-add]#

@@ -1,0 +1,73 @@
+## @file
+#  Component description file for SIO791 Module
+#
+#******************************************************************************
+#* Copyright (c) 2014, Insyde Software Corp. All Rights Reserved.
+#*
+#* You may not reproduce, distribute, publish, display, perform, modify, adapt,
+#* transmit, broadcast, present, recite, release, license or otherwise exploit
+#* any part of this publication in any form, by any means, without the prior
+#* written permission of Insyde Software Corporation.
+#*
+#******************************************************************************
+##@file
+# Component description file for SIO791 module.
+#
+#@copyright
+# Copyright (c) 1999 - 2016 Intel Corporation. All rights reserved
+# This software and associated documentation (if any) is furnished
+# under a license and may only be used or copied in accordance
+# with the terms of the license. Except as permitted by the
+# license, no part of this software or documentation may be
+# reproduced, stored in a retrieval system, or transmitted in any
+# form or by any means without the express written consent of
+# Intel Corporation.
+# This file contains a 'Sample Driver' and is licensed as such
+# under the terms of your license agreement with Intel or your
+# vendor. This file may be modified by the user, subject to
+# the additional terms of the license agreement.
+#
+#@par Specification Reference:
+#
+##
+
+[defines]
+  INF_VERSION                    = 0x00010005
+  BASE_NAME                      = SIO791
+  FILE_GUID                      = 04A76C80-06B9-445e-B73E-CB8C61A6A964
+  MODULE_TYPE                    = DXE_DRIVER
+  VERSION_STRING                 = 1.0
+  ENTRY_POINT                    = LpcDriverEntryPoint
+
+[sources.common]
+  LpcIsaAcpi.h
+  LpcSio.h
+  LpcDriver.h
+  LpcIsaAcpi.c
+  LpcSio.c
+  LpcDriver.c
+
+[Packages]
+  MdePkg/MdePkg.dec
+  $(CHIPSET_PKG)/$(CHIPSET_PKG).dec
+  IntelFrameworkPkg/IntelFrameworkPkg.dec
+  IntelFrameworkModulePkg/IntelFrameworkModulePkg.dec
+  PcAtChipsetPkg/PcAtChipsetPkg.dec
+
+[LibraryClasses]
+  UefiDriverEntryPoint
+  UefiBootServicesTableLib
+  DevicePathLib
+  UefiLib
+  S3BootScriptLib
+  DebugLib
+
+[Protocols]
+  gEfiPciIoProtocolGuid
+  gEfiIsaAcpiProtocolGuid
+  gEfiLpcWpce791PolicyProtocolGuid
+
+[Guids]
+
+[Depex]
+  TRUE

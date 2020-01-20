@@ -1,0 +1,61 @@
+#/** @file
+#
+#  Component description file for BmcSelEventStorage DXE driver.
+#
+#;******************************************************************************
+#;* Copyright (c) 2014 - 2017, Insyde Software Corporation. All Rights Reserved.
+#;*
+#;* You may not reproduce, distribute, publish, display, perform, modify, adapt,
+#;* transmit, broadcast, present, recite, release, license or otherwise exploit
+#;* any part of this publication in any form, by any means, without the prior
+#;* written permission of Insyde Software Corporation.
+#;*
+#;******************************************************************************
+#*/
+
+[Defines]
+  INF_VERSION                    = 0x00010005
+  BASE_NAME                      = BmcSelEventStorageDxe
+  FILE_GUID                      = 2DA99E67-07F8-417B-BA59-F2049D57BDF2
+  MODULE_TYPE                    = DXE_DRIVER
+  PI_SPECIFICATION_VERSION       = 0x0001000A
+  VERSION_STRING                 = 1.0
+  ENTRY_POINT                    = BmcSelEventStorageDxeEntryPoint
+
+[Sources]
+  BmcSelEventStorageDxe.c
+  BmcSelEventStorageDxe.h
+
+[Packages]
+  MdePkg/MdePkg.dec
+  $(INSYDE_EVENTLOG_PKG)/$(INSYDE_EVENTLOG_PKG).dec
+  InsydeModulePkg/InsydeModulePkg.dec
+#[-start-170929-IB08400459-modify]#
+  SegFeaturePkg/SegFeaturePkg.dec
+#[-end-170929-IB08400459-modify]#
+  
+[LibraryClasses]
+  BaseLib
+  IoLib
+  UefiBootServicesTableLib
+  UefiRuntimeServicesTableLib
+  UefiDriverEntryPoint
+  BaseMemoryLib
+#[-start-170929-IB08400459-add]#
+  IpmiInterfaceLib
+  IpmiSelDataLib
+#[-end-170929-IB08400459-add]#
+
+[Protocols]
+#[-start-170929-IB08400459-remove]#
+#  gH2OIpmiInterfaceProtocolGuid                # CONSUMED
+#[-end-170929-IB08400459-remove]#
+  gH2OEventStorageProtocolGuid                 # PRODUCED
+  gH2OEventLogStringProtocolGuid               # PRODUCED
+  gH2OEventLogStringProtocolGuid               # PRODUCED 
+
+[Depex]
+#[-start-170929-IB08400459-modify]#
+  TRUE
+#[-end-170929-IB08400459-modify]#
+  

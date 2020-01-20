@@ -1,0 +1,67 @@
+## @file
+#
+#  Component description file for Event Log POST Display DXE Driver.
+#
+#******************************************************************************
+#* Copyright (c) 2014, Insyde Software Corp. All Rights Reserved.
+#*
+#* You may not reproduce, distribute, publish, display, perform, modify, adapt,
+#* transmit, broadcast, present, recite, release, license or otherwise exploit
+#* any part of this publication in any form, by any means, without the prior
+#* written permission of Insyde Software Corporation.
+#*
+#******************************************************************************
+#    
+#
+
+[Defines]
+  INF_VERSION                    = 0x00010005
+  BASE_NAME                      = EventLogPostDisplayDxe
+  FILE_GUID                      = B702380C-843D-4E5C-9F7B-4FC4F2D5C2C1
+  MODULE_TYPE                    = DXE_DRIVER
+  PI_SPECIFICATION_VERSION       = 0x0001000A
+  VERSION_STRING                 = 1.0
+  ENTRY_POINT                    = EventLogPostDisplayDxeEntry
+
+[Sources]
+  EventLogPostDisplayCommonFunc.c
+  EventLogPostDisplay.c
+
+[Packages]
+  MdePkg/MdePkg.dec
+  MdeModulePkg/MdeModulePkg.dec
+  $(INSYDE_EVENTLOG_PKG)/$(INSYDE_EVENTLOG_PKG).dec
+  InsydeModulePkg/InsydeModulePkg.dec
+#[-start-171207-IB08400539-add]#
+  SegFeaturePkg/SegFeaturePkg.dec
+#[-end-171207-IB08400539-add]#   
+  
+[LibraryClasses]
+  BaseLib
+  UefiBootServicesTableLib  
+  UefiRuntimeServicesTableLib
+  BaseMemoryLib
+  UefiDriverEntryPoint
+  DebugLib
+  UefiLib
+  PrintLib
+  TimerLib
+  CmosLib
+
+[Guids]
+  gH2OEventLogPostDisplayDxeVariableGuid
+
+[Protocols]
+  gH2OEventLogProtocolGuid                       # CONSUMED
+  gH2OEventLogStringProtocolGuid                 # CONSUMED
+  gH2OEventLogStringOverwriteProtocolGuid        # CONSUMED
+  gEfiSimpleFileSystemProtocolGuid               # CONSUMED
+  gEfiBlockIoProtocolGuid                        # CONSUMED
+
+[Pcd]
+#[-start-171212-IB08400542-modify]#
+  gH2OEventLogPkgTokenSpaceGuid.PcdH2OEventsOnPostDisplayFilterList
+#[-end-171212-IB08400542-modify]#
+
+[Depex]
+  gEfiVariableArchProtocolGuid

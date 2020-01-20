@@ -1,0 +1,47 @@
+/** @file
+
+;******************************************************************************
+;* Copyright (c) 2013, Insyde Software Corp. All Rights Reserved.
+;*
+;* You may not reproduce, distribute, publish, display, perform, modify, adapt,
+;* transmit, broadcast, present, recite, release, license or otherwise exploit
+;* any part of this publication in any form, by any means, without the prior
+;* written permission of Insyde Software Corporation.
+;*
+;******************************************************************************
+*/
+
+#ifndef _AMD_POWERXPRESS_ASI_
+#define _AMD_POWERXPRESS_ASI_
+
+//
+// ASL code common define about device and bridge
+//
+#define DGPU_BRIDGE_SCOPE                     \_SB.PCI0.RP01
+#define DGPU_DEVICE                           PXSX
+#define DGPU_AUDIO_DEVICE                     PEGA
+#define DGPU_SCOPE                            DGPU_BRIDGE_SCOPE.DGPU_DEVICE
+#define DGPU_AUDIO_SCOPE                      DGPU_BRIDGE_SCOPE.DGPU_AUDIO_DEVICE
+#define IGPU_SCOPE                            \_SB.PCI0.GFX0
+
+//
+// ATI GFX Interface function define
+//
+#define ATIF_VERIFY_INTERFACE                 0x0
+#define ATIF_GET_SYSTEM_PARAMETERS            0x1
+#define ATIF_GET_SBIOS_REQUESTS               0x2
+#define ATIF_SELECT_ACTIVE_DISPLAY            0x3
+
+//
+// ATI PowerXpress function define
+//
+#define PX_VERIFY_POWERXPRESS_INTERFACE       0x0
+#define PX_GET_POWERXPRESS_PARAMETERS         0x1
+#define PX_POWER_CONTROL                      0x2
+#define PX_DISPLAY_MULTIPLEXER_CONTROL        0x3
+#define PX_MONITOR_I2C_CONTROL                0x4
+#define PX_GFX_SWITCH_START_NOTIFICATION      0x5
+#define PX_GFX_SWITCH_END_NOTIFICATION        0x6
+#define PX_GET_DISPLAY_CONNECTORS_MAPPING     0x8
+
+#endif

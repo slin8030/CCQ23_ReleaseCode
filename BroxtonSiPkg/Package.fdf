@@ -1,0 +1,127 @@
+## @file
+#  RC Package Flash Description File
+#
+#******************************************************************************
+#* Copyright (c) 2012 - 2016, Insyde Software Corp. All Rights Reserved.
+#*
+#* You may not reproduce, distribute, publish, display, perform, modify, adapt,
+#* transmit, broadcast, present, recite, release, license or otherwise exploit
+#* any part of this publication in any form, by any means, without the prior
+#* written permission of Insyde Software Corporation.
+#*
+#******************************************************************************
+
+[FV.IBBFV] #Intel FVIBBM
+!if gBxtRefCodePkgTokenSpaceGuid.PcdHostManagedVariables == TRUE
+  INF RuleOverride=TE_PEIM $(PLATFORM_SI_PACKAGE)/VariableStorage/Pei/SpiVariableStoragePei/SpiVariableStoragePei.inf
+!else
+  INF RuleOverride=TE_PEIM $(PLATFORM_SI_PACKAGE)/VariableStorage/Pei/CseVariableStoragePei/CseVariableStoragePei.inf
+!endif
+
+
+[FV.RECOVERYFV] #Intel FVIBBR
+#[-start-161123-IB07250310-modify]#
+!if (!gChipsetPkgTokenSpaceGuid.PcdFspEnabled)
+INF $(PLATFORM_RC_PACKAGE)/SiInit/Pei/SiInit.inf
+!endif
+#[-end-161123-IB07250310-modify]#
+INF $(PLATFORM_RC_PACKAGE)/Cpu/SmmAccess/Pei/SmmAccess.inf
+INF $(PLATFORM_RC_PACKAGE)/SouthCluster/SmmControl/Pei/SmmControl.inf
+#[-start-171002-IB07400914-remove]#
+#!if $(FTPM_ENABLE) == YES
+#  INF $(PLATFORM_RC_PACKAGE)/Txe/fTPM/Pei/fTPMInitPei.inf
+#!endif
+#[-end-171002-IB07400914-remove]#
+
+[FV.DXEFV] #Intel FVMAIN
+INF $(PLATFORM_RC_PACKAGE)/Cpu/SmmAccess/Dxe/SmmAccess.inf
+#[-start-160302-IB07220045-modify]#
+# !if $(USE_HPET_TIMER) == YES
+  INF PcAtChipsetPkg/HpetTimerDxe/HpetTimerDxe.inf
+# !else
+  INF $(PLATFORM_RC_PACKAGE)/SouthCluster/SmartTimer/Dxe/SmartTimer.inf
+# !endif
+#[-end-160302-IB07220045-modify]#
+INF $(PLATFORM_RC_PACKAGE)/SiInit/Dxe/SiInitDxe.inf
+INF $(PLATFORM_RC_PACKAGE)/SouthCluster/LegacyInterrupt/Dxe/LegacyInterrupt.inf
+INF $(PLATFORM_RC_PACKAGE)/SouthCluster/Reset/RuntimeDxe/ScReset.inf
+INF $(PLATFORM_RC_PACKAGE)/SouthCluster/ScInit/Dxe/ScInitDxeAplk.inf
+INF $(PLATFORM_RC_PACKAGE)/NorthCluster/PciHostBridge/Dxe/PciHostBridge.inf
+INF $(PLATFORM_RC_PACKAGE)/NorthCluster/SaInit/Dxe/SaInit.inf
+INF RuleOverride = ACPITABLE $(PLATFORM_RC_PACKAGE)/NorthCluster/AcpiTables/SaAcpiTables.inf
+!if $(HG_ENABLE) == YES
+  INF RuleOverride = ACPITABLE $(PLATFORM_SI_PACKAGE)/NorthCluster/AcpiTables/HybridGraphics/HgAcpiTables.inf
+!endif
+INF $(PLATFORM_RC_PACKAGE)/SouthCluster/Smbus/Dxe/PchSmbusDxe.inf
+INF $(PLATFORM_RC_PACKAGE)/SouthCluster/Smbus/Smm/PchSmbusSmm.inf
+#!if $(HW_REDUCED_MODE_ENABLE) == YES
+#INF RuleOverride = ACPITABLE $(PLATFORM_RC_PACKAGE)/AcpiTables/AcpiTables.inf
+#INF RuleOverride = ACPITABLE $(PLATFORM_RC_PACKAGE)/AcpiTablesPCAT/PlatformSsdt/PlatformSsdt.inf
+#!else
+#INF RuleOverride = ACPITABLE $(PLATFORM_RC_PACKAGE)/AcpiTablesPCAT/AcpiTables.inf
+#INF RuleOverride = ACPITABLE $(PLATFORM_RC_PACKAGE)/AcpiTablesPCAT/PlatformSsdt/PlatformSsdt.inf
+#!endif
+#INF $(PLATFORM_RC_PACKAGE)/NorthCluster/ISPDxe/ISPDxe.inf
+!if $(EMMC_DRIVER_ENABLE) == YES
+   INF $(PLATFORM_RC_PACKAGE)/SouthCluster/SDControllerDxe/MmcHostDxe.inf
+   INF $(PLATFORM_RC_PACKAGE)/SouthCluster/SDMediaDeviceDxe/MmcMediaDeviceDxe.inf
+   INF $(CHIPSET_PKG)/PlatformEmmcDxe/PlatformEmmcDxe.inf   
+!endif
+#[-start-160901-IB07400777-modify]#
+!if gInsydeTokenSpaceGuid.PcdH2OAhciSupported == 1 || gInsydeTokenSpaceGuid.PcdH2OIdeSupported == 1
+  INF $(PLATFORM_RC_PACKAGE)/SouthCluster/SataController/Dxe/SataController.inf
+!endif  
+#[-end-160901-IB07400777-modify]#
+#[FV.FVMAIN2]
+INF $(PLATFORM_RC_PACKAGE)/Cpu/CpuInit/Dxe/CpuInitDxe.inf
+#[-start-161123-IB07250310-add]#
+!if gChipsetPkgTokenSpaceGuid.PcdFspEnabled
+  INF $(CHIPSET_PKG)/Override/IntelFsp2WrapperPkg/FspWrapperNotifyDxe/FspWrapperNotifyDxe.inf
+!endif
+#[-end-161123-IB07250310-add]#
+INF $(PLATFORM_RC_PACKAGE)/SouthCluster/SmmControl/RuntimeDxe/SmmControl.inf
+#[-start-151124-IB10860187-remove]#
+#INF EdkCompatibilityPkg/Compatibility/SmmControl2OnSmmControlThunk/SmmControl2OnSmmControlThunk.inf
+#[-end-151124-IB10860187-remove]#
+INF $(PLATFORM_RC_PACKAGE)/SouthCluster/ScSmiDispatcher/Smm/ScSmiDispatcher.inf
+INF $(CHIPSET_PKG)/SmmSwDispatch2OnSmmSwDispatchThunk/SmmSwDispatch2OnSmmSwDispatchThunk.inf
+INF $(CHIPSET_PKG)/SmmSxDispatch2OnSmmSxDispatchThunk/SmmSxDispatch2OnSmmSxDispatchThunk.inf
+INF $(PLATFORM_RC_PACKAGE)/SouthCluster/ScInit/Smm/ScInitSmm.inf
+INF $(PLATFORM_RC_PACKAGE)/SouthCluster/Spi/RuntimeDxe/ScSpiRuntime.inf
+INF $(PLATFORM_RC_PACKAGE)/SouthCluster/SampleCode/BiosWriteProtect/Smm/ScBiosWriteProtect.inf
+!if $(SEC_ENABLE) == YES
+  INF  $(PLATFORM_RC_PACKAGE)/Txe/Heci/Dxe/Hecidrv.inf
+!endif
+#  INF RuleOverride = DRIVER_ACPITABLE  $(PLATFORM_RC_PACKAGE)/Txe/fTPM/Smm/FtpmSmm.inf
+!if $(NVM_VARIABLE_ENABLE) == YES
+INF $(PLATFORM_RC_PACKAGE)/Txe/Heci/Smm/HeciSmm.inf
+#[-start-161123-IB07250310-modify]#
+!if gChipsetPkgTokenSpaceGuid.PcdFspEnabled
+  INF $(PLATFORM_RC_PACKAGE)/Txe/Heci/Smm/HeciSmmRuntimeDxeFsp.inf
+!else
+  INF $(PLATFORM_RC_PACKAGE)/Txe/Heci/Smm/HeciSmmRuntimeDxe.inf
+!endif
+#[-end-161123-IB07250310-modify]#
+!endif
+!if $(PPM_ENABLE) == YES
+  INF $(PLATFORM_RC_PACKAGE)/Cpu/PowerManagement/Dxe/PowerMgmtDxe.inf
+  INF $(PLATFORM_RC_PACKAGE)/Cpu/PowerManagement/Smm/PowerMgmtSmm.inf
+  INF RuleOverride = ACPITABLE $(PLATFORM_RC_PACKAGE)/Cpu/AcpiTables/CpuAcpiTables.inf
+!endif
+# INF $(PLATFORM_RC_PACKAGE)/CPU/Dts/Smm/DigitalThermalSensor.inf
+#INF $(PLATFORM_RC_PACKAGE)/NorthCluster/SmBiosMemory/Dxe/SmBiosMemory.inf
+
+!if $(BDAT_SUPPORT_ENABLED) == YES
+  INF $(PLATFORM_RC_PACKAGE)/NorthCluster/BdatDxe/BdatDxe.inf
+!endif
+
+!if gBxtRefCodePkgTokenSpaceGuid.PcdHostManagedVariables == TRUE
+  !if $(SMM_VARIABLE_ENABLE)== YES
+    INF $(PLATFORM_SI_PACKAGE)/VariableStorage/Dxe/FvbVariableStorageSmmRuntimeDxe/FvbVariableStorageSmm.inf
+  !else
+    INF $(PLATFORM_SI_PACKAGE)/VariableStorage/Dxe/FvbVariableStorageSmmRuntimeDxe/FvbVariableStorageRuntimeDxe.inf
+  !endif
+!else
+  INF $(PLATFORM_SI_PACKAGE)/VariableStorage/Dxe/CseVariableStorageSmmRuntimeDxe/CseVariableStorageSmmRuntimeDxe.inf
+  INF $(PLATFORM_SI_PACKAGE)/VariableStorage/Dxe/CseVariableStorageSmmRuntimeDxe/CseVariableStorageRuntimeDxe.inf
+!endif

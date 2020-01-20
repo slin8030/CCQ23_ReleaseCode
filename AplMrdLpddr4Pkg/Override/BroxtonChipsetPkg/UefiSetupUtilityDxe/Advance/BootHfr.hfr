@@ -1,0 +1,100 @@
+/** @file
+
+ Form set for Advance page of SetupUtilityDxe driver
+
+;******************************************************************************
+;* Copyright (c) 2012 - 2014, Insyde Software Corp. All Rights Reserved.
+;*
+;* You may not reproduce, distribute, publish, display, perform, modify, adapt,
+;* transmit, broadcast, present, recite, release, license or otherwise exploit
+;* any part of this publication in any form, by any means, without the prior
+;* written permission of Insyde Software Corporation.
+;*
+;******************************************************************************
+*/
+
+    //
+    //  Form BOOT_CONFIGUATION_FORM_ID: Boot Configuration
+    //
+    form
+      formid = BOOT_CONFIGUATION_FORM_ID, title = STRING_TOKEN(STR_BOOT_CONFIG_STRING);
+
+      subtitle
+        text = STRING_TOKEN(STR_BOOT_CONFIG_STRING);
+
+      subtitle
+        text = STRING_TOKEN(STR_BLANK_STRING);
+
+      grayoutif
+        ideqval SystemConfig.UserAccessLevel == 2
+        AND
+        ideqval SystemConfig.SetUserPass == 1;
+
+//[-start-161008-IB07400794-modify]//
+      subtitle text = STRING_TOKEN(STR_BLANK_STRING);
+      oneof
+        varid       = SystemConfig.OsSelection,
+        questionid  = KEY_OS_SELECTION,
+        prompt      = STRING_TOKEN(STR_OS_SELETION_PROMPT),
+        help        = STRING_TOKEN(STR_OS_SELETION_HELP),
+        option text = STRING_TOKEN(STR_WINDOWS_STRING),     value=0, flags = DEFAULT | INTERACTIVE | RESET_REQUIRED;
+    	  option text = STRING_TOKEN(STR_ANDROID_STRING),     value=1, flags = INTERACTIVE | RESET_REQUIRED;
+      suppressif ideqval SystemConfig.IsIOTGBoardIds == 1;
+        option text = STRING_TOKEN(STR_WINDOWS_7_STRING),   value=2, flags = INTERACTIVE | RESET_REQUIRED;
+      endif
+          option text = STRING_TOKEN(STR_LINUX_L),            value=3, flags = INTERACTIVE | RESET_REQUIRED;
+//    	  option text = STRING_TOKEN(STR_DOS_STRING),         value=4, flags = INTERACTIVE | RESET_REQUIRED;
+      endoneof;
+//[-end-161008-IB07400794-modify]//
+
+//[-start-161008-IB07400794-add]//
+//#if BXTI_PF_ENABLE
+      suppressif TRUE;
+        oneof 
+          varid       = SystemConfig.PlatformSettingEn,
+          prompt      = STRING_TOKEN(STR_PLAT_DEFAULT_PROMPT),
+          help        = STRING_TOKEN(STR_PLAT_DEFAULT_HELP),
+          option text = STRING_TOKEN(STR_DISABLE), value=0, flags=DEFAULT | MANUFACTURING | RESET_REQUIRED;
+          option text = STRING_TOKEN(STR_ENABLE),  value=1, flags=0 | RESET_REQUIRED;
+        endoneof;
+      endif;
+//#endif
+//[-end-161008-IB07400794-add]//
+
+      subtitle
+        text = STRING_TOKEN(STR_BLANK_STRING);
+
+      oneof
+        varid       = SystemConfig.NumLock,
+        prompt      = STRING_TOKEN(STR_NUMLOCK_STRING),
+        help        = STRING_TOKEN(STR_NUMLOCK_HELP),
+//[-start-180103-IB07400939-modify]//
+        option text = STRING_TOKEN(STR_OFF_TEXT), value = 0, flags = DEFAULT;
+        option text = STRING_TOKEN(STR_ON_TEXT),  value = 1, flags = 0;
+//[-end-180103-IB07400939-modify]//
+      endoneof;
+
+      endif;
+//[-start-160628-IB07400748-add]//
+//[-start-160914-IB07400784-modify]//
+//[-start-161022-IB07400802-modify]//
+//#if BXTI_PF_ENABLE
+      suppressif ideqval SystemConfig.IsIOTGBoardIds == 0;
+        oneof 
+          varid       = SystemConfig.RTEn,
+          questionid  = KEY_IOTG_RTEN, 
+          prompt      = STRING_TOKEN(STR_RT_IDI_AGENT_PROMPT),
+          help        = STRING_TOKEN(STR_RT_IDI_AGENT_HELP),
+          flags       = INTERACTIVE,
+          option text = STRING_TOKEN(STR_RT_IDI_AGENT_DISABLE), value=0, flags = DEFAULT | MANUFACTURING | RESET_REQUIRED;
+          //option text = STRING_TOKEN(STR_RT_IDI_AGENT_DID0),    value=1, flags = 0 | RESET_REQUIRED;
+          option text = STRING_TOKEN(STR_RT_IDI_AGENT_DID1),    value=2, flags = 0 | RESET_REQUIRED;
+          option text = STRING_TOKEN(STR_RT_IDI_AGENT_DIDX),    value=3, flags = 0 | RESET_REQUIRED;
+        endoneof;
+      endif;  
+//#endif
+//[-end-161022-IB07400802-modify]//
+//[-end-160914-IB07400784-modify]//
+//[-end-160628-IB07400748-add]//
+
+    endform;

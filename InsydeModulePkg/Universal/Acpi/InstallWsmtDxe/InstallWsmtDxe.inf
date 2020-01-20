@@ -1,0 +1,56 @@
+## @file
+#  Component description file for InstallWsmtDxe module.
+#
+#******************************************************************************
+#* Copyright (c) 2017, Insyde Software Corp. All Rights Reserved.
+#*
+#* You may not reproduce, distribute, publish, display, perform, modify, adapt,
+#* transmit, broadcast, present, recite, release, license or otherwise exploit
+#* any part of this publication in any form, by any means, without the prior
+#* written permission of Insyde Software Corporation.
+#*
+#******************************************************************************
+
+[Defines]
+  INF_VERSION                    = 0x00010005
+  BASE_NAME                      = InstallWsmtDxe
+  FILE_GUID                      = F56E697B-3EF8-471D-3EF8-6B6636A6F2F8
+  MODULE_TYPE                    = DXE_DRIVER
+  VERSION_STRING                 = 1.0
+  ENTRY_POINT                    = InstallWsmtDxeEntryPoint
+
+#
+# The following information is for reference only and not required by the build tools.
+#
+#  VALID_ARCHITECTURES           = IA32 X64 IPF EBC
+#
+
+[Sources]
+  InstallWsmtDxe.c
+
+[Packages]
+  MdePkg/MdePkg.dec
+  MdeModulePkg/MdeModulePkg.dec
+  InsydeModulePkg/InsydeModulePkg.dec
+  IntelFrameworkPkg/IntelFrameworkPkg.dec
+  IntelFrameworkModulePkg/IntelFrameworkModulePkg.dec
+
+[LibraryClasses]
+  UefiDriverEntryPoint
+  DxeServicesLib
+  BaseLib
+  BaseMemoryLib
+  UefiLib
+  UefiBootServicesTableLib
+  DxeChipsetSvcLib
+  DebugLib
+
+[Protocols]
+  gEfiAcpiTableProtocolGuid
+  gEfiAcpiSupportProtocolGuid
+
+[Pcd]
+  gInsydeTokenSpaceGuid.PcdH2OAcpiWsmtProtectionFlags
+
+[Depex]
+  TRUE

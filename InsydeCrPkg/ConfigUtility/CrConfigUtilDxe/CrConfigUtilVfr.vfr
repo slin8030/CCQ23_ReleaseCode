@@ -1,0 +1,320 @@
+/** @file
+
+  Console Redirection Configuration DXE VFR implementation.
+
+;******************************************************************************
+;* Copyright (c) 2015, Insyde Software Corporation. All Rights Reserved.
+;*
+;* You may not reproduce, distribute, publish, display, perform, modify, adapt,
+;* transmit, broadcast, present, recite, release, license or otherwise exploit
+;* any part of this publication in any form, by any means, without the prior
+;* written permission of Insyde Software Corporation.
+;*
+;******************************************************************************
+*/
+
+#include "CrConfig.h"
+
+formset
+  guid      = CONSOLE_REDIRECTION_FORMSET_GUID,
+  title     = STRING_TOKEN(STR_CONSOLE_REDIRECTION_FORMSET_TITLE),
+  help      = STRING_TOKEN(STR_CONSOLE_REDIRECTION_FORMSET_HELP),
+//[-start-160315-IB08400335-modify]//
+  classguid = {PcdGetPtr (PcdH2OConsoleRedirectionFormsetClassGuid)},
+//[-end-160315-IB08400335-modify]//
+  //
+  // Define a Buffer Storage (EFI_IFR_VARSTORE)
+  //
+  varstore CR_CONFIGURATION,                         // This is the data structure type
+    varid = CR_CONFIGURATION_VARSTORE_ID,            // Optional VarStore ID
+    name  = CrConfig,                                // Define referenced name in vfr
+    guid  = CR_CONFIGURATION_GUID;                   // GUID of this buffer storage
+
+  namevaluevarstore CrNameValueVar,                  // Define storage reference name in vfr
+    name  = STRING_TOKEN(STR_NAME_VALUE_VAR_NAME0),  // Define Name list of this storage, refer it by CrNameValueVar[0]
+    guid  = CR_CONFIGURATION_GUID;                   // GUID of this Name/Value storage
+
+  //
+  // ========Form Root==========
+  //
+  form
+    formid = CONSOLE_REDIRECTION_ROOT_FORM_ID, title = STRING_TOKEN(STR_STR_CONSOLE_REDIRECTION_TITLE);
+
+    subtitle  text = STRING_TOKEN(STR_STR_CONSOLE_REDIRECTION_TITLE);
+    subtitle  text = STRING_TOKEN(STR_BLANK_STRING);
+
+    oneof
+      varid       = CrConfig.CREnable,
+      prompt      = STRING_TOKEN(STR_CR_CONSOLE_REDIRECTION),
+      help        = STRING_TOKEN(STR_CR_CONSOLE_REDIRECTION_HELP),
+      option text = STRING_TOKEN(STR_ENABLED_TEXT),  value = 1, flags = DEFAULT;
+      option text = STRING_TOKEN(STR_DISABLED_TEXT), value = 0, flags = 0;
+    endoneof;
+
+    suppressif
+      ideqval CrConfig.CREnable == 0;
+
+      oneof
+        varid       = CrConfig.GlobalTerminalType,
+        questionid  = KEY_GLOBAL_TERMINAL_TYPE,
+        prompt      = STRING_TOKEN(STR_CR_TERMINAL_TYPE),
+        help        = STRING_TOKEN(STR_CR_TERMINAL_TYPE_HELP),
+        option text = STRING_TOKEN(STR_CR_TERMINAL_TYPE_VT100),  value = 0, flags = INTERACTIVE | DEFAULT;
+        option text = STRING_TOKEN(STR_CR_TERMINAL_TYPE_VT100P), value = 1, flags = INTERACTIVE;
+        option text = STRING_TOKEN(STR_CR_TERMINAL_TYPE_VTUTF8), value = 2, flags = INTERACTIVE;
+        option text = STRING_TOKEN(STR_CR_TERMINAL_TYPE_ANSI),   value = 3, flags = INTERACTIVE;
+      endoneof;
+
+      oneof
+        varid       = CrConfig.GlobalBaudRate,
+        questionid  = KEY_GLOBAL_BAUD_RATE,
+        prompt      = STRING_TOKEN(STR_CR_BAUD_RATE),
+        help        = STRING_TOKEN(STR_CR_BAUD_RATE_HELP),
+        option text = STRING_TOKEN(STR_CR_BAUD_RATE_115200), value = 7, flags = INTERACTIVE | DEFAULT;
+        option text = STRING_TOKEN(STR_CR_BAUD_RATE_57600),  value = 6, flags = INTERACTIVE;
+        option text = STRING_TOKEN(STR_CR_BAUD_RATE_38400),  value = 5, flags = INTERACTIVE;
+        option text = STRING_TOKEN(STR_CR_BAUD_RATE_19200),  value = 4, flags = INTERACTIVE;
+        option text = STRING_TOKEN(STR_CR_BAUD_RATE_9600),   value = 3, flags = INTERACTIVE;
+        option text = STRING_TOKEN(STR_CR_BAUD_RATE_4800),   value = 2, flags = INTERACTIVE;
+        option text = STRING_TOKEN(STR_CR_BAUD_RATE_2400),   value = 1, flags = INTERACTIVE;
+        option text = STRING_TOKEN(STR_CR_BAUD_RATE_1200),   value = 0, flags = INTERACTIVE;
+      endoneof;
+
+      oneof
+        varid       = CrConfig.GlobalDataBits,
+        questionid  = KEY_GLOBAL_DATA_BITS,
+        prompt      = STRING_TOKEN(STR_CR_DATA_BIT),
+        help        = STRING_TOKEN(STR_CR_DATA_BIT_HELP),
+        option text = STRING_TOKEN(STR_CR_DATA_BIT_7),  value = 7, flags = INTERACTIVE;
+        option text = STRING_TOKEN(STR_CR_DATA_BIT_8),  value = 8, flags = INTERACTIVE | DEFAULT;
+      endoneof;
+
+      oneof
+        varid       = CrConfig.GlobalParity,
+        questionid  = KEY_GLOBAL_PARITY,
+        prompt      = STRING_TOKEN(STR_CR_PARITY),
+        help        = STRING_TOKEN(STR_CR_PARITY_HELP),
+        option text = STRING_TOKEN(STR_CR_PARITY_NONE), value = 1, flags = INTERACTIVE | DEFAULT;
+        option text = STRING_TOKEN(STR_CR_PARITY_EVEN), value = 2, flags = INTERACTIVE;
+        option text = STRING_TOKEN(STR_CR_PARITY_ODD),  value = 3, flags = INTERACTIVE;
+      endoneof;
+
+      oneof
+        varid       = CrConfig.GlobalStopBits,
+        questionid  = KEY_GLOBAL_STOP_BITS,
+        prompt      = STRING_TOKEN(STR_CR_STOP_BIT),
+        help        = STRING_TOKEN(STR_CR_STOP_BIT_HELP),
+        option text = STRING_TOKEN(STR_CR_STOP_BIT_1),  value = 1, flags = INTERACTIVE | DEFAULT;
+        option text = STRING_TOKEN(STR_CR_STOP_BIT_2),  value = 3, flags = INTERACTIVE;
+      endoneof;
+
+      oneof
+        varid       = CrConfig.GlobalFlowControl,
+        questionid  = KEY_GLOBAL_FLOW_CONTROL,
+        prompt      = STRING_TOKEN(STR_CR_FLOW_CONTROL),
+        help        = STRING_TOKEN(STR_CR_FLOW_CONTROL_HELP),
+        option text = STRING_TOKEN(STR_CR_FLOW_CONTROL_NONE),     value = 0, flags = INTERACTIVE | DEFAULT;
+        option text = STRING_TOKEN(STR_CR_FLOW_CONTROL_HARDWARE), value = 1, flags = INTERACTIVE;
+        option text = STRING_TOKEN(STR_CR_FLOW_CONTROL_SOFTWARE), value = 2, flags = INTERACTIVE;
+      endoneof;
+
+      oneof
+        varid       = CrConfig.CRInfoWaitTime,
+        prompt      = STRING_TOKEN(STR_CR_LOGO_WAIT_TIME),
+        help        = STRING_TOKEN(STR_CR_LOGO_WAIT_TIME_HELP),
+        option text = STRING_TOKEN(STR_CR_LOGO_WAIT_0_SECOND), value = 0, flags = 0;
+        option text = STRING_TOKEN(STR_CR_LOGO_WAIT_2_SECOND), value = 2, flags = 0;
+        option text = STRING_TOKEN(STR_CR_LOGO_WAIT_5_SECOND), value = 5, flags = DEFAULT;
+        option text = STRING_TOKEN(STR_CR_LOGO_WAIT_10_SECOND), value = 10, flags = 0;
+        option text = STRING_TOKEN(STR_CR_LOGO_WAIT_30_SECOND), value = 30, flags = 0;
+      endoneof;
+
+      oneof
+        varid       = CrConfig.CRAfterPost,
+        prompt      = STRING_TOKEN(STR_CR_AFTER_POST),
+        help        = STRING_TOKEN(STR_CR_AFTER_POST_HELP),
+        option text = STRING_TOKEN(STR_YES_TEXT),        value = 1, flags = DEFAULT;
+        option text = STRING_TOKEN(STR_NO_TEXT),         value = 0, flags = 0;
+      endoneof;
+
+      oneof
+        varid       = CrConfig.CRTextModeResolution,
+        prompt      = STRING_TOKEN(STR_CR_TEXT_MODE_RES),
+        help        = STRING_TOKEN(STR_CR_TEXT_MODE_RES_HELP),
+        option text = STRING_TOKEN(STR_CR_TEXT_MODE_AUTO),        value = CR_TEXT_MODE_AUTO, flags = 0;
+        option text = STRING_TOKEN(STR_CR_TEXT_MODE_80X25),       value = CR_TEXT_MODE_80X25, flags = 0;
+        option text = STRING_TOKEN(STR_CR_TEXT_MODE_80X24_DF),    value = CR_TEXT_MODE_80X24DF, flags = 0;
+        option text = STRING_TOKEN(STR_CR_TEXT_MODE_80X24_DL),    value = CR_TEXT_MODE_80X24DL, flags = 0;
+        option text = STRING_TOKEN(STR_CR_TEXT_MODE_128X40),      value = CR_TEXT_MODE_128X40, flags = DEFAULT;
+      endoneof;
+
+      oneof
+        varid       = CrConfig.AutoRefresh,
+        prompt      = STRING_TOKEN(STR_CR_AUTO_REFRESH),
+        help        = STRING_TOKEN(STR_CR_AUTO_REFRESH_HELP),
+        option text = STRING_TOKEN(STR_DISABLED_TEXT), value = 0,flags = INTERACTIVE;
+        option text = STRING_TOKEN(STR_ENABLED_TEXT),  value = 1,flags = INTERACTIVE | DEFAULT;
+      endoneof;
+
+//       oneof
+//         varid       = CrConfig.FailSaveBaudRate,
+//         prompt      = STRING_TOKEN(STR_CR_FAIL_SAFE_BAUDRATE),
+//         help        = STRING_TOKEN(STR_CR_FAIL_SAFE_BAUDRATE_HELP),
+//         option text = STRING_TOKEN(STR_DISABLED_TEXT), value = 0,flags = INTERACTIVE | DEFAULT;
+//         option text = STRING_TOKEN(STR_ENABLED_TEXT),  value = 1,flags = INTERACTIVE;
+//       endoneof;
+
+      oneof
+        varid       = CrConfig.TerminalResize,
+        prompt      = STRING_TOKEN(STR_CR_TERMINAL_RESIZE),
+        help        = STRING_TOKEN(STR_CR_TERMINAL_RESIZE_HELP),
+        option text = STRING_TOKEN(STR_DISABLED_TEXT), value = 0,flags = INTERACTIVE;
+        option text = STRING_TOKEN(STR_ENABLED_TEXT),  value = 1,flags = INTERACTIVE | DEFAULT;
+      endoneof;
+
+    endif;
+
+    suppressif
+      ideqval CrConfig.CREnable == 0;
+
+      subtitle  text = STRING_TOKEN(STR_BLANK_STRING);
+      label CR_DEVICE_LABEL_START;
+      label CR_DEVICE_LABEL_END;
+
+    endif;
+
+    link include = LINK_SOL_FORMSET_CLASS_GUID,;
+
+
+  endform;
+
+  //
+  // =========Form CR_DEVICE=============
+  //
+  form
+    formid = CR_DEVICE_FORM_ID, title = STRING_TOKEN(STR_STR_CR_DEVICE_TITLE);
+
+    subtitle  text = STRING_TOKEN(STR_STR_CR_DEVICE_TITLE);
+    subtitle  text = STRING_TOKEN(STR_BLANK_STRING);
+
+    oneof
+      varid       = CrConfig.CrPortConfig.PortEnable,
+      questionid  = KEY_PORT_ENABLE,
+      prompt      = STRING_TOKEN(STR_CR_PORT_ENABLE),
+      help        = STRING_TOKEN(STR_BLANK_STRING),
+      option text = STRING_TOKEN(STR_DISABLED_TEXT),  value = 0, flags = INTERACTIVE | DEFAULT;
+      option text = STRING_TOKEN(STR_ENABLED_TEXT),   value = 1, flags = INTERACTIVE;
+    endoneof;
+
+    grayoutif
+      ideqval CrConfig.CrPortConfig.PortEnable == 0;
+
+      oneof
+        varid       = CrConfig.CrPortConfig.UseGlobalSetting,
+        questionid  = KEY_USE_GLOBAL_SETTING,
+        prompt      = STRING_TOKEN(STR_CR_USE_GLOBAL_SETTING),
+        help        = STRING_TOKEN(STR_BLANK_STRING),
+        option text = STRING_TOKEN(STR_DISABLED_TEXT),  value = 0, flags = INTERACTIVE | DEFAULT;
+        option text = STRING_TOKEN(STR_ENABLED_TEXT),   value = 1, flags = INTERACTIVE;
+      endoneof;
+
+      suppressif
+        ideqval CrConfig.CrPortConfig.UseGlobalSetting == 1;
+
+        oneof
+          varid       = CrConfig.CrPortConfig.TerminalType,
+          questionid  = KEY_TERMINAL_TYPE,
+          prompt      = STRING_TOKEN(STR_CR_TERMINAL_TYPE),
+          help        = STRING_TOKEN(STR_CR_TERMINAL_TYPE_HELP),
+          option text = STRING_TOKEN(STR_CR_TERMINAL_TYPE_VT100),  value = 0, flags = INTERACTIVE | DEFAULT;
+          option text = STRING_TOKEN(STR_CR_TERMINAL_TYPE_VT100P), value = 1, flags = INTERACTIVE;
+          option text = STRING_TOKEN(STR_CR_TERMINAL_TYPE_VTUTF8), value = 2, flags = INTERACTIVE;
+          option text = STRING_TOKEN(STR_CR_TERMINAL_TYPE_ANSI),   value = 3, flags = INTERACTIVE;
+        endoneof;
+
+        oneof
+          varid       = CrConfig.CrPortConfig.BaudRate,
+          questionid  = KEY_BAUD_RATE,
+          prompt      = STRING_TOKEN(STR_CR_BAUD_RATE),
+          help        = STRING_TOKEN(STR_CR_BAUD_RATE_HELP),
+          option text = STRING_TOKEN(STR_CR_BAUD_RATE_115200), value = 7, flags = INTERACTIVE | DEFAULT;
+          option text = STRING_TOKEN(STR_CR_BAUD_RATE_57600),  value = 6, flags = INTERACTIVE;
+          option text = STRING_TOKEN(STR_CR_BAUD_RATE_38400),  value = 5, flags = INTERACTIVE;
+          option text = STRING_TOKEN(STR_CR_BAUD_RATE_19200),  value = 4, flags = INTERACTIVE;
+          option text = STRING_TOKEN(STR_CR_BAUD_RATE_9600),   value = 3, flags = INTERACTIVE;
+          option text = STRING_TOKEN(STR_CR_BAUD_RATE_4800),   value = 2, flags = INTERACTIVE;
+          option text = STRING_TOKEN(STR_CR_BAUD_RATE_2400),   value = 1, flags = INTERACTIVE;
+          option text = STRING_TOKEN(STR_CR_BAUD_RATE_1200),   value = 0, flags = INTERACTIVE;
+        endoneof;
+
+        oneof
+          varid       = CrConfig.CrPortConfig.DataBits,
+          questionid  = KEY_DATA_BITS,
+          prompt      = STRING_TOKEN(STR_CR_DATA_BIT),
+          help        = STRING_TOKEN(STR_CR_DATA_BIT_HELP),
+          option text = STRING_TOKEN(STR_CR_DATA_BIT_7),  value = 7, flags = INTERACTIVE;
+          option text = STRING_TOKEN(STR_CR_DATA_BIT_8),  value = 8, flags = INTERACTIVE | DEFAULT;
+        endoneof;
+
+        oneof
+          varid       = CrConfig.CrPortConfig.Parity,
+          questionid  = KEY_PARITY,
+          prompt      = STRING_TOKEN(STR_CR_PARITY),
+          help        = STRING_TOKEN(STR_CR_PARITY_HELP),
+          option text = STRING_TOKEN(STR_CR_PARITY_NONE), value = 1, flags = INTERACTIVE | DEFAULT;
+          option text = STRING_TOKEN(STR_CR_PARITY_EVEN), value = 2, flags = INTERACTIVE;
+          option text = STRING_TOKEN(STR_CR_PARITY_ODD),  value = 3, flags = INTERACTIVE;
+        endoneof;
+
+        oneof
+          varid       = CrConfig.CrPortConfig.StopBits,
+          questionid  = KEY_STOP_BITS,
+          prompt      = STRING_TOKEN(STR_CR_STOP_BIT),
+          help        = STRING_TOKEN(STR_CR_STOP_BIT_HELP),
+          option text = STRING_TOKEN(STR_CR_STOP_BIT_1),  value = 1, flags = INTERACTIVE | DEFAULT;
+          option text = STRING_TOKEN(STR_CR_STOP_BIT_2),  value = 3, flags = INTERACTIVE;
+        endoneof;
+
+        oneof
+          varid       = CrConfig.CrPortConfig.FlowControl,
+          questionid  = KEY_FLOW_CONTROL,
+          prompt      = STRING_TOKEN(STR_CR_FLOW_CONTROL),
+          help        = STRING_TOKEN(STR_CR_FLOW_CONTROL_HELP),
+          option text = STRING_TOKEN(STR_CR_FLOW_CONTROL_NONE),     value = 0, flags = INTERACTIVE | DEFAULT;
+          option text = STRING_TOKEN(STR_CR_FLOW_CONTROL_HARDWARE), value = 1, flags = INTERACTIVE;
+          option text = STRING_TOKEN(STR_CR_FLOW_CONTROL_SOFTWARE), value = 2, flags = INTERACTIVE;
+        endoneof;
+
+      endif;
+    endif;
+
+  endform;
+  //
+  // =========Form Load Default=============
+  //
+  form
+    formid = 0xFFFF, title = STRING_TOKEN(STR_BLANK_STRING);
+    subtitle  text = STRING_TOKEN(STR_BLANK_STRING);
+    //
+    // This Opcode is for F9 load default.
+    //
+    suppressif
+      TRUE;
+      numeric
+        varid      = CrNameValueVar[0],                            // This numeric take NameValueVar0 as storage
+        questionid = KEY_SCAN_F9,
+        prompt  = STRING_TOKEN(STR_NAME_VALUE_VAR_NAME0),
+        help    = STRING_TOKEN(STR_NAME_VALUE_VAR_NAME0),
+        flags   = NUMERIC_SIZE_1 | INTERACTIVE,                    // Size of this numeric is 1 byte
+        minimum = 0,
+        maximum = 0xff,
+        step    = 0,
+        default = 0,
+      endnumeric;
+    endif;
+
+  endform;
+
+
+endformset;
+

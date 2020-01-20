@@ -1,0 +1,39 @@
+## @file
+#  If plug memory > 16GB, Bios will calculate the MTRR setting value and push this value in Hob at PEI phase,
+#  Here the Bios will get the MTRR setting value from Hob to replace present MTRR value to the > 16GB setting.
+#
+#******************************************************************************
+#* Copyright (c) 2014, Insyde Software Corporation. All Rights Reserved.
+#*
+#* You may not reproduce, distribute, publish, display, perform, modify, adapt,
+#* transmit, broadcast, present, recite, release, license or otherwise exploit
+#* any part of this publication in any form, by any means, without the prior
+#* written permission of Insyde Software Corporation.
+#*
+#******************************************************************************
+
+[Defines]
+   INF_VERSION                    = 0x00010005
+   BASE_NAME                      = RestoreMtrrDxe
+   FILE_GUID                      = f276bdec-6c41-21e5-9e71-00a13807b45e
+   MODULE_TYPE                    = DXE_DRIVER
+   ENTRY_POINT                    = RestoreMtrrEntry
+
+[Sources]
+  RestoreMtrr.c
+
+[Packages]
+  $(PROJECT_PKG)/Project.dec
+  $(CHIPSET_PKG)/$(CHIPSET_PKG).dec
+  MdePkg/MdePkg.dec
+  
+[LibraryClasses]
+  UefiDriverEntryPoint
+  HobLib
+  BaseLib
+
+[Guids]
+  gMtrrDataInfoGuid
+
+[Depex]
+   TRUE 

@@ -1,0 +1,49 @@
+## @file
+# CPU Branch Trace Package Declaration file
+#
+#******************************************************************************
+#* Copyright (c) 2015, Insyde Software Corporation. All Rights Reserved.
+#*
+#* You may not reproduce, distribute, publish, display, perform, modify, adapt,
+#* transmit, broadcast, present, recite, release, license or otherwise exploit
+#* any part of this publication in any form, by any means, without the prior
+#* written permission of Insyde Software Corporation.
+#*
+#******************************************************************************
+#
+
+[Defines]
+  DEC_SPECIFICATION              = 0x00010005
+  PACKAGE_NAME                   = InsydeCbtPkg
+  PACKAGE_GUID                   = 544D708E-311A-46bc-AE19-A714B9A8299E
+  PACKAGE_VERSION                = 0.92
+
+[Includes]
+  Include
+  
+[LibraryClasses]
+
+[Guids]
+  gInsydeCbtTokenSpaceGuid       = { 0x38de40a9, 0x629f, 0x4151, { 0x8f, 0x37, 0x7b, 0x89, 0xa5, 0x3c, 0x5e, 0x5b }}
+  gBtsInitGuid                   = { 0xfa9bdf53, 0x97a2, 0x405f, { 0xb4, 0x9e, 0xd5, 0x4c, 0x19, 0x08, 0xe3, 0xce }}
+  gBtsVariableGuid               = { 0xcc1e548e, 0x783f, 0x494e, { 0x83, 0x25, 0xa0, 0xc6, 0x80, 0x0b, 0xeb, 0x75 }}
+  
+[Ppis]
+  gPeiBtsInitPpiGuid             = { 0x1c7af2f2, 0xa8cd, 0x4dd1, { 0x8c, 0xa4, 0xf7, 0x36, 0x1e, 0xf8, 0xd0, 0x70 }}
+
+[Protocols]
+  gEfiBtsInitProtocolGuid        = { 0x3fe51719, 0x2b7c, 0x44cc, { 0xa0, 0x05, 0xc9, 0x2a, 0xd2, 0x07, 0xbe, 0x56 }}
+
+[PcdsFeatureFlag]
+  gInsydeCbtTokenSpaceGuid.PcdH2OCBTSupported|FALSE|BOOLEAN|0x10000000
+    
+[PcdsDynamicEx]
+  ## This PCD specifies the BTS image info buffer size
+  #  The value is defined as below, Max Size is 0x9000.
+  #  0 ~ Max Size: set the value.
+  #  > Max Size:   set Max Size.
+  gInsydeCbtTokenSpaceGuid.PcdH2OBtsImageInfoBufferSize|0x0|UINT32|0x20000000
+  
+  gInsydeCbtTokenSpaceGuid.PcdH2OBtsPeiBufferPageSize|0x0|UINT32|0x20000001
+  gInsydeCbtTokenSpaceGuid.PcdH2OBtsDxeBufferPageSize|0x0|UINT32|0x20000002 
+

@@ -1,0 +1,244 @@
+/** @file
+  This file describes the contents of the ACPI Core System Resource Table
+
+ @copyright
+  INTEL CONFIDENTIAL
+  Copyright 1999 - 2016 Intel Corporation.
+
+  The source code contained or described herein and all documents related to the
+  source code ("Material") are owned by Intel Corporation or its suppliers or
+  licensors. Title to the Material remains with Intel Corporation or its suppliers
+  and licensors. The Material may contain trade secrets and proprietary and
+  confidential information of Intel Corporation and its suppliers and licensors,
+  and is protected by worldwide copyright and trade secret laws and treaty
+  provisions. No part of the Material may be used, copied, reproduced, modified,
+  published, uploaded, posted, transmitted, distributed, or disclosed in any way
+  without Intel's prior express written permission.
+
+  No license under any patent, copyright, trade secret or other intellectual
+  property right is granted to or conferred upon you by disclosure or delivery
+  of the Materials, either expressly, by implication, inducement, estoppel or
+  otherwise. Any license under such intellectual property rights must be
+  express and approved by Intel in writing.
+
+  Unless otherwise agreed by Intel in writing, you may not remove or alter
+  this notice or any other notice embedded in Materials by Intel or
+  Intel's suppliers or licensors in any way.
+
+  This file contains a 'Sample Driver' and is licensed as such under the terms
+  of your license agreement with Intel or your vendor. This file may be modified
+  by the user, subject to the additional terms of the license agreement.
+
+@par Specification Reference:
+**/
+
+
+#include "acpitablePlatform.h"
+#include "Csrt.h"
+
+//
+// Debug Port Table
+//
+EFI_ACPI_CSRT_TABLE Csrt = 
+{
+  {  //EFI_ACPI_DESCRIPTION_HEADER Start
+    EFI_ACPI_4_0_CORE_SYSTEM_RESOURCE_TABLE_SIGNATURE,
+    sizeof(EFI_ACPI_CSRT_TABLE),
+    EFI_ACPI_CSRT_TABLE_REVISION,
+    0,                          // to make sum of entire table == 0
+    EFI_ACPI_OEM_ID,            // OEMID is a 6 bytes long field
+    EFI_ACPI_OEM_TABLE_ID,      // OEM table identification(8 bytes long)
+    EFI_ACPI_OEM_REVISION,      // OEM revision
+    EFI_ACPI_CREATOR_ID,        // ASL compiler vendor ID
+    EFI_ACPI_CREATOR_REVISION   // ASL compiler revision number
+  },  //EFI_ACPI_DESCRIPTION_HEADER End  
+  {
+    //
+    // LPIO1 DMA   RESOURCE_GROUP_INFO1
+    //
+   {  //RESOURCE_GROUP_HEADER Start
+      sizeof(RESOURCE_GROUP_INFO1),// sizeof(RESOURCE_GROUP_INFO) 
+      0x4C544E49,
+      0x00000000,
+      0x0004,
+      0x0000,
+      0x0001,
+      0x0000,
+      sizeof(SHARED_INFO_SECTION),
+      {
+        // Shared Info Section
+        0x0001,         // Major Version 1
+        0x0000,         // Minor Version 0
+          0x55AA55AA,     // MMIO Base - Low Part
+        0x00000000,     // MMIO Base - High Part
+        0x0000002A,     // Interrupt GSI 42
+        0x02,           // Interrupt Polarity
+        0x00,           // Interrupt Mode
+        0x06,           // Number of Channels
+        0x20,           // DMA Address Width
+        0x0000,         // Base Request Line
+        0x0010,         // Number of Handshake Signals
+        0x0001000     // Maximum Block Transfer Size
+      },
+    },  // End of Resource Group header
+    {
+      {
+        // Controller 0
+        0x0000000C,     // Resource Descriptor Length
+        0x0003,         // Resource Type
+        0x0001,         // Resource Type
+        0x20495053     // UID - SPI 
+      },
+      {
+        // Channel 0
+        0x0000000C,     // Resource Descriptor Length
+        0x0003,         // Resource Type
+        0x0000,         // Resource Type
+        0x30414843     // UID - CHA0
+      },
+      {
+        // Channel 1
+        0x0000000C,     // Resource Descriptor Length
+        0x0003,         // Resource Type
+        0x0000,         // Resource Type
+        0x31414843     // UID - CHA1
+      },
+      {
+        // Channel 2
+        0x0000000C,     // Resource Descriptor Length
+        0x0003,         // Resource Type
+        0x0000,         // Resource Type
+        0x32414843     // UID - CHA2
+      },
+      {
+        // Channel 3
+        0x0000000C,     // Resource Descriptor Length
+        0x0003,         // Resource Type
+        0x0000,         // Resource Type
+        0x33414843     // UID - CHA3
+      },
+      {
+        // Channel 4
+        0x0000000C,     // Resource Descriptor Length
+        0x0003,         // Resource Type
+        0x0000,         // Resource Type
+        0x34414843     // UID - CHA4
+      },
+      {
+        // Channel 5
+        0x0000000C,     // Resource Descriptor Length
+        0x0003,         // Resource Type
+        0x0000,         // Resource Type
+        0x35414843     // UID - CHA5
+      }
+    }    
+  },
+ {
+    //
+    // LPIO2 DMA   RESOURCE_GROUP_INFO2
+    //
+    {  //RESOURCE_GROUP_HEADER Start
+      sizeof(RESOURCE_GROUP_INFO2),// sizeof(RESOURCE_GROUP_INFO)
+      0x4C544E49,
+      0x00000000,
+      0x0005,
+      0x0000,
+      0x0001,
+      0x0000,
+      sizeof(SHARED_INFO_SECTION),
+      {
+        // Shared Info Section
+        0x0001,         // Major Version 1
+        0x0000,         // Minor Version 0
+          0x55AA55AA,     // MMIO Base - Low Part
+        0x00000000,     // MMIO Base - High Part
+        0x0000002B,     // Interrupt GSI 43
+        0x02,           // Interrupt Polarity
+        0x00,           // Interrupt Mode
+        0x08,           // Number of Channels
+        0x20,           // DMA Address Width
+        0x0010,         // Base Request Line
+        0x0010,         // Number of Handshake Signals
+        0x0001000     // Maximum Block Transfer Size
+      },
+    },  // End of Resource Group header
+    {
+      {
+        // Controller 0
+        0x0000000C,     // Resource Descriptor Length
+        0x0003,         // Resource Type
+        0x0001,         // Resource Type
+        0x20433249   // UID - I2C
+      },
+      {
+        // Channel 0
+        0x0000000C,     // Resource Descriptor Length
+        0x0003,         // Resource Type
+        0x0000,         // Resource Type
+        0x30414843     // UID - CHA0
+      },
+      {
+        // Channel 1
+        0x0000000C,     // Resource Descriptor Length
+        0x0003,         // Resource Type
+        0x0000,         // Resource Type
+        0x31414843     // UID - CHA1
+      },
+      {
+        // Channel 2
+        0x0000000C,     // Resource Descriptor Length
+        0x0003,         // Resource Type
+        0x0000,         // Resource Type
+        0x32414843     // UID - CHA2
+      },
+      {
+        // Channel 3
+        0x0000000C,     // Resource Descriptor Length
+        0x0003,         // Resource Type
+        0x0000,         // Resource Type
+        0x33414843     // UID - CHA3
+      },
+      {
+        // Channel 4
+        0x0000000C,     // Resource Descriptor Length
+        0x0003,         // Resource Type
+        0x0000,         // Resource Type
+        0x34414843     // UID - CHA4
+      },
+      {
+        // Channel 5
+        0x0000000C,     // Resource Descriptor Length
+        0x0003,         // Resource Type
+        0x0000,         // Resource Type
+        0x35414843     // UID - CHA5
+      },
+      {
+        // Channel 6
+        0x0000000C,     // Resource Descriptor Length
+        0x0003,         // Resource Type
+        0x0000,         // Resource Type
+        0x36414843     // UID - CHA6
+      },
+      {
+        // Channel 7
+        0x0000000C,     // Resource Descriptor Length
+        0x0003,         // Resource Type
+        0x0000,         // Resource Type
+        0x37414843     // UID - CHA7
+      }
+    }
+  }//LPIO2 DMA   RESOURCE_GROUP_INFO2 End  
+};
+
+//
+VOID*
+ReferenceAcpiTable (
+  VOID
+  )
+{
+  //
+  // Reference the table being generated to prevent the optimizer from
+  // removing the data structure from the executable
+  //
+  return (VOID*)&Csrt;
+}

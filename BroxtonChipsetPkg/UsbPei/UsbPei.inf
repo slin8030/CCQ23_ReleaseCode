@@ -1,0 +1,68 @@
+## @file
+#  Component description file for USB PEI Module
+#
+#******************************************************************************
+#* Copyright (c) 2014 - 2015, Insyde Software Corp. All Rights Reserved.
+#*
+#* You may not reproduce, distribute, publish, display, perform, modify, adapt,
+#* transmit, broadcast, present, recite, release, license or otherwise exploit
+#* any part of this publication in any form, by any means, without the prior
+#* written permission of Insyde Software Corporation.
+#*
+#******************************************************************************
+
+
+[Defines]
+  INF_VERSION                    = 0x00010005
+  BASE_NAME                      = IchUsbPei
+  FILE_GUID                      = 73E6F6B4-D029-4e87-8405-6067C8BD02A6
+  MODULE_TYPE                    = PEIM
+  VERSION_STRING                 = 1.0
+
+  ENTRY_POINT                    = PeimInitializeIchUsb
+
+#
+# The following information is for reference only and not required by the build tools.
+#
+#  VALID_ARCHITECTURES           = IA32 X64 IPF EBC
+#
+
+[Sources]
+  UsbPei.c
+  UsbPei.h
+
+
+[Packages]
+  MdePkg/MdePkg.dec
+  MdeModulePkg/MdeModulePkg.dec
+  $(CHIPSET_PKG)/$(CHIPSET_PKG).dec
+  $(PLATFORM_RC_PACKAGE)/$(PLATFORM_RC_PACKAGE).dec
+
+[LibraryClasses]
+  IoLib
+  PciLib
+  PcdLib
+  BaseMemoryLib
+  PeimEntryPoint
+  DebugLib
+
+
+[Ppis]
+  gPeiUsbControllerPpiGuid                      # PPI ALWAYS_PRODUCED
+  gEfiPeiStallPpiGuid
+  gEfiEndOfPeiSignalPpiGuid
+
+
+[Pcd]
+#[-start-151216-IB07220025-remove]#
+#   gEfiIchTokenSpaceGuid.PcdPeiIchEhciControllerMemoryBaseAddress
+#[-end-151216-IB07220025-remove]#
+
+[FeaturePcd]
+#[-start-151216-IB07220025-remove]#
+#   gEfiIchTokenSpaceGuid.PcdEhciRecoveryEnabled
+#[-end-151216-IB07220025-remove]#
+
+[Depex]
+  gEfiPeiMemoryDiscoveredPpiGuid AND gEfiPeiBootInRecoveryModePpiGuid
+

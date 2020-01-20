@@ -1,0 +1,98 @@
+## @file
+#
+#  Component description file for OemBadgingSupportDxe driver.
+#
+#******************************************************************************
+#* Copyright (c) 2015, Insyde Software Corporation. All Rights Reserved.
+#*
+#* You may not reproduce, distribute, publish, display, perform, modify, adapt,
+#* transmit, broadcast, present, recite, release, license or otherwise exploit
+#* any part of this publication in any form, by any means, without the prior
+#* written permission of Insyde Software Corporation.
+#*
+#******************************************************************************
+#
+##
+
+[Defines]
+  INF_VERSION                    = 0x00010005
+  BASE_NAME                      = SioNpce285Dxe
+  FILE_GUID                      = DB35BFD1-0487-4A0C-9075-9B35391A217A
+  MODULE_TYPE                    = DXE_DRIVER
+  VERSION_STRING                 = 1.0
+
+  ENTRY_POINT                    = SioDriverEntryPoint
+
+[Sources]
+  SioMainDxe.c
+  SioInitDxe.c
+  Ps2K.c
+  Ps2M.c
+  ProgramExtensiveDevice.c
+  SioInitDxe.h
+  SioHiiResource/SioHiiResource.c
+  SioHiiResource/SioHiiResource.h
+  SioHiiResource/SioHiiResourceStrings.uni
+  SioHiiResource/SioHiiResourceNvData.h
+  SioHiiResource/SioHiiResourceVfr.vfr
+  SioAsl/SioNpce285.asl
+
+[Packages]
+  MdePkg/MdePkg.dec
+  SioNpce285Pkg/SioNpce285Pkg.dec
+  InsydeModulePkg/InsydeModulePkg.dec
+  MdeModulePkg/MdeModulePkg.dec
+  IntelFrameworkPkg/IntelFrameworkPkg.dec
+
+[Guids]
+  gSioNpce285Setup00FormSetGuid
+  gEfiIfrTianoGuid
+
+[LibraryClasses]
+  SioLib
+  AcpiPlatformLib
+  BaseLib
+  BaseMemoryLib
+  DxeServicesLib
+  MemoryAllocationLib
+  UefiDriverEntryPoint
+  UefiBootServicesTableLib
+  HiiLib
+  HiiExLib
+  SetupUtilityLib
+#[-start-170502-IB07400864-add]#
+  DebugLib
+#[-end-170502-IB07400864-add]#
+
+[Protocols]
+  gEfiIsaPnp303DeviceProtocolGuid
+  gEfiIsaPnpF03DeviceProtocolGuid
+  gEfiIsaPnp401DeviceProtocolGuid
+  gEfiIsaPnp501DeviceProtocolGuid
+  gEfiIsaPnp510DeviceProtocolGuid
+  gEfiIsaPnp604DeviceProtocolGuid
+  gEfiSioWdtProtocolGuid
+  gEfiIsaVoltagleDeviceProtocolGuid
+  gEfiIsaFanSpeedDeviceProtocolGuid
+  gEfiIsaTemperatureDeviceProtocolGuid
+  gEfiHiiConfigRoutingProtocolGuid
+  gEfiHiiConfigAccessProtocolGuid
+  gEfiSetupUtilityBrowserProtocolGuid
+  gEfiAcpiSupportProtocolGuid
+  gEfiAcpiTableProtocolGuid
+  gEfiAcpiSdtProtocolGuid
+
+[Pcd]
+  gSioGuid.PcdSioNpce285Setup
+  gSioGuid.PcdSioNpce285Cfg
+  gSioGuid.PcdSioNpce285SetupStr
+  gSioGuid.PcdSioNpce285UpdateAsl
+  gSioGuid.PcdSioNpce285ExtensiveCfg
+  gSioGuid.PcdSioNpce285DxeCustomizeSettingTable
+
+[Depex]
+  gEfiCpuIo2ProtocolGuid AND
+  gEfiAcpiSupportProtocolGuid AND
+  gEfiVariableArchProtocolGuid AND
+  gEfiSetupUtilityProtocolGuid
+

@@ -1,0 +1,404 @@
+// *++
+//
+// Copyright (c)  2015 Intel Corporation. All rights reserved
+// This software and associated documentation (if any) is furnished
+// under a license and may only be used or copied in accordance
+// with the terms of the license. Except as permitted by such
+// license, no part of this software or documentation may be
+// reproduced, stored in a retrieval system, or transmitted in any
+// form or by any means without the express written consent of
+// Intel Corporation.
+//
+//
+// Module Name:
+//
+//   AcpiSetup.vfi
+//
+// Abstract:
+//
+//   Driver SystemConfig formset.
+//
+// Revision History:
+//
+// --*/
+form formid = ACPI_SETUP_FORM_ID,
+  title    = STRING_TOKEN(STR_ACPI_SETUP_TITLE);
+
+  suppressif ideqval SystemConfig.PcieRootPortEn[OFFSET_0] == 0x0;
+    oneof varid   = SystemConfig.PciExpNative,
+      prompt      = STRING_TOKEN(STR_ACPI_PCIE_NATIVE_PROMPT),
+      help        = STRING_TOKEN(STR_ACPI_PCIE_NATIVE_HELP),
+      option text = STRING_TOKEN(STR_DISABLED), value = 0, flags = RESET_REQUIRED;
+      option text = STRING_TOKEN(STR_ENABLE), value = 1, flags = DEFAULT | MANUFACTURING | RESET_REQUIRED;
+    endoneof;
+  endif; // suppressif
+
+  suppressif ideqval SystemConfig.PciExpNative == 0x0;
+    oneof varid   = SystemConfig.NativeAspmEnable,
+      prompt      = STRING_TOKEN(STR_NATIVE_ASPM_PROMPT),
+      help        = STRING_TOKEN(STR_NATIVE_ASPM_HELP),
+//[-start-160421-IB03090426-modify]//
+      option text = STRING_TOKEN(STR_DISABLED), value = 0, flags = MANUFACTURING | RESET_REQUIRED;
+      option text = STRING_TOKEN(STR_ENABLE), value = 1, flags = DEFAULT | RESET_REQUIRED;
+//[-end-160421-IB03090426-modify]//
+    endoneof;
+  endif; // suppressif
+
+//[-start-170323-IB07400848-modify]//
+  //
+  // iRMT only support on DT sku.
+  //
+  suppressif ideqval SystemConfig.IsIOTGBoardIds == 1;
+    oneof varid   = SystemConfig.IrmtConfiguration,
+      prompt      = STRING_TOKEN(STR_IRMT),
+      help        = STRING_TOKEN(STR_IRMT_HELP),
+      option text = STRING_TOKEN(STR_DISABLED), value = 0, flags = DEFAULT | MANUFACTURING | RESET_REQUIRED;
+      option text = STRING_TOKEN(STR_ENABLED), value = 1, flags = RESET_REQUIRED;
+    endoneof;
+  endif;
+//[-end-170323-IB07400848-modify]//
+
+  oneof varid   = SystemConfig.LowPowerS0Idle,
+    prompt      = STRING_TOKEN(STR_LOW_POWER_S0_IDLE),
+    help        = STRING_TOKEN(STR_LOW_POWER_S0_IDLE_HELP),
+//[-start-161021-IB03090435-modify]//
+//[-start-161125-IB07400818-modify]//
+//#if !BXTI_PF_ENABLE //default is Windows
+    option text = STRING_TOKEN(STR_DISABLE), value = 0, flags = DEFAULT | MANUFACTURING | RESET_REQUIRED;
+    option text = STRING_TOKEN(STR_ENABLE),  value = 1, flags = RESET_REQUIRED;
+//#else
+//#if (PPV_ENABLE == 1)
+//    option text = STRING_TOKEN(STR_DISABLE), value = 0, flags = DEFAULT | MANUFACTURING | RESET_REQUIRED;
+//    option text = STRING_TOKEN(STR_ENABLE),  value = 1, flags = RESET_REQUIRED;
+//#else
+//    option text = STRING_TOKEN(STR_DISABLE), value = 0, flags = RESET_REQUIRED;
+//    option text = STRING_TOKEN(STR_ENABLE),  value = 1, flags = DEFAULT | MANUFACTURING | RESET_REQUIRED;
+//#endif
+//#endif
+//[-end-161125-IB07400818-modify]//
+//[-end-161021-IB03090435-modify]//
+  endoneof;
+  
+  suppressif NOT ideqval SystemConfig.LowPowerS0Idle == 1;
+    oneof varid   = SystemConfig.TenSecondPowerButtonEnable,
+      prompt      = STRING_TOKEN(STR_10SEC_POWER_BUTTON_ENABLE),
+      help        = STRING_TOKEN(STR_10SEC_POWER_BUTTON_ENABLE_HELP),
+//[-start-160922-IB03090434-modify]//
+      option text = STRING_TOKEN(STR_DISABLED), value = 0, flags = RESET_REQUIRED;
+      option text = STRING_TOKEN(STR_ENABLED), value = 1, flags = DEFAULT | MANUFACTURING | RESET_REQUIRED;
+//[-end-160922-IB03090434-modify]//
+    endoneof;
+
+    oneof varid     = SystemConfig.PciDelayOptimizationEcr,
+      prompt      = STRING_TOKEN(STR_PCI_DELAY_OPTIMIZATION_ECR),
+      help        = STRING_TOKEN(STR_PCI_DELAY_OPTIMIZATION_ECR_HELP),
+      option text = STRING_TOKEN(STR_DISABLED), value = 0, flags = DEFAULT | MANUFACTURING | RESET_REQUIRED;
+      option text = STRING_TOKEN(STR_ENABLED), value = 1, flags = RESET_REQUIRED;
+    endoneof;
+  endif; // suppressif
+  
+//[-start-170323-IB07400848-modify]//
+  //
+  // EC do not exist on Apollo Lake-I CRBs
+  //
+  suppressif ideqval SystemConfig.IsIOTGBoardIds == 1;
+    oneof varid   = SystemConfig.CSNotifyEC,
+      prompt      = STRING_TOKEN(STR_NOTIFY_EC),
+      help        = STRING_TOKEN(STR_NOTIFY_EC_HELP),
+//[-start-160922-IB03090434-modify]//
+      option text = STRING_TOKEN(STR_DISABLED), value = 0, flags = RESET_REQUIRED;
+      option text = STRING_TOKEN(STR_ENABLED), value = 1, flags = DEFAULT | MANUFACTURING | RESET_REQUIRED;
+//[-end-160922-IB03090434-modify]//
+    endoneof;
+  endif;
+//[-end-170323-IB07400848-modify]//
+
+//[-start-170323-IB07400848-modify]//
+  suppressif 
+    NOT ideqval SystemConfig.CSNotifyEC == 1
+    OR
+    ideqval SystemConfig.IsIOTGBoardIds == 1;
+//[-end-170323-IB07400848-modify]//
+    oneof varid   = SystemConfig.CSDebugLightEC,
+      prompt      = STRING_TOKEN(STR_DEBUG_LT_EC),
+      help        = STRING_TOKEN(STR_DEBUG_LT_EC_HELP),
+      option text = STRING_TOKEN(STR_DISABLED), value = 0, flags = DEFAULT | MANUFACTURING | RESET_REQUIRED;
+      option text = STRING_TOKEN(STR_ENABLED), value = 1, flags = RESET_REQUIRED;
+    endoneof;
+
+    oneof varid   = SystemConfig.EcLowPowerMode,
+      prompt      = STRING_TOKEN(STR_EC_LOWPOWER_MODE),
+      help        = STRING_TOKEN(STR_EC_LOWPOWER_MODE_HELP),
+      option text = STRING_TOKEN(STR_DISABLED), value = 0, flags = DEFAULT | MANUFACTURING | RESET_REQUIRED;
+      option text = STRING_TOKEN(STR_ENABLED), value = 1, flags = RESET_REQUIRED;
+    endoneof;
+  endif; // suppressif
+
+  //
+  // Unused
+  //
+//[-start-170323-IB07400848-remove]//
+//  goto PEP_FORM_ID,
+//     prompt = STRING_TOKEN(STR_PEP_CONFIGURATION),
+//     help = STRING_TOKEN(STR_PEP_CONFIGURATION_HELP);
+//[-end-170323-IB07400848-remove]//
+
+//[-start-161018-IB06740518-add]//
+//[-start-170323-IB07400848-modify]//
+  //
+  // EC do not exist on Apollo Lake-I CRBs
+  //
+  suppressif ideqval SystemConfig.IsIOTGBoardIds == 1;
+    goto IUER_FORM_ID,
+       prompt = STRING_TOKEN(STR_IUER_CONFIGURATION),
+       help = STRING_TOKEN(STR_IUER_CONFIGURATION_HELP);
+  endif;
+//[-end-170323-IB07400848-modify]//
+//[-end-161018-IB06740518-add]//
+
+endform; // ACPI_SETUP_FORM_ID
+
+//[-start-161018-IB06740518-add]//
+//
+// Form to configure Intel Ultrabook Event Notification 
+//
+form formid = IUER_FORM_ID,
+  title = STRING_TOKEN(STR_IUER_CONFIGURATION);
+  subtitle text = STRING_TOKEN(STR_IUER_CONFIGURATION);
+  
+      oneof varid = SystemConfig.ConvertibleEnable,
+      prompt   = STRING_TOKEN(STR_IUER_SLATE_ENABLE),
+      help     = STRING_TOKEN(STR_IUER_SLATE_ENABLE_HELP),
+      option text = STRING_TOKEN(STR_DISABLED), value = 0, flags = DEFAULT | MANUFACTURING | RESET_REQUIRED;
+      option text = STRING_TOKEN(STR_ENABLED), value = 1, flags = RESET_REQUIRED;
+    endoneof;
+
+    suppressif ideqval SystemConfig.ConvertibleEnable == 0;
+      oneof varid = SystemConfig.SlateIndicator,
+        prompt   = STRING_TOKEN(STR_SLATE_INDICATOR),
+        help     = STRING_TOKEN(STR_SLATE_INDICATOR_HELP),
+        option text = STRING_TOKEN(STR_SLATE), value = 0, flags = RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_LAPTOP), value = 1, flags = DEFAULT | MANUFACTURING | RESET_REQUIRED;
+      endoneof;
+
+      oneof varid = SystemConfig.SlateIndicatorSx,
+        prompt   = STRING_TOKEN(STR_SLATE_INDICATOR_SX),
+        help     = STRING_TOKEN(STR_SLATE_INDICATOR_SX_HELP),
+        option text = STRING_TOKEN(STR_SAME), value = 0, flags = DEFAULT | MANUFACTURING | RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_TOGGLE), value = 1, flags = RESET_REQUIRED;
+      endoneof;
+    endif;
+
+    oneof varid = SystemConfig.DockEnable,
+      prompt   = STRING_TOKEN(STR_IUER_DOCK_ENABLE),
+      help     = STRING_TOKEN(STR_IUER_DOCK_ENABLE_HELP),
+      option text = STRING_TOKEN(STR_DISABLED), value = 0, flags = DEFAULT | MANUFACTURING | RESET_REQUIRED;
+      option text = STRING_TOKEN(STR_ENABLED), value = 1, flags = RESET_REQUIRED;
+    endoneof;
+
+    suppressif ideqval SystemConfig.DockEnable == 0;
+      oneof varid = SystemConfig.DockIndicator,
+        prompt   = STRING_TOKEN(STR_DOCK_INDICATOR),
+        help     = STRING_TOKEN(STR_DOCK_INDICATOR_HELP),
+        option text = STRING_TOKEN(STR_UNDOCK), value = 0, flags = DEFAULT | MANUFACTURING | RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_DOCK), value = 1, flags = RESET_REQUIRED;
+      endoneof;
+
+      oneof varid = SystemConfig.DockIndicatorSx,
+        prompt   = STRING_TOKEN(STR_DOCK_INDICATOR_SX),
+        help     = STRING_TOKEN(STR_DOCK_INDICATOR_SX_HELP),
+        option text = STRING_TOKEN(STR_SAME), value = 0, flags = DEFAULT | MANUFACTURING | RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_TOGGLE), value = 1, flags = RESET_REQUIRED;
+      endoneof;
+    endif;
+endform;
+//[-end-161018-IB06740518-add]//
+
+//
+// Form to configure PEP constraints
+//
+form formid = PEP_FORM_ID,
+  title = STRING_TOKEN(STR_PEP_CONFIGURATION);
+  subtitle text = STRING_TOKEN(STR_PEP_CONFIGURATION);
+
+      oneof varid   = SystemConfig.PepCpu,
+        prompt      = STRING_TOKEN(STR_PEP_CPU),
+        help        = STRING_TOKEN(STR_PEP_CPU_HELP),
+        option text = STRING_TOKEN(STR_DISABLED), value = 0, flags = RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_ENABLED), value = 1, flags = DEFAULT | MANUFACTURING | RESET_REQUIRED;
+      endoneof;
+
+      oneof varid   = SystemConfig.PepGfx,
+        prompt      = STRING_TOKEN(STR_PEP_GFX),
+        help        = STRING_TOKEN(STR_PEP_GFX_HELP),
+        option text = STRING_TOKEN(STR_DISABLED), value = 0, flags = RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_ENABLED), value = 1, flags = DEFAULT | MANUFACTURING | RESET_REQUIRED;
+      endoneof;
+
+      oneof varid   = SystemConfig.PepSataContraints,
+        prompt      = STRING_TOKEN(STR_PEP_SATA),
+        help        = STRING_TOKEN(STR_PEP_SATA_HELP),
+        option text = STRING_TOKEN(STR_PEP_SATA_NO_CONSTRAINT), value = 0, flags = RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_PEP_SATA_PORTS), value = 1, flags = DEFAULT | MANUFACTURING | RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_PEP_SATA_CONTROLLER), value = 2, flags = RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_PEP_PCIE_SATA_CONTROLLER), value = 4, flags = RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_PEP_PCIE_SATA_PORTS), value = 5, flags = RESET_REQUIRED;
+      endoneof;
+	  
+    suppressif ideqval SystemConfig.LowPowerS0Idle == 1;
+      oneof varid   = SystemConfig.PepUart,
+        prompt      = STRING_TOKEN(STR_PEP_UART),
+        help        = STRING_TOKEN(STR_PEP_UART_HELP),
+        option text = STRING_TOKEN(STR_DISABLED), value = 0, flags = DEFAULT | MANUFACTURING | RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_ENABLED), value = 1, flags = RESET_REQUIRED;
+      endoneof;
+
+      oneof varid   = SystemConfig.PepSdio,
+        prompt      = STRING_TOKEN(STR_PEP_SDIO),
+        help        = STRING_TOKEN(STR_PEP_SDIO_HELP),
+        option text = STRING_TOKEN(STR_DISABLED), value = 0, flags = DEFAULT | MANUFACTURING | RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_ENABLED), value = 1, flags = RESET_REQUIRED;
+      endoneof;
+
+      oneof varid   = SystemConfig.PepI2c0,
+        prompt      = STRING_TOKEN(STR_PEP_I2C0),
+        help        = STRING_TOKEN(STR_PEP_I2C0_HELP),
+        option text = STRING_TOKEN(STR_DISABLED), value = 0, flags = DEFAULT | MANUFACTURING | RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_ENABLED), value = 1, flags = RESET_REQUIRED;
+      endoneof;
+
+      oneof varid   = SystemConfig.PepI2c1,
+        prompt      = STRING_TOKEN(STR_PEP_I2C1),
+        help        = STRING_TOKEN(STR_PEP_I2C1_HELP),
+        option text = STRING_TOKEN(STR_DISABLED), value = 0, flags = DEFAULT | MANUFACTURING | RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_ENABLED), value = 1, flags = RESET_REQUIRED;
+      endoneof;
+
+      oneof varid   = SystemConfig.PepI2c2,
+        prompt      = STRING_TOKEN(STR_PEP_I2C2),
+        help        = STRING_TOKEN(STR_PEP_I2C2_HELP),
+        option text = STRING_TOKEN(STR_DISABLED), value = 0, flags = DEFAULT | MANUFACTURING | RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_ENABLED), value = 1, flags = RESET_REQUIRED;
+      endoneof;      
+
+      oneof varid   = SystemConfig.PepI2c3,
+        prompt      = STRING_TOKEN(STR_PEP_I2C3),
+        help        = STRING_TOKEN(STR_PEP_I2C3_HELP),
+        option text = STRING_TOKEN(STR_DISABLED), value = 0, flags = DEFAULT | MANUFACTURING | RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_ENABLED), value = 1, flags = RESET_REQUIRED;
+      endoneof;
+
+      oneof varid   = SystemConfig.PepI2c4,
+        prompt      = STRING_TOKEN(STR_PEP_I2C4),
+        help        = STRING_TOKEN(STR_PEP_I2C4_HELP),
+        option text = STRING_TOKEN(STR_DISABLED), value = 0, flags = DEFAULT | MANUFACTURING | RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_ENABLED), value = 1, flags = RESET_REQUIRED;
+      endoneof;
+
+      oneof varid   = SystemConfig.PepI2c5,
+        prompt      = STRING_TOKEN(STR_PEP_I2C5),
+        help        = STRING_TOKEN(STR_PEP_I2C5_HELP),
+        option text = STRING_TOKEN(STR_DISABLED), value = 0, flags = DEFAULT | MANUFACTURING | RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_ENABLED), value = 1, flags = RESET_REQUIRED;
+      endoneof;
+
+      oneof varid   = SystemConfig.PepI2c6,
+        prompt      = STRING_TOKEN(STR_PEP_I2C6),
+        help        = STRING_TOKEN(STR_PEP_I2C6_HELP),
+        option text = STRING_TOKEN(STR_DISABLED), value = 0, flags = DEFAULT | MANUFACTURING | RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_ENABLED), value = 1, flags = RESET_REQUIRED;
+      endoneof;            
+      
+      oneof varid   = SystemConfig.PepI2c7,
+        prompt      = STRING_TOKEN(STR_PEP_I2C7),
+        help        = STRING_TOKEN(STR_PEP_I2C7_HELP),
+        option text = STRING_TOKEN(STR_DISABLED), value = 0, flags = DEFAULT | MANUFACTURING | RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_ENABLED), value = 1, flags = RESET_REQUIRED;
+      endoneof;
+           
+      oneof varid   = SystemConfig.PepPwm1,
+        prompt      = STRING_TOKEN(STR_PEP_PWM1),
+        help        = STRING_TOKEN(STR_PEP_PWM1_HELP),
+        option text = STRING_TOKEN(STR_DISABLED), value = 0, flags = DEFAULT | MANUFACTURING | RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_ENABLED), value = 1, flags = RESET_REQUIRED;
+      endoneof;
+       
+      oneof varid   = SystemConfig.PepHsuart1,
+        prompt      = STRING_TOKEN(STR_PEP_HSUART1),
+        help        = STRING_TOKEN(STR_PEP_HSUART1_HELP),
+        option text = STRING_TOKEN(STR_DISABLED), value = 0, flags = DEFAULT | MANUFACTURING | RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_ENABLED), value = 1, flags = RESET_REQUIRED;
+      endoneof;  
+
+      oneof varid   = SystemConfig.PepHsuart2,
+        prompt      = STRING_TOKEN(STR_PEP_HSUART2),
+        help        = STRING_TOKEN(STR_PEP_HSUART2_HELP),
+        option text = STRING_TOKEN(STR_DISABLED), value = 0, flags = DEFAULT | MANUFACTURING | RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_ENABLED), value = 1, flags = RESET_REQUIRED;
+      endoneof; 
+      
+      oneof varid   = SystemConfig.PepHsuart3,
+        prompt      = STRING_TOKEN(STR_PEP_HSUART3),
+        help        = STRING_TOKEN(STR_PEP_HSUART3_HELP),
+        option text = STRING_TOKEN(STR_DISABLED), value = 0, flags = DEFAULT | MANUFACTURING | RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_ENABLED), value = 1, flags = RESET_REQUIRED;
+      endoneof;                  
+       
+      oneof varid   = SystemConfig.PepHsuart4,
+        prompt      = STRING_TOKEN(STR_PEP_HSUART4),
+        help        = STRING_TOKEN(STR_PEP_HSUART4_HELP),
+        option text = STRING_TOKEN(STR_DISABLED), value = 0, flags = DEFAULT | MANUFACTURING | RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_ENABLED), value = 1, flags = RESET_REQUIRED;
+      endoneof;        
+      
+      oneof varid   = SystemConfig.PepSpi1,
+        prompt      = STRING_TOKEN(STR_PEP_SPI1),
+        help        = STRING_TOKEN(STR_PEP_SPI1_HELP),
+        option text = STRING_TOKEN(STR_DISABLED), value = 0, flags = DEFAULT | MANUFACTURING | RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_ENABLED), value = 1, flags = RESET_REQUIRED;
+      endoneof; 
+      
+      oneof varid   = SystemConfig.PepSpi2,
+        prompt      = STRING_TOKEN(STR_PEP_SPI2),
+        help        = STRING_TOKEN(STR_PEP_SPI2_HELP),
+        option text = STRING_TOKEN(STR_DISABLED), value = 0, flags = DEFAULT | MANUFACTURING | RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_ENABLED), value = 1, flags = RESET_REQUIRED;
+      endoneof; 
+      
+      oneof varid   = SystemConfig.PepSpi3,
+        prompt      = STRING_TOKEN(STR_PEP_SPI3),
+        help        = STRING_TOKEN(STR_PEP_SPI3_HELP),
+        option text = STRING_TOKEN(STR_DISABLED), value = 0, flags = DEFAULT | MANUFACTURING | RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_ENABLED), value = 1, flags = RESET_REQUIRED;
+      endoneof;                            
+      
+      oneof varid   = SystemConfig.PepXhci,
+        prompt      = STRING_TOKEN(STR_PEP_XHCI),
+        help        = STRING_TOKEN(STR_PEP_XHCI_HELP),
+        option text = STRING_TOKEN(STR_DISABLED), value = 0, flags = RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_ENABLED), value = 1, flags = DEFAULT | MANUFACTURING | RESET_REQUIRED;
+      endoneof;
+
+      oneof varid   = SystemConfig.PepAudio,
+        prompt      = STRING_TOKEN(STR_PEP_AUDIO),
+        help        = STRING_TOKEN(STR_PEP_AUDIO_HELP),
+        option text = STRING_TOKEN(STR_DISABLED), value = 0, flags = RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_ENABLED), value = 1, flags = DEFAULT | MANUFACTURING | RESET_REQUIRED;
+      endoneof;
+
+      oneof varid   = SystemConfig.PepEmmc,
+        prompt      = STRING_TOKEN(STR_PEP_EMMC),
+        help        = STRING_TOKEN(STR_PEP_EMMC_HELP),
+        option text = STRING_TOKEN(STR_DISABLED), value = 0, flags = RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_ENABLED), value = 1, flags = DEFAULT | MANUFACTURING | RESET_REQUIRED;
+      endoneof;
+
+      oneof varid   = SystemConfig.PepSdxc,
+        prompt      = STRING_TOKEN(STR_PEP_SDXC),
+        help        = STRING_TOKEN(STR_PEP_SDXC_HELP),
+        option text = STRING_TOKEN(STR_DISABLED), value = 0, flags = RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_ENABLED), value = 1, flags = DEFAULT | MANUFACTURING | RESET_REQUIRED;
+      endoneof;
+	endif;
+
+endform; // PEP_CONFIG_FORM_ID

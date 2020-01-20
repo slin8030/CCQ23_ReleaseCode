@@ -1,0 +1,622 @@
+## @file
+#  Platform Package Flash Description File
+#
+#******************************************************************************
+#* Copyright (c) 2013 - 2016, Insyde Software Corp. All Rights Reserved.
+#*
+#* You may not reproduce, distribute, publish, display, perform, modify, adapt,
+#* transmit, broadcast, present, recite, release, license or otherwise exploit
+#* any part of this publication in any form, by any means, without the prior
+#* written permission of Insyde Software Corporation.
+#*
+#******************************************************************************
+
+
+################################################################################
+#
+# FV Section
+#
+# [FV] section is used to define what components or modules are placed within a flash
+# device file.  This section also defines order the components and modules are positioned
+# within the image.  The [FV] section consists of define statements, set statements and
+# module statements.
+#
+################################################################################
+[FV.FVIBBL]
+BlockSize          = $(FLASH_BLOCK_SIZE)
+FvAlignment        = 16         #FV alignment and FV attributes setting.
+ERASE_POLARITY     = 1
+MEMORY_MAPPED      = TRUE
+STICKY_WRITE       = TRUE
+LOCK_CAP           = TRUE
+LOCK_STATUS        = TRUE
+WRITE_DISABLED_CAP = TRUE
+WRITE_ENABLED_CAP  = TRUE
+WRITE_STATUS       = TRUE
+WRITE_LOCK_CAP     = TRUE
+WRITE_LOCK_STATUS  = TRUE
+READ_DISABLED_CAP  = TRUE
+READ_ENABLED_CAP   = TRUE
+READ_STATUS        = TRUE
+READ_LOCK_CAP      = TRUE
+READ_LOCK_STATUS   = TRUE
+FvNameGuid         = 6699ECAF-3477-4c76-A4E9-D41F46928BE9
+#
+# RESET VECTOR
+#
+#[-start-161123-IB07250310-modify]#
+!if gChipsetPkgTokenSpaceGuid.PcdFspEnabled
+INF  RuleOverride=RESET_VECTOR USE = IA32 $(CHIPSET_OVERRIDE)/UefiCpuPkg/ResetVector/Vtf0/Bin/ResetVectorFsp.inf
+!else
+INF  RuleOverride=RESET_VECTOR USE = IA32 $(CHIPSET_OVERRIDE)/UefiCpuPkg/ResetVector/Vtf0/Bin/ResetVector.inf
+!endif
+#[-end-161123-IB07250310-modify]#
+
+[FV.IBBFV]
+BlockSize          = $(FLASH_BLOCK_SIZE)
+#[-start-151229-IB03090424-modify]#
+#[-start-161123-IB07250310-modify]#
+!if gChipsetPkgTokenSpaceGuid.PcdFspEnabled
+FvBaseAddress      = 0xFEF51000
+!else
+FvBaseAddress      = 0xFEF00000
+!endif
+#[-end-161123-IB07250310-modify]#
+#[-end-151229-IB03090424-modify]#
+FvAlignment        = 16
+ERASE_POLARITY     = 1
+MEMORY_MAPPED      = TRUE
+STICKY_WRITE       = TRUE
+LOCK_CAP           = TRUE
+LOCK_STATUS        = TRUE
+WRITE_DISABLED_CAP = TRUE
+WRITE_ENABLED_CAP  = TRUE
+WRITE_STATUS       = TRUE
+WRITE_LOCK_CAP     = TRUE
+WRITE_LOCK_STATUS  = TRUE
+READ_DISABLED_CAP  = TRUE
+READ_ENABLED_CAP   = TRUE
+READ_STATUS        = TRUE
+READ_LOCK_CAP      = TRUE
+READ_LOCK_STATUS   = TRUE
+FvNameGuid         = B73FE497-B92E-416e-8326-45AD0D270091
+
+APRIORI PEI {
+
+}
+INF RuleOverride=TE_PEIM $(CHIPSET_PKG)/VariableStorageSelector/Pei/VariableStorageSelectorPei.inf
+INF RuleOverride=TE_PEIM InsydeModulePkg/Universal/Variable/VariablePei/VariablePei.inf
+#[-start-161123-IB07250310-modify]#
+!if gChipsetPkgTokenSpaceGuid.PcdFspEnabled
+INF $(CHIPSET_PKG)/PlatformInit/Pei/PlatformInitPreMemWrapper.inf
+INF $(CHIPSET_PKG)/Override/IntelFsp2WrapperPkg/FspmWrapperPeim/FspmWrapperPeim.inf
+!else
+INF RuleOverride=TE_PEIM $(CHIPSET_PKG)/PlatformInit/Pei/PlatformInitPreMem.inf
+#[-start-160308-IB03090425-remove]#
+#!if $(NPK_ENABLE) == YES
+#  INF RuleOverride=TE_PEIM $(PLATFORM_RC_PACKAGE)/NorthCluster/NpkInit/Pei/NpkInitPei.inf
+#!endif
+#[-end-160308-IB03090425-remove]#
+#INF $(CHIPSET_PKG)/ChipsetSvcPei/ChipsetSvcPeiBB.inf
+INF RuleOverride=TE_PEIM $(PLATFORM_RC_PACKAGE)/SiInit/Pei/SiInitPreMem.inf
+#[-start-160901-IB07400777-modify]#
+#[-start-170612-IB07400873-modify]#
+#!if $(EMMC_DRIVER_ENABLE) == YES
+!if $(GET_STAGE2_FROM_EMMC) == YES
+  INF RuleOverride=TE_PEIM $(PLATFORM_RC_PACKAGE)/SouthCluster/MmcMediaDevicePei/MmcMediaDevicePei.inf
+!endif
+#!endif
+#[-end-170612-IB07400873-modify]#
+#[-end-160901-IB07400777-modify]#
+
+#INF $(CHIPSET_OVERRIDE)/InsydeModulePkg/Universal/CommonPolicy/PlatformStage1Pei/PlatformStage1Pei.inf
+
+#[-start-160216-IB03090424-modify]#
+#[-start-170323-IB07400848-modify]#
+!if $(SGX_ENABLE) == TRUE || $(PRAM_ENABLE) == TRUE
+  INF $(PLATFORM_RC_PACKAGE)/NorthCluster/BiosReservedMemoryInit/Pei/BiosReservedMemoryInit.inf
+!endif
+#[-end-170323-IB07400848-modify]#
+#[-end-160216-IB03090424-modify]#
+INF RuleOverride=TE_PEIM $(PLATFORM_RC_PACKAGE)/NorthCluster/MemoryInit/MemoryInitAplk.inf
+!endif
+#[-end-161123-IB07250310-modify]#
+
+#
+# SEC Phase modules
+#
+INF RuleOverride=SEC_CORE $(CHIPSET_OVERRIDE)/IA32FamilyCpuPkg/SecCore/Vtf0SecCore.inf
+INF RuleOverride=RESET_VECTOR USE = IA32 $(CHIPSET_OVERRIDE)/UefiCpuPkg/ResetVector/Vtf1/Bin/ResetVector.inf
+
+[FV.RECOVERYFV]
+
+#
+# Move to IBB
+#
+!disable InsydeModulePkg/Universal/Variable/VariablePei/VariablePei.inf #IBB
+!disable InsydeModulePkg/Universal/CommonPolicy/PlatformStage1Pei/PlatformStage1Pei.inf #IBB
+#!disable IA32FamilyCpuPkg/SecCore/SecCore.inf #IBB
+
+#
+# Reduce Fv size, disable unused PEIMs.
+#
+!disable InsydeModulePkg/Universal/StatusCode/DebugMaskPei/DebugMaskPei.inf #disable
+!disable MdeModulePkg/Universal/CapsulePei/CapsulePei.inf #disable
+!disable InsydeModulePkg/Universal/Variable/SetupDataProviderPei/SetupDataProviderPei.inf #disable
+!disable InsydeModulePkg/Bus/Smbus/ProgClkGenPeim/ProgClkGenPeim.inf #disable
+#[-start-151216-IB07220025-remove]#
+# !disable InsydeModulePkg/Universal/FileAccess/FileAccessPei/FileAccessPei.inf #disable
+#[-end-151216-IB07220025-remove]#
+#[-start-161123-IB07250310-add]#
+!if gChipsetPkgTokenSpaceGuid.PcdFspEnabled
+INF APRIORI $(CHIPSET_PKG)/Override/IntelFsp2WrapperPkg/FspsWrapperPeim/FspsWrapperPeim.inf
+!endif
+#[-end-161123-IB07250310-add]#
+
+INF APRIORI $(CHIPSET_PKG)/ChipsetSvcPei/ChipsetSvcPei.inf
+INF APRIORI $(CHIPSET_PKG)/PlatformInit/Pei/PlatformInit.inf
+#INF APRIORI $(CHIPSET_PKG)/PolicyInit/Pei/PolicyInitPei.inf
+
+# Switchable Graphics / Hybrid Graphics Support
+!if gChipsetPkgTokenSpaceGuid.PcdSwitchableGraphicsSupported
+INF $(CHIPSET_PKG)/SwitchableGraphicsPei/SwitchableGraphicsPei.inf
+!endif
+#INF $(CHIPSET_PKG)/PlatformAzaliaPolicy/AzaliaPolicyPei.inf
+#INF $(CHIPSET_PKG)/CommonChipset/InstallVerbTablePei/InstallVerbTablePei.inf
+#INF $(CHIPSET_PKG)/AzaliaControllerPei/AzaliaInitPei.inf
+
+#[-start-160107-IB08450333-add]#
+!disable InsydeModulePkg/Universal/Security/Tcg/TisPei/TisPei.inf
+
+!if gInsydeTokenSpaceGuid.PcdH2OTpm2Supported
+!if gChipsetPkgTokenSpaceGuid.FtpmSupport
+!else
+INF InsydeModulePkg/Universal/Security/Tcg/TisPei/TisPei.inf
+!endif
+!endif
+#[-end-160107-IB08450333-add]#
+#[-start-160531-IB08450347-add]#
+#[-start-160715-IB08450350-remove]#
+#!disable InsydeModulePkg/Bus/Isa/Ps2KeyboardPei/Ps2KeyboardPei.inf
+#[-end-160715-IB08450350-remove]#
+#[-end-160531-IB08450347-add]#
+
+#[-start-151216-IB07220025-add]#
+[FV.BACKUPFV]
+!if gInsydeTokenSpaceGuid.PcdH2OUsbPeiSupported
+INF RuleOverride=LzmaCompress $(CHIPSET_PKG)/UsbPei/UsbPei.inf
+!endif
+#[-end-151216-IB07220025-add]#
+#[-start-160616-IB07220099-add]#
+INF RuleOverride=LzmaCompress $(CHIPSET_PKG)/PchAhciPei/PchAhciPei.inf
+#[-end-160616-IB07220099-add]#
+
+[FV.DXEFV]
+
+#
+# Reduce Fv size, disable unused drivers.
+#
+!disable MdeModulePkg/Universal/EbcDxe/EbcDxe.inf
+!disable MdeModulePkg/Universal/PrintDxe/PrintDxe.inf
+!disable MdeModulePkg/Universal/StatusCodeHandler/Smm/StatusCodeHandlerSmm.inf
+!disable IntelFrameworkModulePkg/Universal/SectionExtractionDxe/SectionExtractionDxe.inf
+!disable IntelFrameworkModulePkg/Universal/DataHubStdErrDxe/DataHubStdErrDxe.inf
+!disable InsydeModulePkg/Universal/Console/PcxDecoderDxe/PcxDecoderDxe.inf
+!disable InsydeModulePkg/Universal/Acpi/AcpiPlatformDxe/AcpiPlatformDxe.inf
+!disable InsydeModulePkg/Universal/Acpi/WpbtDxe/WpbtDxe.inf
+!disable InsydeModulePkg/Universal/CommonPolicy/PciHotPlugDxe/PciHotPlugDxe.inf
+!disable InsydeModulePkg/Universal/CommonPolicy/CommonSmiCallBackSmm/CommonSmiCallBackSmm.inf
+#[-start-160302-IB11270148-remove]#
+# !disable InsydeModulePkg/Universal/Security/StorageSecurityCommandDxe/StorageSecurityCommandDxe.inf
+#[-end-160302-IB11270148-remove]#
+!disable InsydeModulePkg/Universal/Console/TgaDecoderDxe/TgaDecoderDxe.inf
+!disable InsydeModulePkg/Universal/Console/VgaDriverPolicyDxe/VgaDriverPolicyDxe.inf
+!disable InsydeModulePkg/Universal/Console/EdidOverrideDxe/EdidOverrideDxe.inf
+!disable InsydeModulePkg/Universal/Irsi/IrsiRuntimeDxe/IrsiRuntimeDxe.inf
+!disable InsydeModulePkg/Universal/FirmwareVolume/FirmwareManagementRuntimeDxe/FirmwareManagementRuntimeDxe.inf
+!disable InsydeModulePkg/Universal/FirmwareVolume/VariableRegionInfoDxe/VariableRegionInfoDxe.inf
+!disable InsydeModulePkg/Universal/Disk/DelayUefiRaidOprom/DelayUefiRaidOprom.inf
+
+
+#[-start-151124-IB07220014-modify]#
+!disable InsydeModulePkg/Universal/Irsi/IrsiRegistrationRuntimeDxe/IrsiRegistrationRuntimeDxe.inf
+INF APRIORI InsydeModulePkg/Universal/Irsi/IrsiRegistrationRuntimeDxe/IrsiRegistrationRuntimeDxe.inf
+#[-end-151124-IB07220014-modify]#
+
+!if gInsydeTokenSpaceGuid.PcdH2OCsmSupported
+  INF $(CHIPSET_PKG)/BbstableHookDxe/BbstableHookDxe.inf
+  INF $(CHIPSET_PKG)/OemInt15CallBackSmm/OemInt15CallBackSmm.inf
+!endif
+INF $(CHIPSET_PKG)/RestoreMtrrDxe/RestoreMtrrDxe.inf
+INF $(CHIPSET_PKG)/SetupDataProviderDxe/SetupDataProviderDxe.inf
+#[-start-160107-IB08450333-add]#
+#[-end-160107-IB08450333-add]#
+#[-start-160121-IB06740461-add]#
+INF   $(CHIPSET_PKG)/I2cBus/Dxe/I2cMasterDxe.inf
+#[-end-160121-IB06740461-add]#
+
+#[-start-160216-IB03090424-add]#
+#[-end-160216-IB03090424-add]#
+INF   $(CHIPSET_PKG)/VariableStorageSelector/Dxe/VariableStorageSelectorRuntimeDxe.inf
+INF   $(CHIPSET_PKG)/VariableStorageSelector/Smm/VariableStorageSelectorSmm.inf
+!disable InsydeModulePkg/Universal/Variable/VariableRuntimeDxe/VariableRuntimeDxe.inf
+!disable InsydeModulePkg/Universal/Variable/EmuVariableRuntimeDxe/EmuVariableRuntimeDxe.inf
+!disable InsydeModulePkg/Universal/Variable/VariableDefaultUpdateDxe/VariableDefaultUpdateDxe.inf
+!if gChipsetPkgTokenSpaceGuid.PcdUseEmuVariable == 0
+  INF InsydeModulePkg/Universal/Variable/VariableRuntimeDxe/VariableRuntimeDxe.inf
+!if gInsydeTokenSpaceGuid.PcdUseFastCrisisRecovery == 1
+  INF InsydeModulePkg/Universal/Variable/EmuVariableRuntimeDxe/EmuVariableRuntimeDxe.inf
+!endif
+!else
+  INF MdeModulePkg/Universal/Variable/EmuRuntimeDxe/EmuVariableRuntimeDxe.inf
+!endif
+!disable InsydeModulePkg/Universal/FirmwareVolume/FtwLiteRuntimeDxe/FtwLiteRuntimeDxe.inf
+
+INF $(CHIPSET_PKG)/IhisiSmm/IhisiSmm.inf
+INF $(CHIPSET_PKG)/ChipsetSvcDxe/ChipsetSvcDxe.inf
+INF $(CHIPSET_PKG)/ChipsetSvcSmm/ChipsetSvcSmm.inf
+
+INF $(CHIPSET_PKG)/CommonChipset/SpeakerDxe/LegacySpeakerDxe.inf
+INF $(CHIPSET_PKG)/UefiSetupUtilityDxe/SetupUtilityDxe.inf
+INF $(CHIPSET_PKG)/OEMBadgingSupportDxe/OEMBadgingSupportDxe.inf
+INF IntelFrameworkModulePkg/Universal/StatusCode/DatahubStatusCodeHandlerDxe/DatahubStatusCodeHandlerDxe.inf
+
+!disable InsydeModulePkg/Universal/MemoryTest/GenericMemoryTestDxe/GenericMemoryTestDxe.inf
+INF MdeModulePkg/Universal/MemoryTest/NullMemoryTestDxe/NullMemoryTestDxe.inf
+
+#
+# Switchable Graphics / Hybrid Graphics Support
+#
+!if gChipsetPkgTokenSpaceGuid.PcdSwitchableGraphicsSupported
+INF $(CHIPSET_PKG)/SwitchableGraphicsDxe/SwitchableGraphicsDxe.inf
+INF RuleOverride = ACPITABLE $(CHIPSET_PKG)/SwitchableGraphicsAcpi/AmdPowerXpressSsdt.inf
+INF RuleOverride = ACPITABLE $(CHIPSET_PKG)/SwitchableGraphicsAcpi/NvidiaOptimusSsdt.inf
+!endif
+
+#
+# Tpm
+#
+
+
+!if gInsydeTokenSpaceGuid.PcdDynamicHotKeySupported
+INF $(CHIPSET_PKG)/DynamicHotKeyDxe/DynamicHotKeyDxe.inf
+!endif
+
+#INF $(CHIPSET_PKG)/PolicyInit/Dxe/PolicyInitDxe.inf
+INF $(CHIPSET_PKG)/SeCPolicyInitDxe/SeCPolicyInitDxe.inf
+INF $(CHIPSET_PKG)/PlatformSmm/Platform.inf
+INF $(CHIPSET_PKG)/PlatformInfoDxe/PlatformInfoDxe.inf
+INF $(CHIPSET_PKG)/PlatformCpuInfo/PlatformCpuInfoDxe.inf
+INF $(CHIPSET_PKG)/PlatformDxe/Platform.inf
+INF $(CHIPSET_PKG)/PciPlatform/PciPlatform.inf
+INF $(CHIPSET_PKG)/SaveMemoryConfig/SaveMemoryConfig.inf
+#[-start-151230-IB03090424-remove]#
+#INF $(CHIPSET_PKG)/IBBpreload/IBBpreloadDxe.inf
+#[-end-151230-IB03090424-remove]#
+
+INF $(CHIPSET_PKG)/SmramSaveInfoHandlerSmm/SmramSaveInfoHandlerSmm.inf
+
+!if $(GOP_DRIVER_ENABLE) == YES
+  INF $(CHIPSET_PKG)/PlatformGopPolicy/PlatformGopPolicy.inf
+!endif
+!if gInsydeTokenSpaceGuid.PcdH2OCsmSupported
+  INF $(CHIPSET_PKG)/ChipsetSmmThunkSmm/ChipsetSmmThunkSmm.inf
+!endif
+
+!disable InsydeModulePkg/Universal/Acpi/AcpiS3SaveDxe/AcpiS3SaveDxe.inf
+INF $(CHIPSET_OVERRIDE)/IntelFrameworkModulePkg/Universal/Acpi/AcpiS3SaveDxe/AcpiS3SaveDxe.inf
+
+#
+# SMM
+#
+!disable IA32FamilyCpuPkg/PiSmmCpuDxeSmm/PiSmmCpuDxeSmm.inf
+INF $(CHIPSET_OVERRIDE)/IA32FamilyCpuPkg/PiSmmCpuDxeSmm/PiSmmCpuDxeSmm.inf
+
+#
+# AcpiTables
+#
+#[-start-151124-IB07220021-remove]#
+# !if gInsydeTokenSpaceGuid.PcdH2OConsoleRedirectionSupported == 1
+# #   INF $(CHIPSET_PKG)/AcpiSpcr/AcpiSpcr.inf
+# !endif
+#[-end-151124-IB07220021-remove]#
+!if $(HW_REDUCED_MODE_ENABLE) == YES
+INF RuleOverride = ACPITABLE $(CHIPSET_PKG)/AcpiTables/AcpiTables.inf
+INF RuleOverride = ACPITABLE $(CHIPSET_PKG)/AcpiTablesPCAT/PlatformSsdt/PlatformSsdt.inf
+!else
+INF RuleOverride = ACPITABLE $(CHIPSET_PKG)/AcpiTablesPCAT/AcpiTables.inf
+INF RuleOverride = ACPITABLE $(CHIPSET_PKG)/AcpiTablesPCAT/PlatformSsdt/PlatformSsdt.inf
+!endif
+INF $(CHIPSET_PKG)/AcpiPlatform/AcpiPlatform.inf
+INF $(CHIPSET_PKG)/OemAcpiPlatformDxe/OemAcpiPlatformDxe.inf
+
+#[-start-151220-IB1127138-add]#
+INF $(CHIPSET_PKG)/CommonChipset/SetSsidSvidDxe/SetSsidSvidDxe.inf
+#[-end-151220-IB1127138-add]#
+INF $(CHIPSET_PKG)/CommonChipset/AspmOverrideDxe/AspmOverrideDxe.inf
+#[-start-160420-IB07400719-remove]#
+#INF $(CHIPSET_PKG)/Wpce791/SiO791.inf
+#[-end-160420-IB07400719-remove]#
+#[-start-151124-IB07220021-remove]#
+# !if gInsydeTokenSpaceGuid.PcdH2OConsoleRedirectionSupported == 1
+#   INF IntelFrameworkModulePkg/Bus/Isa/IsaIoDxe/IsaIoDxe.inf
+# !endif
+#[-end-151124-IB07220021-remove]#
+
+INF InsydeModulePkg/Universal/Console/BmpDecoderDxe/BmpDecoderDxe.inf
+
+#
+# SMBIOS
+#
+#[-start-160218-IB08450338-add]#
+INF $(CHIPSET_PKG)/SmbiosUpdateDxe/SmbiosUpdateDxe.inf
+#[-end-160218-IB08450338-add]#
+
+!if $(AT_ENABLE) == YES
+  INF $(CHIPSET_PKG)/TdtPlatformPolicy/TdtPlatformPolicy.inf
+!endif
+
+#[-start-160120-IB07220035-remove]#
+# !if $(SECURE_FLASH_SUPPORT) == YES
+#[-end-160120-IB07220035-remove]#
+  INF $(CHIPSET_PKG)/BiosRegionLock/BiosRegionLock.inf
+#[-start-160120-IB07220035-remove]#
+# !endif
+#[-end-160120-IB07220035-remove]#
+#[-start-161215-IB08450359-remove]#
+##
+## Variable Edit
+##
+#INF $(CHIPSET_PKG)/VariableEditDxe/VariableEditDxe.inf
+#INF $(CHIPSET_PKG)/VariableEditSmm/VariableEditSmm.inf
+#[-end-161215-IB08450359-remove]#
+#[-start-151214-IB03090424-remove]#
+#!if $(CHARGING_ENABLE) == YES
+#INF $(CHIPSET_PKG)/S5Charging/S5Charging.inf
+#INF $(CHIPSET_PKG)/S5Charging/S5ChargingInit.inf
+#!endif
+#[-end-151214-IB03090424-remove]#
+
+!if gChipsetPkgTokenSpaceGuid.PcdSupportUnLockedBarHandle
+INF $(CHIPSET_PKG)/UnLockedBarHandleSmm/UnLockedBarHandleSmm.inf
+!endif
+
+INF $(CHIPSET_PKG)/PlatformResetRunTimeDxe/PlatformResetRunTimeDxe.inf
+INF $(CHIPSET_PKG)/OemModifyOpRegionDxe/OemModifyOpRegionDxe.inf
+#[-start-161206-IB07400822-modify]#
+!if gChipsetPkgTokenSpaceGuid.PcdKscSupport == 1
+  INF $(CHIPSET_PKG)/EC/EC.inf
+!endif
+#[-end-161206-IB07400822-modify]#
+INF $(CHIPSET_PKG)/Dptf/Dxe/Dptf.inf
+INF $(CHIPSET_PKG)/UsbTypeC/UsbTypeC.inf
+
+#[-start-151021-IB08450328-add]#
+#[-start-151210-IB08450331-remove]#
+#INF EdkCompatibilityPkg/Compatibility/PiSmbiosRecordOnDataHubSmbiosRecordThunk/PiSmbiosRecordOnDataHubSmbiosRecordThunk.inf
+#[-end-151210-IB08450331-remove]#
+#[-end-151021-IB08450328-add]#
+
+#[-start-160107-IB08450333-add]#
+!disable InsydeModulePkg/Universal/Security/Tcg/TisDxe/TisDxe.inf
+
+!if gInsydeTokenSpaceGuid.PcdH2OTpm2Supported
+!if gChipsetPkgTokenSpaceGuid.FtpmSupport
+!else
+INF InsydeModulePkg/Universal/Security/Tcg/TisDxe/TisDxe.inf
+!endif
+!endif
+#[-end-160107-IB08450333-add]#
+
+#[-start-160111-IB03090424-add]#
+#
+# APEI BERT Support
+#
+INF $(CHIPSET_PKG)/ApeiBertPkg/Whea/WheaSupport/WheaSupport.inf
+
+#
+# HSTI
+#
+!if $(HSTI_ENABLE) == TRUE
+#INF $(PLATFORM_PACKAGE)/HstiIbvPlatformDxe/HstiIbvPlatformDxe.inf
+INF $(PLATFORM_SI_PACKAGE)/Hsti/Dxe/HstiSiliconDxe.inf
+#[-start-160429-IB03090426-modify]#
+INF $(CHIPSET_PKG)/HstiResultDxe/HstiResultDxe.inf
+#[-end-160429-IB03090426-modify]#
+!endif
+#[-end-160111-IB03090424-add]#
+
+#[-start-160531-IB08450347-add]#
+#[-start-160715-IB08450350-remove]#
+#!disable InsydeModulePkg/Bus/Isa/Ps2KeyboardDxe/Ps2keyboardDxe.inf
+#INF IntelFrameworkModulePkg/Bus/Isa/Ps2KeyboardDxe/Ps2keyboardDxe.inf
+#[-end-160715-IB08450350-remove]#
+#[-end-160531-IB08450347-add]#
+
+[FV.FVMAIN_COMPACT]
+#
+# LZMA Compress
+#
+FILE FV_IMAGE = 20BC8AC9-94D1-4208-AB28-5D673FD73486 {
+  SECTION PEI_DEPEX_EXP = {gLzmaCustomDecompressGuid}
+  SECTION GUIDED EE4E5898-3914-4259-9D6E-DC7BD79403CF PROCESSING_REQUIRED = TRUE {
+    SECTION FV_IMAGE = DXEFV
+  }
+}
+
+################################################################################
+#
+# Rules are use with the [FV] section's module INF type to define
+# how an FFS file is created for a given INF file. The following Rule are the default
+# rules for the different module type. User can add the customized rules to define the
+# content of the FFS file.
+#
+################################################################################
+[Rule.Common.DXE_DRIVER.DRIVER_ACPITABLE]
+  FILE DRIVER = $(NAMED_GUID) {
+    DXE_DEPEX DXE_DEPEX Optional       $(INF_OUTPUT)/$(MODULE_NAME).depex
+    PE32      PE32                     $(INF_OUTPUT)/$(MODULE_NAME).efi
+    UI        STRING="$(MODULE_NAME)" Optional
+    VERSION   STRING="$(INF_VERSION)" Optional BUILD_NUM=$(BUILD_NUMBER)
+    RAW ACPI  Optional                |.acpi
+    RAW ASL   Optional                |.aml
+  }
+
+[Rule.Common.USER_DEFINED.ACPITABLE]
+  FILE FREEFORM = $(NAMED_GUID) {
+    RAW ACPI  Optional            |.acpi
+    RAW ASL   Optional            |.aml
+  }
+
+[Rule.Common.USER_DEFINED.ACPITABLE2]
+  FILE FREEFORM = $(NAMED_GUID) {
+    RAW ASL   Optional            |.aml
+  }
+
+[Rule.Common.SEC.RESET_VECTOR]
+  FILE RAW = $(NAMED_GUID) {
+    RAW RAW                |.raw
+  }
+[Rule.Common.SEC.SEC_CORE]
+  FILE SEC = $(NAMED_GUID) {
+    TE       TE    |.efi
+    UI       STRING ="$(MODULE_NAME)" Optional
+    VERSION  STRING ="$(INF_VERSION)" Optional BUILD_NUM=$(BUILD_NUMBER)
+  }
+[Rule.Common.PEIM.TE_PEIM]
+  FILE PEIM = $(NAMED_GUID) {
+     PEI_DEPEX PEI_DEPEX Optional        $(INF_OUTPUT)/$(MODULE_NAME).depex
+     TE        TE                        $(INF_OUTPUT)/$(MODULE_NAME).efi
+     UI        STRING="$(MODULE_NAME)" Optional
+     VERSION   STRING="$(INF_VERSION)" Optional BUILD_NUM=$(BUILD_NUMBER)
+  }
+
+[Rule.Common.PEI_CORE.TE_PEIM]
+  FILE PEI_CORE = $(NAMED_GUID) {
+    TE       TE                          $(INF_OUTPUT)/$(MODULE_NAME).efi
+    UI       STRING="$(MODULE_NAME)" Optional
+    VERSION  STRING="$(INF_VERSION)" Optional BUILD_NUM=$(BUILD_NUMBER)
+  }
+  
+#[-start-160307-IB07400708-add]#
+#===============================================================================#
+#                                                                               #
+# SEG FVs                                                                       #
+#                                                                               #
+#===============================================================================#
+
+#[-start-160614-IB07400744-modify]#
+#
+# FVs:
+#   FVIBBL                        -> IBBL
+#   IBBFV                         -> IBBM
+#   RECOVERYFV (Include BACKUPFV) -> IBBR
+#   DXEFV to FVMAIN_COMPACT       -> OBB:OBB
+#
+[FV.FVIBBL]
+
+[FV.IBBFV]
+#[-start-160929-IB05400712-add]#
+!if gInsydeTokenSpaceGuid.PcdH2OStatusCodeBeepSupported
+  INF APRIORI RuleOverride=TE_PEIM $(CHIPSET_PKG)/CommonChipset/SpeakerPei/LegacySpeakerPei.inf
+!endif
+#[-end-160929-IB05400712-add]#
+
+[FV.RECOVERYFV]
+#  !disable InsydeModulePkg/Bus/Isa/Ps2KeyboardPei/Ps2KeyboardPei.inf
+
+  !disable FILE FV_IMAGE = E446E797-96E1-47CD-A3B5-0061B404243F
+  FILE FV_IMAGE = E446E797-96E1-47CD-A3B5-0061B404243F {
+    SECTION PEI_DEPEX_EXP = {gEfiPeiMemoryDiscoveredPpiGuid }
+    SECTION GUIDED EE4E5898-3914-4259-9D6E-DC7BD79403CF PROCESSING_REQUIRED = TRUE {  # LzmaCompress
+      SECTION FV_IMAGE = BACKUPFV
+    }
+  }
+
+[FV.BACKUPFV]
+
+  !disable InsydeModulePkg/Bus/Pci/EhciPei/EhciPei.inf
+
+  # Crisis Recovery for SATA 
+#[-start-170209-IB07400839-modify]#
+  !disable $(CHIPSET_PKG)/PchAhciPei/PchAhciPei.inf
+  !disable InsydeModulePkg/Bus/Pci/IdeBusPei/IdeBusPei.inf
+  !disable InsydeModulePkg/Bus/Pci/AhciBusPei/AhciBusPei.inf
+  !if gChipsetPkgTokenSpaceGuid.PcdCrisisRecoverySataSupport
+    INF RuleOverride=LzmaCompress $(CHIPSET_PKG)/PchAhciPei/PchAhciPei.inf
+    INF RuleOverride=LzmaCompress InsydeModulePkg/Bus/Pci/AhciBusPei/AhciBusPei.inf
+  !endif
+#[-end-170209-IB07400839-modify]#
+
+  # Crisis Recovery for SDHC 
+  !disable InsydeModulePkg/Bus/Pci/SdhcPei/SdHostDriverPei.inf
+  !disable InsydeModulePkg/Bus/Sdhc/SdMmcPei/SdMmcDevicePei.inf
+  !if gInsydeTokenSpaceGuid.PcdH2OSdhcSupported
+  !if gChipsetPkgTokenSpaceGuid.PcdCrisisRecoverySdEmmcSupport
+#[-start-170209-IB07400839-modify]#
+    INF RuleOverride=LzmaCompress $(CHIPSET_PKG)/PchSdhcPei/PchSdhcPei.inf
+#    INF RuleOverride=LzmaCompress InsydeModulePkg/Bus/Pci/SdhcPei/SdHostDriverPei.inf
+#    INF RuleOverride=LzmaCompress InsydeModulePkg/Bus/Sdhc/SdMmcPei/SdMmcDevicePei.inf
+    INF RuleOverride=LzmaCompress $(CHIPSET_OVERRIDE2)/InsydeModulePkg/Bus/Pci/SdhcPei/SdHostDriverPei.inf
+    INF RuleOverride=LzmaCompress $(CHIPSET_OVERRIDE2)/InsydeModulePkg/Bus/Sdhc/SdMmcPei/SdMmcDevicePei.inf
+#[-end-170209-IB07400839-modify]#
+  !endif
+  !endif
+
+  # Crisis Recovery for NVMe 
+  !disable InsydeModulePkg/Bus/Pci/NvmExpressPei/NvmExpressPei.inf
+  !if gInsydeTokenSpaceGuid.PcdH2ONvmeSupported
+  !if gChipsetPkgTokenSpaceGuid.PcdCrisisRecoveryNvmeSupport
+    INF RuleOverride=LzmaCompress InsydeModulePkg/Bus/Pci/NvmExpressPei/NvmExpressPei.inf
+  !endif
+  !endif
+
+  # Crisis Recovery for CD/DVD
+  !disable InsydeModulePkg/Universal/Recovery/CdExpressPei/CdExpressPei.inf
+  !if gChipsetPkgTokenSpaceGuid.PcdCrisisRecoveryCdDvdSupport
+    INF RuleOverride=LzmaCompress InsydeModulePkg/Universal/Recovery/CdExpressPei/CdExpressPei.inf
+  !endif
+  
+[FV.DXEFV]
+#[-start-160630-IB07400750-add]#
+  !if gInsydeTokenSpaceGuid.PcdH2OCsmSupported
+    INF $(CHIPSET_PKG)/UsbLegacyControlSmm/UsbLegacyControlSmm.inf # for legacy free suppport (no KBC)
+  !endif
+#[-end-160630-IB07400750-add]#
+#[-start-160808-IB07400769-add]#
+  INF $(CHIPSET_PKG)/ChipsetFeatureSmm/ChipsetFeatureSmm.inf
+#[-end-160808-IB07400769-add]#
+#[-start-170428-IB07400864-add]#
+!disable FILE FREEFORM = 1547B4F3-3E8A-4FEF-81C8-328ED647AB1A
+!if gInsydeTokenSpaceGuid.PcdH2OCsmSupported
+!if $(KSC_SIO_SUPPORT) == YES
+  FILE FREEFORM = 1547B4F3-3E8A-4FEF-81C8-328ED647AB1A {
+    SECTION RAW = $(CHIPSET_OVERRIDE2)/InsydeModulePkg/Csm/Legacy16/$(CSM_VERSION)/Legacy16.bin
+  }
+!else
+  FILE FREEFORM = 1547B4F3-3E8A-4FEF-81C8-328ED647AB1A {
+    SECTION RAW = InsydeModulePkg/Csm/Legacy16/$(CSM_VERSION)/Legacy16.bin
+  }
+!endif
+!endif
+#[-end-170428-IB07400864-add]#
+#[-start-170504-IB07400864-add]#
+!if $(GOP_DEBUG_MESSAGE_SUPPORT) == YES
+  INF $(CHIPSET_PKG)\GopDebugDxe\GopDebugDxe.inf
+!endif  
+#[-end-170504-IB07400864-add]#
+#[-end-160614-IB07400744-modify]#
+#[-start-170901-IB07400905-add]#
+#[-start-180109-IB07400940-modify]#
+!disable InsydeModulePkg/Universal/Security/StorageSecurityCommandDxe/StorageSecurityCommandDxe.inf
+!if gInsydeTokenSpaceGuid.PcdH2OHddPasswordSupported
+  INF InsydeModulePkg/Universal/Security/StorageSecurityCommandDxe/StorageSecurityCommandDxe.inf
+!endif
+#[-end-180109-IB07400940-modify]#
+#[-end-170901-IB07400905-add]#
+#[-end-160307-IB07400708-add]#
+
+#[-start-190321-IB07401094-add]#
+INF $(CHIPSET_PKG)/SeedSupport/SeedProtocolDxe/SeedProtocolDxe.inf
+#[-end-190321-IB07401094-add]#
+

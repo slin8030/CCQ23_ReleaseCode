@@ -1,0 +1,11 @@
+;************************
+;*  DO NOT EDIT
+;*  FILE auto-generated
+;************************
+
+       Resize      Size Taken        Offset         Size        End                      PCD
+   ------------    ----------      -----------    --------   --------         --------------------------
+        fixed           16C               0           1000       1000          gInsydeTokenSpaceGuid.PcdH2OFlashDeviceMapStart
+        fixed           18B            1000           1000       2000          gInsydeTokenSpaceGuid.PcdFlashNvStorageBvdtBase
+        fixed             0            2000           1000       3000          gInsydeTokenSpaceGuid.PcdFlashNvStorageDmiBase
+        fixed             0            3000           1000       4000          gInsydeTokenSpaceGuid.PcdFlashNvStorageMsdmDataBase

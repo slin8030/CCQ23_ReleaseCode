@@ -1,0 +1,53 @@
+## @file
+#
+#******************************************************************************
+#* Copyright (c) 2014, Insyde Software Corporation. All Rights Reserved.
+#*
+#* You may not reproduce, distribute, publish, display, perform, modify, adapt,
+#* transmit, broadcast, present, recite, release, license or otherwise exploit
+#* any part of this publication in any form, by any means, without the prior
+#* written permission of Insyde Software Corporation.
+#*
+#******************************************************************************
+
+[Defines]
+   INF_VERSION                    = 0x00010005
+   BASE_NAME                      = OemAcpiPlatform
+   FILE_GUID                      = 9B182CEE-AED5-4d95-B2A9-A2CF6CDFEAA8
+   MODULE_TYPE                    = DXE_DRIVER
+   ENTRY_POINT                    = InstallOemAcpiPlatform
+
+[Sources]
+  OemAcpiPlatform.c
+  UpdateOemTableID.c
+
+[Packages]
+  MdePkg/MdePkg.dec
+  $(PLATFORM_RC_PACKAGE)/$(PLATFORM_RC_PACKAGE).dec
+  InsydeModulePkg/InsydeModulePkg.dec
+  $(CHIPSET_PKG)/$(CHIPSET_PKG).dec
+  IntelFrameworkPkg/IntelFrameworkPkg.dec
+#[-start-160216-IB03090424-add]#
+  ClientSiliconPkg/ClientSiliconPkg.dec
+#[-end-160216-IB03090424-add]#
+
+
+[LibraryClasses]
+  UefiDriverEntryPoint 
+  UefiBootServicesTableLib
+  UefiRuntimeServicesTableLib
+  UefiLib
+  DxeOemSvcChipsetLibDefault
+  PcdLib
+
+[Protocols]
+  gEfiAcpiSupportProtocolGuid                        # CONSUMED
+  gEfiPciIoProtocolGuid                              # CONSUMED
+  gEfiSetupUtilityProtocolGuid                       # CONSUMED
+
+[Pcd]
+
+[Depex]
+  gEfiAcpiSupportProtocolGuid AND
+  gEfiPciIoProtocolGuid AND
+  gEfiSetupUtilityProtocolGuid

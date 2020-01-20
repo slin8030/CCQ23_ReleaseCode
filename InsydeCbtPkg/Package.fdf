@@ -1,0 +1,23 @@
+## @file
+#  H2O CPU Branch Trace package Flash Description File
+#
+#******************************************************************************
+#* Copyright (c) 2015, Insyde Software Corporation. All Rights Reserved.
+#*
+#* You may not reproduce, distribute, publish, display, perform, modify, adapt,
+#* transmit, broadcast, present, recite, release, license or otherwise exploit
+#* any part of this publication in any form, by any means, without the prior
+#* written permission of Insyde Software Corporation.
+#*
+#******************************************************************************
+
+[FV.RECOVERYFV]
+!if gInsydeCbtTokenSpaceGuid.PcdH2OCBTSupported
+INF InsydeCbtPkg/Btsinit/BtsInitPei/BtsInitPei.inf
+!endif
+
+[FV.DXEFV]
+!if gInsydeCbtTokenSpaceGuid.PcdH2OCBTSupported
+INF InsydeCbtPkg/Btsinit/BtsInitDxe/BtsInitDxe.inf
+INF InsydeCbtPkg/Btsinit/BtsinitSmm/BtsinitSmm.inf
+!endif

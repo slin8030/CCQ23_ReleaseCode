@@ -1,0 +1,44 @@
+#/** @file
+#  TalkI2C Application
+#
+#  Copyright (c) 2012, Intel Corporation. All rights reserved.<BR>
+#  This program and the accompanying materials
+#  are licensed and made available under the terms and conditions of the BSD License
+#  which accompanies this distribution.  The full text of the license may be found at
+#  http://opensource.org/licenses/bsd-license.php
+#
+#  THE PROGRAM IS DISTRIBUTED UNDER THE BSD LICENSE ON AN "AS IS" BASIS,
+#  WITHOUT WARRANTIES OR REPRESENTATIONS OF ANY KIND, EITHER EXPRESS OR IMPLIED.
+#
+#**/
+
+[Defines]
+  INF_VERSION                    = 0x00010005
+  BASE_NAME                      = SecFwuTest
+  FILE_GUID                      = ACB4B7FC-4C81-4D48-8CE2-862D720DCDD5
+  MODULE_TYPE                    = UEFI_APPLICATION
+  VERSION_STRING                 = 1.0
+  ENTRY_POINT                    = SecFwuTestAppMain
+
+[Sources.common]
+  SecFwUpdate.c
+
+[Packages]
+  MdePkg/MdePkg.dec
+  ShellPkg/ShellPkg.dec
+  $(CHIPSET_PKG)/$(CHIPSET_PKG).dec
+  $(PLATFORM_RC_PACKAGE)/$(PLATFORM_RC_PACKAGE).dec
+
+[LibraryClasses]
+  BaseLib
+  BaseMemoryLib
+  ShellLib
+  UefiLib
+  UefiBootServicesTableLib
+  UefiApplicationEntryPoint
+  SeCLib
+
+[Pcd]
+  
+[Protocols]
+  gEfiHeciProtocolGuid

@@ -1,0 +1,65 @@
+## @file
+#  Component description file for UsbLegacyControl module
+#
+#******************************************************************************
+#* Copyright (c) 2014, Insyde Software Corporation. All Rights Reserved.
+#*
+#* You may not reproduce, distribute, publish, display, perform, modify, adapt,
+#* transmit, broadcast, present, recite, release, license or otherwise exploit
+#* any part of this publication in any form, by any means, without the prior
+#* written permission of Insyde Software Corporation.
+#*
+#******************************************************************************
+
+[defines]
+INF_VERSION                    = 0x00010005
+BASE_NAME                      = UnLockedBarHandle
+FILE_GUID                      = A7E3B20F-8B4C-492d-BC1E-DDF639B3EEB4
+MODULE_TYPE                    = DXE_SMM_DRIVER
+VERSION_STRING                 = 1.0
+PI_SPECIFICATION_VERSION       = 0x0001000A  
+ENTRY_POINT                    = UnLockedBarHandleEntryPoint
+
+[Sources]
+  UnLockedBarHandleSmm.h
+  UnLockedBarHandleSmm.c
+  
+[Packages]
+  MdePkg/MdePkg.dec
+  MdeModulePkg/MdeModulePkg.dec
+  IntelFrameworkPkg/IntelFrameworkPkg.dec
+  InsydeModulePkg/InsydeModulePkg.dec
+  $(PLATFORM_RC_PACKAGE)/$(PLATFORM_RC_PACKAGE).dec
+  $(CHIPSET_PKG)/$(CHIPSET_PKG).dec
+  
+[LibraryClasses]
+  UefiBootServicesTableLib
+  UefiDriverEntryPoint
+  IoLib
+  DebugLib
+  BaseLib
+  BaseMemoryLib
+  DevicePathLib
+  SmmServicesTableLib
+  ReportStatusCodeLib
+  PciExpressLib
+
+[Protocols]
+  gEfiSmmBase2ProtocolGuid
+  gEfiSmmVariableProtocolGuid
+  gEfiPciIoProtocolGuid
+  gSaveUnlockedBarDoneProtocolGuid
+  gEfiPciEnumerationCompleteProtocolGuid
+  
+[Guids]
+  gSaveUnLockedBarVariableGuid
+  
+[Pcd]
+  gChipsetPkgTokenSpaceGuid.PcdSupportUnLockedBarHandle
+  gEfiMdePkgTokenSpaceGuid.PcdPciExpressBaseAddress
+  
+[Depex]
+  gEfiSmmBase2ProtocolGuid AND
+  gEfiSmmVariableProtocolGuid AND
+  gEfiPciEnumerationCompleteProtocolGuid AND
+  gEfiPciIoProtocolGuid

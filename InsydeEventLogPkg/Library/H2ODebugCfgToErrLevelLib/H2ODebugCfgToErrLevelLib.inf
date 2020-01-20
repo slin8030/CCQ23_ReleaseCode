@@ -1,0 +1,41 @@
+#/** @file
+#
+#  Component description file for H2O Base Debug Config to Error Level Library.
+#
+#;******************************************************************************
+#;* Copyright (c) 2016 - 2018, Insyde Software Corporation. All Rights Reserved.
+#;*
+#;* You may not reproduce, distribute, publish, display, perform, modify, adapt,
+#;* transmit, broadcast, present, recite, release, license or otherwise exploit
+#;* any part of this publication in any form, by any means, without the prior
+#;* written permission of Insyde Software Corporation.
+#;*
+#;******************************************************************************
+
+[Defines]
+  INF_VERSION                    = 0x00010005
+  BASE_NAME                      = H2ODebugCfgToErrLevelLib
+  FILE_GUID                      = DE7660C6-FAF9-4420-8857-4DF7269354E7
+  MODULE_TYPE                    = BASE
+  VERSION_STRING                 = 1.0
+  LIBRARY_CLASS                  = DebugCfgToErrLevelLib
+
+#
+#  VALID_ARCHITECTURES           = IA32 X64 IPF EBC
+#
+
+[Sources]
+  H2ODebugCfgToErrLevelLib.c
+
+[Packages]
+  MdePkg/MdePkg.dec
+  InsydeEventLogPkg/InsydeEventLogPkg.dec
+  
+[LibraryClasses]
+  
+[Pcd]
+#[-start-180518-IB08400596-modify]#
+  gEfiMdePkgTokenSpaceGuid.PcdDebugPrintErrorLevel
+#[-end-180518-IB08400596-modify]#
+
+  

@@ -1,0 +1,31 @@
+## @file
+#  Component description file for IpmiBmcFeatureOemLib instance.
+#
+#******************************************************************************
+#* Copyright (c) 2016 - 2017, Insyde Software Corporation. All Rights Reserved.
+#*
+#* You may not reproduce, distribute, publish, display, perform, modify, adapt,
+#* transmit, broadcast, present, recite, release, license or otherwise exploit
+#* any part of this publication in any form, by any means, without the prior
+#* written permission of Insyde Software Corporation.
+#*
+#******************************************************************************
+
+[Defines]
+  INF_VERSION                    = 0x00010005
+  BASE_NAME                      = IpmiBmcFeatureOemLib
+  FILE_GUID                      = 31E991E0-A480-43D0-828D-8122DEF4129D
+  MODULE_TYPE                    = DXE_DRIVER
+  VERSION_STRING                 = 1.0
+  LIBRARY_CLASS                  = IpmiBmcFeatureOemLib|DXE_DRIVER
+
+[Sources]
+  IpmiBmcFeatureOemFunNull.c
+
+[Packages]
+  MdePkg/MdePkg.dec
+  MdeModulePkg/MdeModulePkg.dec
+  SegFeaturePkg/SegFeaturePkg.dec
+
+[Pcd]
+  

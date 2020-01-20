@@ -1,0 +1,90 @@
+## @file
+#  Component description file for DxeOemSvcKernelLib instance.
+#
+#******************************************************************************
+#* Copyright (c) 2012 - 2017, Insyde Software Corporation. All Rights Reserved.
+#*
+#* You may not reproduce, distribute, publish, display, perform, modify, adapt,
+#* transmit, broadcast, present, recite, release, license or otherwise exploit
+#* any part of this publication in any form, by any means, without the prior
+#* written permission of Insyde Software Corporation.
+#*
+#******************************************************************************
+
+[Defines]
+  INF_VERSION                    = 0x00010005
+  BASE_NAME                      = DxeOemSvcKernelLib
+  FILE_GUID                      = 9AC5355F-90C2-4f08-B458-82791C55AE27
+  MODULE_TYPE                    = UEFI_DRIVER
+  VERSION_STRING                 = 1.0
+  LIBRARY_CLASS                  = DxeOemSvcKernelLib|DXE_CORE DXE_DRIVER DXE_RUNTIME_DRIVER DXE_SAL_DRIVER DXE_SMM_DRIVER UEFI_APPLICATION UEFI_DRIVER SMM_CORE
+  
+[Sources]
+  OemSvcInstallPostKeyTable.c
+#[-start-151220-IB1127138-add]#
+  OemSvcUpdateSsidSvidInfo.c
+#[-end-151220-IB1127138-add]#
+  OemSvcInstallOptionRomTable.c
+  OemSvcAdjustNavigationMenu.c
+  OemSvcLogoResolution.c
+#[-start-170418-IB15590028-add]#  
+  OemSvcInstallPciSkipTable.c
+#[-end-170418-IB15590028-add]#
+#[-start-160929-IB07400791-add]#
+  OemSvcPrepareInstallMpTable.c
+#[-end-160929-IB07400791-add]#
+#[-start-161112-IB07400812-add]#
+  OemSvcDxeUpdateSmbiosRecord.c
+  OemSvcDxeGetSmbiosReplaceString.c
+#[-end-161112-IB07400812-add]#
+
+[Packages]
+  $(CHIPSET_PKG)/$(CHIPSET_PKG).dec
+  MdePkg/MdePkg.dec
+  $(PLATFORM_RC_PACKAGE)/$(PLATFORM_RC_PACKAGE).dec
+  $(PLATFORM_RC_PACKAGE)/BroxtonSiPrivate.dec
+#[-start-160216-IB03090424-add]#
+  ClientSiliconPkg/ClientSiliconPkg.dec
+#[-end-160216-IB03090424-add]#
+  IntelFrameworkPkg/IntelFrameworkPkg.dec
+  InsydeModulePkg/InsydeModulePkg.dec
+  InsydeOemServicesPkg/InsydeOemServicesPkg.dec
+  MdeModulePkg/MdeModulePkg.dec
+
+[LibraryClasses]
+  PcdLib
+  MemoryAllocationLib
+  UefiBootServicesTableLib
+  DebugLib
+  S3BootScriptLib
+  HiiExLib
+  IoLib
+  S3BootScriptLib
+  HobLib
+#[-start-161112-IB07400812-add]#
+  MultiPlatformBaseLib
+  PrintLib
+#[-end-161112-IB07400812-add]#
+
+[Protocols]
+  gEfiSetupUtilityProtocolGuid
+  gEfiBmpDecoderProtocolGuid
+  gEfiJpegDecoderProtocolGuid
+  gEfiPcxDecoderProtocolGuid
+  gEfiTgaDecoderProtocolGuid
+  gEfiOEMBadgingSupportProtocolGuid
+  gEfiGifDecoderProtocolGuid
+
+[Guids]
+  gScPolicyHobGuid
+
+[FeaturePcd]  
+  gInsydeTokenSpaceGuid.PcdFrontPageSupported
+  
+[Pcd]
+  gEfiMdePkgTokenSpaceGuid.PcdPciExpressBaseAddress  ## CONSUMES
+  gInsydeTokenSpaceGuid.PcdH2ORotateScreenSupported
+  gInsydeTokenSpaceGuid.PcdH2ORotateScreenRotateLogo
+#[-start-170608-IB07400873-add]#
+  gChipsetPkgTokenSpaceGuid.PcdSupportedLogoScuResolution
+#[-end-170608-IB07400873-add]#

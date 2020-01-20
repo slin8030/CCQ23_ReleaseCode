@@ -1,0 +1,61 @@
+## @file
+#  Component description file for Console Redirection SMM driver.
+#
+#******************************************************************************
+#* Copyright (c) 2015, Insyde Software Corp. All Rights Reserved.
+#*
+#* You may not reproduce, distribute, publish, display, perform, modify, adapt,
+#* transmit, broadcast, present, recite, release, license or otherwise exploit
+#* any part of this publication in any form, by any means, without the prior
+#* written permission of Insyde Software Corporation.
+#*
+#******************************************************************************
+[Defines]
+  INF_VERSION                    = 0x00010005
+  BASE_NAME                      = CrServiceSmm
+  FILE_GUID                      = D5A531AB-300B-4aa1-9B8A-9C6C8F0110F4
+  MODULE_TYPE                    = DXE_SMM_DRIVER
+  PI_SPECIFICATION_VERSION       = 0x0001000A
+  VERSION_STRING                 = 1.0
+  ENTRY_POINT                    = CrServiceSmmEntryPoint
+
+
+[Sources]
+  CrServiceSmm.c
+
+[Packages]
+  MdePkg/MdePkg.dec
+  MdeModulePkg/MdeModulePkg.dec
+  InsydeModulePkg/InsydeModulePkg.dec
+  IntelFrameworkPkg/IntelFrameworkPkg.dec
+  InsydeCrPkg/InsydeCrPkg.dec
+
+[LibraryClasses]
+  BaseLib
+  UefiLib
+  UefiBootServicesTableLib
+  BaseMemoryLib
+  MemoryAllocationLib
+  DebugLib
+  PrintLib
+  UefiDriverEntryPoint
+  SmmServicesTableLib
+  IoLib
+
+[Guids]
+
+[Protocols]
+  gEfiSmmCpuProtocolGuid
+  gEfiSmmSwDispatch2ProtocolGuid
+  gEfiSmmReadyToLockProtocolGuid
+
+[Pcd]
+  gInsydeTokenSpaceGuid.PcdSoftwareSmiPort
+  gInsydeCrTokenSpaceGuid.PcdH2OCrSoftwareSmi
+
+[Depex]
+  gEfiSmmCpuProtocolGuid AND
+  gEfiSmmAccess2ProtocolGuid AND
+  gEfiSmmSwDispatch2ProtocolGuid AND
+  gEfiLegacyBiosProtocolGuid
+

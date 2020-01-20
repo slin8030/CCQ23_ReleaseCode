@@ -1,0 +1,43 @@
+## @file
+#  Component description file for UsbDeviceModePei
+#
+#******************************************************************************
+#* Copyright (c) 2014, Insyde Software Corp. All Rights Reserved.
+#*
+#* You may not reproduce, distribute, publish, display, perform, modify, adapt,
+#* transmit, broadcast, present, recite, release, license or otherwise exploit
+#* any part of this publication in any form, by any means, without the prior
+#* written permission of Insyde Software Corporation.
+#*
+#******************************************************************************
+
+
+[Defines]
+  INF_VERSION                    = 0x00010005
+  BASE_NAME                      = UsbDeviceModePei
+  FILE_GUID                      = 5A29EB40-6FD7-436b-9220-27B2A1ED11CB
+  MODULE_TYPE                    = PEIM
+  VERSION_STRING                 = 1.0
+
+  ENTRY_POINT                    = UsbDeviceModeDriverInitialize
+
+[Sources]
+  UsbDeviceModePei.h
+  UsbDeviceModePei.c
+
+[Packages]
+  $(CHIPSET_PKG)/$(CHIPSET_PKG).dec
+  $(PLATFORM_RC_PACKAGE)/$(PLATFORM_RC_PACKAGE).dec
+  MdePkg/MdePkg.dec
+
+[LibraryClasses]
+  PeimEntryPoint
+  DebugLib
+  UsbDeviceModePeiLib
+  
+[Ppis]  
+  gPeiUsbDeviceModePpiGuid
+
+[Depex]
+  gEfiPeiBootInRecoveryModePpiGuid
+

@@ -1,0 +1,40 @@
+#!/bin/bash
+
+LANGCODES=""
+
+#
+#  find langcodes by PcdList.txt if --langcodes isn't exist in commanbd line parameter
+#
+if [[ ! $@ == *"--langcodes"* ]]; then
+
+  for i in ../IA32 ../X64 ../ARM ../AARCH64 IA32 X64 ARM AARCH64; do
+
+    PCD_FILE_PATH=${PWD}/$i/PcdList.txt
+
+    if [[ -z $LANGCODES ]] && [ -e  $PCD_FILE_PATH ]; then
+      LANGCODES=`grep "PcdUefiVariableDefaultPlatformLangCodes:" $PCD_FILE_PATH | cut -d ":" -d " " -f 2`
+      if [[ ! -z $LANGCODES ]]; then
+        LANGCODES="'$LANGCODES'"
+      fi
+    fi
+
+  done
+
+  if [[ -z $LANGCODES ]]; then
+    printf "\n"
+    echo ---- Can not found langcodes in PcdList.txt, it will not generate font.hpk ----
+    printf "\n"
+    exit 0
+  fi
+
+  LANGCODES="--langcodes $LANGCODES"
+fi
+
+Param="$LANGCODES --hpkdir ${PWD} $@";
+
+if [ -e $WORKSPACE/$PROJECT_PKG/Project.fif ]; then
+  Param="$Param --fif $WORKSPACE/$PROJECT_PKG/Project.fif"
+fi
+
+GenFont $Param
+

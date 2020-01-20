@@ -1,0 +1,213 @@
+///** @file
+//
+//    Browser formset.
+//
+//  Copyright (c) 2007 - 2011, Intel Corporation. All rights reserved.<BR>
+//  This program and the accompanying materials
+//  are licensed and made available under the terms and conditions of the BSD License
+//  which accompanies this distribution.  The full text of the license may be found at
+//  http://opensource.org/licenses/bsd-license.php
+//
+//  THE PROGRAM IS DISTRIBUTED UNDER THE BSD LICENSE ON AN "AS IS" BASIS,
+//  WITHOUT WARRANTIES OR REPRESENTATIONS OF ANY KIND, EITHER EXPRESS OR IMPLIED.
+//
+//**/
+
+#include <Guid/BdsHii.h>
+
+#define FRONT_PAGE_CLASS               0x0000
+#define FRONT_PAGE_SUBCLASS            0x0002
+
+#define FRONT_PAGE_FORM_ID             0x1000
+
+#define FRONT_PAGE_ITEM_ONE            0x0001
+#define FRONT_PAGE_ITEM_TWO            0x0002
+#define FRONT_PAGE_ITEM_THREE          0x0003
+#define FRONT_PAGE_ITEM_FOUR           0x0004
+#define FRONT_PAGE_ITEM_FIVE           0x0005
+#define FRONT_PAGE_ITEM_SIX            0x0006
+#define FRONT_PAGE_ITEM_MEBX           0x0101
+
+#define FRONT_PAGE_KEY_CONTINUE        0x1000
+#define FRONT_PAGE_KEY_LANGUAGE        0x1234
+#define FRONT_PAGE_KEY_BOOT_MANAGER    0x1064
+#define FRONT_PAGE_KEY_DEVICE_MANAGER  0x8567
+#define FRONT_PAGE_KEY_BOOT_MAINTAIN   0x9876
+#define FRONT_PAGE_KEY_SETUP_UTILITY   0x2000
+#define FRONT_PAGE_KEY_MEBX            0x2101
+
+#define LABEL_SELECT_LANGUAGE          0x1000
+#define LABEL_TIMEOUT                  0x2000
+#define LABEL_END                      0xffff
+
+#define LABEL_SCU_START                0x2001
+#define LABEL_SCU_END                  0x2002
+#define LABEL_SECURE_BOOT_OPTION_START 0x2003
+#define LABEL_SECURE_BOOT_OPTION_END   0x2004
+
+formset
+  guid     = FRONT_PAGE_FORMSET_GUID,
+  title    = STRING_TOKEN(STR_FRONT_PAGE_TITLE),
+  help     = STRING_TOKEN(STR_NULL_STRING),
+  classguid = FRONT_PAGE_FORMSET_GUID,
+  class    = FRONT_PAGE_CLASS,
+  subclass = FRONT_PAGE_SUBCLASS,
+#if FeaturePcdGet(PcdGraphicsSetupSupported)
+  animation  = ANIMATION_TOKEN (ANI_BACKGROUND);
+#endif
+  form formid = FRONT_PAGE_FORM_ID,
+       title  = STRING_TOKEN(STR_FRONT_PAGE_TITLE);
+
+    banner
+      title = STRING_TOKEN(STR_FRONT_PAGE_COMPUTER_MODEL),
+      line  1,
+      align left;
+
+    banner
+      title = STRING_TOKEN(STR_FRONT_PAGE_CPU_MODEL),
+      line  2,
+      align left;
+
+    banner
+      title = STRING_TOKEN(STR_FRONT_PAGE_CPU_SPEED),
+      line  2,
+      align right;
+
+    banner
+      title = STRING_TOKEN(STR_FRONT_PAGE_BIOS_VERSION),
+      line  3,
+      align left;
+
+    banner
+      title = STRING_TOKEN(STR_FRONT_PAGE_MEMORY_SIZE),
+      line  3,
+      align right;
+
+//    banner
+//      title = STRING_TOKEN(STR_FRONT_PAGE_BANNER_0_LEFT),
+//      line  0,
+//      align left;
+
+//    banner
+//      title = STRING_TOKEN(STR_FRONT_PAGE_BANNER_0_RIGHT),
+//      line  0,
+//      align right;
+
+//    banner
+//      title = STRING_TOKEN(STR_FRONT_PAGE_BANNER_1_LEFT),
+//      line  1,
+//      align left;
+
+//    banner
+//      title = STRING_TOKEN(STR_FRONT_PAGE_BANNER_1_RIGHT),
+//      line  1,
+//      align right;
+
+//    banner
+//      title = STRING_TOKEN(STR_FRONT_PAGE_BANNER_2_LEFT),
+//      line  2,
+//      align left;
+
+//    banner
+//      title = STRING_TOKEN(STR_FRONT_PAGE_BANNER_3_LEFT),
+//      line  3,
+//      align left;
+
+
+    text
+      help    = STRING_TOKEN(STR_CONTINUE_HELP),
+      text    = STRING_TOKEN(STR_CONTINUE_PROMPT),
+      text    = STRING_TOKEN(STR_NULL_STRING),
+      flags   = INTERACTIVE,
+#if FeaturePcdGet(PcdH2OFormBrowserSupported)
+#if FeaturePcdGet(PcdH2OFormBrowserLocalMetroDESupported)
+      key     = FRONT_PAGE_KEY_CONTINUE,
+      image   = IMAGE_TOKEN (IMAGE_CONTINUE);
+#else
+      key     = FRONT_PAGE_KEY_CONTINUE;
+#endif
+#else
+      key     = FRONT_PAGE_KEY_CONTINUE,
+      animation = ANIMATION_TOKEN (ANI_CONTINUE);
+#endif
+
+    label LABEL_SELECT_LANGUAGE;
+    //
+    // This is where we will dynamically add a OneOf type op-code to select
+    // Languages from the currently available choices
+    //
+    label LABEL_END;
+
+    goto FRONT_PAGE_ITEM_FOUR,
+      prompt  = STRING_TOKEN(STR_BOOT_MANAGER),
+      help    = STRING_TOKEN(STR_BOOT_MANAGER_HELP),
+#if !FeaturePcdGet(PcdH2OFormBrowserSupported)
+      animation = ANIMATION_TOKEN (ANI_BOOT_MANAGER),
+#endif
+      flags   = INTERACTIVE,
+#if FeaturePcdGet(PcdH2OFormBrowserLocalMetroDESupported)
+      key     = FRONT_PAGE_KEY_BOOT_MANAGER,
+      image   = IMAGE_TOKEN (IMAGE_BOOT_MANAGER),;
+#else
+      key     = FRONT_PAGE_KEY_BOOT_MANAGER;
+#endif
+
+    goto FRONT_PAGE_ITEM_FIVE,
+      prompt  = STRING_TOKEN(STR_BOOT_MAINT_MANAGER),
+      help    = STRING_TOKEN(STR_BOOT_MAINT_MANAGER_HELP),
+#if !FeaturePcdGet(PcdH2OFormBrowserSupported)
+      animation = ANIMATION_TOKEN (ANI_BOOT_FROM_FILE),
+#endif
+      flags   = INTERACTIVE,
+#if FeaturePcdGet(PcdH2OFormBrowserLocalMetroDESupported)
+      key     = FRONT_PAGE_KEY_BOOT_MAINTAIN,
+      image   = IMAGE_TOKEN (IMAGE_BOOT_FROM_FILE),;
+#else
+      key     = FRONT_PAGE_KEY_BOOT_MAINTAIN;
+#endif
+
+
+    goto FRONT_PAGE_ITEM_SIX,
+      prompt  = STRING_TOKEN(STR_DEVICE_MANAGER),
+      help    = STRING_TOKEN(STR_DEVICE_MANAGER_HELP),
+#if !FeaturePcdGet(PcdH2OFormBrowserSupported)
+      animation = ANIMATION_TOKEN (ANI_DEVICE_MANAGER),
+#endif
+      flags   = INTERACTIVE,
+#if FeaturePcdGet(PcdH2OFormBrowserLocalMetroDESupported)
+      key     = FRONT_PAGE_KEY_DEVICE_MANAGER,
+      image   = IMAGE_TOKEN (IMAGE_DEVICE_MANAGER),;
+#else
+      key     = FRONT_PAGE_KEY_DEVICE_MANAGER;
+#endif
+
+
+
+    label LABEL_SECURE_BOOT_OPTION_START;
+    label LABEL_SECURE_BOOT_OPTION_END;
+
+    label LABEL_SCU_START;
+    label LABEL_SCU_END;
+
+  suppressif TRUE;
+    goto FRONT_PAGE_ITEM_MEBX,
+#if FeaturePcdGet(PcdH2OFormBrowserLocalMetroDESupported)
+      prompt  = STRING_TOKEN(STR_MEBX_FOR_METRO_DE),
+#else
+      prompt  = STRING_TOKEN(STR_MEBX),
+#endif
+      help    = STRING_TOKEN(STR_MEBX_HELP),
+#if !FeaturePcdGet(PcdH2OFormBrowserSupported)
+      animation = ANIMATION_TOKEN (ANI_MEBX),
+#endif
+      flags   = INTERACTIVE ,
+#if FeaturePcdGet(PcdH2OFormBrowserLocalMetroDESupported)
+      key     = FRONT_PAGE_KEY_MEBX,
+      image   = IMAGE_TOKEN (IMAGE_MEBX),;
+#else
+      key     = FRONT_PAGE_KEY_MEBX;
+#endif
+  endif;
+  endform;
+
+endformset;

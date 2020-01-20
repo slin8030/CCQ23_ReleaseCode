@@ -1,0 +1,44 @@
+## @file
+#  Component description file.
+#
+#******************************************************************************
+#* Copyright (c) 2014 - 2016, Insyde Software Corp. All Rights Reserved.
+#*
+#* You may not reproduce, distribute, publish, display, perform, modify, adapt,
+#* transmit, broadcast, present, recite, release, license or otherwise exploit
+#* any part of this publication in any form, by any means, without the prior
+#* written permission of Insyde Software Corporation.
+#*
+#******************************************************************************
+#
+
+[Defines]
+  INF_VERSION                    = 0x00010005
+  BASE_NAME                      = DxeInsydeChipsetLib
+  FILE_GUID                      = C826A8CF-3703-4a6c-B68C-D71C824FBB81
+  MODULE_TYPE                    = DXE_DRIVER
+  VERSION_STRING                 = 1.0
+  LIBRARY_CLASS                  = DxeInsydeChipsetLib |DXE_DRIVER UEFI_DRIVER DXE_RUNTIME_DRIVER DXE_SMM_DRIVER COMBINED_SMM_DXE
+
+[Sources]
+  DxeChipsetSetupVariable.c
+
+[Packages]
+  MdePkg/MdePkg.dec
+  $(CHIPSET_PKG)/$(CHIPSET_PKG).dec
+  InsydeModulePkg/InsydeModulePkg.dec
+
+[LibraryClasses]
+  HobLib
+  DebugLib
+  UefiBootServicesTableLib
+  BaseMemoryLib
+  PcdLib
+  MemoryAllocationLib
+
+[Guids]
+  gSetupDefaultHobGuid
+  gSystemConfigurationGuid
+
+[Pcd]
+  gChipsetPkgTokenSpaceGuid.PcdSetupConfigSize

@@ -1,0 +1,48 @@
+## @file
+#  Component description file for AcpiSpcr driver.
+#
+#******************************************************************************
+#* Copyright (c) 2012 - 2014, Insyde Software Corp. All Rights Reserved.
+#*
+#* You may not reproduce, distribute, publish, display, perform, modify, adapt,
+#* transmit, broadcast, present, recite, release, license or otherwise exploit
+#* any part of this publication in any form, by any means, without the prior
+#* written permission of Insyde Software Corporation.
+#*
+#******************************************************************************
+
+
+[defines]
+  INF_VERSION                    = 0x00010005
+  BASE_NAME                      = AcpiSpcr
+  FILE_GUID                      = 131AAC21-2145-49E6-A3E1-A97BCE090020
+  MODULE_TYPE                    = DXE_DRIVER
+  VERSION_STRING                 = 1.0
+  ENTRY_POINT                    = AcpiSpcrEntryPoint
+
+[sources.common]
+  AcpiSpcr.c
+  SpcrUpdateCommon.c
+
+[Packages]
+  MdePkg/MdePkg.dec
+  MdeModulePkg/MdeModulePkg.dec
+  InsydeModulePkg/InsydeModulePkg.dec
+
+[LibraryClasses]
+  UefiDriverEntryPoint
+  UefiBootServicesTableLib
+  BaseLib
+  DebugLib
+  PcdLib  
+  KernelConfigLib
+
+[Protocols]
+  gEfiAcpiTableProtocolGuid                     # PROTOCOL ALWAYS_CONSUMED
+  gEfiCRPolicyProtocolGuid
+  gEfiAcpiSdtProtocolGuid
+  gConsoleRedirectionServiceProtocolGuid
+
+[Depex]
+  gEfiAcpiTableProtocolGuid AND
+  gEfiSetupUtilityProtocolGuid

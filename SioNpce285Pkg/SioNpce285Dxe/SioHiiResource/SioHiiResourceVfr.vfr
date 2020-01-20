@@ -1,0 +1,36 @@
+/** @file
+
+  VFR file used by the SIO configuration component.
+
+;******************************************************************************
+;* Copyright (c) 2015, Insyde Software Corp. All Rights Reserved.
+;*
+;* You may not reproduce, distribute, publish, display, perform, modify, adapt,
+;* transmit, broadcast, present, recite, release, license or otherwise exploit
+;* any part of this publication in any form, by any means, without the prior
+;* written permission of Insyde Software Corporation.
+;*
+;******************************************************************************
+**/
+
+#include <Guid/SioHiiResourceForm.h>
+#include <SioHiiResourceNvData.h>
+
+formset
+  guid      = SIO_NPCE285_SETUP00_FORMSET_GUID,
+  title     = STRING_TOKEN(STR_SIO_NPCE285_TITLE),
+  help      = STRING_TOKEN(STR_SIO_TITLE_HELP),
+  classguid = SIO_NPCE285_SETUP00_FORMSET_GUID,
+  //
+  // Define a Buffer Storage (EFI_IFR_VARSTORE)
+  //
+  varstore SIO_CONFIGURATION,                         // This is the data structure type
+    varid = SIO_CONFIGURATION_VARSTORE_ID,            // Optional VarStore ID
+    name  = SioNpce285Setup00,                        // Define referenced name in vfr
+    guid  = SIO_NPCE285_SETUP00_FORMSET_GUID;         // GUID of this buffer storage
+
+  form formid = SIO_CONFIGURATION_FORM_ID,
+       title  = STRING_TOKEN(STR_SIO_NPCE285_TITLE);
+
+  endform;
+endformset;

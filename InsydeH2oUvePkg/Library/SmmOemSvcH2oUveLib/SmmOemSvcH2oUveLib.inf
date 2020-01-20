@@ -1,0 +1,66 @@
+## @file
+#  Component description file for Smm OEM Services H2oUve Lib instance.
+#
+#******************************************************************************
+#* Copyright (c) 2016, Insyde Software Corp. All Rights Reserved.
+#*
+#* You may not reproduce, distribute, publish, display, perform, modify, adapt,
+#* transmit, broadcast, present, recite, release, license or otherwise exploit
+#* any part of this publication in any form, by any means, without the prior
+#* written permission of Insyde Software Corporation.
+#*
+#******************************************************************************
+
+[Defines]
+  INF_VERSION                    = 0x00010005
+  BASE_NAME                      = SmmOemSvcH2oUveLib
+  FILE_GUID                      = 029CC4D4-58B4-41d7-B66A-71BBE47735AA
+  MODULE_TYPE                    = DXE_SMM_DRIVER
+  VERSION_STRING                 = 1.0
+  LIBRARY_CLASS                  = SmmOemSvcH2oUveLib|DXE_SMM_DRIVER SMM_CORE
+  CONSTRUCTOR                    = SmmOemSvcH2oUveLibConstructor
+
+[Sources]
+  SmmOemSvcH2oUveLib.c
+  SysPasswordSmm.c
+
+[Packages]
+  MdePkg/MdePkg.dec
+  MdeModulePkg/MdeModulePkg.dec
+  IntelFrameworkPkg/IntelFrameworkPkg.dec
+  $(INSYDE_H2OUVE_PKG)/$(INSYDE_H2OUVE_PKG).dec
+  $(CHIPSET_PKG)/$(CHIPSET_PKG).dec
+  $(PROJECT_PKG)/Project.dec
+  InsydeModulePkg/InsydeModulePkg.dec
+
+[LibraryClasses]
+  PcdLib
+  CmosLib
+  PostCodeLib
+  DevicePathLib
+  DebugLib
+  SmmServicesTableLib
+  HobLib
+
+[Guids]
+  gEfiSupervisorPwGuid
+  gEfiUserPwGuid
+  gInsydeSecureFirmwarePasswordGuid
+  gEfiHashAlgorithmSha256Guid
+  gInsydeSecureFirmwarePasswordHobGuid
+  gEfiSupervisorPwHobGuid
+  gEfiUserPwHobGuid
+
+[Pcd]
+  gInsydeTokenSpaceGuid.PcdSysPasswordInCmos
+  gInsydeTokenSpaceGuid.PcdSysPasswordSupportUserPswd
+  gInsydeTokenSpaceGuid.PcdSecureSysPasswordSupported
+  gInsydeTokenSpaceGuid.PcdLegacyBootTypeOrder
+  gInsydeTokenSpaceGuid.PcdSecureSysPasswordSupported
+
+[FixedPcd]
+  gInsydeTokenSpaceGuid.PcdDefaultSysPasswordMaxLength
+
+[Protocols]
+  gH2OIhisiProtocolGuid
+  gEfiHashProtocolGuid

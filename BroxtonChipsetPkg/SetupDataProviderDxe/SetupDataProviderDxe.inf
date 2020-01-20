@@ -1,0 +1,90 @@
+## @file
+#  Component description file for EmuVariableRuntimeDxe module.
+#
+#******************************************************************************
+#* Copyright (c) 2014, Insyde Software Corp. All Rights Reserved.
+#*
+#* You may not reproduce, distribute, publish, display, perform, modify, adapt,
+#* transmit, broadcast, present, recite, release, license or otherwise exploit
+#* any part of this publication in any form, by any means, without the prior
+#* written permission of Insyde Software Corporation.
+#*
+#******************************************************************************
+
+## 
+# Emulation Variable for EFI_RUNTIME_SERVICES.
+#
+# This module provides three EFI_RUNTIME_SERVICES: SetVariable, GetVariable, GetNextVariableName
+# Copyright (c) 2006 - 2011, Intel Corporation. All rights reserved.<BR>
+#
+#  This program and the accompanying materials
+#  are licensed and made available under the terms and conditions of the BSD License
+#  which accompanies this distribution. The full text of the license may be found at
+#  http://opensource.org/licenses/bsd-license.php
+#  THE PROGRAM IS DISTRIBUTED UNDER THE BSD LICENSE ON AN "AS IS" BASIS,
+#  WITHOUT WARRANTIES OR REPRESENTATIONS OF ANY KIND, EITHER EXPRESS OR IMPLIED.
+#
+#
+##
+
+[Defines]
+  INF_VERSION                    = 0x00010005
+  BASE_NAME                      = SetupDataProviderDxe
+  FILE_GUID                      = A9ACE824-4486-44E6-915A-8FBAED0799B9
+  MODULE_TYPE                    = DXE_RUNTIME_DRIVER
+  VERSION_STRING                 = 1.0
+  ENTRY_POINT                    = SetupDataProviderDxeEntry
+
+#
+# The following information is for reference only and not required by the build tools.
+#
+#  VALID_ARCHITECTURES           = IA32 X64 EBC
+#
+
+[Sources]
+  SetupDataProviderDxe.c
+
+
+[Packages]
+  MdePkg/MdePkg.dec
+  MdeModulePkg/MdeModulePkg.dec
+  InsydeModulePkg/InsydeModulePkg.dec
+  $(CHIPSET_PKG)/$(CHIPSET_PKG).dec
+
+[LibraryClasses]
+  BaseLib
+  UefiLib
+  UefiBootServicesTableLib
+  UefiDriverEntryPoint
+  UefiRuntimeServicesTableLib
+  DebugLib
+  HobLib
+  PcdLib
+#[-start-160803-IB07220122-remove]#
+#   PlatformConfigDataLib
+#[-end-160803-IB07220122-remove]#
+#[-start-160628-IB07400749-add]#
+  PlatformCmosLib
+  MemoryAllocationLib
+  PostCodeLib
+#[-end-160628-IB07400749-add]#
+#[-start-170621-IB07400876-add]#
+  CmosLib
+#[-end-170621-IB07400876-add]#
+
+[Protocols]
+  gEfiVariableArchProtocolGuid                  ## PRODUCES
+
+[Guids]
+  gSetupDefaultHobGuid
+  gSystemConfigurationGuid
+
+[Pcd]
+  gChipsetPkgTokenSpaceGuid.PcdSetupConfigSize
+#[-start-160628-IB07400749-add]#
+  gChipsetPkgTokenSpaceGuid.PcdCmosRestoreSetupDefault
+#[-end-160628-IB07400749-add]#
+
+[Depex]
+  TRUE
+

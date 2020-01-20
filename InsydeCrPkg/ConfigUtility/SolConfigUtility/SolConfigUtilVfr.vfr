@@ -1,0 +1,108 @@
+/** @file
+
+  Console Redirection Configuration DXE VFR implementation.
+
+;******************************************************************************
+;* Copyright (c) 2015, Insyde Software Corporation. All Rights Reserved.
+;*
+;* You may not reproduce, distribute, publish, display, perform, modify, adapt,
+;* transmit, broadcast, present, recite, release, license or otherwise exploit
+;* any part of this publication in any form, by any means, without the prior
+;* written permission of Insyde Software Corporation.
+;*
+;******************************************************************************
+*/
+
+#include "SolConfigUtilSetupConfig.h"
+
+formset
+
+  //
+  // Formset guid is Linked to CrConfigUtil.vfr
+  //
+  guid      = SOL_FORMSET_GUID,
+  title     = STRING_TOKEN(STR_SOL_TITLE_FORMSET),
+  help      = STRING_TOKEN(STR_SOL_TITLE_HELP),
+  classguid = LINK_SOL_FORMSET_CLASS_GUID,
+
+  //
+  // Define a Buffer Storage (EFI_IFR_VARSTORE)
+  //
+  varstore SOL_CONFIGURATION,                         // This is the data structure type
+    varid = SOL_CONFIGURATION_VARSTORE_ID,            // Optional VarStore ID
+    name  = SolConfig,                                // Define referenced name in vfr
+    guid  = SOL_CONFIG_UTIL_VARSTORE_GUID;                   // GUID of this buffer storage
+
+  namevaluevarstore SolNameValueVar,                  // Define storage reference name in vfr
+    name  = STRING_TOKEN(STR_NAME_VALUE_VAR_NAME0),  // Define Name list of this storage, refer it by CrNameValueVar[0]
+//[-start-160111-IB0493test-modify]//
+    guid  = SOL_FORMSET_GUID;                   // GUID of this Name/Value storage
+//[-end-160111-IB0493test-modify]//
+
+
+  //
+  // =========Form CONSOLE_REDIRECTION_NET_PAGE==========
+  //
+  form
+    formid = SOL_FORM_ID, title = STRING_TOKEN(STR_SOL_TITLE_FORMSET);
+
+    subtitle  text = STRING_TOKEN(STR_BLANK_STRING);
+    subtitle  text = STRING_TOKEN(STR_SOL_TITLE_FORMSET);
+
+    oneof
+      varid       = SolConfig.SolEnable,
+      prompt      = STRING_TOKEN(STR_SOL_SOL_ENABLE),
+      help        = STRING_TOKEN(STR_BLANK_STRING),
+      option text = STRING_TOKEN(STR_DISABLED_TEXT), value = 0, flags = 0;
+      option text = STRING_TOKEN(STR_ENABLED_TEXT), value = 1, flags = DEFAULT;
+    endoneof;
+
+    suppressif
+      ideqval SolConfig.SolEnable == 0;
+
+      oneof
+        varid       = SolConfig.UseDhcp,
+        prompt      = STRING_TOKEN(STR_SOL_USE_DHCP),
+        help        = STRING_TOKEN(STR_BLANK_STRING),
+        option text = STRING_TOKEN(STR_DISABLED_TEXT), value = 0, flags = 0;
+        option text = STRING_TOKEN(STR_ENABLED_TEXT), value = 1, flags = DEFAULT;
+      endoneof;
+
+      suppressif
+        ideqval SolConfig.UseDhcp == 1
+        OR
+        ideqval SolConfig.SolEnable == 0;
+
+        label SOL_STATIC_IP_LABEL;
+      endif;
+
+      suppressif
+        ideqval SolConfig.SolEnable == 0;
+
+        label SOL_FORM_LABEL;
+      endif;
+
+    endif;
+
+    //
+    // This Opcode is for F9 load default.
+    //
+    suppressif
+      TRUE;
+
+      numeric varid = SolNameValueVar[0],                           // This numeric take NameValueVar0 as storage
+        questionid  = KEY_LOAD_DEFAULT,
+        prompt  = STRING_TOKEN(STR_NAME_VALUE_VAR_NAME0),
+        help    = STRING_TOKEN(STR_NAME_VALUE_VAR_NAME0),
+        flags   = NUMERIC_SIZE_1 | INTERACTIVE,                    // Size of this numeric is 1 byte
+        minimum = 0,
+        maximum = 0xff,
+        step    = 0,
+        default = 0,
+      endnumeric;
+    endif;
+
+  endform;
+
+endformset;
+

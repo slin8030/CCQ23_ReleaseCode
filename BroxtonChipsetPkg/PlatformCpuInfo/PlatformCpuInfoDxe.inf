@@ -1,0 +1,62 @@
+## @file
+#
+#@copyright
+# Copyright (c) 1999 - 2015 Intel Corporation. All rights reserved
+# This software and associated documentation (if any) is furnished
+# under a license and may only be used or copied in accordance
+# with the terms of the license. Except as permitted by the
+# license, no part of this software or documentation may be
+# reproduced, stored in a retrieval system, or transmitted in any
+# form or by any means without the express written consent of
+# Intel Corporation.
+# This file contains a 'Sample Driver' and is licensed as such
+# under the terms of your license agreement with Intel or your
+# vendor. This file may be modified by the user, subject to
+# the additional terms of the license agreement.
+#
+#@par Specification Reference:
+#
+##
+
+
+[Defines]
+  INF_VERSION          = 0x00010005
+  BASE_NAME            = PlatformCpuInfoDxe
+  FILE_GUID            = 025F738B-4EBD-4d55-B728-5F421B601F20
+  MODULE_TYPE          = DXE_DRIVER
+  VERSION_STRING       = 1.0
+  ENTRY_POINT          = PlatformCpuInfoInit
+
+[Sources]
+  PlatformCpuInfoDxe.c
+  PlatformCpuInfoDxe.h
+
+[Guids]
+  gEfiPlatformCpuInfoGuid
+  gEfiGlobalVariableGuid
+  gEfiBxtVariableGuid
+
+[Packages]
+  MdePkg/MdePkg.dec
+  MdeModulePkg/MdeModulePkg.dec
+  IA32FamilyCpuPkg/IA32FamilyCpuPkg.dec #CpuConfigLib.h
+  BroxtonSiPkg/BroxtonSiPkg.dec
+  IntelFrameworkModulePkg/IntelFrameworkModulePkg.dec
+  $(CHIPSET_PKG)/$(CHIPSET_PKG).dec
+
+[LibraryClasses]
+  HobLib
+  UefiRuntimeServicesTableLib
+  UefiDriverEntryPoint
+
+[BuildOptions]
+  MSFT:*_*_*_CC_FLAGS = /Od /GL-
+  INTEL:*_*_*_CC_FLAGS = /Od /GL-
+  GCC:*_*_*_CC_FLAGS = -O0
+
+[Depex]
+  gEfiVariableArchProtocolGuid AND
+  gEfiVariableWriteArchProtocolGuid
+
+
+

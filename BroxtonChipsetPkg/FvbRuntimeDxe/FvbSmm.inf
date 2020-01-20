@@ -1,0 +1,105 @@
+## @file
+# This driver implement the EFI_SMM_FIRMWARE_VOLUMEN_PROTOCOL.
+#
+#@copyright
+# Copyright (c) 2010 - 2015 Intel Corporation. All rights reserved
+# This software and associated documentation (if any) is furnished
+# under a license and may only be used or copied in accordance
+# with the terms of the license. Except as permitted by the
+# license, no part of this software or documentation may be
+# reproduced, stored in a retrieval system, or transmitted in any
+# form or by any means without the express written consent of
+# Intel Corporation.
+# This file contains a 'Sample Driver' and is licensed as such
+# under the terms of your license agreement with Intel or your
+# vendor. This file may be modified by the user, subject to
+# the additional terms of the license agreement.
+#
+#@par Specification Reference:
+#
+##
+
+[Defines]
+  INF_VERSION                    = 0x00010005
+  BASE_NAME                      = FvbSmm
+  FILE_GUID                      = A4EC8ADB-B7A8-47d1-8E52-EC820D0ACF6F
+  MODULE_TYPE                    = DXE_SMM_DRIVER
+  VERSION_STRING                 = 1.0
+  PI_SPECIFICATION_VERSION       = 0x0001000A
+  ENTRY_POINT                    = FvbSmmInitialize
+
+#
+# The following information is for reference only and not required by the build tools.
+#
+#  VALID_ARCHITECTURES           = IA32 X64
+#
+#  VIRTUAL_ADDRESS_MAP_CALLBACK  =  FvbVirtualddressChangeEvent                  
+#
+
+[Sources]
+  FvbInfo.c
+  FvbService.h
+  FvbService.c
+  FvbServiceSmm.c
+  FvbSmmCommon.h
+
+[Packages]
+  MdePkg/MdePkg.dec
+  MdeModulePkg/MdeModulePkg.dec
+#[-start-160216-IB03090424-modify]#
+  $(CHIPSET_PKG)/$(CHIPSET_PKG).dec
+  $(PLATFORM_RC_PACKAGE)/$(PLATFORM_RC_PACKAGE).dec
+  InsydeModulePkg/InsydeModulePkg.dec
+#[-end-160216-IB03090424-modify]#
+
+[LibraryClasses]
+  FlashDeviceLib
+  PcdLib
+  MemoryAllocationLib
+  CacheMaintenanceLib
+  IoLib
+  BaseMemoryLib
+  DebugLib
+  BaseLib
+  UefiLib
+  SmmLib
+  SmmServicesTableLib  
+  UefiBootServicesTableLib
+  UefiDriverEntryPoint
+
+[Guids]
+  gEfiFirmwareFileSystem2Guid                   # ALWAYS_CONSUMED
+  gEfiSystemNvDataFvGuid                        # ALWAYS_CONSUMED  
+  gEfiEventVirtualAddressChangeGuid
+
+[Protocols]
+  gEfiDevicePathProtocolGuid                    # PROTOCOL ALWAYS_PRODUCED
+  gEfiSmmFirmwareVolumeBlockProtocolGuid        # PROTOCOL ALWAYS_PRODUCED
+
+#[-start-151228-IB03090424-modify]#
+[Pcd]
+#   gPlatformModuleTokenSpaceGuid.PcdFlashFvOBBBase
+  gEfiMdeModulePkgTokenSpaceGuid.PcdFlashNvStorageVariableBase
+#   gPlatformModuleTokenSpaceGuid.PcdFlashFvIBBMBase
+#   gPlatformModuleTokenSpaceGuid.PcdFlashFvOBBSize
+  gEfiMdeModulePkgTokenSpaceGuid.PcdFlashNvStorageVariableSize
+#   gPlatformModuleTokenSpaceGuid.PcdFlashFvIBBMSize
+  gInsydeTokenSpaceGuid.PcdFlashFvRecoveryBase
+  gInsydeTokenSpaceGuid.PcdFlashFvRecoverySize
+  gInsydeTokenSpaceGuid.PcdFlashFvMainBase
+  gInsydeTokenSpaceGuid.PcdFlashFvMainSize
+#[-start-160301-IB07220042-add]#
+  gInsydeTokenSpaceGuid.PcdUseFastCrisisRecovery
+#[-end-160301-IB07220042-add]#
+#[-start-160504-IB07220073-add]#
+  gEfiMdeModulePkgTokenSpaceGuid.PcdFlashNvStorageFtwWorkingSize
+  gEfiMdeModulePkgTokenSpaceGuid.PcdFlashNvStorageFtwSpareSize
+  gInsydeTokenSpaceGuid.PcdFlashNvStorageFactoryCopySize
+#[-end-160504-IB07220073-add]#
+  
+[Depex]
+  TRUE
+#[-end-151228-IB03090424-modify]#
+
+
+

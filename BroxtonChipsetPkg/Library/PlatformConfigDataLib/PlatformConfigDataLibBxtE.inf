@@ -1,0 +1,70 @@
+## @file
+#  NULL PlatformFvbLib library instance
+#
+#  This library handles hooks for Platform Config Data.
+#
+#@copyright
+# Copyright (c) 2006 - 2016 Intel Corporation. All rights reserved
+# This software and associated documentation (if any) is furnished
+# under a license and may only be used or copied in accordance
+# with the terms of the license. Except as permitted by the
+# license, no part of this software or documentation may be
+# reproduced, stored in a retrieval system, or transmitted in any
+# form or by any means without the express written consent of
+# Intel Corporation.
+# This file contains a 'Sample Driver' and is licensed as such
+# under the terms of your license agreement with Intel or your
+# vendor. This file may be modified by the user, subject to
+# the additional terms of the license agreement.
+#
+#@par Specification Reference:
+#
+##
+
+[Defines]
+  INF_VERSION                    = 0x00010005
+  BASE_NAME                      = PlatformConfigDataLib
+  FILE_GUID                      = 402B0508-781A-4016-A1D7-9740FFE001A0
+  MODULE_TYPE                    = BASE
+  VERSION_STRING                 = 1.0
+  LIBRARY_CLASS                  = PlatformConfigDataLib
+
+
+#
+# The following information is for reference only and not required by the build tools.
+#
+#  VALID_ARCHITECTURES           = IA32 X64 IPF EBC
+#
+
+[Sources]
+  PlatformConfigDataLib.c
+
+[Packages]
+  MdePkg/MdePkg.dec
+  MdeModulePkg/MdeModulePkg.dec
+  IntelFrameworkPkg/IntelFrameworkPkg.dec
+  IntelFrameworkModulePkg/IntelFrameworkModulePkg.dec
+  SecurityPkg/SecurityPkg.dec
+  Platform/BxtPlatformPkg/PlatformPkg.dec
+  BroxtonSiPkg/BroxtonSiPkg.dec	
+  Silicon/BroxtonSiPkg/NorthCluster/MemoryInitBxtE/MemoryInitBxtE.dec	
+    
+[LibraryClasses]
+  DebugLib
+  BaseMemoryLib
+  BaseLib
+  MemoryAllocationLib
+  HobLib
+  HeciMsgLib
+  
+[Guids]
+  gPlatformConfigDataGuid
+  gPlatformSystemConfigDataGuid
+  gPlatformMemoryConfigDataGuid
+  gPlatformSmipConfigDataGuid
+  gEfiPlatformInfoGuid
+  gPlatformSystemConfigDataPreMemGuid
+  
+[Depex]
+  TRUE
+

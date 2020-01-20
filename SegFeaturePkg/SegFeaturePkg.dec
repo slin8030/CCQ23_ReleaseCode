@@ -1,0 +1,89 @@
+## @file
+#  Package declaration file for SegFeaturePkg
+#
+#******************************************************************************
+#* Copyright (c) 2012 - 2017, Insyde Software Corp. All Rights Reserved.
+#*
+#* You may not reproduce, distribute, publish, display, perform, modify, adapt,
+#* transmit, broadcast, present, recite, release, license or otherwise exploit
+#* any part of this publication in any form, by any means, without the prior
+#* written permission of Insyde Software Corporation.
+#*
+#******************************************************************************
+
+[Defines]
+  DEC_SPECIFICATION              = 0x00010005
+  PACKAGE_NAME                   = SegFeaturePkg
+  PACKAGE_GUID                   = 5E2C6E6A-F6E6-4e01-B2AB-0FBCBA928356
+  PACKAGE_VERSION                = 0.1
+
+[Includes]
+  Include
+
+[LibraryClasses]
+
+[Guids]
+  gSegFeatureTokenSpaceGuid                  = { 0x649203e6, 0xb87a, 0x4cfc, { 0x8b, 0x93, 0x92, 0x5a, 0x5d, 0x39, 0x9b, 0xb2 } }
+#[-start-171208-IB14090135-add]#
+  ## IntelFrameworkModule package token space guid
+  #  Include/Guid/IntelFrameworkModulePkgTokenSpace.h
+  gEfiIntelFrameworkModulePkgTokenSpaceGuid = { 0xD3705011, 0xBC19, 0x4af7, { 0xBE, 0x16, 0xF6, 0x80, 0x30, 0x37, 0x8C, 0x15 }}
+#[-end-171208-IB14090135-add]#
+
+[Ppis]
+
+
+[Protocols]
+#[-start-171208-IB08400541-add]#
+  ## Include/Protocol/AcpiSupport.h
+  gEfiAcpiSupportProtocolGuid    = { 0xdbff9d55, 0x89b7, 0x46da, { 0xbd, 0xdf, 0x67, 0x7d, 0x3d, 0xc0, 0x24, 0x1d }}
+#[-end-171208-IB08400541-add]#
+
+#[-start-171208-IB14090135-add]#
+  ## Include/Protocol/LegacyBiosPlatform.h
+  gEfiLegacyBiosPlatformProtocolGuid = { 0x783658a3, 0x4172, 0x4421, { 0xa2, 0x99, 0xe0, 0x09, 0x07, 0x9c, 0x0c, 0xb4 }}
+
+  ## Include/Protocol/LegacyBios.h
+  gEfiLegacyBiosProtocolGuid     = { 0xdb9a1e3d, 0x45cb, 0x4abb, { 0x85, 0x3b, 0xe5, 0x38, 0x7f, 0xdb, 0x2e, 0x2d }}
+
+  ## ISA I/O Protocol is used to perform ISA device Io/Mem operations.
+  #  Include/Protocol/IsaIo.h
+  gEfiIsaIoProtocolGuid          = { 0x7ee2bd44, 0x3da0, 0x11d4, { 0x9a, 0x38, 0x0, 0x90, 0x27, 0x3f, 0xc1, 0x4d }}
+
+#[-end-171208-IB14090135-add]#
+
+
+[PcdsFeatureFlag]
+  gSegFeatureTokenSpaceGuid.PcdSerialPortPostCode|TRUE|BOOLEAN|0x10000001
+#[-start-171208-IB14090135-add]#
+  ## Indicates if Serial device uses half hand shake.<BR><BR>
+  #   TRUE  - Serial device uses half hand shake.<BR>
+  #   FALSE - Serial device doesn't use half hand shake.<BR>
+  # @Prompt Enable Serial device Half Hand Shake
+  gEfiIntelFrameworkModulePkgTokenSpaceGuid.PcdIsaBusSerialUseHalfHandshake|FALSE|BOOLEAN|0x00010043
+#[-end-171208-IB14090135-add]#
+
+[PcdsDynamic, PcdsDynamicEx]
+
+[PcdsFixedAtBuild,PcdsPatchableInModule,PcdsDynamic, PcdsDynamicEx]
+
+[PcdsFixedAtBuild]
+#[-start-170509-IB15760003-add]#
+  #
+  # The settings for multiple serial ports.
+  # This PCD is an array. And each element in the array is the settigs for a specific serial port
+  #
+  gSegFeatureTokenSpaceGuid.PcdH2OSerialPortConfig|{0}|VOID*|0x20000001
+#[-end-170509-IB15760003-add]#
+#[-start-180612-IB09330462-add]#
+  gSegFeatureTokenSpaceGuid.PcdH2OSegPlatformSupportBmcUsbDevicePath|{0}|VOID*|0x20000002
+#[-end-180612-IB09330462-add]#
+
+[PcdsFixedAtBuild, PcdsPatchableInModule]
+
+[PcdsDynamic]
+
+[PcdsFixedAtBuild]
+
+[PcdsDynamicEx]
+

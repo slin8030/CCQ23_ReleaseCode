@@ -1,0 +1,208 @@
+/** @file
+
+  BIOS Event Log Config utility DXE VFR implementation for Event and Message Page.
+
+;******************************************************************************
+;* Copyright (c) 2016, Insyde Software Corporation. All Rights Reserved.
+;*
+;* You may not reproduce, distribute, publish, display, perform, modify, adapt,
+;* transmit, broadcast, present, recite, release, license or otherwise exploit
+;* any part of this publication in any form, by any means, without the prior
+;* written permission of Insyde Software Corporation.
+;*
+;******************************************************************************
+*/
+
+#include <Guid/H2OEventLogConfigManagerHii.h>
+#include "BiosEventLogConfigUtilSetupConfig.h"
+
+formset
+  guid      = H2O_BIOS_EVENT_LOG_CONFIG_UTIL_EVENT_AND_MESSAGE_PAGE_FORMSET_GUID,
+  title     = STRING_TOKEN(STR_BIOS_EVENT_LOG_VIEWER_PAGE),
+  help      = STRING_TOKEN(STR_BIOS_EVENT_LOG_VIEWER_PAGE_HELP),
+  classguid = LINK_INCLUDE_H2O_EVENT_LOG_EVENT_AND_MESSAGE_PAGE_CLASS_GUID,
+
+  //
+  // Define a EFI variable Storage (EFI_IFR_VARSTORE_EFI)
+  //
+  varstore BIOS_EVENT_LOG_CONFIG_UTIL_FILTER_CONFIGURATION,
+    varid = BIOS_EVENT_LOG_CONFIG_UTIL_FILTER_VARSTORE_ID,
+    name  = BiosEventLogFilter,
+    guid  = H2O_BIOS_EVENT_LOG_CONFIG_UTIL_VARSTORE_GUID;
+
+  //
+  // Form VFR_FORMID_BIOS_EVENT_LOG_EVENT_AND_MESSAGE_PAGE
+  //
+  form
+    formid = VFR_FORMID_BIOS_EVENT_LOG_EVENT_AND_MESSAGE_PAGE, title = STRING_TOKEN(STR_BIOS_EVENT_LOG_VIEWER_PAGE);
+
+    subtitle text = STRING_TOKEN(STR_BLANK_STRING);
+    subtitle text = STRING_TOKEN(STR_BIOS_EVENT_LOG_VIEWER_PAGE);
+    
+    goto VFR_FORMID_BIOS_EVENT_LOG_VIEWER_STORAGE,
+       prompt = STRING_TOKEN(STR_BIOS_EVENT_LOG_VIEWER_SHOW_EVENT),
+       help   = STRING_TOKEN(STR_BIOS_EVENT_LOG_VIEWER_SHOW_EVENT_HELP),
+       flags  = INTERACTIVE,
+       key    = KEY_ELV_SHOW_EVENT_LOG;
+
+    text
+      help   = STRING_TOKEN(STR_BIOS_EVENT_LOG_VIEWER_CLEAR_EVENT_HELP),
+      text   = STRING_TOKEN(STR_BIOS_EVENT_LOG_VIEWER_CLEAR_EVENT),
+      flags  = INTERACTIVE,
+      key    = KEY_ELV_CLEAR_EVENT_LOG;  
+
+  endform; // End of Form VFR_FORMID_BIOS_EVENT_LOG_EVENT_AND_MESSAGE_PAGE  
+
+  //
+  //  Form VFR_FORMID_BIOS_EVENT_LOG_VIEWER_STORAGE : BIOS Event Log Viewer for Storage page.
+  //
+  form
+    formid = VFR_FORMID_BIOS_EVENT_LOG_VIEWER_STORAGE, title = STRING_TOKEN(STR_BIOS_EVENT_LOG_VIEWER_PAGE);
+
+    subtitle text = STRING_TOKEN(STR_BLANK_STRING);
+    subtitle text = STRING_TOKEN(STR_BIOS_EVENT_LOG_VIEWER_PAGE);
+
+    //
+    // Filter setting
+    //    
+    oneof
+      varid       = BiosEventLogFilter.FilterEn,    
+      questionid  = KEY_FILTER_ENABLE,
+      prompt      = STRING_TOKEN(STR_FILTER_SETTING_STRING),
+      help        = STRING_TOKEN(STR_FILTER_SETTING_HELP),
+      flags       = INTERACTIVE,
+      option text = STRING_TOKEN(STR_DISABLED_TEXT),           value = 0, flags = DEFAULT;
+      option text = STRING_TOKEN(STR_ENABLED_TEXT),            value = 1, flags = 0;
+      option text = STRING_TOKEN(STR_CLAER_TEXT),              value = 2, flags = 0;
+    endoneof;
+
+    suppressif
+      ideqvallist BiosEventLogFilter.FilterEn == 0;
+
+      string  
+        varid    = BiosEventLogFilter.DateFilter,
+        prompt   = STRING_TOKEN(STR_DATE_FILTER_CONDITION_PROMPT),
+        help     = STRING_TOKEN(STR_DATE_FILTER_CONDITION_HELP),
+        flags    = INTERACTIVE,
+        key      = KEY_FILTER_DATE,
+        minsize  = 0,
+        maxsize  = 10,
+      endstring;
+
+      string  
+        varid    = BiosEventLogFilter.TimeFilter,
+        prompt   = STRING_TOKEN(STR_TIME_FILTER_CONDITION_PROMPT),
+        help     = STRING_TOKEN(STR_TIME_FILTER_CONDITION_HELP),
+        flags    = INTERACTIVE,
+        key      = KEY_FILTER_TIME,
+        minsize  = 0,
+        maxsize  = 8,
+      endstring;
+    endif;
+    
+    suppressif
+      ideqvallist BiosEventLogFilter.FilterEn == 0     
+      OR
+      ideqvallist BiosEventLogFilter.StorageType == 1 4; // Not allow for BIOS Storage and MEMORY Storage
+      
+      string  
+        varid    = BiosEventLogFilter.GeneratorIdFilter,
+        prompt   = STRING_TOKEN(STR_GENERATOR_ID_FILTER_CONDITION_PROMPT),
+        help     = STRING_TOKEN(STR_GENERATOR_ID_FILTER_CONDITION_HELP),
+        flags    = INTERACTIVE,
+        key      = KEY_FILTER_GENERATOR_ID,
+        minsize  = 0,
+        maxsize  = 6,
+      endstring;
+    endif;
+    
+    suppressif
+      ideqvallist BiosEventLogFilter.FilterEn == 0    
+      OR
+      ideqvallist BiosEventLogFilter.StorageType == 2; // Not allow for BMC SEL Storage
+      string  
+        varid    = BiosEventLogFilter.EventIdFilter,
+        prompt   = STRING_TOKEN(STR_EVENT_ID_FILTER_CONDITION_PROMPT),
+        help     = STRING_TOKEN(STR_EVENT_ID_FILTER_CONDITION_HELP),
+        flags    = INTERACTIVE,
+        key      = KEY_FILTER_EVENT_ID,
+        minsize  = 0,
+        maxsize  = 15,
+      endstring;
+    endif;
+    
+    suppressif
+      ideqvallist BiosEventLogFilter.FilterEn == 0      
+      OR
+      ideqvallist BiosEventLogFilter.StorageType == 1 4; // Not allow for BIOS Storage and MEMORY Storage
+      string  
+        varid    = BiosEventLogFilter.SensorTypeFilter,
+        prompt   = STRING_TOKEN(STR_SENSOR_TYPE_FILTER_CONDITION_PROMPT),
+        help     = STRING_TOKEN(STR_SENSOR_TYPE_FILTER_CONDITION_HELP),
+        flags    = INTERACTIVE,
+        key      = KEY_FILTER_SENSOR_TYPE,
+        minsize  = 0,
+        maxsize  = 4,
+      endstring;
+
+      string  
+        varid    = BiosEventLogFilter.SensorNumFilter,
+        prompt   = STRING_TOKEN(STR_SENSOR_NUMBER_FILTER_CONDITION_PROMPT),
+        help     = STRING_TOKEN(STR_SENSOR_NUMBER_FILTER_CONDITION_HELP),
+        flags    = INTERACTIVE,
+        key      = KEY_FILTER_SENSOR_NUMBER,
+        minsize  = 0,
+        maxsize  = 4,
+      endstring;
+
+      string  
+        varid    = BiosEventLogFilter.EventTypeFilter,
+        prompt   = STRING_TOKEN(STR_EVENT_TYPE_FILTER_CONDITION_PROMPT),
+        help     = STRING_TOKEN(STR_EVENT_TYPE_FILTER_CONDITION_HELP),
+        flags    = INTERACTIVE,
+        key      = KEY_FILTER_EVENT_TYPE,
+        minsize  = 0,
+        maxsize  = 4,
+      endstring;
+    endif;
+        
+    suppressif
+      ideqvallist BiosEventLogFilter.FilterEn == 0      
+      OR
+      ideqvallist BiosEventLogFilter.StorageType == 2 4; // Not allow for BMC SEL Storage and MEMORY Storage
+
+      string  
+        varid    = BiosEventLogFilter.EventTypeIdFilter,
+        prompt   = STRING_TOKEN(STR_EVENT_TYPE_ID_FILTER_CONDITION_PROMPT),
+        help     = STRING_TOKEN(STR_EVENT_TYPE_ID_FILTER_CONDITION_HELP),
+        flags    = INTERACTIVE,
+        key      = KEY_FILTER_EVENT_TYPE_ID,
+        minsize  = 0,
+        maxsize  = 4,
+      endstring;
+    endif;
+      
+    suppressif
+      ideqvallist BiosEventLogFilter.FilterEn == 0;      
+
+      string  
+        varid    = BiosEventLogFilter.StringFilter,
+        prompt   = STRING_TOKEN(STR_STRING_FILTER_CONDITION_PROMPT),
+        help     = STRING_TOKEN(STR_STRING_FILTER_CONDITION_HELP),
+        flags    = INTERACTIVE,
+        key      = KEY_FILTER_STRING,
+        minsize  = 0,
+        maxsize  = 15,
+      endstring;
+      subtitle text = STRING_TOKEN(STR_BLANK_STRING);
+    endif;
+    
+    label ELV_STORAGE_HEADER_START_LABEL;
+    label ELV_STORAGE_HEADER_END_LABEL;
+    
+    label ELV_STORAGE_EVENTS_START_LABEL;
+    label ELV_STORAGE_EVENTS_END_LABEL;
+
+  endform; // End of Form VFR_FORMID_BIOS_EVENT_LOG_VIEWER_STORAGE    
+endformset;
+

@@ -1,0 +1,220 @@
+/** @file
+
+ @copyright
+  INTEL CONFIDENTIAL
+  Copyright 1999 - 2016 Intel Corporation.
+
+  The source code contained or described herein and all documents related to the
+  source code ("Material") are owned by Intel Corporation or its suppliers or
+  licensors. Title to the Material remains with Intel Corporation or its suppliers
+  and licensors. The Material may contain trade secrets and proprietary and
+  confidential information of Intel Corporation and its suppliers and licensors,
+  and is protected by worldwide copyright and trade secret laws and treaty
+  provisions. No part of the Material may be used, copied, reproduced, modified,
+  published, uploaded, posted, transmitted, distributed, or disclosed in any way
+  without Intel's prior express written permission.
+
+  No license under any patent, copyright, trade secret or other intellectual
+  property right is granted to or conferred upon you by disclosure or delivery
+  of the Materials, either expressly, by implication, inducement, estoppel or
+  otherwise. Any license under such intellectual property rights must be
+  express and approved by Intel in writing.
+
+  Unless otherwise agreed by Intel in writing, you may not remove or alter
+  this notice or any other notice embedded in Materials by Intel or
+  Intel's suppliers or licensors in any way.
+
+  This file contains a 'Sample Driver' and is licensed as such under the terms
+  of your license agreement with Intel or your vendor. This file may be modified
+  by the user, subject to the additional terms of the license agreement.
+
+@par Specification
+**/
+
+form formid = CPU_CONFIGURATION_FORM_ID,
+
+  title    = STRING_TOKEN(STR_CPU_CONFIGURATION_TITLE);
+
+  //
+  // Title on CPU Configuration Page
+  //
+
+  subtitle text = STRING_TOKEN(STR_CPU_CONFIGURATION_TITLE);
+
+
+//[-start-151231-IB03090424-remove]//
+//  oneof varid     = SystemConfig.ExecuteDisableBit,
+//    prompt      = STRING_TOKEN(STR_EXECUTE_DISABLE_BIT_PROMPT),
+//    help        = STRING_TOKEN(STR_EXECUTE_DISABLE_BIT_HELP),
+//    option text = STRING_TOKEN(STR_DISABLE), value = 0, flags = RESET_REQUIRED;
+//    option text = STRING_TOKEN(STR_ENABLE),  value = 1, flags = MANUFACTURING | DEFAULT | RESET_REQUIRED;
+//  endoneof;
+//
+//  oneof varid     = SystemConfig.CpuidMaxValue,
+//    prompt      = STRING_TOKEN(STR_LIMIT_CPUID_MAX_PROMPT),
+//    help        = STRING_TOKEN(STR_LIMIT_CPUID_MAX_HELP),
+//    option text = STRING_TOKEN(STR_DISABLE), value = 0, flags = MANUFACTURING | DEFAULT  | RESET_REQUIRED;
+//    option text = STRING_TOKEN(STR_ENABLE),  value = 1, flags = RESET_REQUIRED;
+//  endoneof;
+//[-end-151231-IB03090424-remove]//
+  
+  oneof varid     = SystemConfig.EnableProcHot,
+    prompt      = STRING_TOKEN(STR_PROC_HOT_ENABLE),
+    help        = STRING_TOKEN(STR_PROC_HOT_ENABLE_HELP),
+    option text = STRING_TOKEN(STR_DISABLE), value = 0, flags = RESET_REQUIRED;
+    option text = STRING_TOKEN(STR_ENABLE),  value = 1, flags =MANUFACTURING | DEFAULT  | RESET_REQUIRED;
+  endoneof;
+  
+  oneof varid     = SystemConfig.ProcessorVmxEnable,
+    prompt      = STRING_TOKEN(STR_VTX2_PROMPT),
+    help        = STRING_TOKEN(STR_VTX2_HELP),
+    option text = STRING_TOKEN(STR_DISABLE), value = 0, flags = RESET_REQUIRED;
+    option text = STRING_TOKEN(STR_ENABLE),  value = 1, flags =MANUFACTURING | DEFAULT  | RESET_REQUIRED;
+  endoneof;
+
+//[-start-160226-IB03090424-modify]//
+  grayoutif ideqval SystemConfig.IpuEn == 1;
+  oneof varid     = SystemConfig.VTdEnable,
+    prompt      = STRING_TOKEN(STR_VTD_PROMPT),
+    help        = STRING_TOKEN(STR_VTD_HELP),
+    option text = STRING_TOKEN(STR_DISABLE), value = 0, flags = MANUFACTURING | DEFAULT  | RESET_REQUIRED;
+    option text = STRING_TOKEN(STR_ENABLE),  value = 1, flags = RESET_REQUIRED;
+  endoneof;
+  endif;
+//[-end-160226-IB03090424-modify]//
+  
+  oneof varid     = SystemConfig.EnableTm,
+    prompt      = STRING_TOKEN(STR_TM1_PROMPT),
+    help        = STRING_TOKEN(STR_TM1_PROMPT_HELP),
+    option text = STRING_TOKEN(STR_DISABLE), value = 0, flags = RESET_REQUIRED;
+    option text = STRING_TOKEN(STR_ENABLE),  value = 1, flags = MANUFACTURING |DEFAULT | RESET_REQUIRED;
+  endoneof;
+
+//  oneof varid     = SystemConfig.EnableTm1,
+//    prompt      = STRING_TOKEN(STR_TM1_PROMPT),
+//    help        = STRING_TOKEN(STR_TM1_PROMPT_HELP),
+//    option text = STRING_TOKEN(STR_DISABLE), value = 0, flags = RESET_REQUIRED;
+//    option text = STRING_TOKEN(STR_ENABLE),  value = 1, flags = MANUFACTURING |DEFAULT | RESET_REQUIRED;
+//  endoneof;
+//  oneof varid     = SystemConfig.EnableTm2,
+//    prompt      = STRING_TOKEN(STR_TM2_PROMPT),
+//    help        = STRING_TOKEN(STR_TM2_PROMPT_HELP),
+//    option text = STRING_TOKEN(STR_DISABLE), value = 0, flags = RESET_REQUIRED;
+//    option text = STRING_TOKEN(STR_ENABLE),  value = 1, flags = MANUFACTURING |DEFAULT  | RESET_REQUIRED;
+//  endoneof;
+//[-start-170105-IB07400830-add]//
+  grayoutif
+    ideqval SystemConfig.UserAccessLevel == 2
+    AND
+    ideqval SystemConfig.SetUserPass == 1;
+    oneof 
+        varid       = SystemConfig.EnableAESNI,
+        prompt      = STRING_TOKEN(STR_AESNI_PROMPT),
+        help        = STRING_TOKEN(STR_AESNI_PROMPT_HELP),
+        option text = STRING_TOKEN(STR_DISABLE), value = 0, flags = RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_ENABLE),  value = 1, flags = DEFAULT | RESET_REQUIRED;
+    endoneof;
+  endif;
+//[-end-170105-IB07400830-add]//
+  oneof varid     = SystemConfig.EnableDigitalThermalSensor,
+    prompt      = STRING_TOKEN(STR_DTS_PROMPT),
+    help        = STRING_TOKEN(STR_DTS_PROMPT_HELP),
+//[-start-160308-IB03090425-modify]//
+    option text = STRING_TOKEN(STR_DISABLE), value = 0, flags = MANUFACTURING | DEFAULT | RESET_REQUIRED;
+    option text = STRING_TOKEN(STR_ENABLE),  value = 1, flags = RESET_REQUIRED;
+//[-end-160308-IB03090425-modify]//
+  endoneof;
+
+//[-start-151229-IB03090424-modify]//
+  oneof varid  = SystemConfig.ActiveProcessorCores,
+    prompt = STRING_TOKEN(STR_ACTIVE_PROCESSOR_CORES_PROMPT),
+    help = STRING_TOKEN(STR_ACTIVE_PROCESSOR_CORES_HELP),
+    option text = STRING_TOKEN(STR_DISABLE), value = 0, flags = MANUFACTURING |DEFAULT  | RESET_REQUIRED;
+    option text = STRING_TOKEN(STR_ENABLE),  value = 1, flags = RESET_REQUIRED;    
+  endoneof;
+//[-end-151229-IB03090424-modify]//
+  
+//[-start-151229-IB03090424-add]//
+  grayoutif TRUE;
+    oneof varid   = SystemConfig.Core0,
+      prompt      = STRING_TOKEN(STR_ACTIVE_CORE0_DISABLE_PROMPT),
+      help        = STRING_TOKEN(STR_ACTIVE_CORE0_DISABLE_PROMPT_HELP),
+      option text = STRING_TOKEN(STR_ENABLE),  value = 1, flags = MANUFACTURING |DEFAULT  | RESET_REQUIRED;
+    endoneof;
+  endif;
+  
+//[-start-160509-IB03090427-modify]//
+  suppressif ideqval SystemConfig.ActiveProcessorCores == 0 OR ideqval SystemConfig.NumOfProcessors == 2;
+//[-end-160509-IB03090427-modify]//
+  oneof varid   = SystemConfig.Core1,
+    prompt      = STRING_TOKEN(STR_ACTIVE_CORE1_DISABLE_PROMPT),
+    help        = STRING_TOKEN(STR_ACTIVE_CORE1_DISABLE_PROMPT_HELP),
+    option text = STRING_TOKEN(STR_DISABLE), value = 0, flags = RESET_REQUIRED;
+    option text = STRING_TOKEN(STR_ENABLE),  value = 1, flags = MANUFACTURING |DEFAULT  | RESET_REQUIRED;
+  endoneof;
+  endif;
+  
+  suppressif ideqval SystemConfig.ActiveProcessorCores == 0;
+  oneof varid   = SystemConfig.Core2,
+    prompt      = STRING_TOKEN(STR_ACTIVE_CORE2_DISABLE_PROMPT),
+    help        = STRING_TOKEN(STR_ACTIVE_CORE2_DISABLE_PROMPT_HELP),
+    option text = STRING_TOKEN(STR_DISABLE), value = 0, flags = RESET_REQUIRED;
+    option text = STRING_TOKEN(STR_ENABLE),  value = 1, flags = MANUFACTURING |DEFAULT  | RESET_REQUIRED;
+  endoneof;  
+  endif;
+  
+//[-start-160509-IB03090427-modify]//
+  suppressif ideqval SystemConfig.ActiveProcessorCores == 0 OR ideqval SystemConfig.NumOfProcessors == 2;
+//[-end-160509-IB03090427-modify]//
+  oneof varid   = SystemConfig.Core3,
+    prompt      = STRING_TOKEN(STR_ACTIVE_CORE3_DISABLE_PROMPT),
+    help        = STRING_TOKEN(STR_ACTIVE_CORE3_DISABLE_PROMPT_HELP),
+    option text = STRING_TOKEN(STR_DISABLE), value = 0, flags = RESET_REQUIRED;
+    option text = STRING_TOKEN(STR_ENABLE),  value = 1, flags = MANUFACTURING |DEFAULT  | RESET_REQUIRED;
+  endoneof;  
+  endif;
+//[-end-151229-IB03090424-add]//
+
+//[-start-170324-IB07400848-modify]//
+  grayoutif TRUE;
+    text
+      help   = STRING_TOKEN(STR_PROCESSOR_HT_MODE_HELP),
+      text   = STRING_TOKEN(STR_PROCESSOR_HT_MODE),
+      text   = STRING_TOKEN(STR_CAPABILITY_NOT_SUPPORT),
+      flags  = 0,
+      key    = 0;
+  endif;
+//[-end-170324-IB07400848-modify]//
+
+//[-start-160719-IB03090429-add]//
+  oneof varid   = SystemConfig.MonitorMwaitEnable,
+    prompt      = STRING_TOKEN(STR_MONITOR_MWAIT_PROMPT),
+    help        = STRING_TOKEN(STR_MONITOR_MWAIT_HELP),
+//[-start-161021-IB03090435-modify]//
+//[-start-161125-IB07400818-modify]// 
+//#if ((BXTI_PF_ENABLE == 1) && (PPV_ENABLE == 1)) //Default OS is Windows
+//    option text = STRING_TOKEN(STR_DISABLE), value = 0, flags = MANUFACTURING | DEFAULT | RESET_REQUIRED;
+//    option text = STRING_TOKEN(STR_ENABLE),  value = 1, flags = RESET_REQUIRED;
+//    option text = STRING_TOKEN(STR_AUTO), value = 2, flags = RESET_REQUIRED;
+//#else
+    option text = STRING_TOKEN(STR_DISABLE), value = 0, flags = RESET_REQUIRED;
+    option text = STRING_TOKEN(STR_ENABLE),  value = 1, flags = RESET_REQUIRED;
+    option text = STRING_TOKEN(STR_AUTO), value = 2, flags = MANUFACTURING | DEFAULT | RESET_REQUIRED;
+//#endif
+//[-end-161125-IB07400818-modify]//
+//[-end-161021-IB03090435-modify]//
+  endoneof;  
+//[-end-160719-IB03090429-add]//
+
+  subtitle text = STRING_TOKEN(STR_NULL_STRING);
+
+  //
+  // Jump to  CPU Power Management Form
+  //
+  goto CPU_PWR_CONFIGURATION_FORM_ID,
+    prompt = STRING_TOKEN(STR_CPU_POWERMNG_TITLE),
+    help   = STRING_TOKEN(STR_CPU_POWERMNG_HELP);
+
+endform;
+
+#include "CpuPower.vfi"

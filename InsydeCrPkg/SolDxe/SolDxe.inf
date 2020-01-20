@@ -1,0 +1,30 @@
+## @file
+#  SOL DXE
+#
+#******************************************************************************
+#* Copyright (c) 2013 - 2016, Insyde Software Corp. All Rights Reserved.
+#*
+#* You may not reproduce, distribute, publish, display, perform, modify, adapt,
+#* transmit, broadcast, present, recite, release, license or otherwise exploit
+#* any part of this publication in any form, by any means, without the prior
+#* written permission of Insyde Software Corporation.
+#*
+#******************************************************************************
+
+[Defines]
+  INF_VERSION          = 0x00010005
+  BASE_NAME            = SolDxe
+  FILE_GUID            = 75F4D10C-619A-465f-BBA5-6A2B15F89774
+  MODULE_TYPE          = UEFI_DRIVER
+  BINARY_VERSION       = 10.02
+
+
+[Binaries.Ia32]
+#
+# IA32 binary version fixd at 10.01
+#
+  PE32|Ia32/SolDxe.efi
+
+
+[Binaries.X64]
+  PE32|X64/SolDxe.efi

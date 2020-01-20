@@ -1,0 +1,29 @@
+## @file
+#  Component description file for Ipmi sync Bmc Lib instance.
+#
+#******************************************************************************
+#* Copyright (c) 2016 - 2017, Insyde Software Corporation. All Rights Reserved.
+#*
+#* You may not reproduce, distribute, publish, display, perform, modify, adapt,
+#* transmit, broadcast, present, recite, release, license or otherwise exploit
+#* any part of this publication in any form, by any means, without the prior
+#* written permission of Insyde Software Corporation.
+#*
+#******************************************************************************
+
+[Defines]
+  INF_VERSION                    = 0x00010005
+  BASE_NAME                      = IpmiSyncBmcLib
+  FILE_GUID                      = 3A4481BD-44F0-4946-9994-33D7264605E9
+  MODULE_TYPE                    = DXE_DRIVER
+  VERSION_STRING                 = 1.0
+  LIBRARY_CLASS                  = IpmiSyncBmcLib|DXE_DRIVER
+
+[Sources]
+  IpmiSyncBmcLibNull.c
+
+[Packages]
+  MdePkg/MdePkg.dec
+  MdeModulePkg/MdeModulePkg.dec
+  SegFeaturePkg/SegFeaturePkg.dec
+  

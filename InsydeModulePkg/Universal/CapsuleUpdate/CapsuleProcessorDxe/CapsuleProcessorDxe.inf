@@ -1,0 +1,70 @@
+## @file
+#  Component description file for Capsule Processor Dxe module.
+#
+#******************************************************************************
+#* Copyright (c) 2012 - 2015, Insyde Software Corp. All Rights Reserved.
+#*
+#* You may not reproduce, distribute, publish, display, perform, modify, adapt,
+#* transmit, broadcast, present, recite, release, license or otherwise exploit
+#* any part of this publication in any form, by any means, without the prior
+#* written permission of Insyde Software Corporation.
+#*
+#******************************************************************************
+
+[defines]
+  INF_VERSION                    = 0x00010005
+  BASE_NAME                      = CapsuleProcessorDxe
+  FILE_GUID                      = 043DF38F-32E1-4893-911F-37A7FE91F723
+  MODULE_TYPE                    = DXE_DRIVER
+  VERSION_STRING                 = 1.0
+  ENTRY_POINT                    = CapsuleProcessorEntryPoint
+
+[sources.common]
+  CapsuleProcessorDxe.c
+  CapsuleProcessorDxe.h
+  CapsuleInWindowsUx.c
+  CapsuleInUefiImage.c
+  CapsuleInUefiFmp.c
+
+[Packages]
+  MdePkg/MdePkg.dec
+  MdeModulePkg/MdeModulePkg.dec
+  InsydeModulePkg/InsydeModulePkg.dec
+
+[LibraryClasses]
+  BaseLib
+  UefiLib
+  PcdLib
+  UefiBootServicesTableLib
+  UefiRuntimeServicesTableLib
+  UefiDriverEntryPoint
+  BaseMemoryLib
+  MemoryAllocationLib
+  DevicePathLib
+  DebugLib
+  CapsuleUpdateCriteriaLib
+  SeamlessRecoveryLib
+  BvdtLib
+  OemGraphicsLib
+  
+[Protocols]
+  gEfiFirmwareManagementProtocolGuid
+
+[Guids]
+  gEfiSystemResourceTableGuid
+  gEfiFmpCapsuleGuid
+  gEfiCertX509Guid
+  gSecureFlashInfoGuid
+  gWindowsUxCapsuleGuid
+
+[Pcd]
+  gInsydeTokenSpaceGuid.PcdCapsuleMaxResult
+  gInsydeTokenSpaceGuid.PcdLowestSupportedFirmwareVersion
+  gInsydeTokenSpaceGuid.PcdSecureFlashCertificateFile
+  gInsydeTokenSpaceGuid.PcdOsIndicationsSupported
+
+[FixedPcd]
+  gInsydeTokenSpaceGuid.PcdFirmwareResourceMaximum
+
+[Depex]
+  gEfiVariableArchProtocolGuid

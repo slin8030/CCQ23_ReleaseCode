@@ -1,0 +1,74 @@
+## @file
+#  Component description file for XhcStatusCodeRuntimeDxe driver
+#
+#******************************************************************************
+#* Copyright (c) 2015, Insyde Software Corp. All Rights Reserved.
+#*
+#* You may not reproduce, distribute, publish, display, perform, modify, adapt,
+#* transmit, broadcast, present, recite, release, license or otherwise exploit
+#* any part of this publication in any form, by any means, without the prior
+#* written permission of Insyde Software Corporation.
+#*
+#******************************************************************************
+
+[Defines]
+  INF_VERSION                    = 0x00010005
+  BASE_NAME                      = XhcStatusCodeRuntimeDxe
+  FILE_GUID                      = 5E4B1B90-2C45-4419-9015-F016AFD91547
+  MODULE_TYPE                    = COMBINED_SMM_DXE
+  VERSION_STRING                 = 1.0
+  ENTRY_POINT                    = XhcStatusCodeRuntimeDxeEntry
+
+#
+# The following information is for reference only and not required by the build tools.
+#
+#  VALID_ARCHITECTURES           = IA32 X64 IPF EBC
+#
+
+[Sources]
+  XhcStatusCodeRuntimeDxe.c
+  XhcDebugDxe.c
+  Pci.c
+
+[Packages]
+  MdePkg/MdePkg.dec
+  MdeModulePkg/MdeModulePkg.dec
+  InsydeModulePkg/InsydeModulePkg.dec
+
+[LibraryClasses]
+  UefiLib
+  MemoryAllocationLib
+  UefiBootServicesTableLib
+  UefiDriverEntryPoint
+  PcdLib
+  PrintLib
+  ReportStatusCodeLib
+  DebugLib
+  BaseMemoryLib
+  H2ODebugLib
+  ImageRelocationLib
+  PciLib
+  IoLib
+  TimerLib
+  HobLib
+
+[Guids]
+  gEfiEventVirtualAddressChangeGuid             ## CONSUMES ## Event
+  gEfiEventExitBootServicesGuid                 ## CONSUMES ## Event
+  gEfiStatusCodeDataTypeStringGuid              ## CONSUMES
+
+[Protocols]
+  gEfiRscHandlerProtocolGuid                    ## CONSUMES
+  gEfiSmmRscHandlerProtocolGuid
+  gEfiSmmBase2ProtocolGuid
+
+[Pcd]
+  gInsydeTokenSpaceGuid.PcdUsbDebugXhciControl
+  gInsydeTokenSpaceGuid.PcdUsbDebugXhciBaseAddress
+
+[Depex]
+  TRUE
+
+[BuildOptions]
+  MSFT:*_*_*_DLINK_FLAGS = /ALIGN:4096 /FILEALIGN:4096
+  GCC:*_*_*_DLINK_FLAGS  = --script=$(WORKSPACE)/BaseTools/Bin/Linux/gcc-4K-align-ld-script

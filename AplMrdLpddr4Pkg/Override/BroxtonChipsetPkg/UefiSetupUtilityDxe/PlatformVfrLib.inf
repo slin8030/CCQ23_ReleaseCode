@@ -1,0 +1,107 @@
+## @file
+#  Component description file for PlatformVfrLib library
+#
+#******************************************************************************
+#* Copyright (c) 2013 - 2015, Insyde Software Corp. All Rights Reserved.
+#*
+#* You may not reproduce, distribute, publish, display, perform, modify, adapt,
+#* transmit, broadcast, present, recite, release, license or otherwise exploit
+#* any part of this publication in any form, by any means, without the prior
+#* written permission of Insyde Software Corporation.
+#*
+#******************************************************************************
+
+[Defines]
+  INF_VERSION                    = 0x00010005
+  BASE_NAME                      = PlatformVfrLib
+  FILE_GUID                      = A31CBEBB-D170-44F1-80FA-1D818E11AE3C
+  MODULE_TYPE                    = BASE
+  VERSION_STRING                 = 1.0
+  LIBRARY_CLASS                  = PlatformVfrLib
+  STRGATHER_RESERVE_SIZE         = 0x1000
+
+[Sources]
+
+  SetupVfrStrings.uni
+  Advance/AdvanceVfr.vfr
+  Advance/BootHfr.hfr
+
+
+  Advance/UnCore.vfi
+  Advance/SouthClusterConfig.vfi
+
+  Advance/Thermal.vfi
+#[-start-151231-IB03090424-add]#
+  Advance/DptfPolicy.vfi
+#[-end-151231-IB03090424-add]#
+  Advance/SystemComponent.vfi
+  Advance/DebugConfig.vfi
+  Advance/AcpiSetup.vfi
+  Advance/RTD3.vfi
+#[-start-160523-IB07220085-add]#
+  Advance/MemorySystem.vfi
+#[-end-160523-IB07220085-add]#
+  Advance/Security.vfi
+
+  Advance/AcpiFeature.hfr
+#[-start-160725-IB07400761-add]#
+!if $(VBT_HOOK_SUPPORT) == YES
+  Advance/VbtHook.vfi
+!endif
+#[-end-160725-IB07400761-add]#
+#[-start-160923-IB07400789-add]#
+  Advance/SegChipsetFeature.vfi
+#[-end-160923-IB07400789-add]#
+
+  Power/PowerVfr.vfr
+  Power/Cpu.vfi
+  Power/CpuPower.vfi
+
+[Packages]
+  MdePkg/MdePkg.dec
+  InsydeModulePkg/InsydeModulePkg.dec
+  $(CHIPSET_PKG)/$(CHIPSET_PKG).dec
+#[-start-171225-IB07400935-add]#
+  $(PROJECT_PKG)/Project.dec
+#[-end-171225-IB07400935-add]#
+
+[LibraryClasses]
+
+[Guids]
+
+[Protocols]
+
+[Pcd]
+#[-start-151124-IB07220021-remove]#
+#   gInsydeTokenSpaceGuid.PcdH2OConsoleRedirectionSupported
+#[-end-151124-IB07220021-remove]#
+  gInsydeTokenSpaceGuid.PcdH2ODdtSupported
+#[-start-171002-IB07400914-remove]#
+#  gChipsetPkgTokenSpaceGuid.FtpmSupport
+#[-end-171002-IB07400914-remove]#
+  gInsydeTokenSpaceGuid.PcdStatusCodeUseUsb
+  gChipsetPkgTokenSpaceGuid.PcdSwitchableGraphicsSupported
+  gChipsetPkgTokenSpaceGuid.MrcRmtEfiDebug
+  gInsydeTokenSpaceGuid.PcdH2OFormBrowserLocalMetroDESupported
+  gInsydeTokenSpaceGuid.PcdH2OFormBrowserSupported
+#[-start-151124-IB07220021-remove]#
+#   gChipsetPkgTokenSpaceGuid.PcdH2OConsoleRedirectionClassGuid
+#[-end-151124-IB07220021-remove]#
+
+[FeaturePcd]
+  gChipsetPkgTokenSpaceGuid.PcdRuntimeFtpmDtpmSwitch
+#[-start-161201-IB11270170-remove]#
+##[-start-161007-IB11270165-add]#
+#  gInsydeTokenSpaceGuid.PcdH2OSdhcSupported
+##[-end-161007-IB11270165-add]#
+#[-end-161201-IB11270170-remove]#
+#[-start-160914-IB07400784-add]#
+  gInsydeTokenSpaceGuid.PcdSecureFlashSupported
+#[-end-160914-IB07400784-add]#
+#[-start-170124-IB07400837-add]#
+  gInsydeTokenSpaceGuid.PcdH2ORotateScreenSupported
+#[-end-170124-IB07400837-add]#
+#[-start-171002-IB07400914-add]#
+  gChipsetPkgTokenSpaceGuid.FtpmSupport
+#[-end-171002-IB07400914-add]#
+

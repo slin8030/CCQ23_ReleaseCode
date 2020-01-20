@@ -1,0 +1,48 @@
+## @file
+# H2O IPMI SEL Data library build description file for SMM phase.
+#
+#******************************************************************************
+#* Copyright (c) 2013 - 2014, Insyde Software Corporation. All Rights Reserved.
+#*
+#* You may not reproduce, distribute, publish, display, perform, modify, adapt,
+#* transmit, broadcast, present, recite, release, license or otherwise exploit
+#* any part of this publication in any form, by any means, without the prior
+#* written permission of Insyde Software Corporation.
+#*
+#******************************************************************************
+#
+
+[Defines]
+  INF_VERSION                    = 0x00010005
+  BASE_NAME                      = SmmIpmiSelDataLib2
+  FILE_GUID                      = 6AEE9B11-93BD-4F0D-B4BF-6CA77F451FB6
+  MODULE_TYPE                    = DXE_SMM_DRIVER
+  VERSION_STRING                 = 1.0
+  LIBRARY_CLASS                  = IpmiSelDataLib2|DXE_SMM_DRIVER
+
+#
+# The following information is for reference only and not required by the build tools.
+#
+#  VALID_ARCHITECTURES           = IA32 X64 IPF EBC
+#
+
+[Sources]
+  SmmIpmiSelDataLib2Null.c
+
+[Packages]
+  MdePkg/MdePkg.dec
+#[-start-171207-IB09330405-modify]#
+  SegFeaturePkg/SegFeaturePkg.dec
+#[-end-171207-IB09330405-modify]#
+
+[LibraryClasses]
+#[-start-171207-IB09330405-remove]#
+#  BaseLib
+#  DebugLib
+#  SmmServicesTableLib
+#[-end-171207-IB09330405-remove]#
+
+[Protocols]
+
+[Depex]
+

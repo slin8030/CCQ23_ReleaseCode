@@ -1,0 +1,122 @@
+## @file
+#  Component description file for DxeOemSvcKernelLib instance.
+#
+#******************************************************************************
+#* Copyright (c) 2015, Insyde Software Corporation. All Rights Reserved.
+#*
+#* You may not reproduce, distribute, publish, display, perform, modify, adapt,
+#* transmit, broadcast, present, recite, release, license or otherwise exploit
+#* any part of this publication in any form, by any means, without the prior
+#* written permission of Insyde Software Corporation.
+#*
+#******************************************************************************
+##@file
+#
+#@copyright
+# Copyright (c) 1999 - 2015 Intel Corporation. All rights reserved
+# This software and associated documentation (if any) is furnished
+# under a license and may only be used or copied in accordance
+# with the terms of the license. Except as permitted by the
+# license, no part of this software or documentation may be
+# reproduced, stored in a retrieval system, or transmitted in any
+# form or by any means without the express written consent of
+# Intel Corporation.
+# This file contains a 'Sample Driver' and is licensed as such
+# under the terms of your license agreement with Intel or your
+# vendor. This file may be modified by the user, subject to
+# the additional terms of the license agreement.
+#
+#@par Specification Reference:
+#
+##
+
+[Defines]
+  INF_VERSION                    = 0x00010005
+  BASE_NAME                      = PlatformGOPPolicy
+  FILE_GUID                      = 9737D7CA-D869-45e5-A5EF-75D9438688DE
+  MODULE_TYPE                    = DXE_DRIVER
+  VERSION_STRING                 = 1.0
+  ENTRY_POINT                    = PlatformGOPPolicyEntryPoint
+
+#
+# The following information is for reference only and not required by the build tools.
+#
+#  VALID_ARCHITECTURES           = IA32
+#
+
+[Sources.common]
+  PlatformGopPolicy.c
+
+[Packages]
+  MdePkg/MdePkg.dec
+  IntelFrameworkPkg/IntelFrameworkPkg.dec
+#  BxtPlatformPkg/PlatformPkg.dec
+  BroxtonSiPkg/BroxtonSiPkg.dec
+#[-start-160216-IB03090424-add]#
+  ClientSiliconPkg/ClientSiliconPkg.dec
+#[-end-160216-IB03090424-add]#
+#[-start-171225-IB07400935-add]#
+  $(PROJECT_PKG)/Project.dec
+#[-end-171225-IB07400935-add]#
+  $(CHIPSET_PKG)/$(CHIPSET_PKG).dec
+  InsydeModulePkg/InsydeModulePkg.dec
+      
+[LibraryClasses]
+  BaseLib
+  DebugLib
+  UefiDriverEntryPoint
+  UefiRuntimeServicesTableLib
+  IoLib
+  HobLib
+  PreSiliconLib
+#[-start-160803-IB07220122-remove]#
+#   PlatformConfigDataLib
+#[-end-160803-IB07220122-remove]#
+#[-start-160216-IB03090424-add]#
+  EcMiscLib
+#[-end-160216-IB03090424-add]#
+#[-start-151220-IB1127138-add]#
+  DxeOemSvcChipsetLibDefault
+#[-end-151220-IB1127138-add]#
+  DxeInsydeChipsetLib
+#[-start-160725-IB07400761-add]#
+!if $(VBT_HOOK_SUPPORT) == YES
+  PcdLib
+  MemoryAllocationLib
+!endif  
+#[-end-160725-IB07400761-add]#
+
+[Guids]
+#  gEfiNormalSetupGuid
+  gVbtInfoGuid
+  gPeiDefaultVbtGuid
+  gVbtMipiAuoGuid
+  gVbtMipiSharpGuid
+  gEfiPlatformInfoGuid
+#[-start-160803-IB07220122-add]#
+  gSystemConfigurationGuid
+#[-end-160803-IB07220122-add]#
+
+[Protocols]
+  gEfiCpuIo2ProtocolGuid 
+  gEfiFirmwareVolume2ProtocolGuid
+  gPlatformGOPPolicyGuid
+
+[Pcd]
+#[-start-160725-IB07400761-add]#
+  gChipsetPkgTokenSpaceGuid.PcdSetupConfigSize
+#[-end-160725-IB07400761-add]#
+#[-start-161205-IB07400822-add]#
+#[-start-170111-IB07400832-remove]#
+#  gChipsetPkgTokenSpaceGuid.PcdKscSupport
+#[-end-170111-IB07400832-remove]#
+#[-end-161205-IB07400822-add]#
+
+[Depex]
+  gEfiCpuIo2ProtocolGuid AND gEfiVariableArchProtocolGuid
+#[-start-160630-IB07400750-add]#
+!if $(LEGACY_BOOT_ENABLE) == YES
+  AND gLegacyFreeGuid
+!endif
+#[-end-160630-IB07400750-add]#
+

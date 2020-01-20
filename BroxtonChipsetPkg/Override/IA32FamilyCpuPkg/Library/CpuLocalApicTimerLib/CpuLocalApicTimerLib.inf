@@ -1,0 +1,43 @@
+## @file
+#  Component description file for CpuLocalApicTimerLib Module
+#
+#******************************************************************************
+#* Copyright (c) 2014, Insyde Software Corp. All Rights Reserved.
+#*
+#* You may not reproduce, distribute, publish, display, perform, modify, adapt,
+#* transmit, broadcast, present, recite, release, license or otherwise exploit
+#* any part of this publication in any form, by any means, without the prior
+#* written permission of Insyde Software Corporation.
+#*
+#******************************************************************************
+
+[Defines]
+  INF_VERSION                    = 0x00010005
+  BASE_NAME                      = CpuLocalApicTimerLib
+  FILE_GUID                      = cceaaf66-aa18-40b1-bfda-e826bc626ddd
+  MODULE_TYPE                    = BASE
+  VERSION_STRING                 = 1.0
+  LIBRARY_CLASS                  = TimerLib|BASE DXE_CORE DXE_DRIVER PEIM PEI_CORE SEC UEFI_APPLICATION UEFI_DRIVER 
+
+#
+# The following information is for reference only and not required by the build tools.
+#
+#  VALID_ARCHITECTURES           = IA32 X64
+#
+
+[Sources]
+  CpuLocalApicTimerLib.c
+
+[Packages]
+  MdePkg/MdePkg.dec
+  UefiCpuPkg/UefiCpuPkg.dec
+  IA32FamilyCpuPkg/IA32FamilyCpuPkg.dec
+  $(PLATFORM_RC_PACKAGE)/$(PLATFORM_RC_PACKAGE).dec
+
+[LibraryClasses]
+  PcdLib
+  DebugLib
+  IoLib
+  BaseLib
+  LocalApicLib
+

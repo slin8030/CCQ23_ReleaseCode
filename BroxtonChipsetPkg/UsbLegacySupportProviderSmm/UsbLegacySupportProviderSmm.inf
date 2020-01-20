@@ -1,0 +1,74 @@
+## @file
+#  Component description file for UsbLegacyControl module
+#
+#******************************************************************************
+#* Copyright (c) 2014, Insyde Software Corp. All Rights Reserved.
+#*
+#* You may not reproduce, distribute, publish, display, perform, modify, adapt,
+#* transmit, broadcast, present, recite, release, license or otherwise exploit
+#* any part of this publication in any form, by any means, without the prior
+#* written permission of Insyde Software Corporation.
+#*
+#******************************************************************************
+
+[Defines]
+  INF_VERSION                    = 0x00010005
+  BASE_NAME                      = UsbLegacySupportProviderSmm
+  MODULE_TYPE                    = COMBINED_SMM_DXE
+  FILE_GUID                      = 7e937040-a938-11e1-b0c2-b870f4fd9ca5
+  PI_SPECIFICATION_VERSION       = 0x0001000A
+  VERSION_STRING                 = 1.0
+  ENTRY_POINT                    = UsbLegacySupportProviderDriverEntryPoint
+  
+[Sources]
+  UsbLegacySupportProvider.c
+  ComponentName.c
+  
+[Packages]
+  MdePkg/MdePkg.dec
+  IntelFrameworkPkg/IntelFrameworkPkg.dec
+  $(PLATFORM_RC_PACKAGE)/$(PLATFORM_RC_PACKAGE).dec
+  InsydeModulePkg/InsydeModulePkg.dec
+  $(CHIPSET_PKG)/$(CHIPSET_PKG).dec
+  
+[LibraryClasses]
+  UefiDriverEntryPoint
+  UefiBootServicesTableLib
+  UefiRuntimeServicesTableLib
+  SmmServicesTableLib
+  BaseMemoryLib
+  BaseLib
+  DebugLib
+  UefiLib
+  IoLib
+  
+[Guids]
+  gEfiEventLegacyBootGuid
+  gSystemConfigurationGuid
+
+[Protocols]  
+  gEfiUsbCoreProtocolGuid
+  gEfiSmmPeriodicTimerDispatch2ProtocolGuid
+  gEfiSetupUtilityProtocolGuid
+  gUsbLegacySupportProviderProtocolGuid
+  gEfiSmmCpuProtocolGuid
+  gEfiSmmSwDispatch2ProtocolGuid
+  gAcpiEnableCallbackStartProtocolGuid
+
+[Pcd]  
+  gEfiMdePkgTokenSpaceGuid.PcdPciExpressBaseAddress
+  gInsydeTokenSpaceGuid.PcdSoftwareSmiPort
+
+[Depex]
+  <DXE_DEPEX>
+  gEfiLegacyBiosProtocolGuid AND
+  gEfiSetupUtilityProtocolGuid AND  
+  gEfiUsbCoreProtocolGuid
+  
+  <SMM_DEPEX>
+  gEfiLegacyBiosProtocolGuid AND
+  gEfiUsbCoreProtocolGuid AND 
+  gEfiSmmSwDispatch2ProtocolGuid AND
+  gEfiSmmPeriodicTimerDispatch2ProtocolGuid AND
+  gUsbLegacySupportProviderProtocolGuid
+  

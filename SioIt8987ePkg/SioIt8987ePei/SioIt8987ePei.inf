@@ -1,0 +1,66 @@
+## @file
+#
+#  SIO Package Declaration file
+#
+#******************************************************************************
+#* Copyright (c) 2014-2015, Insyde Software Corporation. All Rights Reserved.
+#*
+#* You may not reproduce, distribute, publish, display, perform, modify, adapt,
+#* transmit, broadcast, present, recite, release, license or otherwise exploit
+#* any part of this publication in any form, by any means, without the prior
+#* written permission of Insyde Software Corporation.
+#*
+#******************************************************************************
+#
+##
+
+[Defines]
+  INF_VERSION                    = 0x00010005
+  BASE_NAME                      = SioIt8987ePei
+  FILE_GUID                      = B7A7BEFC-5210-4965-A902-E03AF7393935
+  MODULE_TYPE                    = PEIM
+  VERSION_STRING                 = 1.0
+
+  ENTRY_POINT                    = SioInitPeim
+
+[sources]
+  SioMainPei.c
+  SioInitPei.c
+  SioInitPei.h
+  ProgramExtensiveDevicePei.c
+
+[Protocols]
+
+[Packages]
+  MdePkg/MdePkg.dec
+  MdeModulePkg/MdeModulePkg.dec
+  SioIt8987ePkg/SioIt8987ePkg.dec
+  InsydeModulePkg/InsydeModulePkg.dec
+
+[Guids]
+  gSioIt8987eSetup00FormSetGuid
+
+[LibraryClasses]
+  IoLib
+  SioLib
+  DebugLib
+  PostCodeLib
+  BaseMemoryLib
+  PeimEntryPoint
+  IoDecodeLib
+
+[Ppis]
+  gPeiSioInitializedPpiGuid
+  gEfiPeiReadOnlyVariable2PpiGuid
+
+
+[FixedPcd]
+
+[Pcd]
+  gSioGuid.PcdSioIt8987eCfg
+  gSioGuid.PcdSioIt8987eSetupStr
+  gSioGuid.PcdSioIt8987eExtensiveCfg
+  gSioGuid.PcdSioIt8987ePeiCustomizeSettingTable
+
+[Depex]
+  gPcdPpiGuid

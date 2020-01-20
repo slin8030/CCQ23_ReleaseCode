@@ -1,0 +1,63 @@
+## @file
+#  Component description file for HstiDxe driver.
+#
+#******************************************************************************
+#* Copyright (c) 2015, Insyde Software Corp. All Rights Reserved.
+#*
+#* You may not reproduce, distribute, publish, display, perform, modify, adapt,
+#* transmit, broadcast, present, recite, release, license or otherwise exploit
+#* any part of this publication in any form, by any means, without the prior
+#* written permission of Insyde Software Corporation.
+#*
+#******************************************************************************
+
+[Defines]
+  INF_VERSION                    = 0x00010005
+  BASE_NAME                      = HstiDxe
+  FILE_GUID                      = 3D2F8940-A850-4543-B294-9B0BD0E750C7
+  MODULE_TYPE                    = DXE_DRIVER
+  VERSION_STRING                 = 1.0
+  ENTRY_POINT                    = HstiEntryPoint
+
+[Sources]
+  HstiDxe.h
+  HstiDxe.c
+
+[Packages]
+  MdePkg/MdePkg.dec
+  MdeModulePkg/MdeModulePkg.dec
+  InsydeModulePkg/InsydeModulePkg.dec
+  IntelFrameworkPkg/IntelFrameworkPkg.dec
+
+[LibraryClasses]
+  UefiDriverEntryPoint
+  UefiBootServicesTableLib
+  UefiRuntimeServicesTableLib
+  MemoryAllocationLib
+  BaseMemoryLib
+  BaseLib
+  DxeServicesTableLib
+  DebugLib
+  HstiLib
+  PcdLib
+
+[Guids]
+  gAdapterInfoPlatformSecurityGuid
+  gEfiGlobalVariableGuid
+
+[Protocols]
+  gEfiAdapterInformationProtocolGuid
+  gEfiHashProtocolGuid
+  gCryptoServicesProtocolGuid
+  gEfiLegacyBiosProtocolGuid
+
+[Pcd]
+  gInsydeTokenSpaceGuid.PcdNoExternalDmaSupported
+  gInsydeTokenSpaceGuid.PcdH2OSecureBootSupported
+  gInsydeTokenSpaceGuid.PcdH2OCapsuleUpdateSupported
+  gInsydeTokenSpaceGuid.PcdUefiCapsuleUpdateSupported
+  gInsydeTokenSpaceGuid.PcdSecureFlashSupported
+
+[Depex]
+  TRUE
+

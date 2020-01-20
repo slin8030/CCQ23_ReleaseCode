@@ -1,0 +1,46 @@
+## @file
+#  INF file for SD/MMC Devices Driver module.
+#
+#******************************************************************************
+#* Copyright (c) 2013 - 2017, Insyde Software Corp. All Rights Reserved.
+#*
+#* You may not reproduce, distribute, publish, display, perform, modify, adapt,
+#* transmit, broadcast, present, recite, release, license or otherwise exploit
+#* any part of this publication in any form, by any means, without the prior
+#* written permission of Insyde Software Corporation.
+#*
+#******************************************************************************
+
+[Defines]
+  INF_VERSION          = 0x00010005
+  BASE_NAME            = SdMmcDevice
+  FILE_GUID            = 86EDAAE5-073C-4c89-B949-8984AC8A55F3
+  MODULE_TYPE          = COMBINED_SMM_DXE  
+  BINARY_VERSION       = 02.15.03.0123.00
+[Binaries.Ia32]
+  PE32|Ia32/SdMmcDevice.efi|*
+
+[Binaries.X64]
+  PE32|X64/SdMmcDevice.efi|*
+  
+[Binaries.Arm]
+  PE32|Arm/SdMmcDevice.efi|*
+  
+[Binaries.Aarch64]
+  PE32|Aarch64/SdMmcDevice.efi|*
+
+[Packages]
+  MdePkg/MdePkg.dec
+  MdeModulePkg/MdeModulePkg.dec
+  IntelFrameworkPkg/IntelFrameworkPkg.dec
+  InsydeModulePkg/InsydeModulePkg.dec
+
+[Pcd]
+  gInsydeTokenSpaceGuid.PcdH2OSdhcEmmcHs200Supported
+  gInsydeTokenSpaceGuid.PcdH2OSdhcEmmcPartitionEnabled
+
+[Depex]
+  <DXE_DEPEX>
+    TRUE
+  <SMM_DEPEX>
+    gEfiSmmBase2ProtocolGuid

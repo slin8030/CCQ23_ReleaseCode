@@ -1,0 +1,141 @@
+## @file
+#  Implement the Driver of SmmChipsetSvc.
+#  
+#  ***************************************************************************
+#  * Copyright (c) 2014, Insyde Software Corp. All Rights Reserved.
+#  *
+#  * You may not reproduce, distribute, publish, display, perform, modify, adapt,
+#  * transmit, broadcast, present, recite, release, license or otherwise exploit
+#  * any part of this publication in any form, by any means, without the prior
+#  * written permission of Insyde Software Corporation.
+#  *
+#  ******************************************************************************
+#  
+##
+
+[Defines]
+  INF_VERSION               = 0x00010005
+  BASE_NAME                 = ChipsetSvcSmm
+  FILE_GUID                 = D359DE86-0A1B-47bc-95D2-1D1F8FFF0AD8
+  MODULE_TYPE               = DXE_SMM_DRIVER
+  PI_SPECIFICATION_VERSION  = 0x0001000A
+  VERSION_STRING            = 1.0
+  ENTRY_POINT               = ChipsetSvcSmmEntryPoint
+
+[Packages]
+  MdePkg/MdePkg.dec
+  MdeModulePkg/MdeModulePkg.dec
+  $(PLATFORM_RC_PACKAGE)/$(PLATFORM_RC_PACKAGE).dec
+  $(CHIPSET_PKG)/$(CHIPSET_PKG).dec
+  InsydeModulePkg/InsydeModulePkg.dec
+  InsydeOemServicesPkg/InsydeOemServicesPkg.dec
+
+[Sources]
+  ChipsetSvcSmm.c
+  ComponentName.c
+  ComponentName.h
+  ResetSystem.c
+  CsSvcIhisiFbts.c
+  CsSvcIhisiFets.c
+  CsSvcIhisiOemExtraDataCommunication.c
+
+  
+[LibraryClasses]
+  UefiDriverEntryPoint
+  SmmServicesTableLib
+  MemoryAllocationLib
+  BaseMemoryLib
+  BaseLib
+  DebugLib
+  PcdLib
+  IoLib
+  HobLib
+  BaseOemSvcKernelLibDefault
+#[-start-151224-IB07220029-add]#
+  CmosLib
+#[-end-151224-IB07220029-add]#
+#[-start-151229-IB06740454-add]#
+  FlashRegionLib
+#[-end-151229-IB06740454-add]#
+#[-start-160824-IB07220130-add]#
+  VariableLib
+#[-end-160824-IB07220130-add]#
+#[-start-161012-IB10860211-add]#
+  UefiBootServicesTableLib
+#[-end-161012-IB10860211-add]#
+  DxeInsydeChipsetLib
+#[-start-160827-IB07400773-add]#
+  HeciMsgLib
+#[-end-160827-IB07400773-add]#
+
+[Protocols]
+  gEfiDriverSupportedEfiVersionProtocolGuid
+  gEfiComponentName2ProtocolGuid
+  gEfiComponentNameProtocolGuid
+  gH2OSmmChipsetServicesProtocolGuid
+  gEfiGlobalNvsAreaProtocolGuid
+  gEfiSmmFwBlockServiceProtocolGuid
+  gH2OSmmChipsetServicesProtocolGuid
+  gEfiSmmVariableProtocolGuid
+  gH2OIhisiProtocolGuid  
+#[-start-161012-IB10860211-add]#
+  gEfiAtaPassThruProtocolGuid
+#[-end-161012-IB10860211-add]#
+#[-start-161026-IB07400805-add]#
+  gEfiGlobalNvsAreaProtocolGuid
+#[-end-161026-IB07400805-add]#
+
+[Guids]
+  gSystemConfigurationGuid
+#[-start-151229-IB06740454-add]#
+  gH2OFlashMapRegionMsdmGuid
+#[-end-151229-IB06740454-add]#
+#[-start-160824-IB07220130-add]#
+  gSecureFlashInfoGuid
+#[-end-160824-IB07220130-add]#
+
+[FeaturePcd]
+  gChipsetPkgTokenSpaceGuid.PcdMe5MbSupported
+  gChipsetPkgTokenSpaceGuid.PcdAntiTheftSupported
+  gChipsetPkgTokenSpaceGuid.PcdEcSharedFlashSupport
+  gChipsetPkgTokenSpaceGuid.PcdEcIdlePerWriteBlock
+
+[Pcd]
+  gEfiMdePkgTokenSpaceGuid.PcdPciExpressBaseAddress
+  gChipsetPkgTokenSpaceGuid.PcdSetupConfigSize
+  gInsydeTokenSpaceGuid.PcdFlashFvMainBase
+  gInsydeTokenSpaceGuid.PcdFlashFvMainSize
+  gInsydeTokenSpaceGuid.PcdFlashFvRecoveryBase
+  gInsydeTokenSpaceGuid.PcdFlashFvRecoverySize
+  gChipsetPkgTokenSpaceGuid.PcdFlashFvRecovery2Base
+  gChipsetPkgTokenSpaceGuid.PcdFlashFvRecovery2Size
+  gInsydeTokenSpaceGuid.PcdFlashNvStorageMsdmDataBase
+  gInsydeTokenSpaceGuid.PcdFlashNvStorageMsdmDataSize
+  gInsydeTokenSpaceGuid.PcdFlashNvStorageMicrocodeBase
+  gInsydeTokenSpaceGuid.PcdFlashNvStorageMicrocodeSize
+  gEfiMdeModulePkgTokenSpaceGuid.PcdFlashNvStorageVariableSize
+  gEfiMdeModulePkgTokenSpaceGuid.PcdFlashNvStorageVariableBase
+  gEfiMdeModulePkgTokenSpaceGuid.PcdFlashNvStorageFtwWorkingBase
+  gEfiMdeModulePkgTokenSpaceGuid.PcdFlashNvStorageFtwWorkingSize
+  gEfiMdeModulePkgTokenSpaceGuid.PcdFlashNvStorageFtwSpareBase
+  gEfiMdeModulePkgTokenSpaceGuid.PcdFlashNvStorageFtwSpareSize
+  gEfiBxtTokenSpaceGuid.PcdScAcpiIoPortBaseAddress
+#[-start-160624-IB10860203-add]#
+  gInsydeTokenSpaceGuid.PcdSecureFlashSupported
+#[-start-160624-IB10860203-add]#
+#[-start-160712-IB07400755-add]#
+#[-start-160816-IB07400771-modify]#
+  gEfiBxtTokenSpaceGuid.PcdPmcIpc1BaseAddress0
+#[-end-160816-IB07400771-modify]#
+#[-end-160712-IB07400755-add]#
+#[-start-170214-IB07400840-add]#
+  gChipsetPkgTokenSpaceGuid.PcdFlashDeviceExpansionBase
+  gChipsetPkgTokenSpaceGuid.PcdFlashDeviceExpansionSize
+  gChipsetPkgTokenSpaceGuid.PcdFlashIfwiRegionBase
+  gChipsetPkgTokenSpaceGuid.PcdFlashIfwiRegionSize
+  gChipsetPkgTokenSpaceGuid.PcdFlashBootPartition2Base
+  gChipsetPkgTokenSpaceGuid.PcdFlashSpiRomSize
+#[-end-170214-IB07400840-add]#
+
+[Depex]
+  TRUE

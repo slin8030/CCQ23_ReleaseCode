@@ -1,0 +1,44 @@
+## @file
+#  Component description file for PEI OEM Services Chipset Lib instance.
+#
+#******************************************************************************
+#* Copyright (c) 2014 - 2015, Insyde Software Corporation. All Rights Reserved.
+#*
+#* You may not reproduce, distribute, publish, display, perform, modify, adapt,
+#* transmit, broadcast, present, recite, release, license or otherwise exploit
+#* any part of this publication in any form, by any means, without the prior
+#* written permission of Insyde Software Corporation.
+#*
+#******************************************************************************
+
+[Defines]
+  INF_VERSION                    = 0x00010005
+  BASE_NAME                      = PeiOemSvcChipsetLib
+  FILE_GUID                      = A79B5B30-8CF0-4dc5-A526-E99BCD91BDC6
+  MODULE_TYPE                    = PEIM
+  VERSION_STRING                 = 1.0
+  LIBRARY_CLASS                  = PeiOemSvcChipsetLib|PEI_CORE PEIM
+
+[Sources]
+  OemSvcModifyGpioSettingTable.c
+  OemSvcUpdateAzaliaPolicy.c
+  OemSvcGetBoardFabIds.c
+  OemSvcMxmDgpuPowerSequence.c
+  OemSvcUpdatePeiChvPlatformPolicy.c
+#[-start-151216-IB11270137-add]#
+  OemSvcUpdatePeiCpuPlatformPolicy.c
+  OemSvcUpdatePeiSiPlatformPolicy.c
+  OemSvcUpdateScPlatformPolicy.c
+  OemSvcUpdateSaPlatformPolicy.c
+#[-end-151216-IB11270137-add]#
+#[-start-160114-IB11270145-add]#
+  OemSvcUpdateSsidSvidPei.c
+#[-end-160114-IB11270145-add]#
+[Packages]
+  MdePkg/MdePkg.dec
+#[-start-151216-IB11270137-add]#
+  ClientSiliconPkg/ClientSiliconPkg.dec
+#[-end-151216-IB11270137-add]#
+  $(PLATFORM_RC_PACKAGE)/$(PLATFORM_RC_PACKAGE).dec
+  $(CHIPSET_PKG)/$(CHIPSET_PKG).dec
+  InsydeModulePkg/InsydeModulePkg.dec

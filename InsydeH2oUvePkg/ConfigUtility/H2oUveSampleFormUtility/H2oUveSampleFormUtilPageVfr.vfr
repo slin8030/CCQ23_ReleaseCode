@@ -1,0 +1,374 @@
+/** @file
+
+  H2oUve Sample Form utility DXE VFR implementation for Config page.
+
+;******************************************************************************
+;* Copyright (c) 2016, Insyde Software Corporation. All Rights Reserved.
+;*
+;* You may not reproduce, distribute, publish, display, perform, modify, adapt,
+;* transmit, broadcast, present, recite, release, license or otherwise exploit
+;* any part of this publication in any form, by any means, without the prior
+;* written permission of Insyde Software Corporation.
+;*
+;******************************************************************************
+*/
+
+#include "H2oUveSampleFormUtilSetupConfig.h"
+
+formset
+  guid      = H2OUVE_SAMPLE_FORM_GUID,
+  title     = STRING_TOKEN(STR_H2OUVE_SAMPLE_FORM_PAGE_FORMSET),
+  help      = STRING_TOKEN(STR_H2OUVE_SAMPLE_FORM_PAGE_FORMSET_HELP),
+  classguid = {PcdGetPtr (PcdH2oUveClassGuid)}, // LINK_SAMPLE_FORM_CLASS_GUID,
+
+
+  efivarstore H2OUVE_TEST_VAR,  attribute = 0x7, name = TestVar, guid = H2OUVE_SAMPLE_FORM_VARSTORE_GUID;
+
+  //
+  // Define a Buffer Storage (EFI_IFR_VARSTORE)
+  //
+  varstore H2OUVE_DEBUG_VAR,                              // This is the data structure type
+    varid = H2OUVE_SAMPLE_FORM_VARSTORE_ID,               // Optional VarStore ID
+    name  = H2oUveDebugVar,                                     // Define referenced name in vfr
+    guid  = H2OUVE_SAMPLE_FORM_VARSTORE_GUID;             // GUID of this buffer storage
+
+  defaultstore MyStandardDefault,
+    prompt      = STRING_TOKEN(STR_STANDARD_DEFAULT_PROMPT),
+    attribute   = 0x0000;                         // Default ID: 0000 standard default
+
+  defaultstore MyManufactureDefault,
+     prompt      = STRING_TOKEN(STR_MANUFACTURE_DEFAULT_PROMPT),
+     attribute   = 0x0001;
+
+  namevaluevarstore H2OUVE_SAMPLE_FORM_UTIL_NAME_VALUE_CONFIGURATION,
+    name = STRING_TOKEN(STR_NAME_VALUE_VAR_NAME0),
+    guid = H2OUVE_SAMPLE_FORM_VARSTORE_GUID;
+
+  namevaluevarstore PasswordNameValueVar,                      // Define storage reference name in vfr
+    varid = H2OUVE_SAMPLE_FORM_PASSWORD_VARSTORE_ID,           // Define Name value varstore ID
+    name = STRING_TOKEN(STR_PASSWORD_SAMPLE),                  // Define Name list of this storage, refer it by PasswordNameValueVar[0]
+    guid = H2OUVE_SAMPLE_FORM_VARSTORE_GUID;                   // GUID of this Name/Value storage
+
+  //
+  // ========Form H2OUVE_SAMPLE_FORM_PAGE==========
+  //
+  form
+    formid = VFR_FORMID_H2OUVE_SAMPLE_FORM_PAGE, title = STRING_TOKEN(STR_H2OUVE_SAMPLE_FORM_PAGE_FORMSET);
+
+    subtitle
+      text = STRING_TOKEN(STR_H2OUVE_SAMPLE_FORM_PAGE_FORMSET);
+    subtitle
+      text = STRING_TOKEN(STR_SAMPLEFORM_VERSION);
+
+    //
+    // Base item
+    //
+    time
+      varid = H2oUveDebugVar.Time,
+      prompt = STRING_TOKEN(STR_SAMPLE_TIME_PROMPT),
+      help   = STRING_TOKEN(STR_SAMPLE_TIME_HELP),
+      flags  = STORAGE_NORMAL,
+      default = 01:23:45,
+    endtime;
+
+    time
+      hour
+        varid       = Time2.Hour,
+        prompt      = STRING_TOKEN(STR_SAMPLE_TIME_PROMPT),
+        help        = STRING_TOKEN(STR_SAMPLE_TIME_HELP),
+        minimum     = 0,
+        maximum     = 23,
+        step        = 1,
+        default     = 0,
+
+      minute
+        varid       = Time2.Minute,
+        prompt      = STRING_TOKEN(STR_SAMPLE_TIME_PROMPT),
+        help        = STRING_TOKEN(STR_SAMPLE_TIME_HELP),
+        minimum     = 0,
+        maximum     = 59,
+        step        = 1,
+        default     = 0,
+
+      second
+        varid       = Time2.Second,
+        prompt      = STRING_TOKEN(STR_SAMPLE_TIME_PROMPT),
+        help        = STRING_TOKEN(STR_SAMPLE_TIME_HELP),
+        minimum     = 0,
+        maximum     = 59,
+        step        = 1,
+        default     = 0,
+    endtime;
+
+    date
+      year
+        varid       = Date.Year,
+        prompt      = STRING_TOKEN(STR_SAMPLE_DATE_PROMPT),
+        help        = STRING_TOKEN(STR_SAMPLE_DATE_HELP),
+        minimum     = 1990,
+        maximum     = 3000,
+        step        = 1,
+        default     = 2016,
+
+      month
+        varid       = Date.Month,
+        prompt      = STRING_TOKEN(STR_SAMPLE_DATE_PROMPT),
+        help        = STRING_TOKEN(STR_SAMPLE_DATE_HELP),
+        minimum     = 1,
+        maximum     = 12,
+        step        = 1,
+        default     = 7,
+
+      day
+        varid       = Date.Day,
+        prompt      = STRING_TOKEN(STR_SAMPLE_DATE_PROMPT),
+        help        = STRING_TOKEN(STR_SAMPLE_DATE_HELP),
+        minimum     = 1,
+        maximum     = 31,
+        step        = 1,
+        default     = 1,
+    enddate;
+
+
+
+
+    password
+      varid    = PasswordNameValueVar[0],
+      prompt   = STRING_TOKEN(STR_PASSWORD_SAMPLE),
+      help     = STRING_TOKEN(STR_SAMPLE_FORM_HELP),
+      flags    = INTERACTIVE,
+      key      = KEY_SAMPLE2,
+      minsize  = 2,
+      maxsize  = 8,
+      encoding = 1,
+    endpassword;
+
+    oneof
+      varid       = H2oUveDebugVar.Prompt0,
+      questionid  = QUESTIONID_SAMPLE1,
+      prompt      = STRING_TOKEN (STR_SAMPLE_FORM_STRING0),
+      help        = STRING_TOKEN (STR_SAMPLE_FORM_HELP),
+      option text = STRING_TOKEN (STR_DISABLED_TEXT), value = 1, flags = DEFAULT;
+      option text = STRING_TOKEN (STR_ENABLED_TEXT),  value = 0, flags = 0;
+    endoneof;
+
+    numeric
+      varid   = H2oUveDebugVar.Prompt1,
+      prompt  = STRING_TOKEN(STR_SAMPLE_FORM_STRING1),
+      help    = STRING_TOKEN(STR_SAMPLE_FORM_HELP),
+      flags   = INTERACTIVE,
+      minimum = 10,
+      maximum = 1024,
+      step    = 1,
+      default = 10,
+    endnumeric;
+
+    checkbox
+      varid      = H2oUveDebugVar.Prompt2,
+      questionid = QUESTIONID_SAMPLE2,
+      prompt     = STRING_TOKEN(STR_SAMPLE_FORM_STRING2),
+      help       = STRING_TOKEN(STR_SAMPLE_FORM_HELP),
+      flags      = INTERACTIVE,
+      default    = 1,
+    endcheckbox;
+
+    grayoutif
+      ideqval H2oUveDebugVar.Prompt0 == 0
+      AND
+      ideqvallist H2oUveDebugVar.Prompt1 == 10 9 8 7 6 5 4 3 2 1;
+      label LABEL_SAMPLE;
+    endif;
+
+    //
+    // Test default value syntax
+    //
+    suppressif NOT ideqval H2oUveDebugVar.Prompt0 == 1;
+      oneof varid = H2oUveDebugVar.Prompt3,
+        prompt  = STRING_TOKEN(STR_SAMPLE_FORM_STRING3),
+        help   = STRING_TOKEN(STR_SAMPLE_FORM_HELP),
+       default value = cond(ideqvallist H2oUveDebugVar.Prompt1 == 1 5 8 10
+                       ? 30:0),
+        option text = STRING_TOKEN(STR_OPTION_1_STRING), value = 0,  flags = RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_OPTION_2_STRING), value = 30, flags = DEFAULT | MANUFACTURING | RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_OPTION_3_STRING), value = 40, flags = RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_OPTION_4_STRING), value = 50, flags = RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_OPTION_5_STRING), value = 60, flags = RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_OPTION_6_STRING), value = 70, flags = RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_OPTION_7_STRING), value = 80, flags = RESET_REQUIRED;
+      endoneof;
+    endif;
+
+    numeric
+      varid   = H2oUveDebugVar.Prompt4,
+      prompt  = STRING_TOKEN(STR_SAMPLE_FORM_STRING4),
+      help    = STRING_TOKEN(STR_SAMPLE_FORM_HELP),
+      flags   = INTERACTIVE,
+      minimum = 20,
+      maximum = 1024,
+      step    = 3,
+      default value = cond(ideqvallist H2oUveDebugVar.Prompt1 == 1 5 8 10 ? 30:40),
+    endnumeric;
+
+    //
+    // Mix grayoutif and suppressif
+    //
+    grayoutif
+      ideqval H2oUveDebugVar.Prompt0 == 0
+       AND
+       ideqval H2oUveDebugVar.Prompt1 == 10
+       OR
+       ideqval H2oUveDebugVar.Prompt2 == 0;
+      suppressif
+       ideqval H2oUveDebugVar.Prompt0 == 1
+        AND
+        ideqval H2oUveDebugVar.Prompt1 == 0
+        OR
+        ideqval H2oUveDebugVar.Prompt2 == 0;
+        oneof
+          varid       = H2oUveDebugVar.Prompt5,
+          questionid  = KEY_SAMPLE3,
+          prompt      = STRING_TOKEN(STR_SAMPLE_FORM_STRING5),
+          help        = STRING_TOKEN(STR_SAMPLE_FORM_HELP),
+          option text = STRING_TOKEN(STR_DISABLED_TEXT),             value = 0x00, flags = INTERACTIVE;
+          option text = STRING_TOKEN(STR_ENABLED_TEXT),              value = 0x01, flags = DEFAULT | INTERACTIVE;
+        endoneof;
+      endif;
+    endif;
+
+
+    //
+    // Test the suppressif in option field
+    //
+    oneof
+      varid = H2oUveDebugVar.Prompt6,
+      prompt    = STRING_TOKEN(STR_SAMPLE_FORM_STRING6),
+      help      = STRING_TOKEN(STR_SAMPLE_FORM_HELP),
+      suppressif ideqvallist H2oUveDebugVar.Prompt1 == 0x01 0x02 0x03 0x04 0x05 0x06 0x07 0x08 0x09 0x0A;
+        option text = STRING_TOKEN(STR_OPTION_1_STRING),    value = 0,   flags = RESET_REQUIRED;
+      endif
+      suppressif ideqval H2oUveDebugVar.Prompt2 == 0;
+        option text = STRING_TOKEN(STR_OPTION_2_STRING),    value = 0x01, flags = RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_OPTION_3_STRING),    value = 0x03, flags = RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_OPTION_4_STRING),    value = 0x0B, flags = RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_OPTION_5_STRING),    value = 0x13, flags = DEFAULT | RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_OPTION_6_STRING),    value = 0x83, flags = RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_OPTION_7_STRING),    value = 0x8B, flags = RESET_REQUIRED;
+      endif
+    endoneof;
+
+    //
+    // Test the Operator Precedence
+    //
+    grayoutif
+      (ideqval H2oUveDebugVar.Prompt1 == 0   //  Prompt1 default = 10
+      OR
+      ideqval H2oUveDebugVar.Prompt2 == 0)   //  Prompt2 default = 1
+      AND
+      (ideqval H2oUveDebugVar.Prompt1 == 20  //  Prompt1 default = 10
+      OR
+      ideqval H2oUveDebugVar.Prompt0 == 1);  //  Prompt0 default = 1
+      oneof
+        varid       = H2oUveDebugVar.Prompt7,
+        prompt      = STRING_TOKEN(STR_SAMPLE_FORM_STRING7),
+        help        = STRING_TOKEN(STR_SAMPLE_FORM_HELP),
+        option text = STRING_TOKEN ( STR_DISABLED_TEXT ), value = 0, flags = 0;
+        option text = STRING_TOKEN ( STR_ENABLED_TEXT  ), value = 1, flags = DEFAULT;
+      endoneof;
+    endif;
+
+    //
+    // Test for the step
+    //
+    numeric
+      varid   = H2oUveDebugVar.Prompt8,
+      prompt  = STRING_TOKEN(STR_SAMPLE_FORM_STRING8),
+      help    = STRING_TOKEN(STR_SAMPLE_FORM_HELP),
+      flags   = INTERACTIVE,
+      minimum = 0,
+      maximum = 1024,
+      step    = 3,
+      default = 50,
+    endnumeric;
+
+    //
+    // Test without default
+    //
+    numeric
+      varid   = H2oUveDebugVar.Prompt9,
+      prompt  = STRING_TOKEN(STR_SAMPLE_FORM_STRING9),
+      help    = STRING_TOKEN(STR_SAMPLE_FORM_HELP),
+      flags   = INTERACTIVE,
+      minimum = 10,
+      maximum = 1024,
+      step    = 3,
+    endnumeric;
+
+    //
+    // Test default value syntax
+    //
+    checkbox
+      varid      = H2oUveDebugVar.Prompt10,
+      questionid = QUESTIONID_SAMPLE3,
+      prompt     = STRING_TOKEN(STR_SAMPLE_FORM_STRING10),
+      help       = STRING_TOKEN(STR_SAMPLE_FORM_HELP),
+      flags      = 0,
+      default value = 1,
+    endcheckbox;
+
+    numeric
+      varid   = H2oUveDebugVar.Prompt11,
+      prompt  = STRING_TOKEN(STR_SAMPLE_FORM_STRING11),
+      help    = STRING_TOKEN(STR_SAMPLE_FORM_HELP),
+      flags   = INTERACTIVE,
+      minimum = 15,
+      maximum = 1024,
+      step    = 1,
+      default value =20,
+    endnumeric;
+
+    oneof
+      varid       = H2oUveDebugVar.Prompt12,
+      prompt      = STRING_TOKEN(STR_SAMPLE_FORM_STRING12),
+      help        = STRING_TOKEN(STR_SAMPLE_FORM_HELP),
+      option text = STRING_TOKEN(STR_OPTION_1_STRING),    value = 0,   flags = RESET_REQUIRED;
+      option text = STRING_TOKEN(STR_OPTION_2_STRING),    value = 0x01, flags = DEFAULT | RESET_REQUIRED;
+      option text = STRING_TOKEN(STR_OPTION_3_STRING),    value = 0x03, flags = RESET_REQUIRED;
+      suppressif ideqval H2oUveDebugVar.Prompt1 >= 20;
+        option text = STRING_TOKEN(STR_OPTION_4_STRING),    value = 0x0B, flags = RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_OPTION_5_STRING),    value = 0x13, flags = RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_OPTION_6_STRING),    value = 0x83, flags = RESET_REQUIRED;
+        option text = STRING_TOKEN(STR_OPTION_7_STRING),    value = 0x8B, flags = RESET_REQUIRED;
+      endif
+    endoneof;
+
+    numeric
+      varid   = H2oUveDebugVar.Prompt13,
+      prompt  = STRING_TOKEN(STR_SAMPLE_FORM_STRING13),
+      help    = STRING_TOKEN(STR_SAMPLE_FORM_HELP),
+      flags   = RESET_REQUIRED,
+      minimum = 6,
+      maximum = 1024,
+      step    = 3,
+      default value = cond(ideqval H2oUveDebugVar.Prompt2 == 1 ? cond(ideqval H2oUveDebugVar.Prompt1 <= 20 ? cond(ideqval H2oUveDebugVar.Prompt0 == 0 ? 10:20):30) : cond(ideqval H2oUveDebugVar.Prompt1 > 20 ? 40:50)),
+    endnumeric;
+
+    //
+    // This Opcode is for F9 load default.
+    //
+    suppressif
+      TRUE;
+
+      numeric varid   = H2OUVE_SAMPLE_FORM_UTIL_NAME_VALUE_CONFIGURATION[0],     // This numeric take NameValueVar0 as storage
+        questionid  = KEY_LOAD_DEFAULT,
+        prompt  = STRING_TOKEN(STR_NAME_VALUE_VAR_NAME0),
+        help    = STRING_TOKEN(STR_NAME_VALUE_VAR_NAME0),
+        flags   = NUMERIC_SIZE_1 | INTERACTIVE,        // Size of this numeric is 1 byte
+        minimum = 0,
+        maximum = 0xff,
+        step    = 0,
+        default = 0,
+      endnumeric;
+    endif;
+  endform;// end of form VFR_FORMID_POST_MESSAGE_CONFIG_PAGE
+endformset;
+

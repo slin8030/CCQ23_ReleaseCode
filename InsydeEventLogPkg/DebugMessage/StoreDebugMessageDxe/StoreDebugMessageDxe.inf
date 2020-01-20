@@ -1,0 +1,90 @@
+#/** @file
+#
+#  Component description file for Store DEBUG Message DXE driver.
+#
+#;******************************************************************************
+#;* Copyright (c) 2014, Insyde Software Corporation. All Rights Reserved.
+#;*
+#;* You may not reproduce, distribute, publish, display, perform, modify, adapt,
+#;* transmit, broadcast, present, recite, release, license or otherwise exploit
+#;* any part of this publication in any form, by any means, without the prior
+#;* written permission of Insyde Software Corporation.
+#;*
+#;******************************************************************************
+#*/
+
+[Defines]
+  INF_VERSION                    = 0x00010005
+  BASE_NAME                      = StoreDebugMessageDxe
+  FILE_GUID                      = 444783FA-CA1E-4C44-9130-A1942CE6E64A
+  MODULE_TYPE                    = DXE_DRIVER
+  PI_SPECIFICATION_VERSION       = 0x0001000A
+  VERSION_STRING                 = 1.0
+  ENTRY_POINT                    = StoreDebugMessageDxeEntry
+
+[Sources]
+  StoreDebugMessageDxe.c
+  StoreDebugMessageDxe.h
+
+[Packages]
+  MdePkg/MdePkg.dec
+  $(INSYDE_EVENTLOG_PKG)/$(INSYDE_EVENTLOG_PKG).dec
+  $(CHIPSET_PKG)/$(CHIPSET_PKG).dec
+  InsydeModulePkg/InsydeModulePkg.dec
+#[-start-171207-IB08400539-remove]#
+#  IntelFrameworkPkg/IntelFrameworkPkg.dec
+#[-end-171207-IB08400539-remove]#
+  MdeModulePkg/MdeModulePkg.dec
+  
+[LibraryClasses]
+  BaseLib
+  UefiDriverEntryPoint
+  BaseMemoryLib
+  UefiBootServicesTableLib
+  UefiRuntimeServicesTableLib
+  HobLib
+  UefiLib
+  PrintLib
+#[-start-180503-IB08400586-add]#
+  VariableLib
+#[-end-180503-IB08400586-add]#
+  
+[Protocols]
+  gEfiVariableWriteArchProtocolGuid            # CONSUMED
+  gEfiRscHandlerProtocolGuid                   # CONSUMED
+#[-start-170413-IB08400444-add]#
+  gEfiSmmCommunicationProtocolGuid             # CONSUMED
+#[-end-170413-IB08400444-add]#
+
+[Guids]
+  gEfiEventExitBootServicesGuid                # CONSUMED
+  gEfiStatusCodeDataTypeDebugGuid              # CONSUMED
+  gH2ODebugMessageVariableGuid                 # PRODUCED
+  gEfiStatusCodeDataTypeStringGuid             # CONSUMED
+#[-start-170413-IB08400444-add]#
+  gH2ODebugMessageStatusCodeCommunicationGuid  # CONSUMED
+#[-end-170413-IB08400444-add]#
+
+[Pcd]
+#[-start-171212-IB08400542-modify]#
+  gH2OEventLogPkgTokenSpaceGuid.PcdH2OStoreDebugMsgSupported
+#[-start-180510-IB08400592-remove]#
+#  gH2OEventLogPkgTokenSpaceGuid.PcdH2OStoreDebugMsgSize
+#[-end-180510-IB08400592-remove]#
+  gH2OEventLogPkgTokenSpaceGuid.PcdH2OPeiStoreDebugMsgEntry
+  gH2OEventLogPkgTokenSpaceGuid.PcdH2OMaxStoreDebugMsgSize
+#[-start-180502-IB08400586-modify]#
+  gH2OEventLogPkgTokenSpaceGuid.PcdH2OStoreDebugMsgMemAddressPtr
+#[-end-180502-IB08400586-modify]#
+#[-end-171212-IB08400542-modify]#
+
+#[-start-180509-IB08400590-add]#
+  gH2OEventLogPkgTokenSpaceGuid.PcdH2OShowProgressCodeSerialMsgEnable
+  gH2OEventLogPkgTokenSpaceGuid.PcdH2OShowErrorCodeSerialMsgEnable
+  gH2OEventLogPkgTokenSpaceGuid.PcdH2OShowDebugCodeSerialMsgEnable
+  gH2OEventLogPkgTokenSpaceGuid.PcdH2OShowStatusCodeSerialMsgReady
+#[-end-180509-IB08400590-add]#
+  
+[Depex]
+  TRUE
+

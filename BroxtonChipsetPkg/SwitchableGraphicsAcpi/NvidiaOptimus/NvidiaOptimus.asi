@@ -1,0 +1,90 @@
+/** @file
+
+;******************************************************************************
+;* Copyright (c) 2013, Insyde Software Corp. All Rights Reserved.
+;*
+;* You may not reproduce, distribute, publish, display, perform, modify, adapt,
+;* transmit, broadcast, present, recite, release, license or otherwise exploit
+;* any part of this publication in any form, by any means, without the prior
+;* written permission of Insyde Software Corporation.
+;*
+;******************************************************************************
+*/
+
+#ifndef _NVIDIA_OPTIMUS_ASI_
+#define _NVIDIA_OPTIMUS_ASI_
+
+//
+// ASL code common define about device and bridge
+//
+#define DGPU_BRIDGE_SCOPE                     \_SB.PCI0.RP01
+#define DGPU_DEVICE                           PXSX
+#define DGPU_SCOPE                            DGPU_BRIDGE_SCOPE.DGPU_DEVICE
+#define IGPU_SCOPE                            \_SB.PCI0.GFX0
+#define EC_SCOPE                              \_SB.PCI0.LPCB.EC0
+
+//
+// nVIDIA GPS and Ventura feature usage define
+//
+#define CPU0_SCOPE                            \_PR.CPU0
+#define CPU1_SCOPE                            \_PR.CPU1
+#define CPU2_SCOPE                            \_PR.CPU2
+#define CPU3_SCOPE                            \_PR.CPU3
+#define CPU4_SCOPE                            \_PR.CPU4
+#define CPU5_SCOPE                            \_PR.CPU5
+#define CPU6_SCOPE                            \_PR.CPU6
+#define CPU7_SCOPE                            \_PR.CPU7
+
+//
+// ACPI define in dGPU SCOPE _DOD method
+//
+#define ACPI_ID_HDMI                          0x80087330
+
+//
+// nVIDIA return status code
+//
+#define STATUS_SUCCESS                        0x00000000 // Generic Success
+#define STATUS_ERROR_UNSPECIFIED              0x80000001 // Generic unspecified error code
+#define STATUS_ERROR_UNSUPPORTED              0x80000002 // Sub-Function not supported
+
+//
+// MXM Function define
+//
+#define MXM_FUNC_MXSS                         0x00
+#define MXM_FUNC_MXMI                         0x18
+#define MXM_FUNC_MXMS                         0x10
+
+//
+// nVIDIA Optimus feature related function define
+//
+#define NVOP_FUNC_SUPPORT                     0x00
+#define NVOP_FUNC_GETOBJBYTYPE                0x10
+#define NVOP_FUNC_DISPLAYSTATUS               0x05
+#define NVOP_FUNC_MDTL                        0x06
+#define NVOP_FUNC_OPTIMUSCAPS                 0x1A
+#define NVOP_FUNC_OPTIMUSFLAGS                0x1B
+
+//
+// nVIDIA GPS feature related function define
+//
+#define GPS_FUNC_SUPPORT                      0x00
+#define GPS_FUNC_GETCALLBACKS                 0x13
+#define GPS_FUNC_PSHARESTATUS                 0x20
+#define GPS_FUNC_GETPSS                       0x21
+#define GPS_FUNC_SETPPC                       0x22
+#define GPS_FUNC_GETPPC                       0x23
+#define GPS_FUNC_PSHAREPARAMS                 0x2A
+
+//
+// nVIDIA Optimus GC6 feature related function define
+//
+#define JT_REVISION_ID                        0x00000100
+#define JT_FUNC_SUPPORT                       0x00000000
+#define JT_FUNC_CAPS                          0x00000001
+#define JT_FUNC_POLICYSELECT                  0x00000002
+#define JT_FUNC_POWERCONTROL                  0x00000003
+#define JT_FUNC_PLATPOLICY                    0x00000004
+#define JT_FUNC_DISPLAYSTATUS                 0x00000005
+#define JT_FUNC_MDTL                          0x00000006
+
+#endif

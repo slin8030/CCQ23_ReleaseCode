@@ -1,0 +1,95 @@
+/** @file
+
+  H2O Event Log Config Manager DXE VFR implementation.
+
+;******************************************************************************
+;* Copyright (c) 2016, Insyde Software Corporation. All Rights Reserved.
+;*
+;* You may not reproduce, distribute, publish, display, perform, modify, adapt,
+;* transmit, broadcast, present, recite, release, license or otherwise exploit
+;* any part of this publication in any form, by any means, without the prior
+;* written permission of Insyde Software Corporation.
+;*
+;******************************************************************************
+*/
+
+#include "H2OEventLogConfigManagerSetupConfig.h"
+
+formset
+  guid      = H2O_EVENT_LOG_CONFIG_MANAGER_FORMSET_GUID,
+  title     = STRING_TOKEN(STR_H2O_EVENT_LOG_CONFIG_MANAGER_FORMSET),
+  help      = STRING_TOKEN(STR_H2O_EVENT_LOG_CONFIG_MANAGER_FORMSET_HELP),
+//[-start-160315-IB08400335-modify]//
+  classguid = {PcdGetPtr (PcdH2OEventLogManagerFormsetClassGuid)},
+//[-end-160315-IB08400335-modify]//
+  
+  //
+  // Form H2O_EVENT_LOG_CONFIG_MANAGER_FORMSET_GUID
+  //
+  form
+    formid = VFR_FORMID_H2O_EVENT_LOG_CONTROL_UTIL, title = STRING_TOKEN(STR_H2O_EVENT_LOG_CONFIG_MANAGER_FORMSET);
+
+    subtitle
+      text = STRING_TOKEN(STR_H2O_EVENT_LOG_CONFIG_MANAGER_FORMSET);
+
+    subtitle
+      text = STRING_TOKEN(STR_BLANK_STRING);
+
+    goto VFR_FORMID_SHOW_CONFIGURATION_PAGE,
+       prompt = STRING_TOKEN(STR_SHOW_CONFIGURATION_PAGE),
+       help   = STRING_TOKEN(STR_SHOW_CONFIGURATION_PAGE_HELP),
+       flags  = INTERACTIVE,
+       key    = KEY_SHOW_CONFIGURATION_PAGE;
+
+    goto VFR_FORMID_SHOW_EVENT_AND_MESSAGE_PAGE,
+       prompt = STRING_TOKEN(STR_SHOW_EVENT_AND_MESSAGE_PAGE),
+       help   = STRING_TOKEN(STR_SHOW_EVENT_AND_MESSAGE_PAGE_HELP),
+       flags  = INTERACTIVE,
+       key    = KEY_SHOW_EVENT_AND_MESSAGE_PAGE;
+    
+  endform;
+
+  //
+  // Form VFR_FORMID_SHOW_CONFIGURATION_PAGE
+  //
+  form
+    formid = VFR_FORMID_SHOW_CONFIGURATION_PAGE, title = STRING_TOKEN(STR_SHOW_CONFIGURATION_PAGE);
+
+    subtitle
+      text = STRING_TOKEN(STR_SHOW_CONFIGURATION_PAGE);
+
+    subtitle
+      text = STRING_TOKEN(STR_BLANK_STRING);
+
+    label CONFIGURATION_PAGE_LABEL;
+    label CONFIGURATION_PAGE_END_LABEL;
+
+    //
+    // For other Setup VFR, including this GUID as its classguid can be contained in this page.
+    //
+    link include = LINK_INCLUDE_H2O_EVENT_LOG_CONFIG_PAGE_CLASS_GUID,;
+  endform;
+
+  //
+  // Form VFR_FORMID_SHOW_EVENT_AND_MESSAGE_PAGE
+  //
+  form
+    formid = VFR_FORMID_SHOW_EVENT_AND_MESSAGE_PAGE, title = STRING_TOKEN(STR_SHOW_EVENT_AND_MESSAGE_PAGE);
+
+    subtitle
+      text = STRING_TOKEN(STR_SHOW_EVENT_AND_MESSAGE_PAGE);
+
+    subtitle
+      text = STRING_TOKEN(STR_BLANK_STRING);
+
+    label EVENT_AND_MESSAGE_PAGE_LABEL;
+    label EVENT_AND_MESSAGE_PAGE_END_LABEL;
+
+    //
+    // For other Setup VFR, including this GUID as its classguid can be contained in this page.
+    //
+    link include = LINK_INCLUDE_H2O_EVENT_LOG_EVENT_AND_MESSAGE_PAGE_CLASS_GUID,;
+  endform;
+  
+endformset;
+

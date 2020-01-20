@@ -1,0 +1,94 @@
+## @file
+# FSP DXE Module
+#
+# This driver will register two callbacks to call fsp's notifies.
+#
+#  Copyright (c) 2014 - 2016, Intel Corporation. All rights reserved.<BR>
+#
+#  This program and the accompanying materials
+#  are licensed and made available under the terms and conditions of the BSD License
+#  which accompanies this distribution. The full text of the license may be found at
+#  http://opensource.org/licenses/bsd-license.php.
+#  THE PROGRAM IS DISTRIBUTED UNDER THE BSD LICENSE ON AN "AS IS" BASIS,
+#  WITHOUT WARRANTIES OR REPRESENTATIONS OF ANY KIND, EITHER EXPRESS OR IMPLIED.
+#
+##
+
+[Defines]
+  INF_VERSION                    = 0x00010005
+  BASE_NAME                      = FspWrapperNotifyDxe
+  FILE_GUID                      = AD61999A-507E-47E6-BA28-79CC609FA1A4
+  MODULE_TYPE                    = DXE_DRIVER
+  VERSION_STRING                 = 1.0
+  ENTRY_POINT                    = FspWrapperNotifyDxeEntryPoint
+
+#
+# The following information is for reference only and not required by the build tools.
+#
+#  VALID_ARCHITECTURES           = IA32 X64
+#
+
+[Sources]
+  FspWrapperNotifyDxe.c
+  LoadBelow4G.c
+
+[Packages]
+  MdePkg/MdePkg.dec
+#[-start-161123-IB07250310-modify]#
+  $(CHIPSET_PKG)/Override/IntelFsp2WrapperPkg/IntelFsp2WrapperPkg.dec #override
+#  ClientCommonPkg/ClientCommonPkg.dec # ROYAL_PARK_OVERRIDE: RoyalParkOverrideContent - RPCO-0045
+  IntelFsp2Pkg/IntelFsp2Pkg.dec
+  IntelFsp2WrapperPkg/IntelFsp2WrapperPkg.dec
+#  Platform/AplPlatSamplePkg/PlatformPkg.dec
+#[-end-161123-IB07250310-modify]#
+
+[LibraryClasses]
+  UefiDriverEntryPoint
+  UefiBootServicesTableLib
+  DebugLib
+  BaseMemoryLib
+  UefiLib
+  FspWrapperApiLib
+  FspWrapperPlatformResetLib
+  PeCoffLib
+  CacheMaintenanceLib
+  DxeServicesLib
+ #
+ # ROYAL_PARK_OVERRIDE: RoyalParkOverrideBegin - RPPO-APL-0002
+ #
+  PerformanceLib
+  HobLib
+  ReportStatusCodeLib
+ #
+ # ROYAL_PARK_OVERRIDE: RoyalParkOverrideEnd
+ #
+
+[Protocols]
+  gEfiPciEnumerationCompleteProtocolGuid            ## CONSUMES
+ #
+ # ROYAL_PARK_OVERRIDE: RoyalParkOverrideBegin - RPPO-APL-0002
+ #
+  gAddPerfRecordProtocolGuid                        ## CONSUMES
+ #
+ # ROYAL_PARK_OVERRIDE: RoyalParkOverrideEnd
+ #
+
+[Guids]
+  gEfiEventExitBootServicesGuid ## CONSUMES
+ #
+ # ROYAL_PARK_OVERRIDE: RoyalParkOverrideBegin - RPPO-APL-0002
+ #
+  gFspApiPerformanceGuid        ## CONSUMES
+  gFspHobGuid                   ## CONSUMES
+  gFspPerformanceDataGuid       ## CONSUMES
+ #
+ # ROYAL_PARK_OVERRIDE: RoyalParkOverrideEnd
+ #
+[Pcd]
+  gIntelFsp2WrapperTokenSpaceGuid.PcdFlashFvFspBase       ## CONSUMES
+  gIntelFsp2WrapperTokenSpaceGuid.PcdFlashFvSecondFspBase ## CONSUMES
+  gIntelFsp2WrapperTokenSpaceGuid.PcdFlashFvFspSize       ## CONSUMES
+  gIntelFsp2WrapperTokenSpaceGuid.PcdFspsBaseAddress      ## CONSUMES
+
+[Depex]
+  TRUE

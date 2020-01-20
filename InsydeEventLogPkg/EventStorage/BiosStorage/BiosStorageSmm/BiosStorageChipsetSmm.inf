@@ -1,0 +1,61 @@
+#/** @file
+#
+#  Component description file for BiosStorageChipset SMM driver.
+#
+#;******************************************************************************
+#;* Copyright (c) 2016, Insyde Software Corporation. All Rights Reserved.
+#;*
+#;* You may not reproduce, distribute, publish, display, perform, modify, adapt,
+#;* transmit, broadcast, present, recite, release, license or otherwise exploit
+#;* any part of this publication in any form, by any means, without the prior
+#;* written permission of Insyde Software Corporation.
+#;*
+#;******************************************************************************
+#*/
+
+[Defines]
+  INF_VERSION                    = 0x00010005
+  BASE_NAME                      = BiosStorageChipsetSmm
+  FILE_GUID                      = 26942B3A-B873-49FF-A36D-E76D11F0C1FF
+  MODULE_TYPE                    = DXE_SMM_DRIVER
+  PI_SPECIFICATION_VERSION       = 0x0001000A
+  VERSION_STRING                 = 1.0
+  ENTRY_POINT                    = BiosStorageChipsetSmmEntryPoint
+  
+[Sources]
+  BiosStorageChipsetSmm.c
+
+[Packages]
+  MdePkg/MdePkg.dec
+  $(INSYDE_EVENTLOG_PKG)/$(INSYDE_EVENTLOG_PKG).dec
+  InsydeModulePkg/InsydeModulePkg.dec
+  
+[LibraryClasses]
+  BaseLib
+  UefiDriverEntryPoint
+  BaseMemoryLib
+  SmmServicesTableLib
+  DebugLib
+  MemoryAllocationLib
+  VariableLib
+  
+[Protocols]
+  gEfiSmmBase2ProtocolGuid                     # CONSUMED
+#[-start-171212-IB08400542-modify]#
+  gH2OBiosSmmEventLogProtocolGuid              # CONSUMED
+#[-end-171212-IB08400542-modify]#
+  gH2OSmmBiosEventLogUseVariableProtocolGuid   # CONSUMED
+  gH2OSmmEventStorageProtocolGuid              # PRODUCED
+
+[FeaturePcd]  
+  gH2OEventLogPkgTokenSpaceGuid.PcdH2OBiosEventStorageUseVariableStorageSupported
+
+[Guids]
+  gH2OBiosStorageVariableGuid
+
+[Depex]
+#[-start-171212-IB08400542-modify]#
+  gEfiSmmBase2ProtocolGuid AND
+  gH2OBiosSmmEventLogProtocolGuid OR
+  gH2OSmmBiosEventLogUseVariableProtocolGuid
+#[-end-171212-IB08400542-modify]#

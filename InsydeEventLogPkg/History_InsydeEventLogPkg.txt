@@ -1,0 +1,985 @@
+#;*************************************************************************************************
+#;* Copyright (c) 2014 - 2016, Insyde Software Corporation. All Rights Reserved.
+#;*
+#;* You may not reproduce, distribute, publish, display, perform, modify, adapt,
+#;* transmit, broadcast, present, recite, release, license or otherwise exploit
+#;* any part of this publication in any form, by any means, without the prior
+#;* written permission of Insyde Software Corporation.
+#;*
+#;*************************************************************************************************
+#; Revision History: 
+#; 
+#; Label#: 05.32.28
+#; Status: Tag version
+#; 
+#; Tag#: 05.32.28
+#; Issue#: IB08400620
+#; Severity: Medium
+#; Category: Status Code
+#; Symptom: Fix the coding issue for protocol notification.
+#; RootCause: Code enhancement
+#; Description: Code enhancement.
+#; Solution: Code enhancement.
+#; SolutionDependency: None.
+#; RelatedFiles:
+#; Modified:
+#;   1. DebugMessage\StoreDebugMessageDxe\StoreDebugMessageDxe.c
+#;   2. PostMessage\PostMessageDxe\PostMessageDxe.c
+#; 
+#; Tag#: 05.32.28
+#; Issue#: IB08400617
+#; Severity: Medium
+#; Category: Code analysis
+#; Symptom: Fix the issues from VS2017 code analysis.
+#; RootCause: Code enhancement
+#; Description: Code enhancement.
+#; Solution: Code enhancement.
+#; SolutionDependency: None.
+#; RelatedFiles:
+#; Modified:
+#;   1. BmcSelStringTranslationDxe\BmcSelStringTranslation.c
+#;   2. ConfigUtility\BiosEventLogConfigUtilDxe\BiosEventLogConfigUtil.c
+#;   3. ConfigUtility\BiosEventLogConfigUtilDxe\BiosEventLogConfigUtil.h
+#;   4. ConfigUtility\DebugMessageConfigUtilDxe\DebugMessageConfigUtil.c
+#;   5. ConfigUtility\DebugMessageConfigUtilDxe\DebugMessageConfigUtil.h
+#;   6. ConfigUtility\PostMessageConfigUtilDxe\PostMessageConfigUtil.c
+#;   7. ConfigUtility\SetupChangeConfigUtilDxe\SetupChangeConfigUtil.h
+#;   8. DebugMessage\StoreDebugMessageDxe\StoreDebugMessageDxe.c
+#;   9. DebugMessage\StoreDebugMessagePei\StoreDebugMessagePei.c
+#;   10. EventLog\EventLogPei\EventLogPei.c
+#;   11. EventLogPostDisplayDxe\EventLogPostDisplay.c
+#;   12. EventLogPostDisplayDxe\EventLogPostDisplay.h
+#;   13. EventLogPostDisplayDxe\EventLogPostDisplayCommonFunc.c
+#;   14. EventStorage\BiosStorage\BiosStorageDxe\BiosStorageChipsetDxe.c
+#;   15. EventStorage\BiosStorage\BiosStorageDxe\BiosStorageChipsetDxe.h
+#;   16. EventStorage\BiosStorage\BiosStorageDxe\BiosStorageKernelDxe.c
+#;   17. EventStorage\BiosStorage\BiosStorageSmm\BiosStorageKernelSmm.c
+#;   18. EventStorage\BmcSelStorage\BmcSelEventStorageDxe\BmcSelEventStorageDxe.c
+#;   19. EventStorage\BmcSelStorage\BmcSelEventStorageDxe\BmcSelEventStorageDxe.h
+#;   20. EventStorage\MemoryStorage\MemoryStorageDxe\MemoryStorageChipsetDxe.c
+#;   21. EventStorage\MemoryStorage\MemoryStorageDxe\MemoryStorageKernelDxe.c
+#;   22. EventStorage\MemoryStorage\MemoryStorageDxe\MemoryStorageKernelDxe.inf
+#;   23. Include\Protocol\EventLog.h
+#;   24. PostMessage\PostMessageDxe\PostMessageDxe.c
+#;   25. PostMessage\PostMessageDxe\PostMessageDxe.h
+#;   26. PostMessage\PostMessageDxe\PostMessageDxe.inf
+#;   27. PostMessage\PostMessagePei\PostMessagePei.c
+#;   28. StatusCodeHandler\Pei\H2OSerialStatusCodeWorker.c
+#; 
+#;------------------------------------------------------------------------------
+#; Label#: 05.32.24
+#; Status: Tag version
+#; 
+#;------------------------------------------------------------------------------
+#; Label#: 05.32.20
+#; Status: Tag version
+#; 
+#; Tag#: 05.32.20
+#; Issue#: IB08400600
+#; Severity: Medium
+#; Category: Setup
+#; Symptom: Build failure for Setup VFR by PcdGetPtr().
+#; RootCause: Need change PCD type to PcdsFixedAtBuild type for new VfrCompiler change.
+#; Description: Code enhancement.
+#; Solution: Change PCD type for the PCD which is used by PcdGetPtr() in VFR.
+#; SolutionDependency: None.
+#; RelatedFiles:
+#; Modified:
+#;   1. InsydeEventLogPkg.dec
+#;   2. Package.dsc
+#; 
+#; Tag#: 05.32.19
+#; Issue#: IB08400596
+#; Severity: Medium
+#; Category: Debug Message
+#; Symptom: Change PcdH2OEfiDebugMsgDefaultPrintErrorLevel to PcdDebugPrintErrorLevel.
+#; RootCause: Let user not be confused about the two kinds of PCDs. Use MdePkg PCD as default setting.
+#; Description: Code enhancement.
+#; Solution: Code enhancement.
+#; SolutionDependency: None.
+#; RelatedFiles:
+#; Modified:
+#;   1. ConfigUtility\DebugMessageConfigUtilDxe\DebugMessageConfigUtilDxe.inf
+#;   2. Library\H2OBaseDebugPrintErrorLevelLib\H2OBaseDebugPrintErrorLevelLib.c
+#;   3. Library\H2OBaseDebugPrintErrorLevelLib\H2OBaseDebugPrintErrorLevelLib.inf
+#;   4. Library\H2ODebugCfgToErrLevelLib\H2ODebugCfgToErrLevelLib.c
+#;   5. Library\H2ODebugCfgToErrLevelLib\H2ODebugCfgToErrLevelLib.inf
+#;   6. Library\H2ODxeDebugPrintErrorLevelLib\H2ODxeDebugPrintErrorLevelLib.c
+#;   7. Library\H2ODxeDebugPrintErrorLevelLib\H2ODxeDebugPrintErrorLevelLib.inf
+#;   8. Library\H2OPeiDebugPrintErrorLevelLib\H2OPeiDebugPrintErrorLevelLib.c
+#;   9. Library\H2OPeiDebugPrintErrorLevelLib\H2OPeiDebugPrintErrorLevelLib.inf
+#;   10. Library\H2OSmmDebugPrintErrorLevelLib\H2OSmmDebugPrintErrorLevelLib.c
+#;   11. Library\H2OSmmDebugPrintErrorLevelLib\H2OSmmDebugPrintErrorLevelLib.inf
+#; 
+#; Tag#: 05.32.19
+#; Issue#: IB08400595
+#; Severity: Medium
+#; Category: Debug Message
+#; Symptom: 1. Change PCD usage for GetDebugMessageBufferInfo().
+#;          2. Use GetDebugMessageBufferInfo() library interface to get Debug Messages in Setup.
+#; RootCause: Code enhancement.
+#; Description: Code enhancement.
+#; Solution: Code enhancement.
+#; SolutionDependency: None.
+#; RelatedFiles:
+#; Modified:
+#;   1. ConfigUtility\DebugMessageConfigUtilDxe\DebugMessageConfigUtil.c
+#;   2. ConfigUtility\DebugMessageConfigUtilDxe\DebugMessageConfigUtilDxe.inf
+#;   3. DebugMessage\StoreDebugMessageDxe\StoreDebugMessageDxe.c
+#;   4. DebugMessage\StoreDebugMessageSmm\StoreDebugMessageSmm.c
+#;   5. DebugMessage\StoreDebugMessageSmm\StoreDebugMessageSmm.h
+#;   6. Include\Guid\DebugMessageVariable.h
+#;   7. Library\EventLogDebugMsgLib\EventLogDebugMsgLib.c
+#;   8. Library\EventLogDebugMsgLib\EventLogDebugMsgLib.inf
+#; 
+#; Tag#: 05.32.19
+#; Issue#: IB08400594
+#; Severity: Medium
+#; Category: Build code
+#; Symptom: Fix the build code issue under Linux build code environment for SEG features.
+#; Description: Fix bug.
+#; RootCause: Case-sensitive issue.
+#; Solution: Fix bug.
+#; SolutionDependency: None.
+#; RelatedFiles:
+#; Modified:
+#;   1. ConfigUtility\BiosEventLogConfigUtilDxe\BiosEventLogConfigUtil.h
+#;   2. ConfigUtility\DebugMessageConfigUtilDxe\DebugMessageConfigUtil.h
+#;   3. ConfigUtility\H2OEventLogConfigManagerDxe\H2OEventLogConfigManager.h
+#;   4. ConfigUtility\SetupChangeConfigUtilDxe\SetupChangeConfigUtil.h
+#;   5. DebugMessage\StoreDebugMessageDxe\StoreDebugMessageDxe.inf
+#;   6. DebugMessage\StoreDebugMessageSmm\StoreDebugMessageSmm.inf
+#; 
+#; Tag#: 05.32.18
+#; Issue#: IB08400592
+#; Severity: Medium
+#; Category: Debug Message
+#; Symptom: Remove the resize function to avoid the re-allocate memory page during Status Code callback.
+#; Description: Code Enhancement.
+#; RootCause: Code Enhancement.
+#; Solution: Remove the resize function, and just allocate memory page on driver initialization.
+#; SolutionDependency: None.
+#; RelatedFiles:
+#; Modified:
+#;   1. DebugMessage\StoreDebugMessageDxe\StoreDebugMessageDxe.c
+#;   2. DebugMessage\StoreDebugMessageDxe\StoreDebugMessageDxe.inf
+#;   3. DebugMessage\StoreDebugMessageSmm\StoreDebugMessageSmm.c
+#;   4. DebugMessage\StoreDebugMessageSmm\StoreDebugMessageSmm.inf
+#;   5. InsydeEventLogPkg.dec
+#; 
+#; Tag#: 05.32.18
+#; Issue#: IB08400591
+#; Severity: Medium
+#; Category: Setup
+#; Symptom: System will have assert when changing setup items and saving.
+#; Description: Fix bug.
+#; RootCause: RouteConfig() should initialize the output parameter *Progress, or it will be NULL and cause assert.
+#; Solution: Refer to Driver Sample code, assign parameter Configuration to *Progress.
+#; SolutionDependency: None.
+#; RelatedFiles:
+#; Modified:
+#;   1. ConfigUtility\BiosEventLogConfigUtilDxe\BiosEventLogConfigUtil.c
+#;   2. ConfigUtility\DebugMessageConfigUtilDxe\DebugMessageConfigUtil.c
+#;   3. ConfigUtility\H2OEventLogConfigManagerDxe\H2OEventLogConfigManager.c
+#;   4. ConfigUtility\PostMessageConfigUtilDxe\PostMessageConfigUtil.c
+#;   5. ConfigUtility\SetupChangeConfigUtilDxe\SetupChangeConfigUtil.c
+#; 
+#; Tag#: 05.32.18
+#; Issue#: IB08400590
+#; Severity: Medium
+#; Category: Debug Message
+#; Symptom: Add Setup control to determine the output of Status Code serial messages of Store Debug Message feature.
+#; Description: Code Enhancement.
+#; RootCause: Code Enhancement.
+#; Solution: Get Setup Control from Debug Message Configuration Setup menu.
+#; SolutionDependency: None.
+#; RelatedFiles:
+#; Modified:
+#;   1. DebugMessage\StoreDebugMessageDxe\StoreDebugMessageDxe.c
+#;   2. DebugMessage\StoreDebugMessageDxe\StoreDebugMessageDxe.inf
+#;   3. DebugMessage\StoreDebugMessagePei\StoreDebugMessagePei.c
+#;   4. DebugMessage\StoreDebugMessagePei\StoreDebugMessagePei.inf
+#;   5. DebugMessage\StoreDebugMessageSmm\StoreDebugMessageSmm.c
+#;   6. DebugMessage\StoreDebugMessageSmm\StoreDebugMessageSmm.inf
+#;   7. InsydeEventLogPkg.dec
+#;   8. Package.dsc
+#; 
+#; Tag#: 05.32.18
+#; Issue#: IB08400587
+#; Severity: Medium
+#; Category: SCT
+#; Symptom: The failed items of UEFI2.6 SCT Test:
+#;          1. HII_CONFIG_ACCESS_PROTOCOL.RouteConfig - RouteConfig() returns EFI_NOT_FOUND if no target was found with the routing data.
+#;          2. HII_CONFIG_ACCESS_PROTOCOL.RouteConfig - RouteConfig() returns EFI_INVALID_PARAMETER with Configuration been NULL.
+#;          3. HII_CONFIG_ACCESS_PROTOCOL.ExtractConfig - ExtractConfig() returns EFI_INVALID_PARAMETER with Request been <MultiConfigRequest> format.
+#;          4. HII_CONFIG_ACCESS_PROTOCOL.ExtractConfig - ExtractConfig() Check if Results is in <MultiConfigAltResp> format.
+#;          5. HII_CONFIG_ACCCES_PROTOCOL.ExtractConfig - ExtractConfig() returns EFI_SUCCESS with valid parameters and and Progress points to the Requests null terminator.		 
+#; RootCause: RouteConfig() and ExtractConfig() don't follow the UEFI spec.
+#; Description: Fix bug.
+#; Solution: Correct the issues by referring to UEFI Specification and Driver Sample code. 
+#; SolutionDependency: None.
+#; RelatedFiles:
+#; Modified:
+#;   1. ConfigUtility\BiosEventLogConfigUtilDxe\BiosEventLogConfigUtil.c
+#;   2. ConfigUtility\BiosEventLogConfigUtilDxe\BiosEventLogConfigUtil.h
+#;   3. ConfigUtility\DebugMessageConfigUtilDxe\DebugMessageConfigUtil.c
+#;   4. ConfigUtility\DebugMessageConfigUtilDxe\DebugMessageConfigUtil.h
+#;   5. ConfigUtility\H2OEventLogConfigManagerDxe\H2OEventLogConfigManager.c
+#;   6. ConfigUtility\PostMessageConfigUtilDxe\PostMessageConfigUtil.c
+#;   7. ConfigUtility\SetupChangeConfigUtilDxe\SetupChangeConfigUtil.c
+#; 
+#; Tag#: 05.32.18
+#; Issue#: IB08400586
+#; Severity: Serious
+#; Category: DEBUG
+#; Symptom: POST will hang if enabling Store Debug Message feature.
+#; RootCause: Use PcdGet() in Status Code callback function will have TPL assert issue.
+#; Description: Fix bug.
+#; Solution: Remove the PcdGet() function.
+#; SolutionDependency: None.
+#; RelatedFiles:
+#; Modified:
+#;   1. DebugMessage\StoreDebugMessageDxe\StoreDebugMessageDxe.c
+#;   2. DebugMessage\StoreDebugMessageDxe\StoreDebugMessageDxe.h
+#;   3. DebugMessage\StoreDebugMessageDxe\StoreDebugMessageDxe.inf
+#;   4. DebugMessage\StoreDebugMessagePei\StoreDebugMessagePei.c
+#;   5. DebugMessage\StoreDebugMessageSmm\StoreDebugMessageSmm.c
+#;   6. DebugMessage\StoreDebugMessageSmm\StoreDebugMessageSmm.h
+#;   7. DebugMessage\StoreDebugMessageSmm\StoreDebugMessageSmm.inf
+#;   8. InsydeEventLogPkg.dec
+#; 
+#;------------------------------------------------------------------------------
+#; Label#: 05.32.16
+#; Status: Tag version
+#; 
+#; Tag#: 05.32.16
+#; Issue#: IB08400580
+#; Severity: Medium
+#; Category: SMM
+#; Symptom: Clear BIOS event log failure after locking SMRAM.
+#; RootCause: SMM driver cannot access EfiBootServicesCode/EfiBootServicesData.
+#; Description: Fix bug.
+#; Solution: Use EfiRuntimeServicesData instead for SMM Communication buffer.
+#; SolutionDependency: None.
+#; RelatedFiles:
+#; Modified:
+#;   1. DebugMessage\StoreDebugMessageDxe\StoreDebugMessageDxe.c
+#;   2. EventStorage\BiosStorage\BiosStorageDxe\BiosStorageKernelDxe.c
+#;   3. Library\EventLogDebugMsgLib\EventLogDebugMsgLib.c
+#;   4. Library\EventLogDebugMsgLib\EventLogDebugMsgLib.inf
+#;   5. Package.dsc
+#;   6. Package.fdf
+#; 
+#; Tag#: 05.32.16
+#; Issue#: IB08400580
+#; Severity: Medium
+#; Category: SMM
+#; Symptom: Clear BIOS event log failure after locking SMRAM.
+#; RootCause: SMM driver cannot access EfiBootServicesCode/EfiBootServicesData.
+#; Description: Fix bug.
+#; Solution: Use EfiRuntimeServicesData instead for SMM Communication buffer.
+#; SolutionDependency: None.
+#; RelatedFiles:
+#; Modified:
+#;   1. EventStorage\BiosStorage\BiosStorageDxe\BiosStorageKernelDxe.c
+#;   2. Package.dsc
+#; 
+#;------------------------------------------------------------------------------
+#; Label#: 05.32.12
+#; Status: Tag version
+#; 
+#; Tag#: 05.32.08
+#; Issue#: IB08400569
+#; Severity: Medium
+#; Category: Setup
+#; Symptom: Event Log Setup string ID will be used out.
+#; RootCause: None.
+#; Description: Enhancement.
+#; Solution: Reuse the string ID for the repeated action of setting string.
+#; SolutionDependency: None.
+#; RelatedFiles:
+#; Modified:
+#;   1. ConfigUtility\BiosEventLogConfigUtilDxe\BiosEventLogConfigUtil.c
+#;   2. ConfigUtility\DebugMessageConfigUtilDxe\DebugMessageConfigUtil.c
+#;   3. ConfigUtility\SetupChangeConfigUtilDxe\SetupChangeConfigUtil.c
+#; 
+#; Tag#: 05.32.08
+#; Issue#: IB08400567
+#; Severity: Medium
+#; Category: Exception
+#; Symptom: Fix exception issue.
+#; RootCause: None.
+#; Description: Fix bug.
+#; Solution: 1. Add gSmst checking in SMM library.
+#;           2. Remove the get HOB mechanism for DEBUG message error level.
+#; SolutionDependency: None.
+#; RelatedFiles:
+#; Modified:
+#;   1. DebugMessage\DebugMaskPei\DebugMaskPei.c
+#;   2. DebugMessage\DebugMaskPei\DebugMaskPei.h
+#;   3. DebugMessage\DebugMaskPei\DebugMaskPei.inf
+#;   4. EventStorage\MemoryStorage\MemoryStorageDxe\MemoryStorageKernelDxe.inf
+#;   5. Library\H2ODxeDebugPrintErrorLevelLib\H2ODxeDebugPrintErrorLevelLib.c
+#;   6. Library\H2ODxeDebugPrintErrorLevelLib\H2ODxeDebugPrintErrorLevelLib.inf
+#;   7. Library\H2OSmmDebugPrintErrorLevelLib\H2OSmmDebugPrintErrorLevelLib.c
+#;   8. Library\H2OSmmDebugPrintErrorLevelLib\H2OSmmDebugPrintErrorLevelLib.inf
+#;   9. PostMessage\PostMessageDxe\PostMessageHookDxe.c
+#; 
+#;------------------------------------------------------------------------------
+#; Label#: 05.32.04
+#; Status: Tag version
+#; 
+#; Tag#: 05.32.04
+#; Issue#: IB14090000
+#; Severity: Minor
+#; Category: EventLog
+#; Symptom: (Code Enhancement)
+#; RootCause: (Code Enhancement)
+#; Description: Modify function to dump debug message on SMM mode and DXE.
+#; Solution: (Code Enhancement)
+#; SolutionDependency: None.
+#; Reviewer: IB14090000
+#; RelatedFiles:
+#; Modified:
+#;   1. Library\EventLogDebugMsgLib\EventLogDebugMsgLib.c
+#;   2. Library\EventLogDebugMsgLib\EventLogDebugMsgLib.inf
+#;   3. Package.dsc
+#; 
+#;------------------------------------------------------------------------------
+#; Label#: 05.31.52
+#; Status: Tag version
+#; 
+#; Tag#: 05.31.52
+#; Issue#: IB08400552
+#; Severity: Medium
+#; Category: BMC SEL
+#; Symptom: Fix issue for executing IPMI commands with assigning the size of receive buffer size.
+#; RootCause: Need assign size for receive buffer.
+#; Description: Fix it.
+#; Solution: Assign size of receive buffer.
+#; SolutionDependency: None.
+#; RelatedFiles:
+#; Modified:
+#;   1. EventStorage\BmcSelStorage\BmcSelEventStorageDxe\BmcSelEventStorageDxe.c
+#;   2. EventStorage\BmcSelStorage\BmcSelEventStorageSmm\BmcSelEventStorageSmm.c
+#;   3. EventStorage\BmcSelStorage\BmcSelStoragePei\BmcSelStoragePei.c
+#; 
+#; Tag#: 05.31.49
+#; Issue#: IB08400545
+#; Severity: Feature
+#; Category: DEBUG
+#; Symptom: Add DEBUG Message library.
+#; RootCause: Enhancement.
+#; Description: Implement it.
+#; Solution: None.
+#; SolutionDependency: None.
+#; RelatedFiles:
+#; Added:
+#;   1. Library\EventLogDebugMsgLib\
+#;   2. Library\EventLogDebugMsgLib\EventLogDebugMsgLib.c
+#;   3. Library\EventLogDebugMsgLib\EventLogDebugMsgLib.inf
+#; Modified:
+#;   1. Package.dsc
+#; 
+#; Tag#: 05.31.49
+#; Issue#: IB08400542
+#; Severity: Feature
+#; Category: PCD
+#; Symptom: Change the PCD name with H2O naming rule.
+#; RootCause: Enhancement.
+#; Description: Update PCD name.
+#; Solution: None.
+#; SolutionDependency: None.
+#; RelatedFiles:
+#; Modified:
+#;   1. ConfigUtility\DebugMessageConfigUtilDxe\DebugMessageConfigUtil.c
+#;   2. ConfigUtility\DebugMessageConfigUtilDxe\DebugMessageConfigUtilDxe.inf
+#;   3. DebugMessage\StoreDebugMessageDxe\StoreDebugMessageDxe.c
+#;   4. DebugMessage\StoreDebugMessageDxe\StoreDebugMessageDxe.inf
+#;   5. DebugMessage\StoreDebugMessagePei\StoreDebugMessagePei.c
+#;   6. DebugMessage\StoreDebugMessagePei\StoreDebugMessagePei.inf
+#;   7. DebugMessage\StoreDebugMessageSmm\StoreDebugMessageSmm.c
+#;   8. DebugMessage\StoreDebugMessageSmm\StoreDebugMessageSmm.inf
+#;   9. EventLog\EventLogDxe\EventLogDxe.c
+#;   10. EventLog\EventLogDxe\EventLogDxe.inf
+#;   11. EventLog\EventLogPei\EventLogPei.c
+#;   12. EventLog\EventLogPei\EventLogPei.inf
+#;   13. EventLog\EventLogSmm\EventLogSmm.c
+#;   14. EventLog\EventLogSmm\EventLogSmm.inf
+#;   15. EventLogPostDisplayDxe\EventLogPostDisplay.c
+#;   16. EventLogPostDisplayDxe\EventLogPostDisplayDxe.inf
+#;   17. EventStorage\BiosStorage\BiosStorageDxe\BiosStorageChipsetDxe.c
+#;   18. EventStorage\BiosStorage\BiosStorageDxe\BiosStorageChipsetDxe.inf
+#;   19. EventStorage\BiosStorage\BiosStorageDxe\BiosStorageKernelDxe.c
+#;   20. EventStorage\BiosStorage\BiosStorageDxe\BiosStorageKernelDxe.inf
+#;   21. EventStorage\BiosStorage\BiosStorageDxe\BiosStorageKernelUseVariableDxe.c
+#;   22. EventStorage\BiosStorage\BiosStorageDxe\BiosStorageKernelUseVariableDxe.inf
+#;   23. EventStorage\BiosStorage\BiosStoragePei\BiosStoragePei.c
+#;   24. EventStorage\BiosStorage\BiosStoragePei\BiosStoragePei.inf
+#;   25. EventStorage\BiosStorage\BiosStorageSmm\BiosStorageChipsetSmm.c
+#;   26. EventStorage\BiosStorage\BiosStorageSmm\BiosStorageChipsetSmm.inf
+#;   27. EventStorage\BiosStorage\BiosStorageSmm\BiosStorageKernelSmm.c
+#;   28. EventStorage\BiosStorage\BiosStorageSmm\BiosStorageKernelSmm.inf
+#;   29. EventStorage\BiosStorage\BiosStorageSmm\BiosStorageKernelUseVariableSmm.c
+#;   30. EventStorage\BiosStorage\BiosStorageSmm\BiosStorageKernelUseVariableSmm.inf
+#;   31. EventStorage\BmcSelStorage\BmcSelStoragePei\BmcSelStoragePei.c
+#;   32. EventStorage\BmcSelStorage\BmcSelStoragePei\BmcSelStoragePei.inf
+#;   33. Include\Guid\BiosEventLogHob.h
+#;   34. Include\Ppi\BiosStorage.h
+#;   35. Include\Ppi\BmcSelStoragePei.h
+#;   36. Include\Ppi\EventLogPei.h
+#;   37. Include\Ppi\PostMessagePei.h
+#;   38. Include\Protocol\BiosEventLog.h
+#;   39. InsydeEventLogPkg.dec
+#;   40. Library\EventLogPeiLib\EventLogPeiLib.c
+#;   41. Library\EventLogPeiLib\EventLogPeiLib.inf
+#;   42. Package.dsc
+#;   43. Package.fdf
+#;   44. PostMessage\PostMessageDxe\PostMessageDxe.c
+#;   45. PostMessage\PostMessageDxe\PostMessageDxe.inf
+#;   46. PostMessage\PostMessageDxe\PostMessageHookDxe.c
+#;   47. PostMessage\PostMessagePei\PostMessagePei.c
+#;   48. PostMessage\PostMessagePei\PostMessagePei.inf
+#;   49. PostMessage\PostMessageSmm\PostMessageHookSmm.c
+#;   50. PostMessage\PostMessageSmm\PostMessageSmm.c
+#;   51. PostMessage\PostMessageSmm\PostMessageSmm.inf
+#;   52. StatusCodeHandler\Pei\H2OSerialStatusCodeWorker.c
+#;   53. StatusCodeHandler\Pei\H2OStatusCodeHandlerPei.inf
+#;   54. StatusCodeHandler\RuntimeDxe\H2OSerialStatusCodeWorker.c
+#;   55. StatusCodeHandler\RuntimeDxe\H2OStatusCodeHandlerRuntimeDxe.inf
+#;   56. StatusCodeHandler\Smm\H2OSerialStatusCodeWorker.c
+#;   57. StatusCodeHandler\Smm\H2OStatusCodeHandlerSmm.inf
+#; 
+#;------------------------------------------------------------------------------
+#; Label#: 05.31.48
+#; Status: Tag version
+#; 
+#; Tag#: 05.31.48
+#; Issue#: IB08400539
+#; Severity: Feature
+#; Category: EDK
+#; Symptom: Remove the IntelFrameworkPkg reference.
+#; RootCause: New feature.
+#; Description: New feature.
+#; Solution: Remove IntelFrameworkPkg reference from .inf file.
+#; SolutionDependency: None.
+#; RelatedFiles:
+#; Modified:
+#;   1. BmcSelStringTranslationDxe\BmcSelStringTranslationDxe.inf
+#;   2. ConfigUtility\BiosEventLogConfigUtilDxe\BiosEventLogConfigUtil.h
+#;   3. ConfigUtility\BiosEventLogConfigUtilDxe\BiosEventLogConfigUtilDxe.inf
+#;   4. ConfigUtility\BiosEventLogConfigUtilDxe\BiosEventLogConfigUtilSetupConfig.h
+#;   5. ConfigUtility\DebugMessageConfigUtilDxe\DebugMessageConfigUtil.h
+#;   6. ConfigUtility\DebugMessageConfigUtilDxe\DebugMessageConfigUtilDxe.inf
+#;   7. ConfigUtility\H2OEventLogConfigManagerDxe\H2OEventLogConfigManager.h
+#;   8. ConfigUtility\H2OEventLogConfigManagerDxe\H2OEventLogConfigManagerDxe.inf
+#;   9. ConfigUtility\PostMessageConfigUtilDxe\PostMessageConfigUtil.h
+#;   10. ConfigUtility\PostMessageConfigUtilDxe\PostMessageConfigUtilDxe.inf
+#;   11. ConfigUtility\SetupChangeConfigUtilDxe\SetupChangeConfigUtil.h
+#;   12. ConfigUtility\SetupChangeConfigUtilDxe\SetupChangeConfigUtilDxe.inf
+#;   13. DebugMessage\StoreDebugMessageDxe\StoreDebugMessageDxe.inf
+#;   14. DebugMessage\StoreDebugMessageSmm\StoreDebugMessageSmm.inf
+#;   15. EventLog\EventLogDxe\EventLogDxe.h
+#;   16. EventLog\EventLogDxe\EventLogDxe.inf
+#;   17. EventLog\EventLogPei\EventLogPei.h
+#;   18. EventLog\EventLogPei\EventLogPei.inf
+#;   19. EventLog\EventLogSmm\EventLogSmm.h
+#;   20. EventLog\EventLogSmm\EventLogSmm.inf
+#;   21. EventLogPostDisplayDxe\EventLogPostDisplay.c
+#;   22. EventLogPostDisplayDxe\EventLogPostDisplayDxe.inf
+#;   23. EventStorage\BiosStorage\BiosStoragePei\BiosStoragePei.inf
+#;   24. EventStorage\BmcSelStorage\BmcSelEventStorageSmm\BmcSelEventStorageSmm.inf
+#;   25. EventStorage\MemoryStorage\MemoryStorageDxe\MemoryStorageKernelDxe.c
+#;   26. EventStorage\MemoryStorage\MemoryStorageDxe\MemoryStorageKernelDxe.h
+#;   27. EventStorage\MemoryStorage\MemoryStorageDxe\MemoryStorageKernelDxe.inf
+#;   28. EventStorage\MemoryStorage\MemoryStorageSmm\MemoryStorageChipsetSmm.inf
+#;   29. EventStorage\MemoryStorage\MemoryStorageSmm\MemoryStorageKernelSmm.inf
+#;   30. Include\Guid\BiosEventLogConfigUtilHii.h
+#;   31. PostMessage\PostMessageDxe\PostMessageDxe.c
+#;   32. PostMessage\PostMessageDxe\PostMessageDxe.h
+#;   33. PostMessage\PostMessageDxe\PostMessageDxe.inf
+#;   34. PostMessage\PostMessageDxe\PostMessageHookDxe.c
+#;   35. PostMessage\PostMessageSmm\PostMessageSmm.h
+#;   36. PostMessage\PostMessageSmm\PostMessageSmm.inf
+#; 
+#;------------------------------------------------------------------------------
+#; Label#: 05.31.44
+#; Status: Tag version
+#; 
+#;------------------------------------------------------------------------------
+#; Label#: 05.31.40
+#; Status: Tag version
+#; 
+#; Tag#: 05.31.39
+#; Issue#: IB08400522
+#; Severity: Medium
+#; Category: POST Message
+#; Symptom: Use PCD to control the event logging option.
+#; RootCause: Originally log option is LogAll, so use PCD instead.
+#; Description: Code enhancement.
+#; Solution: Add PCD PcdLogEventTo to POST message driver for event logging.
+#; SolutionDependency: None.
+#; RelatedFiles:
+#; Modified:
+#;   1. PostMessage\PostMessageDxe\PostMessageDxe.inf
+#;   2. PostMessage\PostMessageDxe\PostMessageHookDxe.c
+#; 
+#; Tag#: 05.31.39
+#; Issue#: IB08400521
+#; Severity: Medium
+#; Category: Setup
+#; Symptom: Under "Show BIOS Event Log" option, press ESC to skip the storage selection will enter BIOS storage page. 
+#; RootCause: Not return error status if there is not "Enter" key action.
+#; Description: Fix bug.
+#; Solution: Return EFI error status (Besides EFI_UNSUPPORT) by EFI_INVALID_PARAMETER to skip goto opcode to the new page.
+#; SolutionDependency: None.
+#; RelatedFiles:
+#; Modified:
+#;   1. ConfigUtility\BiosEventLogConfigUtilDxe\BiosEventLogConfigUtil.c
+#; 
+#; Tag#: 05.31.39
+#; Issue#: IB08400459
+#; Severity: Medium
+#; Category: IPMI
+#; Symptom: Cannot get BMC SEL event.
+#; RootCause: IPMI related protocol interface should be replaced by IPMI library.
+#; Description: Code Enhancement.
+#; Solution: Remove the usage of IPMI protocol, and use IPMI library instead.
+#; SolutionDependency: None.
+#; RelatedFiles:
+#; Added:
+#;   1. Include\Guid\IpmiDefinition.h
+#; Modified:
+#;   1. BmcSelStringTranslationDxe\BmcSelStringTranslation.c
+#;   2. BmcSelStringTranslationDxe\BmcSelStringTranslation.h
+#;   3. BmcSelStringTranslationDxe\BmcSelStringTranslationDxe.inf
+#;   4. EventStorage\BmcSelStorage\BmcSelEventStorageDxe\BmcSelEventStorageDxe.c
+#;   5. EventStorage\BmcSelStorage\BmcSelEventStorageDxe\BmcSelEventStorageDxe.h
+#;   6. EventStorage\BmcSelStorage\BmcSelEventStorageDxe\BmcSelEventStorageDxe.inf
+#;   7. EventStorage\BmcSelStorage\BmcSelEventStorageSmm\BmcSelEventStorageSmm.c
+#;   8. EventStorage\BmcSelStorage\BmcSelEventStorageSmm\BmcSelEventStorageSmm.h
+#;   9. EventStorage\BmcSelStorage\BmcSelEventStorageSmm\BmcSelEventStorageSmm.inf
+#;   10. EventStorage\BmcSelStorage\BmcSelStoragePei\BmcSelStoragePei.c
+#;   11. EventStorage\BmcSelStorage\BmcSelStoragePei\BmcSelStoragePei.h
+#;   12. EventStorage\BmcSelStorage\BmcSelStoragePei\BmcSelStoragePei.inf
+#;   13. Include\Protocol\EventLog.h
+#; 
+#;------------------------------------------------------------------------------
+#; Label#: 05.31.36
+#; Status: Tag version
+#; 
+#; Tag#: 05.31.36
+#; Issue#: IB08400505
+#; Severity: Medium
+#; Category: Build
+#; Symptom: Build failure in some older kernel base.
+#; RootCause: MemoryStatusCodeRecord.h file has been changed file path.
+#; Description: Fix bug.
+#; Solution: Create new file H2OMemoryStatusCode.h base on the original EDK file.
+#; SolutionDependency: None.
+#; RelatedFiles:
+#; Added:
+#;   1. Include\Guid\H2OMemoryStatusCodeRecord.h
+#; Modified:
+#;   1. StatusCodeHandler\RuntimeDxe\H2OStatusCodeHandlerRuntimeDxe.h
+#;   2. StatusCodeHandler\Smm\H2OStatusCodeHandlerSmm.h
+#; 
+#;------------------------------------------------------------------------------
+#; Label#: 05.31.32
+#; Status: Tag version
+#; 
+#;------------------------------------------------------------------------------
+#; Label#: 05.31.28
+#; Status: Tag version
+#; 
+#; Tag#: 05.31.28
+#; Issue#: IB04560000
+#; Severity: Medium
+#; Category: Status Code
+#; Symptom: Build fail with kernel 05.31.28
+#; RootCause: EDKII change
+#; Description: none
+#; Solution: remove RUNTIME_MEMORY_STATUSCODE_HEADER
+#; Reviewer: IB08400000
+#; RelatedFiles:
+#; Modified:
+#;   1. StatusCodeHandler\RuntimeDxe\H2OStatusCodeHandlerRuntimeDxe.h
+#;   2. StatusCodeHandler\Smm\H2OStatusCodeHandlerSmm.h
+#;
+#;------------------------------------------------------------------------------
+#; Label#: 05.31.24
+#; Status: Tag version
+#; 
+#;------------------------------------------------------------------------------
+#; Label#: 05.31.20
+#; Status: Tag version
+#; 
+#; Tag#: 05.31.20
+#; Issue#: IB08400458 
+#; Severity: Medium
+#; Category: Setup
+#; Symptom: Change the return default status for the ConfigAccessDriverCallback.
+#; RootCause: Enhancement.
+#; Description: Enhancement.
+#; Solution: Change the default status to EFI_UNSUPPORTED.
+#; SolutionDependency: None.
+#; Reviewer: IB08400000
+#; RelatedFiles:
+#; Modified:
+#;   1. ConfigUtility\H2OEventLogConfigManagerDxe\H2OEventLogConfigManager.c
+#; 
+#;------------------------------------------------------------------------------
+#; Label#: 05.31.16
+#; Status: Tag version
+#; 
+#; Tag#: 05.31.13
+#; Issue#: IB01780851
+#; Severity: Tweak
+#; Category: Platform
+#; Symptom: Fixed Coverity scan errors.
+#; RootCause: There are coding issues reports by Coverity scan.
+#; Description: Other issue numbers,
+#;              IB04560700, IB04560701, IB04560702, IB04560703, IB04560704, IB04560705, IB04560706
+#; Solution: Fixed coding issues.
+#; SolutionDependency: None
+#; RelatedFiles:
+#; Modified:
+#;   1. BmcSelStringTranslationDxe\BmcSelStringTranslation.c
+#;   2. ConfigUtility\BiosEventLogConfigUtilDxe\BiosEventLogConfigUtil.c
+#;   3. EventLog\EventLogPei\EventLogPei.c
+#;   4. EventStorage\BiosStorage\BiosStorageDxe\BiosStorageKernelDxe.c
+#;   5. EventStorage\BiosStorage\BiosStorageSmm\BiosStorageKernelSmm.c
+#;   6. StatusCodeHandler\Pei\H2OStatusCodeHandlerPei.c
+#; 
+#; Tag#: 05.31.13
+#; Issue#: IB08400444
+#; Severity: Medium
+#; Category: Boot
+#; Symptom: Unregister status code handler for Debug Message driver.
+#; RootCause: Code Enhancement.
+#; Description: Code Enhancement.
+#; Solution: Use SMM communication protocol to let SMM driver to unregister status code handler.
+#; SolutionDependency: None.
+#; Reviewer: IB08400000
+#; RelatedFiles:
+#; Modified:
+#;   1. DebugMessage\StoreDebugMessageDxe\StoreDebugMessageDxe.c
+#;   2. DebugMessage\StoreDebugMessageDxe\StoreDebugMessageDxe.h
+#;   3. DebugMessage\StoreDebugMessageDxe\StoreDebugMessageDxe.inf
+#;   4. DebugMessage\StoreDebugMessageSmm\StoreDebugMessageSmm.c
+#;   5. DebugMessage\StoreDebugMessageSmm\StoreDebugMessageSmm.h
+#;   6. DebugMessage\StoreDebugMessageSmm\StoreDebugMessageSmm.inf
+#;   7. Include\Guid\DebugMessageVariable.h
+#;   8. InsydeEventLogPkg.dec
+#; 
+#; Tag#: 05.31.13
+#; Issue#: IB08400443 
+#; Severity: Medium
+#; Category: Time
+#; Symptom: Get time library sometimes may not work.
+#; RootCause: Code algorithm is incorrect.
+#; Description: Bug fix.
+#; Solution: 1. Fix the wrong code structure.
+#;           2. Change the header file name as internal usage.
+#; SolutionDependency: None.
+#; Reviewer: IB08400000
+#; RelatedFiles:
+#; Added:
+#;   1. Library\EventLogGetTimeFromCmosLib\EventLogGetTimeFromCmosLibInternal.h
+#; Deleted:
+#;   1. Library\EventLogGetTimeFromCmosLib\EventLogGetTimeFromCmosLib.h
+#; Modified:
+#;   1. Library\EventLogGetTimeFromCmosLib\EventLogGetTimeFromCmosLib.c
+#;   2. Package.dsc
+#; 
+#;------------------------------------------------------------------------------
+#; Label#: 05.31.12
+#; Status: Tag version
+#; 
+#;------------------------------------------------------------------------------
+#; Label#: 05.31.08
+#; Status: Tag version
+#; 
+#;------------------------------------------------------------------------------
+#; Label#: 05.31.04
+#; Status: Tag version
+#; 
+#;------------------------------------------------------------------------------
+#; Label#: 05.21.48
+#; Status: Tag version
+#; 
+#;------------------------------------------------------------------------------
+#; Label#: 05.21.44
+#; Status: Tag version
+#; 
+#;------------------------------------------------------------------------------
+#; Label#: 05.21.40
+#; Status: Tag version
+#; 
+#;------------------------------------------------------------------------------
+#; Label#: 05.21.36
+#; Status: Tag version
+#; 
+#;------------------------------------------------------------------------------
+#; Label#: 05.21.32
+#; Status: Tag version
+#; 
+#;------------------------------------------------------------------------------
+#; Label#: 05.21.30
+#; Status: Tag version
+#; 
+#; Tag#: 05.21.30 
+#; Issue#: IB08400000 
+#; Severity: Feature
+#; Category: Event Log
+#; Symptom: Initial version.
+#; RootCause: None.
+#; Description: Initial version. 
+#; Solution: Create initial versions for Event Log features.
+#; SolutionDependency: None.
+#; Reviewer: IB08400000
+#; RelatedFiles:
+#; Added:
+#;   1. BmcSelStringTranslationDxe\
+#;   2. BmcSelStringTranslationDxe\BmcSelStringTranslation.c
+#;   3. BmcSelStringTranslationDxe\BmcSelStringTranslation.h
+#;   4. BmcSelStringTranslationDxe\BmcSelStringTranslationDxe.inf
+#;   5. ConfigUtility\
+#;   6. ConfigUtility\BiosEventLogConfigUtilDxe\
+#;   7. ConfigUtility\BiosEventLogConfigUtilDxe\BiosEventLogConfigUtil.c
+#;   8. ConfigUtility\BiosEventLogConfigUtilDxe\BiosEventLogConfigUtil.h
+#;   9. ConfigUtility\BiosEventLogConfigUtilDxe\BiosEventLogConfigUtilConfigPageVfr.vfr
+#;   10. ConfigUtility\BiosEventLogConfigUtilDxe\BiosEventLogConfigUtilDxe.inf
+#;   11. ConfigUtility\BiosEventLogConfigUtilDxe\BiosEventLogConfigUtilEventAndMessagePageVfr.vfr
+#;   12. ConfigUtility\BiosEventLogConfigUtilDxe\BiosEventLogConfigUtilSetupConfig.h
+#;   13. ConfigUtility\BiosEventLogConfigUtilDxe\BiosEventLogConfigUtilStr.uni
+#;   14. ConfigUtility\DebugMessageConfigUtilDxe\
+#;   15. ConfigUtility\DebugMessageConfigUtilDxe\DebugMessageConfigUtil.c
+#;   16. ConfigUtility\DebugMessageConfigUtilDxe\DebugMessageConfigUtil.h
+#;   17. ConfigUtility\DebugMessageConfigUtilDxe\DebugMessageConfigUtilConfigPageVfr.vfr
+#;   18. ConfigUtility\DebugMessageConfigUtilDxe\DebugMessageConfigUtilDxe.inf
+#;   19. ConfigUtility\DebugMessageConfigUtilDxe\DebugMessageConfigUtilEventAndMessagePageVfr.vfr
+#;   20. ConfigUtility\DebugMessageConfigUtilDxe\DebugMessageConfigUtilSetupConfig.h
+#;   21. ConfigUtility\DebugMessageConfigUtilDxe\DebugMessageConfigUtilStr.uni
+#;   22. ConfigUtility\H2OEventLogConfigManagerDxe\
+#;   23. ConfigUtility\H2OEventLogConfigManagerDxe\H2OEventLogConfigManager.c
+#;   24. ConfigUtility\H2OEventLogConfigManagerDxe\H2OEventLogConfigManager.h
+#;   25. ConfigUtility\H2OEventLogConfigManagerDxe\H2OEventLogConfigManagerDxe.inf
+#;   26. ConfigUtility\H2OEventLogConfigManagerDxe\H2OEventLogConfigManagerSetupConfig.h
+#;   27. ConfigUtility\H2OEventLogConfigManagerDxe\H2OEventLogConfigManagerStr.uni
+#;   28. ConfigUtility\H2OEventLogConfigManagerDxe\H2OEventLogConfigManagerVfr.vfr
+#;   29. ConfigUtility\PostMessageConfigUtilDxe\
+#;   30. ConfigUtility\PostMessageConfigUtilDxe\PostMessageConfigUtil.c
+#;   31. ConfigUtility\PostMessageConfigUtilDxe\PostMessageConfigUtil.h
+#;   32. ConfigUtility\PostMessageConfigUtilDxe\PostMessageConfigUtilConfigPageVfr.vfr
+#;   33. ConfigUtility\PostMessageConfigUtilDxe\PostMessageConfigUtilDxe.inf
+#;   34. ConfigUtility\PostMessageConfigUtilDxe\PostMessageConfigUtilSetupConfig.h
+#;   35. ConfigUtility\PostMessageConfigUtilDxe\PostMessageConfigUtilStr.uni
+#;   36. ConfigUtility\SetupChangeConfigUtilDxe\
+#;   37. ConfigUtility\SetupChangeConfigUtilDxe\SetupChangeConfigUtil.c
+#;   38. ConfigUtility\SetupChangeConfigUtilDxe\SetupChangeConfigUtil.h
+#;   39. ConfigUtility\SetupChangeConfigUtilDxe\SetupChangeConfigUtilDxe.inf
+#;   40. ConfigUtility\SetupChangeConfigUtilDxe\SetupChangeConfigUtilEventAndMessagePageVfr.vfr
+#;   41. ConfigUtility\SetupChangeConfigUtilDxe\SetupChangeConfigUtilSetupConfig.h
+#;   42. ConfigUtility\SetupChangeConfigUtilDxe\SetupChangeConfigUtilStr.uni
+#;   43. DebugMessage\
+#;   44. DebugMessage\DebugMaskPei\
+#;   45. DebugMessage\DebugMaskPei\DebugMaskPei.c
+#;   46. DebugMessage\DebugMaskPei\DebugMaskPei.h
+#;   47. DebugMessage\DebugMaskPei\DebugMaskPei.inf
+#;   48. DebugMessage\StoreDebugMessageDxe\
+#;   49. DebugMessage\StoreDebugMessageDxe\StoreDebugMessageDxe.c
+#;   50. DebugMessage\StoreDebugMessageDxe\StoreDebugMessageDxe.h
+#;   51. DebugMessage\StoreDebugMessageDxe\StoreDebugMessageDxe.inf
+#;   52. DebugMessage\StoreDebugMessagePei\
+#;   53. DebugMessage\StoreDebugMessagePei\StoreDebugMessagePei.c
+#;   54. DebugMessage\StoreDebugMessagePei\StoreDebugMessagePei.h
+#;   55. DebugMessage\StoreDebugMessagePei\StoreDebugMessagePei.inf
+#;   56. DebugMessage\StoreDebugMessageSmm\
+#;   57. DebugMessage\StoreDebugMessageSmm\StoreDebugMessageSmm.c
+#;   58. DebugMessage\StoreDebugMessageSmm\StoreDebugMessageSmm.h
+#;   59. DebugMessage\StoreDebugMessageSmm\StoreDebugMessageSmm.inf
+#;   60. EventLog\
+#;   61. EventLog\EventLogDxe\
+#;   62. EventLog\EventLogDxe\EventLogDxe.c
+#;   63. EventLog\EventLogDxe\EventLogDxe.h
+#;   64. EventLog\EventLogDxe\EventLogDxe.inf
+#;   65. EventLog\EventLogPei\
+#;   66. EventLog\EventLogPei\EventLogPei.c
+#;   67. EventLog\EventLogPei\EventLogPei.h
+#;   68. EventLog\EventLogPei\EventLogPei.inf
+#;   69. EventLog\EventLogSmm\
+#;   70. EventLog\EventLogSmm\EventLogSmm.c
+#;   71. EventLog\EventLogSmm\EventLogSmm.h
+#;   72. EventLog\EventLogSmm\EventLogSmm.inf
+#;   73. EventLogPostDisplayDxe\
+#;   74. EventLogPostDisplayDxe\EventLogPostDisplay.c
+#;   75. EventLogPostDisplayDxe\EventLogPostDisplay.h
+#;   76. EventLogPostDisplayDxe\EventLogPostDisplayCommonFunc.c
+#;   77. EventLogPostDisplayDxe\EventLogPostDisplayCommonFunc.h
+#;   78. EventLogPostDisplayDxe\EventLogPostDisplayDxe.inf
+#;   79. EventLogPostDisplayDxe\EventLogPostDisplaySetting.h
+#;   80. EventStorage\
+#;   81. EventStorage\BiosStorage\
+#;   82. EventStorage\BiosStorage\BiosStorageDxe\
+#;   83. EventStorage\BiosStorage\BiosStorageDxe\BiosStorageChipsetDxe.c
+#;   84. EventStorage\BiosStorage\BiosStorageDxe\BiosStorageChipsetDxe.h
+#;   85. EventStorage\BiosStorage\BiosStorageDxe\BiosStorageChipsetDxe.inf
+#;   86. EventStorage\BiosStorage\BiosStorageDxe\BiosStorageKernelDxe.c
+#;   87. EventStorage\BiosStorage\BiosStorageDxe\BiosStorageKernelDxe.h
+#;   88. EventStorage\BiosStorage\BiosStorageDxe\BiosStorageKernelDxe.inf
+#;   89. EventStorage\BiosStorage\BiosStorageDxe\BiosStorageKernelUseVariableDxe.c
+#;   90. EventStorage\BiosStorage\BiosStorageDxe\BiosStorageKernelUseVariableDxe.h
+#;   91. EventStorage\BiosStorage\BiosStorageDxe\BiosStorageKernelUseVariableDxe.inf
+#;   92. EventStorage\BiosStorage\BiosStoragePei\
+#;   93. EventStorage\BiosStorage\BiosStoragePei\BiosStoragePei.c
+#;   94. EventStorage\BiosStorage\BiosStoragePei\BiosStoragePei.h
+#;   95. EventStorage\BiosStorage\BiosStoragePei\BiosStoragePei.inf
+#;   96. EventStorage\BiosStorage\BiosStorageSmm\
+#;   97. EventStorage\BiosStorage\BiosStorageSmm\BiosStorageChipsetSmm.c
+#;   98. EventStorage\BiosStorage\BiosStorageSmm\BiosStorageChipsetSmm.h
+#;   99. EventStorage\BiosStorage\BiosStorageSmm\BiosStorageChipsetSmm.inf
+#;   100. EventStorage\BiosStorage\BiosStorageSmm\BiosStorageKernelSmm.c
+#;   101. EventStorage\BiosStorage\BiosStorageSmm\BiosStorageKernelSmm.h
+#;   102. EventStorage\BiosStorage\BiosStorageSmm\BiosStorageKernelSmm.inf
+#;   103. EventStorage\BiosStorage\BiosStorageSmm\BiosStorageKernelUseVariableSmm.c
+#;   104. EventStorage\BiosStorage\BiosStorageSmm\BiosStorageKernelUseVariableSmm.h
+#;   105. EventStorage\BiosStorage\BiosStorageSmm\BiosStorageKernelUseVariableSmm.inf
+#;   106. EventStorage\BmcSelStorage\
+#;   107. EventStorage\BmcSelStorage\BmcSelEventStorageDxe\
+#;   108. EventStorage\BmcSelStorage\BmcSelEventStorageDxe\BmcSelEventStorageDxe.c
+#;   109. EventStorage\BmcSelStorage\BmcSelEventStorageDxe\BmcSelEventStorageDxe.h
+#;   110. EventStorage\BmcSelStorage\BmcSelEventStorageDxe\BmcSelEventStorageDxe.inf
+#;   111. EventStorage\BmcSelStorage\BmcSelEventStorageSmm\
+#;   112. EventStorage\BmcSelStorage\BmcSelEventStorageSmm\BmcSelEventStorageSmm.c
+#;   113. EventStorage\BmcSelStorage\BmcSelEventStorageSmm\BmcSelEventStorageSmm.h
+#;   114. EventStorage\BmcSelStorage\BmcSelEventStorageSmm\BmcSelEventStorageSmm.inf
+#;   115. EventStorage\BmcSelStorage\BmcSelStoragePei\
+#;   116. EventStorage\BmcSelStorage\BmcSelStoragePei\BmcSelStoragePei.c
+#;   117. EventStorage\BmcSelStorage\BmcSelStoragePei\BmcSelStoragePei.h
+#;   118. EventStorage\BmcSelStorage\BmcSelStoragePei\BmcSelStoragePei.inf
+#;   119. EventStorage\MemoryStorage\
+#;   120. EventStorage\MemoryStorage\MemoryStorageDxe\
+#;   121. EventStorage\MemoryStorage\MemoryStorageDxe\MemoryStorageChipsetDxe.c
+#;   122. EventStorage\MemoryStorage\MemoryStorageDxe\MemoryStorageChipsetDxe.h
+#;   123. EventStorage\MemoryStorage\MemoryStorageDxe\MemoryStorageChipsetDxe.inf
+#;   124. EventStorage\MemoryStorage\MemoryStorageDxe\MemoryStorageKernelDxe.c
+#;   125. EventStorage\MemoryStorage\MemoryStorageDxe\MemoryStorageKernelDxe.h
+#;   126. EventStorage\MemoryStorage\MemoryStorageDxe\MemoryStorageKernelDxe.inf
+#;   127. EventStorage\MemoryStorage\MemoryStorageSmm\
+#;   128. EventStorage\MemoryStorage\MemoryStorageSmm\MemoryStorageChipsetSmm.c
+#;   129. EventStorage\MemoryStorage\MemoryStorageSmm\MemoryStorageChipsetSmm.h
+#;   130. EventStorage\MemoryStorage\MemoryStorageSmm\MemoryStorageChipsetSmm.inf
+#;   131. EventStorage\MemoryStorage\MemoryStorageSmm\MemoryStorageKernelSmm.c
+#;   132. EventStorage\MemoryStorage\MemoryStorageSmm\MemoryStorageKernelSmm.h
+#;   133. EventStorage\MemoryStorage\MemoryStorageSmm\MemoryStorageKernelSmm.inf
+#;   134. Include\
+#;   135. Include\Guid\
+#;   136. Include\Guid\BiosEventLogConfigUtilHii.h
+#;   137. Include\Guid\BiosEventLogHob.h
+#;   138. Include\Guid\BiosStorageVariable.h
+#;   139. Include\Guid\DebugMessageConfigUtilHii.h
+#;   140. Include\Guid\DebugMessageVariable.h
+#;   141. Include\Guid\EventLogPkgTokenSpace.h
+#;   142. Include\Guid\EventLogPostDisplayVariable.h
+#;   143. Include\Guid\EventStorageVariable.h
+#;   144. Include\Guid\H2OEventLogConfigManagerHii.h
+#;   145. Include\Guid\MemoryStorageVariable.h
+#;   146. Include\Guid\PeiEventLogHob.h
+#;   147. Include\Guid\PeiPostMessageHob.h
+#;   148. Include\Guid\PostMessageConfigUtilHii.h
+#;   149. Include\Guid\SetupChangeConfigUtilHii.h
+#;   150. Include\Library\
+#;   151. Include\Library\DebugCfgToErrLevelLib.h
+#;   152. Include\Library\EventLogDxeLib.h
+#;   153. Include\Library\EventLogGetTimeFromCmosLib.h
+#;   154. Include\Library\EventLogPeiLib.h
+#;   155. Include\Library\EventLogSmmLib.h
+#;   156. Include\Ppi\
+#;   157. Include\Ppi\BiosStorage.h
+#;   158. Include\Ppi\BmcSelStoragePei.h
+#;   159. Include\Ppi\EventLogPei.h
+#;   160. Include\Ppi\PostMessagePei.h
+#;   161. Include\Protocol\
+#;   162. Include\Protocol\BiosEventLog.h
+#;   163. Include\Protocol\BiosEventLogUseVariable.h
+#;   164. Include\Protocol\EventLog.h
+#;   165. Include\Protocol\EventLogString.h
+#;   166. Include\Protocol\EventLogStringOverwrite.h
+#;   167. Include\Protocol\EventStorage.h
+#;   168. Include\Protocol\MemoryStorage.h
+#;   169. Include\Protocol\PostMessage.h
+#;   170. InsydeEventLogPkg.dec
+#;   171. Library\
+#;   172. Library\EventLogDxeLib\
+#;   173. Library\EventLogDxeLib\EventLogDxeLib.c
+#;   174. Library\EventLogDxeLib\EventLogDxeLib.inf
+#;   175. Library\EventLogDxeLib\EventLogDxeLib.uni
+#;   176. Library\EventLogGetTimeFromCmosLib\
+#;   177. Library\EventLogGetTimeFromCmosLib\EventLogGetTimeFromCmosLib.c
+#;   178. Library\EventLogGetTimeFromCmosLib\EventLogGetTimeFromCmosLib.h
+#;   179. Library\EventLogGetTimeFromCmosLib\EventLogGetTimeFromCmosLib.inf
+#;   180. Library\EventLogPeiLib\
+#;   181. Library\EventLogPeiLib\EventLogPeiLib.c
+#;   182. Library\EventLogPeiLib\EventLogPeiLib.inf
+#;   183. Library\EventLogPeiLib\EventLogPeiLib.uni
+#;   184. Library\EventLogSmmLib\
+#;   185. Library\EventLogSmmLib\EventLogSmmLib.c
+#;   186. Library\EventLogSmmLib\EventLogSmmLib.inf
+#;   187. Library\EventLogSmmLib\EventLogSmmLib.uni
+#;   188. Library\H2OBaseDebugPrintErrorLevelLib\
+#;   189. Library\H2OBaseDebugPrintErrorLevelLib\H2OBaseDebugPrintErrorLevelLib.c
+#;   190. Library\H2OBaseDebugPrintErrorLevelLib\H2OBaseDebugPrintErrorLevelLib.inf
+#;   191. Library\H2ODebugCfgToErrLevelLib\
+#;   192. Library\H2ODebugCfgToErrLevelLib\H2ODebugCfgToErrLevelLib.c
+#;   193. Library\H2ODebugCfgToErrLevelLib\H2ODebugCfgToErrLevelLib.inf
+#;   194. Library\H2ODxeDebugPrintErrorLevelLib\
+#;   195. Library\H2ODxeDebugPrintErrorLevelLib\H2ODxeDebugPrintErrorLevelLib.c
+#;   196. Library\H2ODxeDebugPrintErrorLevelLib\H2ODxeDebugPrintErrorLevelLib.inf
+#;   197. Library\H2OPeiDebugPrintErrorLevelLib\
+#;   198. Library\H2OPeiDebugPrintErrorLevelLib\H2OPeiDebugPrintErrorLevelLib.c
+#;   199. Library\H2OPeiDebugPrintErrorLevelLib\H2OPeiDebugPrintErrorLevelLib.inf
+#;   200. Library\H2OSmmDebugPrintErrorLevelLib\
+#;   201. Library\H2OSmmDebugPrintErrorLevelLib\H2OSmmDebugPrintErrorLevelLib.c
+#;   202. Library\H2OSmmDebugPrintErrorLevelLib\H2OSmmDebugPrintErrorLevelLib.inf
+#;   203. Package.dsc
+#;   204. Package.fdf
+#;   205. PostMessage\
+#;   206. PostMessage\PostMessageDxe\
+#;   207. PostMessage\PostMessageDxe\PostMessageDxe.c
+#;   208. PostMessage\PostMessageDxe\PostMessageDxe.h
+#;   209. PostMessage\PostMessageDxe\PostMessageDxe.inf
+#;   210. PostMessage\PostMessageDxe\PostMessageHookDxe.c
+#;   211. PostMessage\PostMessageDxe\PostMessageHookDxe.h
+#;   212. PostMessage\PostMessageDxe\PostMessageList.c
+#;   213. PostMessage\PostMessagePei\
+#;   214. PostMessage\PostMessagePei\PostMessagePei.c
+#;   215. PostMessage\PostMessagePei\PostMessagePei.h
+#;   216. PostMessage\PostMessagePei\PostMessagePei.inf
+#;   217. PostMessage\PostMessageSmm\
+#;   218. PostMessage\PostMessageSmm\PostMessageHookSmm.c
+#;   219. PostMessage\PostMessageSmm\PostMessageHookSmm.h
+#;   220. PostMessage\PostMessageSmm\PostMessageList.c
+#;   221. PostMessage\PostMessageSmm\PostMessageSmm.c
+#;   222. PostMessage\PostMessageSmm\PostMessageSmm.h
+#;   223. PostMessage\PostMessageSmm\PostMessageSmm.inf
+#;   224. StatusCodeHandler\
+#;   225. StatusCodeHandler\Pei\
+#;   226. StatusCodeHandler\Pei\H2OMemoryStausCodeWorker.c
+#;   227. StatusCodeHandler\Pei\H2OSerialStatusCodeWorker.c
+#;   228. StatusCodeHandler\Pei\H2OStatusCodeHandlerPei.c
+#;   229. StatusCodeHandler\Pei\H2OStatusCodeHandlerPei.h
+#;   230. StatusCodeHandler\Pei\H2OStatusCodeHandlerPei.inf
+#;   231. StatusCodeHandler\RuntimeDxe\
+#;   232. StatusCodeHandler\RuntimeDxe\H2OMemoryStatusCodeWorker.c
+#;   233. StatusCodeHandler\RuntimeDxe\H2OSerialStatusCodeWorker.c
+#;   234. StatusCodeHandler\RuntimeDxe\H2OStatusCodeHandlerRuntimeDxe.c
+#;   235. StatusCodeHandler\RuntimeDxe\H2OStatusCodeHandlerRuntimeDxe.h
+#;   236. StatusCodeHandler\RuntimeDxe\H2OStatusCodeHandlerRuntimeDxe.inf
+#;   237. StatusCodeHandler\Smm\
+#;   238. StatusCodeHandler\Smm\H2OMemoryStatusCodeWorker.c
+#;   239. StatusCodeHandler\Smm\H2OSerialStatusCodeWorker.c
+#;   240. StatusCodeHandler\Smm\H2OStatusCodeHandlerSmm.c
+#;   241. StatusCodeHandler\Smm\H2OStatusCodeHandlerSmm.h
+#;   242. StatusCodeHandler\Smm\H2OStatusCodeHandlerSmm.inf
+#; 

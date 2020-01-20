@@ -1,0 +1,52 @@
+## @file
+#  Azalia controller initialize in PEI phase.
+#
+#******************************************************************************
+#* Copyright (c) 2014, Insyde Software Corporation. All Rights Reserved.
+#*
+#* You may not reproduce, distribute, publish, display, perform, modify, adapt,
+#* transmit, broadcast, present, recite, release, license or otherwise exploit
+#* any part of this publication in any form, by any means, without the prior
+#* written permission of Insyde Software Corporation.
+#*
+#******************************************************************************
+
+[Defines]
+  INF_VERSION                    = 0x00010005
+  BASE_NAME                      = AzaliaInitPei
+  FILE_GUID                      = 8C3CFB87-F7AE-4a36-AAFF-931FDC5F436E
+  MODULE_TYPE                    = PEIM
+  VERSION_STRING                 = 1.0
+  ENTRY_POINT                    = AzaliaInitPeimEntry
+
+[Sources]
+  PeiAzalia.c
+
+[Packages]
+  MdePkg/MdePkg.dec
+  $(PLATFORM_RC_PACKAGE)/$(PLATFORM_RC_PACKAGE).dec
+  $(CHIPSET_PKG)/$(CHIPSET_PKG).dec
+  InsydeModulePkg/InsydeModulePkg.dec
+[LibraryClasses]
+  PeimEntryPoint
+  IoLib
+  S3BootScriptLib
+  PciExpressLib
+  PeiServicesLib
+  PcdLib
+  MemoryAllocationLib
+  DebugLib
+[Guids]
+  gSystemConfigurationGuid
+[Ppis]
+  gPeiInstallVerbTablePpiGuid
+  gEfiPeiReadOnlyVariable2PpiGuid
+  gAzaliaPolicyPpiGuid
+  gScPolicyPpiGuid
+[Pcd]
+  gEfiMdePkgTokenSpaceGuid.PcdPciExpressBaseAddress
+  gChipsetPkgTokenSpaceGuid.PcdPchHdaBaseAddress
+  gChipsetPkgTokenSpaceGuid.PcdSetupConfigSize
+[Depex]
+  gAzaliaPolicyPpiGuid        AND
+  gPeiInstallVerbTablePpiGuid

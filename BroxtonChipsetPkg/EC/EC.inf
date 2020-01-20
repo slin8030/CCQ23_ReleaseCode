@@ -1,0 +1,111 @@
+## @file
+# Component description file for EC module.
+#
+# @copyright
+#  INTEL CONFIDENTIAL
+#  Copyright 2010 - 2016 Intel Corporation.
+#
+#  The source code contained or described herein and all documents related to the
+#  source code ("Material") are owned by Intel Corporation or its suppliers or
+#  licensors. Title to the Material remains with Intel Corporation or its suppliers
+#  and licensors. The Material may contain trade secrets and proprietary and
+#  confidential information of Intel Corporation and its suppliers and licensors,
+#  and is protected by worldwide copyright and trade secret laws and treaty
+#  provisions. No part of the Material may be used, copied, reproduced, modified,
+#  published, uploaded, posted, transmitted, distributed, or disclosed in any way
+#  without Intel's prior express written permission.
+#
+#  No license under any patent, copyright, trade secret or other intellectual
+#  property right is granted to or conferred upon you by disclosure or delivery
+#  of the Materials, either expressly, by implication, inducement, estoppel or
+#  otherwise. Any license under such intellectual property rights must be
+#  express and approved by Intel in writing.
+#
+#  Unless otherwise agreed by Intel in writing, you may not remove or alter
+#  this notice or any other notice embedded in Materials by Intel or
+#  Intel's suppliers or licensors in any way.
+#
+#  This file contains a 'Sample Driver' and is licensed as such under the terms
+#  of your license agreement with Intel or your vendor. This file may be modified
+#  by the user, subject to the additional terms of the license agreement.
+#
+# @par Specification Reference:
+#
+##
+
+
+[Defines]
+  INF_VERSION              = 0x00010017
+  BASE_NAME                = EC
+  FILE_GUID                = 41015350-BA3B-4916-B043-4615408A87B3
+  VERSION_STRING           = 1.0
+  MODULE_TYPE              = DXE_SMM_DRIVER
+  PI_SPECIFICATION_VERSION = 1.20
+  ENTRY_POINT              = InitializeEcSmm
+  #
+  # The following information is for reference only and not required by the build tools.
+  #
+  # VALID_ARCHITECTURES = IA32 X64 EBC
+  #
+
+[LibraryClasses]
+  UefiDriverEntryPoint
+  UefiRuntimeServicesTableLib
+  ScPlatformLib
+  DevicePathLib
+  AslUpdateLib
+  GpioLib
+  PcdLib
+  TimerLib
+  DxeInsydeChipsetLib
+#[-start-161022-IB07400803-modify]#
+  MultiPlatformBaseLib
+#[-end-161022-IB07400803-modify]#
+
+[Packages]
+  MdePkg/MdePkg.dec
+  IntelFrameworkPkg/IntelFrameworkPkg.dec
+  BroxtonSiPkg/BroxtonSiPkg.dec
+#[-start-160906-IB03090434-remove]#
+#  Platform/AplPlatSamplePkg/PlatformPkg.dec
+#  Platform/BxtPlatformPkg/PlatformPkg.dec
+#[-end-160906-IB03090434-remove]#
+#[-start-160906-IB03090434-add]#
+  InsydeModulePkg/InsydeModulePkg.dec
+  $(CHIPSET_PKG)/$(CHIPSET_PKG).dec
+#[-end-160906-IB03090434-add]#
+
+
+[Pcd]
+  gEfiMdePkgTokenSpaceGuid.PcdPciExpressBaseAddress
+  gEfiBxtTokenSpaceGuid.PcdScAcpiIoPortBaseAddress
+#[-start-160906-IB03090434-add]#
+  gChipsetPkgTokenSpaceGuid.PcdSetupConfigSize
+#[-end-160906-IB03090434-add]#
+
+[Sources]
+  EC.C
+
+[Protocols]
+  gEfiSmmIchnDispatchProtocolGuid  ## CONSUMES
+  gEfiGlobalNvsAreaProtocolGuid    ## CONSUMES
+  gEfiSmmGpiDispatch2ProtocolGuid  ## CONSUMES
+  gEfiDevicePathProtocolGuid       ## CONSUMES
+  gEfiEcAccessProtocolGuid         ## PRODUCES
+  gScSmmIoTrapControlGuid          ## CONSUMES
+  gEfiSmmCpuProtocolGuid           ## CONSUMES
+  gEfiSmmCpuIo2ProtocolGuid        ## CONSUMES
+
+[Guids]
+#[-start-160906-IB03090434-add]#
+  gSystemConfigurationGuid
+#[-end-160906-IB03090434-add]#
+
+
+[Depex]
+  gEfiSmmBase2ProtocolGuid AND
+  gEfiSmmIchnDispatchProtocolGuid AND
+  gEfiSmmGpiDispatch2ProtocolGuid AND
+  gScSmmIoTrapControlGuid         AND
+  gEfiSmmCpuIo2ProtocolGuid       AND
+  gEfiGlobalNvsAreaProtocolGuid

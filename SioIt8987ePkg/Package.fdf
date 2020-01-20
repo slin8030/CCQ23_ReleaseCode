@@ -1,0 +1,26 @@
+## @file
+#
+#  SIO Package Flash Description File
+#
+#******************************************************************************
+#* Copyright (c) 2014-2015, Insyde Software Corp. All Rights Reserved.
+#*
+#* You may not reproduce, distribute, publish, display, perform, modify, adapt,
+#* transmit, broadcast, present, recite, release, license or otherwise exploit
+#* any part of this publication in any form, by any means, without the prior
+#* written permission of Insyde Software Corporation.
+#*
+#******************************************************************************
+#
+##
+
+[FV.RECOVERYFV]
+!if gSioGuid.PcdSioIt8987eSupported
+INF APRIORI=0xC000 SioIt8987ePkg/SioIt8987ePei/SioIt8987ePei.inf
+!endif
+
+[FV.DXEFV]
+!if gSioGuid.PcdSioIt8987eSupported
+INF RuleOverride=ACPITABLE  SioIt8987ePkg/SioIt8987eDxe/SioIt8987eDxe.inf
+!endif
+

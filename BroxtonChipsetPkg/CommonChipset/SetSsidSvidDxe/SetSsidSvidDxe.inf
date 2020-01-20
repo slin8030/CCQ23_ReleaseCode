@@ -1,0 +1,57 @@
+## @file
+#  Component description file for SetSsidSvidDxe driver.
+#
+#******************************************************************************
+#* Copyright (c) 2012-2014, Insyde Software Corp. All Rights Reserved.
+#*
+#* You may not reproduce, distribute, publish, display, perform, modify, adapt,
+#* transmit, broadcast, present, recite, release, license or otherwise exploit
+#* any part of this publication in any form, by any means, without the prior
+#* written permission of Insyde Software Corporation.
+#*
+#******************************************************************************
+
+[Defines]
+  INF_VERSION                    = 0x00010005
+  BASE_NAME                      = SetSsidSvidDxe
+  FILE_GUID                      = 96BDEA61-C364-4513-B6B3-037E9AD54CE4
+  MODULE_TYPE                    = DXE_DRIVER
+  VERSION_STRING                 = 1.0
+  ENTRY_POINT                    = SetSsidSvidEntryPoint
+
+[Sources]
+  SetSsidSvidDxe.c
+ 
+[Packages]
+  MdePkg/MdePkg.dec
+  MdeModulePkg/MdeModulePkg.dec
+  InsydeOemServicesPkg/InsydeOemServicesPkg.dec
+  InsydeModulePkg/InsydeModulePkg.dec
+  IntelFrameworkPkg/IntelFrameworkPkg.dec
+  IntelFrameworkModulePkg/IntelFrameworkModulePkg.dec
+  $(CHIPSET_PKG)/$(CHIPSET_PKG).dec
+  $(PLATFORM_RC_PACKAGE)/$(PLATFORM_RC_PACKAGE).dec
+  
+[LibraryClasses]
+  IoLib
+  DebugLib
+  CommonPciLib
+  PciExpressLib
+  S3BootScriptLib
+  UefiDriverEntryPoint
+  UefiBootServicesTableLib
+  DxeOemSvcKernelLibDefault
+  DxeChipsetSvcLib
+  PcdLib  
+
+[Protocols]
+  gEfiPciEnumerationCompleteProtocolGuid
+
+
+[Pcd]
+  gChipsetPkgTokenSpaceGuid.PcdNoBridgeDeviceSsid
+  gInsydeTokenSpaceGuid.PcdDefaultSsidSvid
+  gEfiMdePkgTokenSpaceGuid.PcdPciExpressBaseAddress
+
+[Depex]
+   gH2OChipsetServicesProtocolGuid

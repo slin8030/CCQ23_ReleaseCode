@@ -1,0 +1,82 @@
+### @file
+# SmbiosCpu library
+#
+#@copyright
+# Copyright (c) 2014 - 2015 Intel Corporation. All rights reserved
+# This software and associated documentation (if any) is furnished
+# under a license and may only be used or copied in accordance
+# with the terms of the license. Except as permitted by the
+# license, no part of this software or documentation may be
+# reproduced, stored in a retrieval system, or transmitted in any
+# form or by any means without the express written consent of
+# Intel Corporation.
+# This file contains an 'Intel Peripheral Driver' and is uniquely
+# identified as "Intel Reference Module" and is licensed for Intel
+# CPUs and chipsets under the terms of your license agreement with
+# Intel or your vendor. This file may be modified by the user, subject
+# to additional terms of the license agreement.
+#
+# @par Specification Reference:
+# System Management BIOS (SMBIOS) Reference Specification v2.8.0
+# dated 2013-Mar-28 (DSP0134)
+# http://www.dmtf.org/sites/default/files/standards/documents/DSP0134_2.8.0.pdf
+#
+# @par Glossary:
+###
+
+
+[Defines]
+INF_VERSION = 0x00010017
+BASE_NAME = DxeSmbiosCpuLib
+FILE_GUID = BDD1AEF3-F044-4A0F-9C82-D59319806E02
+VERSION_STRING = 1.0
+MODULE_TYPE = DXE_DRIVER
+LIBRARY_CLASS = SmbiosCpuLib|DXE_DRIVER
+#
+# The following information is for reference only and not required by the build tools.
+#
+# VALID_ARCHITECTURES = IA32 X64 EBC
+#
+
+
+
+[LibraryClasses]
+DebugLib
+BaseLib
+BaseMemoryLib
+MemoryAllocationLib
+HobLib
+PreSiliconLib
+PcdLib
+
+[Packages]
+MdePkg/MdePkg.dec
+ClientSiliconPkg/ClientSiliconPkg.dec
+BroxtonSiPkg/BroxtonSiPkg.dec
+BroxtonSiPkg/BroxtonSiPrivate.dec
+#[-start-161111-IB07400811-add]#
+$(CHIPSET_PKG)/$(CHIPSET_PKG).dec
+#[-end-161111-IB07400811-add]#
+
+[Sources]
+SmbiosCpu.c
+SmbiosType4.c
+SmbiosType7.c
+
+
+[Protocols]
+gCpuInfoProtocolGuid ## CONSUMES
+gEfiSmbiosProtocolGuid ## CONSUMES
+
+
+[Guids]
+gCpuInitDataHobGuid ## UNDEFINED
+
+[Pcd]
+gEfiBxtTokenSpaceGuid.PcdSmbiosDefaultSocketDesignation  ## SOMETIMES_CONSUMES
+gEfiBxtTokenSpaceGuid.PcdSmbiosDefaultSerialNumber       ## SOMETIMES_CONSUMES
+gEfiBxtTokenSpaceGuid.PcdSmbiosDefaultAssetTag           ## SOMETIMES_CONSUMES
+gEfiBxtTokenSpaceGuid.PcdSmbiosDefaultPartNumber         ## SOMETIMES_CONSUMES
+#[-start-161111-IB07400811-add]#
+gChipsetPkgTokenSpaceGuid.PcdMaxCpuCoreNumber
+#[-end-161111-IB07400811-add]#

@@ -1,0 +1,52 @@
+## @file
+#  Azalia controller initialize in PEI phase.
+#
+#******************************************************************************
+#* Copyright (c) 2014 - 2015, Insyde Software Corporation. All Rights Reserved.
+#*
+#* You may not reproduce, distribute, publish, display, perform, modify, adapt,
+#* transmit, broadcast, present, recite, release, license or otherwise exploit
+#* any part of this publication in any form, by any means, without the prior
+#* written permission of Insyde Software Corporation.
+#*
+#******************************************************************************
+
+[Defines]
+  INF_VERSION                    = 0x00010005
+  BASE_NAME                      = AzaliaPolicyPei
+  FILE_GUID                      = 8BEEDB0D-A31A-0361-A312-5DC8574C65F1
+  MODULE_TYPE                    = PEIM
+  VERSION_STRING                 = 1.0
+  ENTRY_POINT                    = AzaliaPolicyPeiEntry
+
+[Sources]
+  AzaliaPolicyPei.c
+
+[Packages]
+  MdePkg/MdePkg.dec
+  $(CHIPSET_PKG)/$(CHIPSET_PKG).dec
+  InsydeModulePkg/InsydeModulePkg.dec
+  $(PLATFORM_RC_PACKAGE)/$(PLATFORM_RC_PACKAGE).dec
+
+[LibraryClasses]
+  PeimEntryPoint
+  DebugLib
+  MemoryAllocationLib
+  PeiServicesLib
+  PeiOemSvcChipsetLibDefault
+  BaseMemoryLib
+
+[Ppis]
+  gEfiPeiReadOnlyVariable2PpiGuid
+  gAzaliaPolicyPpiGuid
+
+[Guids]
+
+[Pcd]
+  gChipsetPkgTokenSpaceGuid.PcdPchAzaliaPolicyPpiDockAttached
+  gChipsetPkgTokenSpaceGuid.PcdPchAzaliaPolicyPpiResetWaitTimer
+  gChipsetPkgTokenSpaceGuid.PcdSetupConfigSize
+
+[Depex]
+  gEfiPeiReadOnlyVariable2PpiGuid
+

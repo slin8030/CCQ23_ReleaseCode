@@ -1,0 +1,88 @@
+/**@file
+
+@copyright
+ Copyright (c) 1999 - 2014 Intel Corporation. All rights reserved
+ This software and associated documentation (if any) is furnished
+ under a license and may only be used or copied in accordance
+ with the terms of the license. Except as permitted by the
+ license, no part of this software or documentation may be
+ reproduced, stored in a retrieval system, or transmitted in any
+ form or by any means without the express written consent of
+ Intel Corporation.
+
+This file contains an 'Intel Peripheral Driver' and is uniquely
+ identified as "Intel Reference Module" and is licensed for Intel
+ CPUs and chipsets under the terms of your license agreement with
+ Intel or your vendor. This file may be modified by the user, subject
+ to additional terms of the license agreement.
+**/
+/*++
+
+Copyright (c)  1999 - 2005 Intel Corporation. All rights reserved
+This software and associated documentation (if any) is furnished
+under a license and may only be used or copied in accordance
+with the terms of the license. Except as permitted by such
+license, no part of this software or documentation may be
+reproduced, stored in a retrieval system, or transmitted in any
+form or by any means without the express written consent of
+Intel Corporation.
+
+
+Module Name:
+
+  Pram.c
+
+Abstract:
+
+--*/
+
+//
+// Statements that include other files
+//
+#include <Pram.h>
+
+//
+// MCFG Table definition
+//
+EFI_ACPI_PRAM_BASE_ADDRESS_TABLE PRAM = {
+  EFI_ACPI_PRAM_BASE_ADDRESS_TABLE_SIGNATURE,
+  sizeof (EFI_ACPI_PRAM_BASE_ADDRESS_TABLE),
+  EFI_ACPI_PRAM_BASE_ADDRESS_TABLE_REVISION,
+  //
+  // Checksum will be updated at runtime
+  //
+  0x00,
+  //
+  // It is expected that these values will be programmed at runtime
+  //
+  ' ',
+  ' ',
+  ' ',
+  ' ',
+  ' ',
+  ' ',
+
+  0,
+  EFI_ACPI_OEM_PRAM_REVISION,
+  0,
+  0,
+  //
+  // Beginning of PRAM specific fields
+  //
+  0, //address
+  0, //size
+};
+
+VOID*
+ReferenceAcpiTable (
+  VOID
+  )
+{
+  //
+  // Reference the table being generated to prevent the optimizer from
+  // removing the data structure from the executable
+  //
+#ifdef PRAM_SUPPORT
+  return (VOID*)&PRAM;
+#endif
+}

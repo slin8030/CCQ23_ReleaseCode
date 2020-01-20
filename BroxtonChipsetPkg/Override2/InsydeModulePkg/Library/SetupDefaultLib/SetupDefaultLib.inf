@@ -1,0 +1,50 @@
+## @file
+#  Component description file for SetupDefaultLib module
+#
+#******************************************************************************
+#* Copyright (c) 2013 - 2014, Insyde Software Corp. All Rights Reserved.
+#*
+#* You may not reproduce, distribute, publish, display, perform, modify, adapt,
+#* transmit, broadcast, present, recite, release, license or otherwise exploit
+#* any part of this publication in any form, by any means, without the prior
+#* written permission of Insyde Software Corporation.
+#*
+#******************************************************************************
+
+[Defines]
+  INF_VERSION                    = 0x00010005
+  BASE_NAME                      = SetupDefaultLib
+  FILE_GUID                      = 33D7D8D1-A8DC-4DCB-BFF5-9665538185A4
+  MODULE_TYPE                    = BASE
+  VERSION_STRING                 = 1.0
+  LIBRARY_CLASS                  = BaseSetupDefaultLib
+
+[Sources]
+  SetupDefaultLib.c
+
+[Packages]
+  MdePkg/MdePkg.dec
+  InsydeModulePkg/InsydeModulePkg.dec
+#[-start-160928-IB07400789-add]#
+  $(CHIPSET_PKG)/$(CHIPSET_PKG).dec
+#[-end-160928-IB07400789-add]#
+
+[LibraryClasses]
+  KernelConfigLib
+  DebugLib
+  PcdLib
+#[-start-160913-IB07400784-add]#
+  MultiPlatformBaseLib
+#[-end-160913-IB07400784-add]#
+#[-start-160928-IB07400789-add]#
+#[-start-180621-IB07400979-modify]#
+  PlatformCmosLib
+#[-end-180621-IB07400979-modify]#
+#[-end-160928-IB07400789-add]#
+[Guids]
+
+[Protocols]
+
+[Pcd]
+  gInsydeTokenSpaceGuid.PcdLegacyBootTypeOrder
+

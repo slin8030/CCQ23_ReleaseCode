@@ -1,0 +1,39 @@
+## @file
+#  Flash Device Support Library Class
+#
+#******************************************************************************
+#* Copyright (c) 2014, Insyde Software Corp. All Rights Reserved.
+#*
+#* You may not reproduce, distribute, publish, display, perform, modify, adapt,
+#* transmit, broadcast, present, recite, release, license or otherwise exploit
+#* any part of this publication in any form, by any means, without the prior
+#* written permission of Insyde Software Corporation.
+#*
+#******************************************************************************
+
+[Defines]
+  INF_VERSION                    = 0x00010005
+  BASE_NAME                      = SmmSpiAccessInitLib
+  FILE_GUID                      = 8A05BA40-0D9E-400F-8B8E-EFB175383EC4
+  MODULE_TYPE                    = DXE_DRIVER
+  LIBRARY_CLASS                  = SpiAccessInitLib
+
+[Sources]
+  SmmSpiAccessInitLib.c
+
+[Packages]
+  MdePkg/MdePkg.dec
+  InsydeModulePkg/InsydeModulePkg.dec
+  $(PLATFORM_RC_PACKAGE)/$(PLATFORM_RC_PACKAGE).dec
+
+[LibraryClasses]
+  BaseLib
+  DxeServicesTableLib
+
+[Pcd]
+  gEfiMdePkgTokenSpaceGuid.PcdPciExpressBaseAddress
+
+[Guids]
+
+
+

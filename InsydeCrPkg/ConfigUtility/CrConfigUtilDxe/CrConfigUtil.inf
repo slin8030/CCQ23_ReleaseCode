@@ -1,0 +1,82 @@
+#/** @file
+#
+#  Component description file for H2O Console Redirection Config DXE driver.
+#
+#;******************************************************************************
+#;* Copyright (c) 2015, Insyde Software Corporation. All Rights Reserved.
+#;*
+#;* You may not reproduce, distribute, publish, display, perform, modify, adapt,
+#;* transmit, broadcast, present, recite, release, license or otherwise exploit
+#;* any part of this publication in any form, by any means, without the prior
+#;* written permission of Insyde Software Corporation.
+#;*
+#;******************************************************************************
+#*/
+
+[Defines]
+  INF_VERSION                    = 0x00010005
+  BASE_NAME                      = CrConfigUtil
+  FILE_GUID                      = B14AFFC9-F12B-4eaa-B335-1CD84889F6F1
+  MODULE_TYPE                    = DXE_DRIVER
+  VERSION_STRING                 = 1.0
+  ENTRY_POINT                    = CrConfigUtilEntry
+
+[Sources]
+  CrConfigUtil.c
+  CrDeviceMenu.c
+  CrCallback.c
+  CrConfigUtilVfr.vfr
+  CrConfigUtilStr.uni
+
+[Packages]
+  InsydeCrPkg/InsydeCrPkg.dec
+  InsydeModulePkg/InsydeModulePkg.dec
+  IntelFrameworkPkg/IntelFrameworkPkg.dec
+  MdePkg/MdePkg.dec
+  MdeModulePkg/MdeModulePkg.dec
+
+[LibraryClasses]
+  BaseMemoryLib
+  DebugLib
+  DevicePathLib
+  HiiLib
+  HiiExLib
+  UefiLib
+  UefiDriverEntryPoint
+  UefiBootServicesTableLib
+  UefiRuntimeServicesTableLib
+  VariableLib
+  CrDeviceVariableLib
+  CrConfigDefaultLib
+  SelfDebugLib
+
+[Guids]
+  gEfiIfrTianoGuid
+  gEfiGlobalVariableGuid
+  gCrConfigurationGuid
+  gConsoleRedirectionFormsetGuid
+
+[Protocols]
+  gEfiHiiConfigRoutingProtocolGuid              ## CONSUMES
+  gEfiHiiConfigAccessProtocolGuid               ## PRODUCES
+  gEfiHiiDatabaseProtocolGuid                   ## CONSUMES
+  gEfiHiiStringProtocolGuid                     ## CONSUMES
+  gEfiFormBrowser2ProtocolGuid                  ## CONSUMES
+  gEfiVariableArchProtocolGuid                  ## CONSUMES
+  gEfiSetupUtilityApplicationProtocolGuid       ## CONSUMES
+  gEdkiiFormBrowserEx2ProtocolGuid              ## CONSUMES
+  gEdkiiVariableLockProtocolGuid                ## CONSUMES
+
+[Pcd]
+  gInsydeCrTokenSpaceGuid.PcdH2OCrPolicy
+  gInsydeCrTokenSpaceGuid.PcdH2OCRSrvManagerSupported
+#[-start-160315-IB08400335-add]#
+  gInsydeCrTokenSpaceGuid.PcdH2OConsoleRedirectionFormsetClassGuid
+#[-end-160315-IB08400335-add]#
+
+
+[Depex]
+  gEfiVariableArchProtocolGuid      AND
+  gEfiVariableWriteArchProtocolGuid AND
+  gEfiHiiDatabaseProtocolGuid
+

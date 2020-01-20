@@ -1,0 +1,35 @@
+## @file
+#  Component description file for NVM Express Host Controller Driver PEIM
+#
+#******************************************************************************
+#* Copyright (c) 2016, Insyde Software Corp. All Rights Reserved.
+#*
+#* You may not reproduce, distribute, publish, display, perform, modify, adapt,
+#* transmit, broadcast, present, recite, release, license or otherwise exploit
+#* any part of this publication in any form, by any means, without the prior
+#* written permission of Insyde Software Corporation.
+#*
+#;******************************************************************************
+
+[Defines]
+  INF_VERSION                    = 0x00010005
+  BASE_NAME                      = NvmExpressPei
+  FILE_GUID                      = 3D154670-6015-4425-B9C5-8035E34BE6FD
+  MODULE_TYPE                    = PEIM
+  BINARY_VERSION                 = 01.01.08.0215.00
+
+[Binaries.Ia32]
+  PE32|Ia32/NvmExpressPei.efi|*
+
+[Binaries.Arm]
+  PE32|Arm/NvmExpressPei.efi|*
+
+[Binaries.Aarch64]
+  PE32|Aarch64/NvmExpressPei.efi|*
+
+[Packages]
+  InsydeModulePkg/InsydeModulePkg.dec
+
+[Depex]
+  gPeiNvmeControllerPpiGuid AND
+  gPeiBootInRecoveryModePpiGuid

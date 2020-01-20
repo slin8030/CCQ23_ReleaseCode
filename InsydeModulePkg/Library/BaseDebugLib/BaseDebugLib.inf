@@ -1,0 +1,67 @@
+## @file
+#  Component description file for ReservedDxeDebugLib
+#
+#******************************************************************************
+#* Copyright (c) 2016, Insyde Software Corp. All Rights Reserved.
+#*
+#* You may not reproduce, distribute, publish, display, perform, modify, adapt,
+#* transmit, broadcast, present, recite, release, license or otherwise exploit
+#* any part of this publication in any form, by any means, without the prior
+#* written permission of Insyde Software Corporation.
+#*
+#******************************************************************************
+
+[Defines]
+  INF_VERSION                    = 0x00010005
+  BASE_NAME                      = BaseDebugLib
+  FILE_GUID                      = 5F161EB4-D3B6-4f92-A96A-36CD8CC1A032
+  MODULE_TYPE                    = DXE_DRIVER
+  VERSION_STRING                 = 1.0
+  LIBRARY_CLASS                  = DebugLib|DXE_CORE DXE_DRIVER DXE_RUNTIME_DRIVER DXE_SAL_DRIVER DXE_SMM_DRIVER SMM_CORE UEFI_APPLICATION UEFI_DRIVER
+
+#
+# The following information is for reference only and not required by the build tools.
+#
+#  VALID_ARCHITECTURES           = IA32 X64 IPF EBC
+#
+
+[Sources]
+  DebugLib.c
+  UsbDebug.c
+  Pci.c
+  XhcDebugDxe.c
+
+[Packages]
+  MdePkg/MdePkg.dec
+  MdeModulePkg/MdeModulePkg.dec
+  InsydeModulePkg/InsydeModulePkg.dec
+
+[LibraryClasses]
+  PrintLib
+  SerialPortLib
+  PcdLib
+  BaseMemoryLib
+  BaseLib
+  H2ODebugLib
+  TimerLib
+  HobLib
+  PciLib
+
+[Pcd]
+  gEfiMdePkgTokenSpaceGuid.PcdDebugClearMemoryValue  ## SOMETIMES_CONSUMES
+  gEfiMdePkgTokenSpaceGuid.PcdDebugPropertyMask      ## CONSUMES
+  gEfiMdePkgTokenSpaceGuid.PcdFixedDebugPrintErrorLevel ## CONSUMES
+  gEfiMdePkgTokenSpaceGuid.PcdDebugPrintErrorLevel  ## CONSUMES
+  gEfiMdeModulePkgTokenSpaceGuid.PcdStatusCodeUseSerial
+  gInsydeTokenSpaceGuid.PcdH2ODdtSupported
+  gInsydeTokenSpaceGuid.PcdStatusCodeUseUsb
+  gInsydeTokenSpaceGuid.PcdDdtStatusCodeReportsProgressCode
+  gInsydeTokenSpaceGuid.PcdStatusCodeUseDdt
+  gInsydeTokenSpaceGuid.PcdStatusCodeUseUsb
+  gInsydeTokenSpaceGuid.PcdStatusCodeUseXhc
+
+[FixedPcd]
+  gInsydeTokenSpaceGuid.PcdUsbDebugEhciControl
+  gInsydeTokenSpaceGuid.PcdUsbDebugEhciBaseAddress
+  gInsydeTokenSpaceGuid.PcdUsbDebugXhciControl
+  gInsydeTokenSpaceGuid.PcdUsbDebugXhciBaseAddress

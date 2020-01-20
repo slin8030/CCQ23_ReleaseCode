@@ -1,0 +1,54 @@
+## @file
+#  Component description file for RAM Disk Application.
+#
+#******************************************************************************
+#* Copyright (c) 2015, Insyde Software Corp. All Rights Reserved.
+#*
+#* You may not reproduce, distribute, publish, display, perform, modify, adapt,
+#* transmit, broadcast, present, recite, release, license or otherwise exploit
+#* any part of this publication in any form, by any means, without the prior
+#* written permission of Insyde Software Corporation.
+#*
+#******************************************************************************
+
+[Defines]
+  INF_VERSION                    = 0x00010005
+  BASE_NAME                      = RamDiskApp
+  MODULE_UNI_FILE                = RamDiskApp.uni
+  FILE_GUID                      = 2378936E-ED34-44db-AE11-1FA5E4ED4316
+  MODULE_TYPE                    = UEFI_APPLICATION
+  VERSION_STRING                 = 1.0
+  ENTRY_POINT                    = RamDiskAppMain
+  MODULE_UNI_FILE                = RamDiskApp.uni
+
+#
+# The following information is for reference only and not required by the build tools.
+#
+#  VALID_ARCHITECTURES           = IA32 X64 IPF EBC
+#
+
+[Sources]
+  RamDiskApp.c
+  RamDiskAppStrings.uni
+
+[Packages]
+  InsydeModulePkg/InsydeModulePkg.dec
+  MdePkg/MdePkg.dec
+  MdeModulePkg/MdeModulePkg.dec
+  ShellPkg/ShellPkg.dec
+
+[LibraryClasses]
+  BaseLib
+  UefiBootServicesTableLib
+  UefiApplicationEntryPoint
+  BaseMemoryLib
+  ShellLib
+  MemoryAllocationLib
+  UefiLib
+  PcdLib
+  DebugLib
+  HiiLib
+ 
+[Protocols]
+  gH2ORamDiskServicesProtocolGuid
+

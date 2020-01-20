@@ -1,0 +1,58 @@
+## @file
+#  Component description file for RAM Disk Module.
+#
+#******************************************************************************
+#* Copyright (c) 2015, Insyde Software Corp. All Rights Reserved.
+#*
+#* You may not reproduce, distribute, publish, display, perform, modify, adapt,
+#* transmit, broadcast, present, recite, release, license or otherwise exploit
+#* any part of this publication in any form, by any means, without the prior
+#* written permission of Insyde Software Corporation.
+#*
+#******************************************************************************
+
+[Defines]
+  INF_VERSION          = 0x00010005
+  BASE_NAME            = RamDiskDxe
+  FILE_GUID            = 9AA27DAE-2E90-11E5-897D-6DFC1D5D46B0
+  MODULE_TYPE          = UEFI_DRIVER
+  VERSION_STRING       = 1.0
+  ENTRY_POINT          = InitializeRamDiskDriver
+#
+# The following information is for reference only and not required by the build tools.
+#
+#  VALID_ARCHITECTURES           = IA32 X64
+#
+
+[Sources]
+  RamDisk.c
+  RamDisk.h
+
+[Packages]
+  InsydeModulePkg/InsydeModulePkg.dec
+  MdePkg/MdePkg.dec
+ 
+[LibraryClasses]
+  DevicePathLib
+  UefiBootServicesTableLib
+  MemoryAllocationLib
+  BaseMemoryLib
+  UefiLib
+  BaseLib
+  UefiDriverEntryPoint
+  DebugLib
+ 
+[Guids]
+  gH2ORamDiskGuid                            #ALWAYS_CONSUME
+ 
+[Pcd]
+  gInsydeTokenSpaceGuid.PcdH2ORamDiskSize
+  gInsydeTokenSpaceGuid.PcdH2ORamDiskApiSupported
+  gInsydeTokenSpaceGuid.PcdH2ORamDiskAutoCreatedList
+   
+[Protocols]
+  gEfiLoadedImageProtocolGuid                #ALWAYS_CONSUME
+  gEfiBlockIoProtocolGuid                    #ALWAYS_PRODUCE
+  gEfiDevicePathProtocolGuid                 #ALWAYS_PRODUCE
+  gH2ORamDiskServicesProtocolGuid            #ALWAYS_PRODUCE
+

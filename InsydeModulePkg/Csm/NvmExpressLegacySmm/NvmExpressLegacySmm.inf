@@ -1,0 +1,40 @@
+## @file
+#  Component description file for NvmExpressLegacy module
+#
+#;******************************************************************************
+#;* Copyright (c) 2015, Insyde Software Corporation. All Rights Reserved.
+#;*
+#;* You may not reproduce, distribute, publish, display, perform, modify, adapt,
+#;* transmit, broadcast, present, recite, release, license or otherwise exploit
+#;* any part of this publication in any form, by any means, without the prior
+#;* written permission of Insyde Software Corporation.
+#;*
+#;******************************************************************************
+
+[Defines]
+  INF_VERSION                    = 0x00010005
+  PI_SPECIFICATION_VERSION       = 0x0001000A
+  BASE_NAME                      = NvmExpressLegacySmm
+  FILE_GUID                      = 4AAAE990-5F1C-4ba3-B0CE-66754D383521
+  MODULE_TYPE                    = DXE_SMM_DRIVER
+  BINARY_VERSION                 = 01.00.47.1116.00
+
+
+[Binaries.Ia32]
+  PE32|Ia32/NvmExpressLegacySmm.efi|*
+
+[Binaries.X64]
+  PE32|X64/NvmExpressLegacySmm.efi|*
+
+[Packages]
+  MdePkg/MdePkg.dec
+  MdeModulePkg/MdeModulePkg.dec
+  IntelFrameworkPkg/IntelFrameworkPkg.dec
+  InsydeModulePkg/InsydeModulePkg.dec
+
+[Depex]
+  gEfiSmmBase2ProtocolGuid AND
+  gEfiSmmSwDispatch2ProtocolGuid AND
+  gEfiLegacyBiosProtocolGuid AND
+  gEfiNvmExpressPassThruProtocolGuid
+

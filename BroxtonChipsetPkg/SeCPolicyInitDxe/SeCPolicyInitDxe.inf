@@ -1,0 +1,76 @@
+##@file
+# Implement platform SeC t policy
+#
+#@copyright
+# Copyright (c) 1999 - 2015 Intel Corporation. All rights reserved
+# This software and associated documentation (if any) is furnished
+# under a license and may only be used or copied in accordance
+# with the terms of the license. Except as permitted by the
+# license, no part of this software or documentation may be
+# reproduced, stored in a retrieval system, or transmitted in any
+# form or by any means without the express written consent of
+# Intel Corporation.
+# This file contains a 'Sample Driver' and is licensed as such
+# under the terms of your license agreement with Intel or your
+# vendor. This file may be modified by the user, subject to
+# the additional terms of the license agreement.
+#
+#@par Specification Reference:
+#
+##
+
+[defines]
+  INF_VERSION                    = 0x00010005
+  BASE_NAME                      = SeCPolicyInitDxe
+  FILE_GUID                      = 17D09362-326C-4920-A50C-76F8A116A093
+  MODULE_TYPE                    = DXE_DRIVER
+  VERSION_STRING                 = 1.0
+  ENTRY_POINT                    = SeCPlatformPolicyEntryPoint
+
+[Sources]
+  SeCPolicyInitDxe.c
+
+[Packages]
+  MdePkg/MdePkg.dec
+#AutoTrim  Platform/BxtPlatformPkg/PlatformPkg.dec
+  IA32FamilyCpuPkg/IA32FamilyCpuPkg.dec
+  BroxtonSiPkg/BroxtonSiPkg.dec
+  $(CHIPSET_PKG)/$(CHIPSET_PKG).dec
+  InsydeModulePkg/InsydeModulePkg.dec
+
+[LibraryClasses]
+  DebugLib
+  BaseLib
+  PciLib
+  IoLib
+  UefiDriverEntryPoint
+  MemoryAllocationLib
+  SeCLib
+  UefiLib
+#[-start-160803-IB07220122-remove]#
+#   PlatformConfigDataLib
+#[-end-160803-IB07220122-remove]#
+  PreSiliconLib
+#[-start-160904-IB07400778-add]#
+#[-start-161123-IB07250310-add]#
+#!if $(FSP_ENABLE) == YES
+  HobLib
+#!endif
+#[-end-161123-IB07250310-add]#
+#[-end-160904-IB07400778-add]#
+
+[Protocols]
+  gDxePlatformSeCPolicyGuid
+  gEfiSeCOperationProtocolGuid
+  gEfiHeciProtocolGuid
+
+[Guids]
+  gEfiPlatformInfoGuid
+
+[Pcd]
+  gEfiMdePkgTokenSpaceGuid.PcdPciExpressBaseAddress
+  gChipsetPkgTokenSpaceGuid.PcdSetupConfigSize
+
+[Depex]
+  TRUE
+

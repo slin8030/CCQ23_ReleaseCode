@@ -1,0 +1,57 @@
+## @file
+#  Implement the PEIM of Pei BIOS Storage.
+#  
+#  ***************************************************************************
+#  * Copyright (c) 2014, Insyde Software Corp. All Rights Reserved.
+#  *
+#  * You may not reproduce, distribute, publish, display, perform, modify, adapt,
+#  * transmit, broadcast, present, recite, release, license or otherwise exploit
+#  * any part of this publication in any form, by any means, without the prior
+#  * written permission of Insyde Software Corporation.
+#  *
+#  ******************************************************************************
+#  
+##
+
+[Defines]
+  INF_VERSION               = 0x00010005
+  BASE_NAME                 = BiosStoragePei
+  FILE_GUID                 = 650870ED-2F7D-4686-BE6E-2D0494F4B629
+  MODULE_TYPE               = PEIM
+  VERSION_STRING            = 1.0
+  ENTRY_POINT               = PeiBiosStorageInit
+
+[Packages]
+  MdePkg/MdePkg.dec
+  $(INSYDE_EVENTLOG_PKG)/$(INSYDE_EVENTLOG_PKG).dec
+  InsydeModulePkg/InsydeModulePkg.dec
+#[-start-171207-IB08400539-remove]#
+#  IntelFrameworkPkg/IntelFrameworkPkg.dec
+#[-end-171207-IB08400539-remove]#
+  
+[Sources]
+  BiosStoragePei.c
+  
+[LibraryClasses]
+  PeimEntryPoint
+  PeiServicesLib
+  BaseLib
+  HobLib
+  EventLogGetTimeFromCmosLib
+  
+[Ppis]
+#[-start-171212-IB08400542-modify]#
+  gH2OBiosStoragePpiGuid
+#[-end-171212-IB08400542-modify]#
+  
+[Guids]
+#[-start-171212-IB08400542-modify]#
+  gH2OBiosEventLogHobGuid
+#[-end-171212-IB08400542-modify]#
+  
+[Pcd]
+
+[FeaturePcd]  
+  
+[Depex]
+  TRUE

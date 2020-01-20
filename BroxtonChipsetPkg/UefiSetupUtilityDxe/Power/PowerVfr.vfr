@@ -1,0 +1,153 @@
+/** @file
+  The Vfr component for Power menu
+
+;******************************************************************************
+;* Copyright (c) 2012 - 2014, Insyde Software Corp. All Rights Reserved.
+;*
+;* You may not reproduce, distribute, publish, display, perform, modify, adapt,
+;* transmit, broadcast, present, recite, release, license or otherwise exploit
+;* any part of this publication in any form, by any means, without the prior
+;* written permission of Insyde Software Corporation.
+;*
+;******************************************************************************
+*/
+#include "Configuration.h"
+#include <ChipsetSetupConfig.h>
+//
+//          Form 4: Power Menu
+//
+
+formset
+#if FeaturePcdGet(PcdH2OFormBrowserSupported)
+  guid     = FORMSET_ID_GUID_POWER,
+#else
+  guid     = SYSTEM_CONFIGURATION_GUID,
+#endif
+  title    = STRING_TOKEN(STR_POWER_TITLE),
+  help     = STRING_TOKEN(STR_BLANK_STRING),
+  classguid = SETUP_UTILITY_FORMSET_CLASS_GUID,
+  class    = SETUP_UTILITY_CLASS,
+  subclass = EFI_USER_ACCESS_THREE,
+#if defined(SETUP_IMAGE_SUPPORT) && FeaturePcdGet(PcdH2OFormBrowserLocalMetroDESupported)
+  image     = IMAGE_TOKEN (IMAGE_POWER);
+#endif
+
+  varstore CHIPSET_CONFIGURATION,            // This is the data structure type
+    varid = CONFIGURATION_VARSTORE_ID,      // Optional VarStore ID
+    name  = SystemConfig,                   // Define referenced name in vfr
+    guid  = SYSTEM_CONFIGURATION_GUID;      // GUID of this buffer storage
+
+  form
+    formid = ROOT_FORM_ID,
+
+    title = STRING_TOKEN(STR_POWER_TITLE);
+
+    subtitle
+      text = STRING_TOKEN(STR_BLANK_STRING);
+
+
+//[-start-161103-IB07400807-modify]//
+    //
+    // Jump to  2)CPU Configuration Form
+    //
+    goto CPU_CONFIGURATION_FORM_ID,
+      prompt = STRING_TOKEN(STR_CPU_CONFIGURATION_TITLE),
+      help   = STRING_TOKEN(STR_CPU_CONFIGURATION_HELP);
+      
+    subtitle
+      text = STRING_TOKEN(STR_BLANK_STRING);
+      
+    grayoutif
+      ideqval SystemConfig.UserAccessLevel == 2
+      AND
+      ideqval SystemConfig.SetUserPass == 1;
+//[-start-170314-IB07400847-remove]//
+//      oneof
+//        varid       = SystemConfig.S5LongRunTest,
+//        prompt      = STRING_TOKEN(STR_S5_LONG_RUN_TEST_STRING),
+//        help        = STRING_TOKEN(STR_S5_LONG_RUN_TEST_HELP),
+//        option text = STRING_TOKEN(STR_DISABLED_TEXT),    value = 0, flags = DEFAULT;
+//        option text = STRING_TOKEN(STR_ENABLED_TEXT),     value = 1, flags = 0;
+//      endoneof;
+//[-end-170314-IB07400847-remove]//
+//[-start-161118-IB07400817-add]//
+      oneof
+        varid       = SystemConfig.WakeOnPME,
+        prompt      = STRING_TOKEN(STR_WAKE_ON_PME_STRING),
+        help        = STRING_TOKEN(STR_WAKE_ON_PME_HELP),
+//[-start-171115-IB07400928-modify]//
+        option text = STRING_TOKEN(STR_DISABLED_TEXT),      value = 0, flags = DEFAULT | INTERACTIVE;
+        option text = STRING_TOKEN(STR_ENABLED_BY_OS_TEXT), value = 1, flags = 0       | INTERACTIVE;
+        option text = STRING_TOKEN(STR_FORCE_ENABLED_TEXT), value = 2, flags = 0       | INTERACTIVE;
+//[-end-171115-IB07400928-modify]//
+      endoneof;
+//[-end-161118-IB07400817-add]//
+//[-start-170314-IB07400847-add]//
+      oneof
+        varid       = SystemConfig.WakeOnS5,
+        prompt      = STRING_TOKEN(STR_WAKE_ON_RTC_FROM_S5_PROMPT),
+        help        = STRING_TOKEN(STR_WAKE_ON_RTC_FROM_S5_HELP),
+        option text = STRING_TOKEN(STR_DISABLED_TEXT),              value = 0, flags = DEFAULT;
+        option text = STRING_TOKEN(STR_WAKE_BY_EVERY_DAY_TEXT),     value = 1, flags = 0;
+        option text = STRING_TOKEN(STR_WAKE_BY_DAY_OF_MONTH_TEXT),  value = 2, flags = 0;
+        option text = STRING_TOKEN(STR_WAKE_BY_SLEEP_TIME_TEXT),    value = 3, flags = 0;
+        option text = STRING_TOKEN(STR_WAKE_BY_OS_UTILITY_TEXT),    value = 4, flags = 0;
+      endoneof;
+      
+      suppressif
+        ideqvallist SystemConfig.WakeOnS5 == 0 3 4;
+        time
+          varid   = SystemConfig.WakeOnS5Time,
+          prompt  = STRING_TOKEN(STR_WAKE_FROM_S5_TIME_PROMPT),
+          help    = STRING_TOKEN(STR_TIME_HELP),
+          flags   = STORAGE_NORMAL,
+          default = 00:00:00,
+        endtime;
+      endif;
+      
+      suppressif
+        ideqvallist SystemConfig.WakeOnS5 == 0 1 3 4;
+        numeric
+          varid       = SystemConfig.WakeOnS5DayOfMonth,
+          prompt      = STRING_TOKEN(STR_WAKE_DAY_OF_MONTH_PROMPT),
+          help        = STRING_TOKEN(STR_DATE_DAY_HELP),
+          minimum     = 1,
+          maximum     = 31,
+          step        = 1,
+          default     = 1,
+        endnumeric;
+      endif;
+      
+      suppressif
+        ideqvallist SystemConfig.WakeOnS5 == 0 1 2 4;
+        numeric
+          varid       = SystemConfig.S5WakeOnRtcAfterSec,
+          prompt      = STRING_TOKEN(STR_WAKE_S5_AFTER_SECONDS_PROMPT),
+          help        = STRING_TOKEN(STR_WAKE_FROM_S5_TIME_HELP),
+          minimum     = 5,
+//[-start-180410-IB07400956-modify]//
+          maximum     = 255,
+//[-end-180410-IB07400956-modify]//
+          step        = 1,
+          default     = 5,
+        endnumeric;
+      endif;
+      
+//[-end-170314-IB07400847-add]//
+    endif;
+
+//    //
+//    // Jump to  2)CPU Configuration Form
+//    //
+//    goto CPU_CONFIGURATION_FORM_ID,
+//      prompt = STRING_TOKEN(STR_CPU_CONFIGURATION_TITLE),
+//      help   = STRING_TOKEN(STR_CPU_CONFIGURATION_HELP);
+//[-end-161103-IB07400807-modify]//
+      
+  endform;
+
+#include "Cpu.vfi"
+
+link;
+
+endformset;

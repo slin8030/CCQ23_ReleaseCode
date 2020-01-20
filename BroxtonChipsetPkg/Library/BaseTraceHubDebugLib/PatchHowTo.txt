@@ -1,0 +1,102 @@
+
+================================================================================
+                                 Introduction
+================================================================================
+  SvenTX is a source delivery API for TraceHub support.
+
+
+================================================================================
+                                SvenTX-Version
+================================================================================
+  Not Applicable
+
+
+================================================================================
+                      HOW to Install SvenTx for UEFI Building
+================================================================================
+1.  Download TraceHub from website:
+    https://wiki.ith.intel.com/display/npksdk/Download+NPK+SW+Tools+Releases
+
+2.  Apply following modification to SvenTX core
+    2.a ERROR C2491
+        @ ClientCommonPkg/Include/Library/sventx/sventx/compiler.h
+
+        #if defined(SVENTX_EXPORTS)
+        #define SVEN_EXPORT   __declspec(dllexport)
+        #else
+        #define SVEN_EXPORT   __declspec(dllimport)
+        #endif
+        #undef SVEN_EXPORT                                  <- Add this line
+        #define SVEN_EXPORT                                 <- Add this line
+        #define SVEN_CALLCONV __stdcall
+
+    2.b #include <intrin.h>
+        @ ClientCommonPkg/Library/SventxLib/sventx/src/sventx_compiler.c
+
+        #if defined(_WIN32)     /* MSVC Compiler section*/
+
+        //#include <intrin.h>                               <- Comment this line
+        #pragma intrinsic(_ReturnAddress)
+
+    Note: refer to ClientCommonPkg/Include/Library/sventx.old and
+                   ClientCommonPkg/Library/SventxLib/sventx.old
+
+3.  Implement platform specific functions
+    3.a malloc(s) and free(p)
+        @ ClientCommonPkg\Include\Library\sventx\sventx_platform.h
+
+        #include "sventx_platform_config.h"
+        
+        #if defined(SVEN_PCFG_ENABLE_HEAP_MEMORY)
+        #include <Library/MemoryAllocationLib.h>            <- Modify this line
+        #endif
+        
+        #ifdef __cplusplus
+
+         * @see
+         */
+        #define SVEN_HEAP_MALLOC(s) AllocateRuntimePool(s)  <- Modify this line
+        #define SVEN_HEAP_FREE(p)   FreePool(p)             <- Modify this line
+        #endif
+
+
+    3.b Include files
+        @ ClientCommonPkg/Library/SventxLib/sventx/platform/UEFI/src/sventx_platform.c
+
+        #include <Base.h>                                   <- Use EFI header
+        #include <Uefi.h>                                      Instead
+        #include <Library/DebugLib.h>
+
+    3.c Output method
+        @ ClientCommonPkg/Library/SventxLib/sventx/platform/UEFI/src/sventx_platform.c
+
+        #if !defined(SVEN_UNIT_TEST)
+            DEBUG (( DEBUG_INFO,                            <- Replace printf
+                "  in SVEN plaform handle init hook: \n"       with DEBUG
+                                                               macro
+
+    3.d CONSTRUCTOR and DESTRUCTOR 
+        @ ClientCommonPkg/Library/SventxLib/sventx/platform/UEFI/src/sventx_platform.c
+
+        EFI_STATUS                                          <- Modify function
+        EFIAPI                                                 type and parameter
+        shared_library_init (
+          IN EFI_HANDLE        ImageHandle,
+          IN EFI_SYSTEM_TABLE  *SystemTable
+          )
+
+        EFI_STATUS                                          <- Modify function
+        EFIAPI                                                 type and parameter
+        shared_library_exit (
+          IN EFI_HANDLE        ImageHandle,
+          IN EFI_SYSTEM_TABLE  *SystemTable
+          )
+
+    3.e EFI redundant function
+        @ ClientCommonPkg/Library/SventxLib/sventx/platform/UEFI/src/sventx_platform.c
+
+        DllMain()                                           <- Remove this
+                                                               function
+
+    Note: refer to ClientCommonPkg/Include/Library/sventx.old and
+                   ClientCommonPkg/Library/SventxLib/sventx.old

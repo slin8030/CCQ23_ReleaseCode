@@ -1,0 +1,154 @@
+## @file
+#  Platform Package Flash Description File
+#
+#******************************************************************************
+#* Copyright (c) 2016, Insyde Software Corp. All Rights Reserved.
+#*
+#* You may not reproduce, distribute, publish, display, perform, modify, adapt,
+#* transmit, broadcast, present, recite, release, license or otherwise exploit
+#* any part of this publication in any form, by any means, without the prior
+#* written permission of Insyde Software Corporation.
+#*
+#******************************************************************************
+
+[FV.RECOVERYFV]
+
+#[-start-180823-IB07400999-add]#
+!if gH2OEventLogPkgTokenSpaceGuid.PcdH2OEventLogSupported
+#[-end-180823-IB07400999-add]#
+#[-start-171212-IB08400542-modify]#
+!if gH2OEventLogPkgTokenSpaceGuid.PcdH2OBiosEventStorageSupported
+  INF $(INSYDE_EVENTLOG_PKG)/EventStorage/BiosStorage/BiosStoragePei/BiosStoragePei.inf
+!endif
+
+!if gH2OEventLogPkgTokenSpaceGuid.PcdH2OEventLogSupported
+INF $(INSYDE_EVENTLOG_PKG)/EventLog/EventLogPei/EventLogPei.inf
+!endif
+
+!if gH2OEventLogPkgTokenSpaceGuid.PcdH2OPostMessageSupported
+INF $(INSYDE_EVENTLOG_PKG)/PostMessage/PostMessagePei/PostMessagePei.inf
+!endif
+
+!if gH2OEventLogPkgTokenSpaceGuid.PcdH2OBmcSelEventStorageSupported
+  INF $(INSYDE_EVENTLOG_PKG)/EventStorage/BmcSelStorage/BmcSelStoragePei/BmcSelStoragePei.inf
+!endif
+
+!if gH2OEventLogPkgTokenSpaceGuid.PcdH2OEfiDebugMsgSupported  
+!disable INF InsydeModulePkg/Universal/StatusCode/DebugMaskPei/DebugMaskPei.inf
+INF $(INSYDE_EVENTLOG_PKG)/DebugMessage/DebugMaskPei/DebugMaskPei.inf
+!endif
+
+!if gH2OEventLogPkgTokenSpaceGuid.PcdH2OStoreDebugMsgPeiSupported
+INF $(INSYDE_EVENTLOG_PKG)/DebugMessage/StoreDebugMessagePei/StoreDebugMessagePei.inf
+!endif
+#[-end-171212-IB08400542-modify]#
+
+#[-start-180822-IB07400999-modify]#
+!if gH2OEventLogPkgTokenSpaceGuid.PcdH2OEfiDebugMsgSupported
+!if gEfiMdeModulePkgTokenSpaceGuid.PcdStatusCodeUseSerial == 1 || gEfiMdeModulePkgTokenSpaceGuid.PcdStatusCodeUseMemory == 1
+  !disable INF MdeModulePkg/Universal/StatusCodeHandler/Pei/StatusCodeHandlerPei.inf
+  INF APRIORI $(INSYDE_EVENTLOG_PKG)/StatusCodeHandler/Pei/H2OStatusCodeHandlerPei.inf
+!endif  
+!else
+!if gEfiMdeModulePkgTokenSpaceGuid.PcdStatusCodeUseSerial == 1 || gEfiMdeModulePkgTokenSpaceGuid.PcdStatusCodeUseMemory == 1
+INF APRIORI MdeModulePkg/Universal/StatusCodeHandler/Pei/StatusCodeHandlerPei.inf
+!endif
+!endif
+#[-end-180822-IB07400999-modify]#
+#[-start-180823-IB07400999-add]#
+!endif
+#[-end-180823-IB07400999-add]#
+
+
+
+[FV.DXEFV]
+
+#[-start-180823-IB07400999-add]#
+!if gH2OEventLogPkgTokenSpaceGuid.PcdH2OEventLogSupported
+#[-end-180823-IB07400999-add]#
+#[-start-171212-IB08400542-modify]#
+!if gH2OEventLogPkgTokenSpaceGuid.PcdH2OBiosEventStorageSupported
+!if gH2OEventLogPkgTokenSpaceGuid.PcdH2OBiosEventStorageUseVariableStorageSupported
+INF $(INSYDE_EVENTLOG_PKG)/EventStorage/BiosStorage/BiosStorageSmm/BiosStorageKernelUseVariableSmm.inf
+INF $(INSYDE_EVENTLOG_PKG)/EventStorage/BiosStorage/BiosStorageDxe/BiosStorageKernelUseVariableDxe.inf
+!else
+INF $(INSYDE_EVENTLOG_PKG)/EventStorage/BiosStorage/BiosStorageDxe/BiosStorageKernelDxe.inf
+INF $(INSYDE_EVENTLOG_PKG)/EventStorage/BiosStorage/BiosStorageSmm/BiosStorageKernelSmm.inf
+!endif
+
+INF $(INSYDE_EVENTLOG_PKG)/EventStorage/BiosStorage/BiosStorageDxe/BiosStorageChipsetDxe.inf 
+INF $(INSYDE_EVENTLOG_PKG)/EventStorage/BiosStorage/BiosStorageSmm/BiosStorageChipsetSmm.inf 
+!endif
+
+!if gH2OEventLogPkgTokenSpaceGuid.PcdH2OEventLogSupported
+INF $(INSYDE_EVENTLOG_PKG)/EventLog/EventLogDxe/EventLogDxe.inf
+INF $(INSYDE_EVENTLOG_PKG)/EventLog/EventLogSmm/EventLogSmm.inf
+
+#[-start-180823-IB07400999-modify]#
+!if $(H2O_MEMORY_EVENT_STORAGE_SUPPORTED) == YES
+INF $(INSYDE_EVENTLOG_PKG)/EventStorage/MemoryStorage/MemoryStorageDxe/MemoryStorageKernelDxe.inf 
+INF $(INSYDE_EVENTLOG_PKG)/EventStorage/MemoryStorage/MemoryStorageDxe/MemoryStorageChipsetDxe.inf
+
+INF $(INSYDE_EVENTLOG_PKG)/EventStorage/MemoryStorage/MemoryStorageSmm/MemoryStorageKernelSmm.inf
+INF $(INSYDE_EVENTLOG_PKG)/EventStorage/MemoryStorage/MemoryStorageSmm/MemoryStorageChipsetSmm.inf
+!endif
+#[-end-180823-IB07400999-modify]#
+
+!if gH2OEventLogPkgTokenSpaceGuid.PcdH2OBmcSelEventStorageSupported
+  INF $(INSYDE_EVENTLOG_PKG)/EventStorage/BmcSelStorage/BmcSelEventStorageDxe/BmcSelEventStorageDxe.inf
+  INF $(INSYDE_EVENTLOG_PKG)/EventStorage/BmcSelStorage/BmcSelEventStorageSmm/BmcSelEventStorageSmm.inf
+  INF $(INSYDE_EVENTLOG_PKG)/BmcSelStringTranslationDxe/BmcSelStringTranslationDxe.inf
+!endif
+
+!if gH2OEventLogPkgTokenSpaceGuid.PcdH2OEventLogConfigManagerSupported
+  INF $(INSYDE_EVENTLOG_PKG)/ConfigUtility/H2OEventLogConfigManagerDxe/H2OEventLogConfigManagerDxe.inf
+  INF $(INSYDE_EVENTLOG_PKG)/ConfigUtility/BiosEventLogConfigUtilDxe/BiosEventLogConfigUtilDxe.inf
+  !if gH2OEventLogPkgTokenSpaceGuid.PcdH2OPostMessageSupported  
+    INF $(INSYDE_EVENTLOG_PKG)/ConfigUtility/PostMessageConfigUtilDxe/PostMessageConfigUtilDxe.inf
+  !endif
+  !if gInsydeTokenSpaceGuid.PcdH2OSetupChangeDisplaySupported
+    INF $(INSYDE_EVENTLOG_PKG)/ConfigUtility/SetupChangeConfigUtilDxe/SetupChangeConfigUtilDxe.inf
+  !endif
+  !if gH2OEventLogPkgTokenSpaceGuid.PcdH2OEfiDebugMsgSupported  
+    INF $(INSYDE_EVENTLOG_PKG)/ConfigUtility/DebugMessageConfigUtilDxe/DebugMessageConfigUtilDxe.inf
+  !endif
+!endif  
+
+!endif
+
+!if gH2OEventLogPkgTokenSpaceGuid.PcdH2OPostMessageSupported
+INF  $(INSYDE_EVENTLOG_PKG)/PostMessage/PostMessageDxe/PostMessageDxe.inf
+INF  $(INSYDE_EVENTLOG_PKG)/PostMessage/PostMessageSmm/PostMessageSmm.inf
+!endif
+
+!if gH2OEventLogPkgTokenSpaceGuid.PcdH2OStoreDebugMsgSupported
+INF APRIORI $(INSYDE_EVENTLOG_PKG)/DebugMessage/StoreDebugMessageDxe/StoreDebugMessageDxe.inf 
+INF APRIORI $(INSYDE_EVENTLOG_PKG)/DebugMessage/StoreDebugMessageSmm/StoreDebugMessageSmm.inf
+!endif
+
+!if gH2OEventLogPkgTokenSpaceGuid.PcdH2OShowEventsOnPostDisplaySupported
+INF $(INSYDE_EVENTLOG_PKG)/EventLogPostDisplayDxe/EventLogPostDisplayDxe.inf
+!endif
+#[-end-171212-IB08400542-modify]#
+
+!disable INF MdeModulePkg/Universal/StatusCodeHandler/RuntimeDxe/StatusCodeHandlerRuntimeDxe.inf
+!if gH2OEventLogPkgTokenSpaceGuid.PcdH2OEfiDebugMsgSupported
+!if gEfiMdeModulePkgTokenSpaceGuid.PcdStatusCodeUseSerial == 1 || gEfiMdeModulePkgTokenSpaceGuid.PcdStatusCodeUseMemory == 1
+  INF APRIORI $(INSYDE_EVENTLOG_PKG)/StatusCodeHandler/RuntimeDxe/H2OStatusCodeHandlerRuntimeDxe.inf
+!endif  
+!else
+!if gEfiMdeModulePkgTokenSpaceGuid.PcdStatusCodeUseSerial == 1 || gEfiMdeModulePkgTokenSpaceGuid.PcdStatusCodeUseMemory == 1
+  INF APRIORI MdeModulePkg/Universal/StatusCodeHandler/RuntimeDxe/StatusCodeHandlerRuntimeDxe.inf
+!endif
+!endif
+
+!disable INF MdeModulePkg/Universal/StatusCodeHandler/Smm/StatusCodeHandlerSmm.inf
+!if gH2OEventLogPkgTokenSpaceGuid.PcdH2OEfiDebugMsgSupported
+  INF $(INSYDE_EVENTLOG_PKG)/StatusCodeHandler/Smm/H2OStatusCodeHandlerSmm.inf
+!else
+  INF MdeModulePkg/Universal/StatusCodeHandler/Smm/StatusCodeHandlerSmm.inf
+!endif
+#[-start-180823-IB07400999-add]#
+!endif
+#[-end-180823-IB07400999-add]#
+

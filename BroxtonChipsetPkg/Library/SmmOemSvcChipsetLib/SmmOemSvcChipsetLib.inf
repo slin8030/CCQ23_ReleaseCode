@@ -1,0 +1,50 @@
+## @file
+#  Component description file for Smm OEM Services Chipset Lib instance.
+#
+#******************************************************************************
+#* Copyright (c) 2014, Insyde Software Corp. All Rights Reserved.
+#*
+#* You may not reproduce, distribute, publish, display, perform, modify, adapt,
+#* transmit, broadcast, present, recite, release, license or otherwise exploit
+#* any part of this publication in any form, by any means, without the prior
+#* written permission of Insyde Software Corporation.
+#*
+#******************************************************************************
+
+[Defines]
+  INF_VERSION                    = 0x00010005
+  BASE_NAME                      = SmmOemSvcChipsetLib
+  FILE_GUID                      = DBC5E61B-263B-4f82-90D0-B8A02F3EB504
+  MODULE_TYPE                    = DXE_SMM_DRIVER
+  VERSION_STRING                 = 1.0
+  LIBRARY_CLASS                  = SmmOemSvcChipsetLib|DXE_SMM_DRIVER SMM_CORE
+
+[Sources]
+  OemSvcGetSaveRestorePciDeviceOemList.c
+  OemSvcVbiosHookCallBack.c
+  OemSvcIhisiS10HookGetAcStatus.c          
+  OemSvcIhisiS10HookGetBatterylife.c    
+  OemSvcIhisiS10HookGetPermission.c
+  OemSvcIhisiS11HookFbtsApCheck.c
+#[-start-190220-IB07401083-remove]#
+#  OemSvcIhisiS12HookGetOemFlashMap.c
+#[-end-190220-IB07401083-remove]#
+  OemSvcIhisiS20HookFetsDoBeforeFlashing.c
+  OemSvcIhisiS20HookFetsDoAfterFlashing.c
+  OemSvcIhisiS20HookFetsEcFlash.c
+  OemSvcIhisiS20HookFetsEcIdle.c
+  OemSvcIhisiS21HookFetsGetPartInfo.c
+  OemSvcIhisiS41T1VbiosFunction.c
+  OemSvcIhisiS41T54LogoUpdateFunction.c
+  OemSvcIhisiS41T55CheckBiosSignBySystemBiosFunction.c
+  OemSvcIhisiS41ReservedFunction.c
+  OemSvcIhisiS41T50HookOa30ReadWriteFunction.c   
+  OemSvcIhisiS1FHookFbtsApHookForBios.c
+  
+[Packages]
+  MdePkg/MdePkg.dec
+  MdeModulePkg/MdeModulePkg.dec
+  $(CHIPSET_PKG)/$(CHIPSET_PKG).dec
+  $(PROJECT_PKG)/Project.dec
+  InsydeModulePkg/InsydeModulePkg.dec
+  IntelFrameworkPkg/IntelFrameworkPkg.dec

@@ -1,0 +1,33 @@
+## @file
+#  Component description file for BaseOemSvcChipsetLib Module
+#
+#******************************************************************************
+#* Copyright (c) 2014, Insyde Software Corp. All Rights Reserved.
+#*
+#* You may not reproduce, distribute, publish, display, perform, modify, adapt,
+#* transmit, broadcast, present, recite, release, license or otherwise exploit
+#* any part of this publication in any form, by any means, without the prior
+#* written permission of Insyde Software Corporation.
+#*
+#******************************************************************************
+
+[Defines]
+  INF_VERSION                    = 0x00010005
+  BASE_NAME                      = BaseOemSvcChipsetLib
+  FILE_GUID                      = 46D8DDE4-ECAA-4b0c-BD27-CD57A401B306
+  MODULE_TYPE                    = BASE
+  VERSION_STRING                 = 1.0
+  LIBRARY_CLASS                  = BaseOemSvcChipsetLib
+
+[Sources]
+  OemSvcEcVersion.c
+  OemSvcEcGetLidState.c
+  OemSvcEcPowerState.c
+  OemSvcEcSaveRestoreKbc.c
+  OemSvcEcSetDswMode.c
+
+[Packages]
+  MdePkg/MdePkg.dec
+  $(CHIPSET_PKG)/$(CHIPSET_PKG).dec
+  InsydeModulePkg/InsydeModulePkg.dec
+  

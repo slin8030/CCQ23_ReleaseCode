@@ -1,0 +1,58 @@
+## @file
+# Implement for CrConfig variable load default setting
+#
+#******************************************************************************
+#* Copyright (c) 2012 - 2013, Insyde Software Corp. All Rights Reserved.
+#*
+#* You may not reproduce, distribute, publish, display, perform, modify, adapt,
+#* transmit, broadcast, present, recite, release, license or otherwise exploit
+#* any part of this publication in any form, by any means, without the prior
+#* written permission of Insyde Software Corporation.
+#*
+#******************************************************************************
+
+
+[Defines]
+  INF_VERSION                    = 0x00010005
+  BASE_NAME                      = CrDeviceVariableLib
+  FILE_GUID                      = 3F20D6AF-B42C-4946-9FD6-C33506105574
+  MODULE_TYPE                    = BASE
+  VERSION_STRING                 = 1.0
+  LIBRARY_CLASS                  = CrDeviceVariableLib|DXE_DRIVER UEFI_DRIVER UEFI_APPLICATION
+
+[Sources]
+  CrDeviceVariableLib.c
+  CrDeviceVariableMisc.c
+#   DebugPrint.c
+
+[Packages]
+  InsydeCrPkg/InsydeCrPkg.dec
+  InsydeModulePkg/InsydeModulePkg.dec
+  MdePkg/MdePkg.dec
+  MdeModulePkg/MdeModulePkg.dec
+
+[LibraryClasses]
+  BaseLib
+  BaseMemoryLib
+  DebugLib
+  DevicePathLib
+  MemoryAllocationLib
+  PcdLib
+  UefiLib
+  UefiBootServicesTableLib
+  UefiRuntimeServicesTableLib
+  VariableLib
+  SelfDebugLib
+
+[Guids]
+  gCrConfigurationGuid
+
+[Pcd]
+  gInsydeCrTokenSpaceGuid.PcdH2OCrDevice
+
+[Protocols]
+
+#   gEfiCRPolicyProtocolGuid
+#   gCRBdsHookProtocolGuid
+#   gConsoleRedirectionServiceProtocolGuid
+

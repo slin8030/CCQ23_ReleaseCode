@@ -1,0 +1,51 @@
+## @file
+#  SmbiosUpdateDxe.inf 
+#
+#******************************************************************************
+#* Copyright (c) 2012 - 2016, Insyde Software Corp. All Rights Reserved.
+#*
+#* You may not reproduce, distribute, publish, display, perform, modify, adapt,
+#* transmit, broadcast, present, recite, release, license or otherwise exploit
+#* any part of this publication in any form, by any means, without the prior
+#* written permission of Insyde Software Corporation.
+#*
+#******************************************************************************
+
+[Defines]
+  INF_VERSION          = 0x00010005
+  BASE_NAME            = SmbiosUpdateDxe
+  FILE_GUID            = 453253B9-A204-46e4-B873-CA2249DA4888
+  MODULE_TYPE          = DXE_DRIVER
+  VERSION_STRING       = 1.0
+  ENTRY_POINT          = SmbiosUpdateInit
+
+[Sources]
+  SmbiosUpdateDxe.c
+
+[Packages]
+  MdePkg/MdePkg.dec
+  InsydeModulePkg/InsydeModulePkg.dec
+  $(CHIPSET_PKG)/$(CHIPSET_PKG).dec
+  MdeModulePkg/MdeModulePkg.dec
+  $(PLATFORM_RC_PACKAGE)/$(PLATFORM_RC_PACKAGE).dec
+#[-start-160218-IB08450338-add]#
+  BroxtonSiPkg/NorthCluster/MemoryInit/MemoryInitAplk.dec
+#[-end-160218-IB08450338-add]#
+
+[LibraryClasses]
+  UefiDriverEntryPoint
+  UefiBootServicesTableLib
+  BaseMemoryLib
+  MemoryAllocationLib
+  IoLib
+  DebugLib
+  UefiLib
+  CommonSmbiosLib
+
+[Protocols]
+  gEfiSmbiosProtocolGuid
+  gMemInfoProtocolGuid
+
+[Depex]
+  gEfiSmbiosProtocolGuid AND
+  gMemInfoProtocolGuid

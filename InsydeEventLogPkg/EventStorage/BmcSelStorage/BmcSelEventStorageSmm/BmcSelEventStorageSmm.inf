@@ -1,0 +1,64 @@
+#/** @file
+#
+#  Component description file for BmcSelEventStorage SMM driver.
+#
+#;******************************************************************************
+#;* Copyright (c) 2013 - 2017, Insyde Software Corporation. All Rights Reserved.
+#;*
+#;* You may not reproduce, distribute, publish, display, perform, modify, adapt,
+#;* transmit, broadcast, present, recite, release, license or otherwise exploit
+#;* any part of this publication in any form, by any means, without the prior
+#;* written permission of Insyde Software Corporation.
+#;*
+#;******************************************************************************
+#*/
+
+[Defines]
+  INF_VERSION                    = 0x00010005
+  BASE_NAME                      = BmcSelEventStorageSmm
+  FILE_GUID                      = 74AC8A89-8CF5-49B7-A09D-97591610462E
+  MODULE_TYPE                    = DXE_SMM_DRIVER
+  PI_SPECIFICATION_VERSION       = 0x0001000A
+  VERSION_STRING                 = 1.0
+  ENTRY_POINT                    = BmcSelEventStorageSmmEntryPoint
+
+[Sources]
+  BmcSelEventStorageSmm.c
+  BmcSelEventStorageSmm.h
+
+[Packages]
+  MdePkg/MdePkg.dec
+  $(INSYDE_EVENTLOG_PKG)/$(INSYDE_EVENTLOG_PKG).dec
+#[-start-171207-IB08400539-remove]#
+#  IntelFrameworkPkg/IntelFrameworkPkg.dec
+#[-end-171207-IB08400539-remove]#
+  InsydeModulePkg/InsydeModulePkg.dec
+#[-start-170929-IB08400459-modify]#
+  SegFeaturePkg/SegFeaturePkg.dec
+#[-end-170929-IB08400459-modify]#
+
+[LibraryClasses]
+  BaseLib
+  IoLib
+  UefiBootServicesTableLib
+  UefiRuntimeServicesTableLib
+  UefiDriverEntryPoint
+  BaseMemoryLib
+#[-start-170929-IB08400459-add]#
+  IpmiInterfaceLib
+  IpmiSelDataLib
+#[-end-170929-IB08400459-add]#
+  SmmServicesTableLib
+
+[Protocols]
+  gEfiSmmBase2ProtocolGuid                     # CONSUMED
+#[-start-170929-IB08400459-remove]#
+#  gH2OSmmIpmiInterfaceProtocolGuid             # CONSUMED
+#[-end-170929-IB08400459-remove]#
+  gH2OSmmEventStorageProtocolGuid              # PRODUCED
+
+[Depex]
+#[-start-170929-IB08400459-modify]#
+  gEfiSmmBase2ProtocolGuid
+#[-end-170929-IB08400459-modify]#
+  

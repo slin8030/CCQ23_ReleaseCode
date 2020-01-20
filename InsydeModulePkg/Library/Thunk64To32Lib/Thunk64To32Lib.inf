@@ -1,0 +1,57 @@
+#/** @file
+#
+#  Component description file for the Thunk 64 To 32 Lib
+#
+#;******************************************************************************
+#;* Copyright (c) 2015, Insyde Software Corporation. All Rights Reserved.
+#;*
+#;* You may not reproduce, distribute, publish, display, perform, modify, adapt,
+#;* transmit, broadcast, present, recite, release, license or otherwise exploit
+#;* any part of this publication in any form, by any means, without the prior
+#;* written permission of Insyde Software Corporation.
+#;*
+#;******************************************************************************
+#*/
+
+[Defines]
+  INF_VERSION                    = 0x00010005
+  BASE_NAME                      = Thunk64To32Lib
+  FILE_GUID                      = BE33F960-7A18-4021-A171-6EA8AB30EF94
+  MODULE_TYPE                    = DXE_DRIVER
+  VERSION_STRING                 = 1.0
+  LIBRARY_CLASS                  = Thunk64To32Lib|DXE_DRIVER DXE_SMM_DRIVER DXE_CORE
+  CONSTRUCTOR                    = Thunk64To32LibConstructor
+
+[Sources.X64]
+  Thunk64To32Lib.c
+  X64/Thunk64To32Lib.asm     | MSFT
+  X64/Thunk64To32Lib.asm     | INTEL
+  X64/Thunk64To32Lib.jwasm   | GCC
+
+[Sources.Ia32]
+  Thunk64To32Lib.c
+  Ia32/Thunk64To32Lib.asm | MSFT
+  Ia32/Thunk64To32Lib.asm | INTEL
+  Ia32/Thunk64To32Lib.S   | GCC
+  
+[Sources.Arm, Sources.AArch64]
+  Arm/Thunk64To32Lib.c
+
+[Packages]
+  MdePkg/MdePkg.dec
+  MdeModulePkg/MdeModulePkg.dec
+  
+[LibraryClasses]
+  UefiLib
+  UefiBootServicesTableLib
+  BaseLib
+  MemoryAllocationLib
+  BaseMemoryLib
+  DebugLib
+  
+[Pcd]
+  
+[Guids]
+
+[Protocols]
+  

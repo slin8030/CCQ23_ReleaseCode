@@ -1,0 +1,2623 @@
+/** @file
+
+;******************************************************************************
+;* Copyright (c) 2012 - 2015, Insyde Software Corp. All Rights Reserved.
+;*
+;* You may not reproduce, distribute, publish, display, perform, modify, adapt,
+;* transmit, broadcast, present, recite, release, license or otherwise exploit
+;* any part of this publication in any form, by any means, without the prior
+;* written permission of Insyde Software Corporation.
+;*
+;******************************************************************************
+*/
+
+#include "HiiLayoutPkgDxeIdfDefs.h"
+#include "HiiLayoutPkgDxeStrDefs.h"
+#include "PropertyDef.h"
+
+#define DISPLAY_ENGINE_LOCAL_TEXT_GUID   { 0x7c808617, 0x7bc1, 0x4745, {0xa4, 0x58, 0x09, 0x28, 0xf8, 0xb9, 0x5e, 0x60} }
+#define DISPLAY_ENGINE_LOCAL_METRO_GUID  { 0xb9e329a2, 0xaba7, 0x4f41, {0x93, 0x98, 0x46, 0xde, 0xc0, 0xae, 0xc1, 0xf7} }
+
+//
+// format
+//
+format {
+  visibility              : boolean;
+  enable                  : boolean;
+
+  left                    : coord;
+  top                     : coord;
+  right                   : coord;
+  bottom                  : coord;
+
+  height                  : size;
+  width                   : size;
+
+  foreground-color        : color;
+  background-color        : color;
+
+  border-width            : size;
+
+  scrollbar-color         : color;
+  scrollbar-width         : size;
+
+  background-image        : image;
+  background-image-style  : override;
+
+  font-size               : size;
+  font-name               : string;
+
+  child-padding           : coord;
+
+  padding-left            : coord;
+  padding-top             : coord;
+  padding-right           : coord;
+  padding-bottom          : coord;
+
+  prompt-icon-width       : size;
+  prompt-icon-image       : image;
+  prompt-background-image : image;
+  prompt-font-color       : color;
+  prompt-font-size        : size;
+  prompt-control-type     : override;
+  prompt-width            : size;
+
+  value-icon-width        : size;
+  value-icon-image        : image;
+  value-background-image  : image;
+  value-font-color        : color;
+  value-font-size         : size;
+  value-control-type      : override;
+
+  help-text-show          : boolean;
+  help-text-font-size     : size;
+  help-image-display      : enums {
+                              none = DISPLAY_NONE,
+                              left = DISPLAY_LEFT,
+                              top = DISPLAY_TOP,
+                              right = DISPLAY_RIGHT,
+                              bottom = DISPLAY_BOTTOM,
+                              };
+
+  control                 : guid;
+
+  panel.resolution        : enum {
+                              vertical = RESOLUTION_VERTICAL,
+                              horizontal = RESOLUTION_HORIZONTAL,
+                              };
+
+  //
+  // new property for hotkey definition
+  //
+  key-string                  : string;
+  prompt-string-token         : token;
+  prompt-image-token          : token;
+  help-string-token           : token;
+  group-id                    : id;
+  key-action                  : id;
+  action-formsetguid          : guid;
+  action-formid               : id;
+  action-questionid           : id;
+  action-target-formsetguid   : guid;
+  action-target-formid        : id;
+  action-target-questionid    : id;
+  action-target-questionvalue : value; // example: STRING(test), BUFFER(0x10,0x20), UINT8(3)
+  action-defaultid            : id;
+
+  //
+  // layout
+  //
+  layout                      : id;
+}
+
+//
+// LTDE styles for boot manager
+//
+style
+  .LtdeBootManagerScreen
+  property {
+    visibility : false;
+    left   : 0%;
+    top    : 0%;
+    right  : 100%;
+    bottom : -1em;
+    foreground-color : lightgray;
+    background-color : black;
+  }
+endstyle;
+
+style
+  .LtdeBootManagerTitle
+  property {
+    foreground-color : white;
+    background-color : blue;
+  }
+endstyle;
+
+style
+  .LtdeBootManagerTitle panel
+  property {
+    visibility : true;
+    border-width : 1em;
+    left   : 0%;
+    top    : 0em;
+    right  : 100%;
+    bottom : 2em;
+  }
+endstyle;
+
+style
+  .LtdeBootManagerSetupPage
+  property {
+    foreground-color : blue;
+    background-color : lightgray;
+  }
+endstyle;
+
+style
+  .LtdeBootManagerSetupPage panel
+  property {
+    visibility : true;
+    left   : 1em;
+    top    : 4em;
+    right  : 67%;
+    bottom : -6em;
+  }
+endstyle;
+
+style
+  .LtdeBootManagerSetupPage :highlight
+  property {
+    foreground-color : white;
+  }
+endstyle;
+
+style
+  .LtdeBootManagerSetupPage :grayout
+  property {
+    foreground-color : black;
+  }
+endstyle;
+
+style
+  .LtdeBootManagerSetupPage :selectable
+  property {
+    foreground-color : blue;
+  }
+endstyle;
+
+style
+  .LtdeBootManagerSetupPage :focus
+  property {
+    foreground-color : white;
+  }
+endstyle;
+
+style
+  .LtdeBootManagerHelpText
+  property {
+    foreground-color : blue;
+    background-color : lightgray;
+  }
+endstyle;
+
+style
+  .LtdeBootManagerHelpText panel
+  property {
+    visibility : true;
+    left   : 67%;
+    top    : 4em;
+    right  : -1em;
+    bottom : -6em;
+  }
+endstyle;
+
+style
+  .LtdeBootManagerHelpText :highlight
+  property {
+    foreground-color : white;
+  }
+endstyle;
+
+style
+  .LtdeBootManagerHelpText :grayout
+  property {
+    foreground-color : black;
+  }
+endstyle;
+
+style
+  .LtdeBootManagerHelpText :selectable
+  property {
+    foreground-color : blue;
+    background-color : lightgray;
+  }
+endstyle;
+
+style
+  .LtdeBootManagerHelpText :focus
+  property {
+    foreground-color : blue;
+    background-color : lightgray;
+  }
+endstyle;
+
+style
+  .LtdeBootManagerHotkey
+  property {
+    foreground-color : lightgray;
+    background-color : blue;
+  }
+endstyle;
+
+style
+  .LtdeBootManagerHotkey panel
+  property {
+    visibility : true;
+    border-width : 1em;
+    left   : 0%;
+    top    : -4em;
+    right  : 100%;
+    bottom : -1em;
+  }
+endstyle;
+
+style
+  .LtdeBootManagerHotkey :highlight
+  property {
+    foreground-color : white;
+  }
+endstyle;
+
+style
+  .LtdeBootManagerHotkey :grayout
+  property {
+    foreground-color : darkgray;
+  }
+endstyle;
+
+style
+  .LtdeBootManagerHotkey :selectable
+  property {
+    foreground-color : blue;
+  }
+endstyle;
+
+style
+  .LtdeBootManagerHotkey :focus
+  property {
+    foreground-color : white;
+  }
+endstyle;
+
+style
+  .LtdeBootManagerQuestion
+  property {
+    foreground-color : lightgray;
+    background-color : blue;
+  }
+endstyle;
+
+style
+  .LtdeBootManagerQuestion panel
+  property {
+    visibility : false;
+    border-width : 1em;
+    left   : 0%;
+    top    : 0%;
+    right  : 100%;
+    bottom : 100%;
+  }
+endstyle;
+
+style
+  .LtdeBootManagerQuestion :help
+  property {
+    foreground-color : blue;
+    background-color : lightgray;
+  }
+endstyle;
+
+style
+  .LtdeBootManagerQuestion :highlight
+  property {
+    foreground-color : white;
+  }
+endstyle;
+
+style
+  .LtdeBootManagerQuestion :grayout
+  property {
+    foreground-color : darkgray;
+  }
+endstyle;
+
+style
+  .LtdeBootManagerQuestion :selectable
+  property {
+    foreground-color : lightgray;
+  }
+endstyle;
+
+style
+  .LtdeBootManagerQuestion :focus
+  property {
+    foreground-color : white;
+    background-color : cyan;
+  }
+endstyle;
+
+style
+  .LtdeBootManagerQuestion :disabled
+  property {
+    foreground-color : black;
+    background-color : lightgray;
+  }
+endstyle;
+
+style
+  .LtdeBootManagerQuestion :enabled
+  property {
+    foreground-color : white;
+    background-color : black;
+  }
+endstyle;
+
+//
+// LTDE layout for boot manager
+//
+layout
+  layoutid = BOOT_MANAGER_LAYOUT_ID,
+  displayengineguid = DISPLAY_ENGINE_LOCAL_TEXT_GUID;
+
+  panel
+    panelid = SCREEN_PANEL_ID,
+    paneltype = H2O_PANEL_TYPE_SCREEN;
+    style = .LtdeBootManagerScreen;
+  endpanel;
+
+  panel
+    panelid = TITLE_PANEL_ID,
+    paneltype = H2O_PANEL_TYPE_FORM_TITLE;
+    style = .LtdeBootManagerTitle;
+  endpanel;
+
+  panel
+    panelid = SETUP_PAGE_PANEL_ID,
+    paneltype = H2O_PANEL_TYPE_SETUP_PAGE;
+    style = .LtdeBootManagerSetupPage;
+  endpanel;
+
+  panel
+    panelid = HOTKEY_PANEL_ID,
+    paneltype = H2O_PANEL_TYPE_HOTKEY;
+    style = .LtdeBootManagerHotkey;
+  endpanel;
+
+  panel
+    panelid = HELP_TEXT_PANEL_ID,
+    paneltype = H2O_PANEL_TYPE_HELP_TEXT;
+    style = .LtdeBootManagerHelpText;
+  endpanel;
+
+  panel
+    panelid = QUESTION_PANEL_ID,
+    paneltype = H2O_PANEL_TYPE_QUESTION;
+    style = .LtdeBootManagerQuestion;
+  endpanel;
+endlayout;
+
+//
+// LTDE styles for boot from file
+//
+style
+  .LtdeBootFromFileScreen
+  property {
+    visibility : false;
+    left   : 0%;
+    top    : 0%;
+    right  : 100%;
+    bottom : -1em;
+    foreground-color : lightgray;
+    background-color : black;
+  }
+endstyle;
+
+style
+  .LtdeBootFromFileTitle
+  property {
+    foreground-color : white;
+    background-color : blue;
+  }
+endstyle;
+
+style
+  .LtdeBootFromFileTitle panel
+  property {
+    visibility : true;
+    border-width : 1em;
+    left   : 0%;
+    top    : 0em;
+    right  : 100%;
+    bottom : 2em;
+  }
+endstyle;
+
+style
+  .LtdeBootFromFileSetupMenu
+  property {
+    foreground-color : black;
+    background-color : cyan;
+  }
+endstyle;
+
+style
+  .LtdeBootFromFileSetupMenu panel
+  property {
+    visibility : false;
+  }
+endstyle;
+
+style
+  .LtdeBootFromFileSetupPage
+  property {
+    foreground-color : blue;
+    background-color : lightgray;
+  }
+endstyle;
+
+style
+  .LtdeBootFromFileSetupPage panel
+  property {
+    visibility : true;
+    left   : 1em;
+    top    : 4em;
+    right  : -1em;
+    bottom : -6em;
+  }
+endstyle;
+
+style
+  .LtdeBootFromFileSetupPage :highlight
+  property {
+    foreground-color : white;
+  }
+endstyle;
+
+style
+  .LtdeBootFromFileSetupPage :grayout
+  property {
+    foreground-color : black;
+  }
+endstyle;
+
+style
+  .LtdeBootFromFileSetupPage :selectable
+  property {
+    foreground-color : blue;
+  }
+endstyle;
+
+style
+  .LtdeBootFromFileSetupPage :focus
+  property {
+    foreground-color : white;
+  }
+endstyle;
+
+style
+  .LtdeBootFromFileHelpText
+  property {
+    foreground-color : blue;
+    background-color : lightgray;
+  }
+endstyle;
+
+style
+  .LtdeBootFromFileHelpText panel
+  property {
+    visibility : false;
+  }
+endstyle;
+
+style
+  .LtdeBootFromFileHelpText :highlight
+  property {
+    foreground-color : white;
+  }
+endstyle;
+
+style
+  .LtdeBootFromFileHelpText :grayout
+  property {
+    foreground-color : black;
+  }
+endstyle;
+
+style
+  .LtdeBootFromFileHelpText :selectable
+  property {
+    foreground-color : blue;
+    background-color : lightgray;
+  }
+endstyle;
+
+style
+  .LtdeBootFromFileHelpText :focus
+  property {
+    foreground-color : blue;
+    background-color : lightgray;
+  }
+endstyle;
+
+style
+  .LtdeBootFromFileHotkey
+  property {
+    foreground-color : lightgray;
+    background-color : blue;
+  }
+endstyle;
+
+style
+  .LtdeBootFromFileHotkey panel
+  property {
+    visibility : true;
+    border-width : 1em;
+    left   : 0%;
+    top    : -4em;
+    right  : 100%;
+    bottom : -1em;
+  }
+endstyle;
+
+style
+  .LtdeBootFromFileHotkey :highlight
+  property {
+    foreground-color : white;
+  }
+endstyle;
+
+style
+  .LtdeBootFromFileHotkey :grayout
+  property {
+    foreground-color : darkgray;
+  }
+endstyle;
+
+style
+  .LtdeBootFromFileHotkey :selectable
+  property {
+    foreground-color : blue;
+  }
+endstyle;
+
+style
+  .LtdeBootFromFileHotkey :focus
+  property {
+    foreground-color : white;
+  }
+endstyle;
+
+style
+  .LtdeBootFromFileQuestion
+  property {
+    foreground-color : lightgray;
+    background-color : blue;
+  }
+endstyle;
+
+style
+  .LtdeBootFromFileQuestion panel
+  property {
+    visibility : false;
+    border-width : 1em;
+    left   : 0%;
+    top    : 0%;
+    right  : 100%;
+    bottom : 100%;
+  }
+endstyle;
+
+style
+  .LtdeBootFromFileQuestion :help
+  property {
+    foreground-color : blue;
+    background-color : lightgray;
+  }
+endstyle;
+
+style
+  .LtdeBootFromFileQuestion :highlight
+  property {
+    foreground-color : white;
+  }
+endstyle;
+
+style
+  .LtdeBootFromFileQuestion :grayout
+  property {
+    foreground-color : darkgray;
+  }
+endstyle;
+
+style
+  .LtdeBootFromFileQuestion :selectable
+  property {
+    foreground-color : lightgray;
+  }
+endstyle;
+
+style
+  .LtdeBootFromFileQuestion :focus
+  property {
+    foreground-color : white;
+    background-color : cyan;
+  }
+endstyle;
+
+style
+  .LtdeBootFromFileQuestion :disabled
+  property {
+    foreground-color : black;
+    background-color : lightgray;
+  }
+endstyle;
+
+style
+  .LtdeBootFromFileQuestion :enabled
+  property {
+    foreground-color : white;
+    background-color : black;
+  }
+endstyle;
+
+//
+// LTDE layout for boot from file
+//
+layout
+  layoutid = BOOT_FROM_FILE_LAYOUT_ID,
+  displayengineguid = DISPLAY_ENGINE_LOCAL_TEXT_GUID;
+
+  panel
+    panelid = SCREEN_PANEL_ID,
+    paneltype = H2O_PANEL_TYPE_SCREEN;
+    style = .LtdeBootFromFileScreen;
+  endpanel;
+
+  panel
+    panelid = TITLE_PANEL_ID,
+    paneltype = H2O_PANEL_TYPE_FORM_TITLE;
+    style = .LtdeBootFromFileTitle;
+  endpanel;
+
+  panel
+    panelid = SETUP_MENU_PANEL_ID,
+    paneltype = H2O_PANEL_TYPE_SETUP_MENU;
+    style = .LtdeBootFromFileSetupMenu;
+  endpanel;
+
+  panel
+    panelid = SETUP_PAGE_PANEL_ID,
+    paneltype = H2O_PANEL_TYPE_SETUP_PAGE;
+    style = .LtdeBootFromFileSetupPage;
+  endpanel;
+
+panel
+    panelid = HOTKEY_PANEL_ID,
+    paneltype = H2O_PANEL_TYPE_HOTKEY;
+    style = .LtdeBootFromFileHotkey;
+  endpanel;
+
+
+  panel
+    panelid = QUESTION_PANEL_ID,
+    paneltype = H2O_PANEL_TYPE_QUESTION;
+    style = .LtdeBootFromFileQuestion;
+  endpanel;
+endlayout;
+
+//
+// LTDE styles
+//
+style
+  .LtdeScreen
+  property {
+    visibility : false;
+    left   : 0%;
+    top    : 0%;
+    right  : 100%;
+    bottom : 100%;
+    foreground-color : lightgray;
+    background-color : black;
+  }
+endstyle;
+
+style
+  .LtdeTitle
+  property {
+    foreground-color : black;
+    background-color : cyan;
+  }
+endstyle;
+
+style
+  .LtdeTitle panel
+  property {
+    visibility : true;
+    left   : 0%;
+    top    : 0em;
+    right  : 100%;
+    bottom : 0em;
+  }
+endstyle;
+
+style
+  .LtdeTitle :highlight
+  property {
+    foreground-color : white;
+ }
+endstyle;
+
+style
+  .LtdeTitle :grayout
+  property {
+    foreground-color : darkgray;
+  }
+endstyle;
+
+style
+  .LtdeTitle :selectable
+  property {
+    foreground-color : blue;
+  }
+endstyle;
+
+style
+  .LtdeTitle :focus
+  property {
+    foreground-color : white;
+  }
+endstyle;
+
+style
+  .LtdeTitle :disabled
+  property {
+    foreground-color : blue;
+    background-color : black;
+  }
+endstyle;
+
+style
+  .LtdeTitle :enabled
+  property {
+    foreground-color : white;
+    background-color : black;
+  }
+endstyle;
+
+style
+  .LtdeSetupMenu
+  property {
+    foreground-color : lightgray;
+    background-color : blue;
+  }
+endstyle;
+
+style
+  .LtdeSetupMenu panel
+  property {
+    visibility : true;
+    left   : 0%;
+    top    : 1em;
+    right  : 100%;
+    bottom : 1em;
+    resolution : horizontal;
+  }
+endstyle;
+
+style
+  .LtdeSetupMenu :highlight
+  property {
+    foreground-color : blue;
+    background-color : lightgray;
+  }
+endstyle;
+
+style
+  .LtdeSetupMenu :grayout
+  property {
+    foreground-color : darkgray;
+  }
+endstyle;
+
+style
+  .LtdeSetupMenu :selectable
+  property {
+    foreground-color : lightgray;
+  }
+endstyle;
+
+style
+  .LtdeSetupMenu :focus
+  property {
+    foreground-color : blue;
+    background-color : lightgray;
+  }
+endstyle;
+
+style
+  .LtdeSetupMenu :disabled
+  property {
+    foreground-color : blue;
+    background-color : black;
+  }
+endstyle;
+
+style
+  .LtdeSetupMenu :enabled
+  property {
+    foreground-color : white;
+    background-color : black;
+  }
+endstyle;
+
+style
+  .LtdeSetupPage
+  property {
+    foreground-color : blue;
+    background-color : lightgray;
+  }
+endstyle;
+
+style
+  .LtdeSetupPage panel
+  property {
+    visibility : true;
+    border-width : 1em;
+    left   : 0%;
+    top    : 2em;
+    right  : 67%;
+    bottom : -2em;
+  }
+endstyle;
+
+style
+  .LtdeSetupPage :highlight
+  property {
+    foreground-color : white;
+  }
+endstyle;
+
+style
+  .LtdeSetupPage :grayout
+  property {
+    foreground-color : darkgray;
+  }
+endstyle;
+
+style
+  .LtdeSetupPage :selectable
+  property {
+    foreground-color : blue;
+  }
+endstyle;
+
+style
+  .LtdeSetupPage :focus
+  property {
+    foreground-color : white;
+  }
+endstyle;
+
+style
+  .LtdeSetupPage :disabled
+  property {
+    foreground-color : blue;
+  }
+endstyle;
+
+style
+  .LtdeSetupPage :enabled
+  property {
+    foreground-color : white;
+  }
+endstyle;
+
+style
+  .LtdeHelpText
+  property {
+    foreground-color : blue;
+    background-color : lightgray;
+  }
+endstyle;
+
+style
+  .LtdeHelpText panel
+  property {
+    visibility : true;
+    border-width : 1em;
+    left   : 67%;
+    top    : 2em;
+    right  : 100%;
+    bottom : -2em;
+  }
+endstyle;
+
+style
+  .LtdeHelpText :highlight
+  property {
+    foreground-color : white;
+  }
+endstyle;
+
+style
+  .LtdeHelpText :grayout
+  property {
+    foreground-color : darkgray;
+  }
+endstyle;
+
+style
+  .LtdeHelpText :selectable
+  property {
+    foreground-color : blue;
+  }
+endstyle;
+
+style
+  .LtdeHelpText :focus
+  property {
+    foreground-color : blue;
+  }
+endstyle;
+
+style
+  .LtdeHelpText :disabled
+  property {
+    foreground-color : blue;
+  }
+endstyle;
+
+style
+  .LtdeHelpText :enabled
+  property {
+    foreground-color : white;
+    background-color : black;
+  }
+endstyle;
+
+style
+  .LtdeHotkey
+  property {
+    foreground-color : black;
+    background-color : cyan;
+  }
+endstyle;
+
+style
+  .LtdeHotkey panel
+  property {
+    visibility : true;
+    left   : 0%;
+    top    : -1em;
+    right  : 100%;
+    bottom : 100%;
+  }
+endstyle;
+
+style
+  .LtdeHotkey :highlight
+  property {
+    foreground-color : white;
+  }
+endstyle;
+
+style
+  .LtdeHotkey :grayout
+  property {
+    foreground-color : darkgray;
+  }
+endstyle;
+
+style
+  .LtdeHotkey :selectable
+  property {
+    foreground-color : blue;
+  }
+endstyle;
+
+style
+  .LtdeHotkey :focus
+  property {
+    foreground-color : white;
+  }
+endstyle;
+
+style
+  .LtdeHotkey :disabled
+  property {
+    foreground-color : blue;
+  }
+endstyle;
+
+style
+  .LtdeHotkey :enabled
+  property {
+    foreground-color : white;
+    background-color : black;
+  }
+endstyle;
+
+style
+  .LtdeQuestion
+  property {
+    foreground-color : lightgray;
+    background-color : blue;
+  }
+endstyle;
+
+style
+  .LtdeQuestion panel
+  property {
+    visibility : false;
+    border-width : 1em;
+    left   : 0%;
+    top    : 0%;
+    right  : 100%;
+    bottom : 100%;
+  }
+endstyle;
+
+style
+  .LtdeQuestion :help
+  property {
+    foreground-color : blue;
+    background-color : lightgray;
+  }
+endstyle;
+
+style
+  .LtdeQuestion :highlight
+  property {
+    foreground-color : white;
+  }
+endstyle;
+
+style
+  .LtdeQuestion :grayout
+  property {
+    foreground-color : darkgray;
+  }
+endstyle;
+
+style
+  .LtdeQuestion :selectable
+  property {
+    foreground-color : lightgray;
+  }
+endstyle;
+
+style
+  .LtdeQuestion :focus
+  property {
+    foreground-color : white;
+    background-color : cyan;
+  }
+endstyle;
+
+style
+  .LtdeQuestion :disabled
+  property {
+    foreground-color : black;
+    background-color : lightgray;
+  }
+endstyle;
+
+style
+  .LtdeQuestion :enabled
+  property {
+    foreground-color : white;
+    background-color : black;
+  }
+endstyle;
+
+//
+// LTDE layout
+//
+layout
+  layoutid = COMMON_PAGE_LAYOUT_ID,
+  displayengineguid = DISPLAY_ENGINE_LOCAL_TEXT_GUID;
+
+  panel
+    panelid = SCREEN_PANEL_ID,
+    paneltype = H2O_PANEL_TYPE_SCREEN;
+    style = .LtdeScreen;
+  endpanel;
+
+  panel
+    panelid = TITLE_PANEL_ID,
+    paneltype = H2O_PANEL_TYPE_FORM_TITLE;
+    style = .LtdeTitle;
+  endpanel;
+
+  panel
+    panelid = SETUP_MENU_PANEL_ID,
+    paneltype = H2O_PANEL_TYPE_SETUP_MENU;
+    style = .LtdeSetupMenu;
+  endpanel;
+
+  panel
+    panelid = SETUP_PAGE_PANEL_ID,
+    paneltype = H2O_PANEL_TYPE_SETUP_PAGE;
+    style = .LtdeSetupPage;
+  endpanel;
+
+  panel
+    panelid = HELP_TEXT_PANEL_ID,
+    paneltype = H2O_PANEL_TYPE_HELP_TEXT;
+    style = .LtdeHelpText;
+  endpanel;
+
+  panel
+    panelid = HOTKEY_PANEL_ID,
+    paneltype = H2O_PANEL_TYPE_HOTKEY;
+    style = .LtdeHotkey;
+  endpanel;
+
+  panel
+    panelid = QUESTION_PANEL_ID,
+    paneltype = H2O_PANEL_TYPE_QUESTION;
+    style = .LtdeQuestion;
+  endpanel;
+endlayout;
+
+//
+// LMDE Styles
+//
+style
+  .LmdeScreen
+  property {
+    visibility : false;
+    left   : 0%;
+    top    : 0%;
+    right  : 100%;
+    bottom : 100%;
+    foreground-color : lightgray;
+    background-color : black;
+  }
+endstyle;
+
+style
+  .LmdeOwnerDraw
+  property {
+    foreground-color : lightgray;
+    background-color : black;
+    font-size : 20;
+    font-name : ttf;
+    padding-left   : 10px;
+    padding-top    : 10px;
+    padding-right  : 10px;
+    padding-bottom : 10px;
+  }
+endstyle;
+
+style
+  .LmdeOwnerDraw panel
+  property {
+    visibility : true;
+    left   : 0%;
+    top    : 0%;
+    right  : 100%;
+    bottom : 14%;
+  }
+endstyle;
+
+style
+  .LmdeTitle
+  property {
+    foreground-color : white;
+    background-color : darkgray;
+    font-size : 25;
+    font-name : ttf;
+    padding-left   : 30px;
+    padding-top    : 5px;
+    padding-right  : 30px;
+    padding-bottom : 5px;
+  }
+endstyle;
+
+style
+  .LmdeTitle panel
+  property {
+    visibility : true;
+    left   : 12%;
+    top    : 14%;
+    right  : 100%;
+    bottom : 23%;
+  }
+endstyle;
+
+style
+  .LmdeTitle :highlight
+  property {
+    foreground-color : white;
+  }
+endstyle;
+
+style
+  .LmdeSetupMenu
+  property {
+    foreground-color : blue;
+    background-color : black;
+    background-image : IMAGE_MENU_BACKGROUND_NORMAL;
+    font-size : 19;
+    font-name : ttf;
+    padding-left   : 10px;
+    padding-top    : 50px;
+    padding-right  : 10px;
+    padding-bottom : 10px;
+    help-image-display : top;
+  }
+endstyle;
+
+style
+  .LmdeSetupMenu panel
+  property {
+    visibility : true;
+    left   : 0%;
+    top    : 14%;
+    right  : 12%;
+    bottom : 100%;
+  }
+endstyle;
+
+style
+  .LmdeSetupMenu :highlight
+  property {
+    foreground-color : blue;
+    background-color : lightgray;
+    background-image : IMAGE_MENU_BACKGROUND_HOT;
+  }
+endstyle;
+
+style
+  .LmdeSetupMenu :grayout
+  property {
+    foreground-color : darkgray;
+    background-image : IMAGE_MENU_BACKGROUND_NORMAL;
+  }
+endstyle;
+
+style
+  .LmdeSetupMenu :selectable
+  property {
+    foreground-color : white;
+    background-image : IMAGE_MENU_BACKGROUND_NORMAL;
+  }
+endstyle;
+
+style
+  .LmdeSetupMenu :focus
+  property {
+    foreground-color : blue;
+    background-color : lightgray;
+    background-image : IMAGE_MENU_BACKGROUND_HOT;
+  }
+endstyle;
+
+style
+  .LmdeSetupPage
+  property {
+    foreground-color : darkgray;
+    background-color : lightgray;
+    background-image : IMAGE_SETUP_MENU_TEXT_OP_BKG;
+    font-size : 19;
+    font-name : ttf;
+    padding-left   : 40px;
+    padding-top    : 20px;
+    padding-right  : 10px;
+    padding-bottom : 20px;
+    help-image-display : left;
+  }
+endstyle;
+
+style
+  .LmdeSetupPage panel
+  property {
+    visibility : true;
+    border-width : 1em;
+    left   : 12%;
+    top    : 23%;
+    right  : 65%;
+    bottom : 87%;
+  }
+endstyle;
+
+style
+  .LmdeSetupPage :highlight
+  property {
+    foreground-color : white;
+    background-color : blue;
+  }
+endstyle;
+
+style
+  .LmdeSetupPage :grayout
+  property {
+    foreground-color : darkgray;
+  }
+endstyle;
+
+style
+  .LmdeSetupPage :selectable
+  property {
+    foreground-color : darkgray;
+  }
+endstyle;
+
+style
+  .LmdeSetupPage :focus
+  property {
+    foreground-color : white;
+    background-color : blue;
+  }
+endstyle;
+
+style
+  .LmdeSetupPage :disabled
+  property {
+    foreground-color : blue;
+    background-color : black;
+  }
+endstyle;
+
+style
+  .LmdeSetupPage :enabled
+  property {
+    foreground-color : white;
+    background-color : black;
+  }
+endstyle;
+
+style
+  .LmdeHelpText
+  property {
+    foreground-color : darkgray;
+    background-color : lightgray;
+    font-size : 19;
+    font-name : ttf;
+    padding-left   : 10px;
+    padding-top    : 10px;
+    padding-right  : 10px;
+    padding-bottom : 10px;
+  }
+endstyle;
+
+style
+  .LmdeHelpText panel
+  property {
+    visibility : true;
+    border-width : 1em;
+    left   : 65%;
+    top    : 23%;
+    right  : 100%;
+    bottom : 87%;
+  }
+endstyle;
+
+style
+  .LmdeHotkey
+  property {
+    foreground-color : white;
+    background-color : black;
+    font-size : 15;
+    font-name : ttf;
+    padding-left   : 50px;
+    padding-top    : 19px;
+    padding-right  : 0px;
+    padding-bottom : 19px;
+  }
+endstyle;
+
+style
+  .LmdeHotkey panel
+  property {
+    visibility : true;
+    left   : 12%;
+    top    : 87%;
+    right  : 100%;
+    bottom : 100%;
+    resolution : horizontal;
+  }
+endstyle;
+
+style
+  .LmdeHotkey :highlight
+  property {
+    foreground-color : white;
+  }
+endstyle;
+
+style
+  .LmdeHotkey :grayout
+  property {
+    foreground-color : darkgray;
+  }
+endstyle;
+
+style
+  .LmdeHotkey :selectable
+  property {
+    foreground-color : white;
+  }
+endstyle;
+
+style
+  .LmdeHotkey :focus
+  property {
+    foreground-color : white;
+  }
+endstyle;
+
+style
+  .LmdeQuestion
+  property {
+    foreground-color : black;
+    background-color : blue;
+    font-size : 20;
+    font-name : ttf;
+    padding-left   : 10px;
+    padding-top    : 10px;
+    padding-right  : 10px;
+    padding-bottom : 10px;
+  }
+endstyle;
+
+style
+  .LmdeQuestion panel
+  property {
+    visibility : false;
+    border-width : 1em;
+    left   : 60%;
+    top    : 50%;
+    right  : 100%;
+    bottom : 85%;
+  }
+endstyle;
+
+style
+  .LmdeQuestion :highlight
+  property {
+    foreground-color : white;
+  }
+endstyle;
+
+style
+  .LmdeQuestion :grayout
+  property {
+    foreground-color : darkgray;
+  }
+endstyle;
+
+style
+  .LmdeQuestion :selectable
+  property {
+    foreground-color : black;
+  }
+endstyle;
+
+style
+  .LmdeQuestion :focus
+  property {
+    foreground-color : white;
+  }
+endstyle;
+
+style
+  .LmdeQuestion :disabled
+  property {
+    foreground-color : darkgray;
+    background-color : black;
+  }
+endstyle;
+
+style
+  .LmdeQuestion :enabled
+  property {
+    foreground-color : white;
+    background-color : black;
+  }
+endstyle;
+
+//
+// LMDE layout
+//
+layout
+  layoutid = SCU_LAYOUT_ID,
+  displayengineguid = DISPLAY_ENGINE_LOCAL_METRO_GUID;
+
+  panel
+    panelid = SCREEN_PANEL_ID,
+    paneltype = H2O_PANEL_TYPE_SCREEN;
+    style = .LmdeScreen;
+  endpanel;
+
+  panel
+    panelid = OWNER_DRAW_PANEL_ID,
+    paneltype = H2O_PANEL_TYPE_OWNER_DRAW;
+    style = .LmdeOwnerDraw;
+  endpanel;
+
+  panel
+    panelid = TITLE_PANEL_ID,
+    paneltype = H2O_PANEL_TYPE_FORM_TITLE;
+    style = .LmdeTitle;
+  endpanel;
+
+  panel
+    panelid = SETUP_MENU_PANEL_ID,
+    paneltype = H2O_PANEL_TYPE_SETUP_MENU;
+    style = .LmdeSetupMenu;
+  endpanel;
+
+  panel
+    panelid = SETUP_PAGE_PANEL_ID,
+    paneltype = H2O_PANEL_TYPE_SETUP_PAGE;
+    style = .LmdeSetupPage;
+  endpanel;
+
+  panel
+    panelid = HELP_TEXT_PANEL_ID,
+    paneltype = H2O_PANEL_TYPE_HELP_TEXT;
+    style = .LmdeHelpText;
+  endpanel;
+
+  panel
+    panelid = HOTKEY_PANEL_ID,
+    paneltype = H2O_PANEL_TYPE_HOTKEY;
+    style = .LmdeHotkey;
+  endpanel;
+
+  panel
+    panelid = QUESTION_PANEL_ID,
+    paneltype = H2O_PANEL_TYPE_QUESTION;
+    style = .LmdeQuestion;
+  endpanel;
+endlayout;
+
+//
+// LMDE front page Styles
+//
+style
+  .FrontPageLmdeOwnerDraw panel
+  property {
+    visibility : true;
+    left   : 0%;
+    top    : 0%;
+    right  : 100%;
+    bottom : 14%;
+  }
+endstyle;
+
+
+style
+  .FrontPageLmdeSetupPage panel
+  property {
+    visibility : true;
+    left   : 0%;
+    top    : 14%;
+    right  : 100%;
+    bottom : 87%;
+  }
+endstyle;
+
+
+style
+  .FrontPageLmdeHotkey panel
+  property {
+    visibility : true;
+    left   : 0%;
+    top    : 87%;
+    right  : 100%;
+    bottom : 100%;
+  }
+endstyle;
+
+//
+// LMDE front page layout
+//
+layout
+  layoutid = FRONT_PAGE_LAYOUT_ID,
+  displayengineguid = DISPLAY_ENGINE_LOCAL_METRO_GUID;
+
+  panel
+    panelid   = OWNER_DRAW_PANEL_ID,
+    paneltype = H2O_PANEL_TYPE_OWNER_DRAW;
+    style     = .FrontPageLmdeOwnerDraw;
+  endpanel;
+
+  panel
+    panelid   = SETUP_PAGE_PANEL_ID,
+    paneltype = H2O_PANEL_TYPE_SETUP_PAGE;
+    style     = .FrontPageLmdeSetupPage;
+  endpanel;
+
+  panel
+    panelid   = HOTKEY_PANEL_ID,
+    paneltype = H2O_PANEL_TYPE_HOTKEY;
+    style     = .FrontPageLmdeHotkey;
+  endpanel;
+endlayout;
+
+//
+// LMDE common page Styles
+//
+style
+  .CommonPageLmdeOwnerDraw panel
+  property {
+    visibility : true;
+    left   : 0%;
+    top    : 0%;
+    right  : 100%;
+    bottom : 14%;
+  }
+endstyle;
+
+style
+  .CommonPageLmdeTitle panel
+  property {
+    visibility : true;
+    left   : 0%;
+    top    : 14%;
+    right  : 100%;
+    bottom : 23%;
+  }
+endstyle;
+
+style
+  .CommonPageLmdeSetupPage panel
+  property {
+    visibility : true;
+    left   : 0%;
+    top    : 23%;
+    right  : 65%;
+    bottom : 87%;
+  }
+endstyle;
+
+style
+  .CommonPageLmdeSetupPage action
+  property {
+    height                  : 60;
+    background-image        : @OptionBkg;
+    background-image-style  : stretch;
+    child-padding           : 2;
+
+    prompt-icon-width       : 30;
+    prompt-icon-image       : @dot;
+    prompt-background-image : @SetupMenuTextOpBkg;
+    prompt-font-color       : blue;
+    prompt-font-size        : 25;
+    prompt-control-type     : Label;
+    prompt-width            : 258;
+
+    value-icon-width        : 30;
+    value-icon-image        : @continue;
+    value-background-image  : @SetupMenuTextOpBkg;
+    value-font-color        : black;
+    value-font-size         : 20;
+    value-control-type      : Label;
+  }
+endstyle;
+
+style
+  .CommonPageLmdeSetupPage checkbox
+  property {
+    height                  : 50;
+    background-image        : @OptionBkg;
+    background-image-style  : stretch;
+    child-padding           : 2;
+
+    prompt-icon-width       : 30;
+    prompt-icon-image       : @dot;
+    prompt-font-color       : green;
+    prompt-font-size        : 25;
+    prompt-control-type     : Label;
+    prompt-width            : 258;
+
+    value-icon-width        : 30;
+    value-icon-image        : @continue;
+    value-font-color        : black;
+    value-font-size         : 20;
+    value-control-type      : Switch;
+  }
+endstyle;
+
+style
+  .CommonPageLmdeSetupPage date
+  property {
+    height                  : 70;
+    background-image        : @OptionBkg;
+    background-image-style  : stretch;
+    child-padding           : 2;
+
+    prompt-icon-width       : 30;
+    prompt-icon-image       : @dot;
+    prompt-font-color       : red;
+    prompt-font-size        : 25;
+    prompt-control-type     : Label;
+    prompt-width            : 258;
+
+    value-icon-width        : 30;
+    value-icon-image        : @continue;
+    value-font-color        : black;
+    value-font-size         : 20;
+    value-control-type      : Label;
+  }
+endstyle;
+
+style
+  .CommonPageLmdeSetupPage goto
+  property {
+    height                  : 50;
+    background-image        : @OptionBkg;
+    background-image-style  : stretch;
+    child-padding           : 2;
+
+    prompt-icon-width       : 30;
+    prompt-icon-image       : @dot;
+    prompt-font-color       : yellow;
+    prompt-font-size        : 25;
+    prompt-control-type     : Label;
+    prompt-width            : 500;
+
+    value-icon-width        : 30;
+    value-icon-image        : @continue;
+    value-font-color        : black;
+    value-font-size         : 20;
+    value-control-type      : Label;
+  }
+endstyle;
+
+style
+  .CommonPageLmdeSetupPage oneof
+  property {
+    height                  : 70;
+    background-image        : @OptionBkg;
+    background-image-style  : stretch;
+    child-padding           : 2;
+
+    prompt-icon-width       : 30;
+    prompt-icon-image       : @dot;
+    prompt-font-color       : brown;
+    prompt-font-size        : 25;
+    prompt-control-type     : Label;
+    prompt-width            : 258;
+
+    value-icon-width        : 30;
+    value-icon-image        : @continue;
+    value-font-color        : black;
+    value-font-size         : 20;
+    value-control-type      : Label;
+
+    control                 : H2O_CONTROL_MAIN_PAGE_ONE_OF_GUID;
+  }
+endstyle;
+
+style
+  .CommonPageLmdeSetupPage numeric
+  property {
+    height                  : 70;
+    background-image        : @OptionBkg;
+    background-image-style  : stretch;
+    child-padding           : 2;
+
+    prompt-icon-width       : 30;
+    prompt-icon-image       : @dot;
+    prompt-font-color       : blue;
+    prompt-font-size        : 25;
+    prompt-control-type     : Label;
+    prompt-width            : 258;
+
+    value-icon-width        : 30;
+    value-icon-image        : @continue;
+    value-font-color        : black;
+    value-font-size         : 20;
+    value-control-type      : Label;
+  }
+endstyle;
+
+style
+  .CommonPageLmdeSetupPage orderedlist
+  property {
+    height                  : 70;
+    background-image        : @OptionBkg;
+    background-image-style  : stretch;
+    child-padding           : 2;
+
+    prompt-icon-width       : 30;
+    prompt-icon-image       : @dot;
+    prompt-font-color       : lightblue;
+    prompt-font-size        : 25;
+    prompt-control-type     : Label;
+    prompt-width            : 258;
+
+    value-icon-width        : 30;
+    value-icon-image        : @continue;
+    value-font-color        : black;
+    value-font-size         : 20;
+    value-control-type      : Label;
+  }
+endstyle;
+
+style
+  .CommonPageLmdeSetupPage password
+  property {
+    height                  : 70;
+    background-image        : @OptionBkg;
+    background-image-style  : stretch;
+    child-padding           : 2;
+
+    prompt-icon-width       : 30;
+    prompt-icon-image       : @dot;
+    prompt-font-color       : lightgreen;
+    prompt-font-size        : 25;
+    prompt-control-type     : Label;
+    prompt-width            : 500;
+
+    value-icon-width        : 30;
+    value-icon-image        : @continue;
+    value-font-color        : black;
+    value-font-size         : 20;
+    value-control-type      : Label;
+  }
+endstyle;
+
+style
+  .CommonPageLmdeSetupPage string
+  property {
+    height                  : 70;
+    background-image        : @OptionBkg;
+    background-image-style  : stretch;
+    child-padding           : 2;
+
+    prompt-icon-width       : 30;
+    prompt-icon-image       : @dot;
+    prompt-font-color       : blue;
+    prompt-font-size        : 25;
+    prompt-control-type     : Label;
+    prompt-width            : 258;
+
+    value-icon-width        : 30;
+    value-icon-image        : @continue;
+    value-font-color        : black;
+    value-font-size         : 20;
+    value-control-type      : Label;
+  }
+endstyle;
+
+style
+  .CommonPageLmdeSetupPage time
+  property {
+    height                  : 70;
+    background-image        : @OptionBkg;
+    background-image-style  : stretch;
+    child-padding           : 2;
+
+    prompt-icon-width       : 30;
+    prompt-icon-image       : @dot;
+    prompt-font-color       : blue;
+    prompt-font-size        : 25;
+    prompt-control-type     : Label;
+    prompt-width            : 258;
+
+    value-icon-width        : 30;
+    value-icon-image        : @continue;
+    value-font-color        : black;
+    value-font-size         : 20;
+    value-control-type      : Label;
+  }
+endstyle;
+
+style
+  .CommonPageLmdeSetupPage text
+  property {
+    height                  : 35;
+    background-image        : @OptionBkg;
+    background-image-style  : stretch;
+    child-padding           : 2;
+
+    prompt-icon-width       : 30;
+    prompt-icon-image       : @dot;
+    prompt-background-image : @SetupMenuTextOpBkg;
+    prompt-font-color       : magenta;
+    prompt-font-size        : 25;
+    prompt-control-type     : Label;
+    prompt-width            : 258;
+
+    value-icon-width        : 30;
+    value-icon-image        : @continue;
+    value-background-image  : @SetupMenuTextOpBkg;
+    value-font-color        : black;
+    value-font-size         : 20;
+    value-control-type      : Label;
+  }
+endstyle;
+
+style
+  .CommonPageLmdeSetupPage subtitle
+  property {
+    height                  : 32;
+    background-image-style  : stretch;
+    child-padding           : 2;
+
+    prompt-icon-width       : 30;
+    prompt-icon-image       : @dot;
+    prompt-font-color       : cyan;
+    prompt-font-size        : 25;
+    prompt-control-type     : Label;
+    prompt-width            : 258;
+
+    value-icon-width        : 30;
+    value-icon-image        : @continue;
+    value-font-color        : black;
+    value-font-size         : 20;
+    value-control-type      : Label;
+  }
+endstyle;
+
+style
+  .CommonPageLmdeSetupPage resetbutton
+  property {
+    height                  : 60;
+    background-image        : @OptionBkg;
+    background-image-style  : stretch;
+    child-padding           : 2;
+
+    prompt-icon-width       : 30;
+    prompt-icon-image       : @dot;
+    prompt-font-color       : blue;
+    prompt-font-size        : 25;
+    prompt-control-type     : Label;
+    prompt-width            : 258;
+
+    value-icon-width        : 30;
+    value-icon-image        : @continue;
+    value-font-color        : black;
+    value-font-size         : 20;
+    value-control-type      : Label;
+  }
+endstyle;
+
+style
+  .CommonPageLmdeHelpText panel
+  property {
+    visibility : true;
+    left   : 65%;
+    top    : 23%;
+    right  : 100%;
+    bottom : 87%;
+  }
+endstyle;
+
+style
+  .CommonPageLmdeHotkey panel
+  property {
+    visibility : true;
+    left   : 0%;
+    top    : 87%;
+    right  : 100%;
+    bottom : 100%;
+  }
+endstyle;
+
+//
+// LMDE common page layout
+//
+layout
+  layoutid = COMMON_PAGE_LAYOUT_ID,
+  displayengineguid = DISPLAY_ENGINE_LOCAL_METRO_GUID;
+
+  panel
+    panelid   = OWNER_DRAW_PANEL_ID,
+    paneltype = H2O_PANEL_TYPE_OWNER_DRAW;
+    style     = .CommonPageLmdeOwnerDraw;
+  endpanel;
+
+  panel
+    panelid   = TITLE_PANEL_ID,
+    paneltype = H2O_PANEL_TYPE_FORM_TITLE;
+    style     = .CommonPageLmdeTitle;
+  endpanel;
+
+  panel
+    panelid   = SETUP_PAGE_PANEL_ID,
+    paneltype = H2O_PANEL_TYPE_SETUP_PAGE;
+    style     = .CommonPageLmdeSetupPage;
+  endpanel;
+
+  panel
+    panelid   = HELP_TEXT_PANEL_ID,
+    paneltype = H2O_PANEL_TYPE_HELP_TEXT;
+    style     = .CommonPageLmdeHelpText;
+  endpanel;
+
+  panel
+    panelid   = HOTKEY_PANEL_ID,
+    paneltype = H2O_PANEL_TYPE_HOTKEY;
+    style     = .CommonPageLmdeHotkey;
+  endpanel;
+endlayout;
+
+//
+// Hot key definitions
+//
+style
+  .H2OHotKeyShowHelp hotkey
+  property {
+    visibility                  : true;
+    key-string                  : STRING(L"F1");
+    prompt-image-token          : IMAGE_TOKEN(IMAGE_HOTKEY_SHOW_HELP);
+    prompt-string-token         : STRING_TOKEN(STR_HOT_KEY_SHOW_HELP_PROMPT_STRING);
+    help-string-token           : STRING_TOKEN(STR_HOT_KEY_SHOW_HELP_HELP_STRING);
+    key-action                  : H2O_HOT_KEY_ACTION_SHOW_HELP;
+  }
+endstyle;
+
+style
+  .H2OHotKeyDiscardAndExit hotkey
+  property {
+    visibility                  : true;
+    key-string                  : STRING(L"ESC");
+    prompt-image-token          : IMAGE_TOKEN(IMAGE_HOTKEY_DISCARD_EXIT);
+    prompt-string-token         : STRING_TOKEN(STR_HOT_KEY_DISCARD_AND_EXIT_PROMPT_STRING);
+    help-string-token           : STRING_TOKEN(STR_HOT_KEY_DISCARD_AND_EXIT_HELP_STRING);
+    key-action                  : H2O_HOT_KEY_ACTION_DISCARD_AND_EXIT;
+  }
+endstyle;
+
+style
+  .H2OHotKeySelectPreviousItem hotkey
+  property {
+    visibility                  : true;
+    key-string                  : STRING(L"up");
+    prompt-image-token          : IMAGE_TOKEN(IMAGE_HOTKEY_SELECT_ITEM_UP);
+    prompt-string-token         : STRING_TOKEN(STR_HOT_KEY_SELECT_PREVIOUS_ITEM_PROMPT_STRING);
+    help-string-token           : STRING_TOKEN(STR_HOT_KEY_SELECT_ITEM_HELP_STRING);
+    group-id                    : 1;
+    key-action                  : H2O_HOT_KEY_ACTION_SELECT_PREVIOUS_ITEM;
+  }
+endstyle;
+
+style
+  .H2OHotKeySelectNextItem hotkey
+  property {
+    visibility                  : true;
+    key-string                  : STRING(L"down");
+    prompt-image-token          : IMAGE_TOKEN(IMAGE_HOTKEY_SELECT_ITEM_DOWN);
+    prompt-string-token         : STRING_TOKEN(STR_HOT_KEY_SELECT_NEXT_ITEM_PROMPT_STRING);
+    help-string-token           : STRING_TOKEN(STR_HOT_KEY_SELECT_ITEM_HELP_STRING);
+    group-id                    : 1;
+    key-action                  : H2O_HOT_KEY_ACTION_SELECT_NEXT_ITEM;
+  }
+endstyle;
+
+style
+  .H2OHotKeyEnter hotkey
+  property {
+    visibility                  : true;
+    key-string                  : STRING(L"enter");
+    prompt-image-token          : IMAGE_TOKEN(IMAGE_HOTKEY_ENTER);
+    prompt-string-token         : STRING_TOKEN(STR_HOT_KEY_ENTER_PROMPT_STRING);
+    help-string-token           : STRING_TOKEN(STR_HOT_KEY_ENTER_HELP_STRING);
+    key-action                  : H2O_HOT_KEY_ACTION_ENTER;
+  }
+endstyle;
+
+style
+  .H2OHotKeySelectPreviousMenu hotkey
+  property {
+    visibility                  : true;
+    key-string                  : STRING(L"left");
+    prompt-image-token          : IMAGE_TOKEN(IMAGE_HOTKEY_SELECT_MENU_UP);
+    prompt-string-token         : STRING_TOKEN(STR_HOT_KEY_SELECT_PREVIOUS_MENU_PROMPT_STRING);
+    help-string-token           : STRING_TOKEN(STR_HOT_KEY_SELECT_MENU_HELP_STRING);
+    group-id                    : 2;
+    key-action                  : H2O_HOT_KEY_ACTION_SELECT_PREVIOUS_MENU;
+  }
+endstyle;
+
+style
+  .H2OHotKeySelectNextMenu hotkey
+  property {
+    visibility                  : true;
+    key-string                  : STRING(L"right");
+    prompt-image-token          : IMAGE_TOKEN(IMAGE_HOTKEY_SELECT_MENU_DOWN);
+    prompt-string-token         : STRING_TOKEN(STR_HOT_KEY_SELECT_NEXT_MENU_PROMPT_STRING);
+    help-string-token           : STRING_TOKEN(STR_HOT_KEY_SELECT_MENU_HELP_STRING);
+    group-id                    : 2;
+    key-action                  : H2O_HOT_KEY_ACTION_SELECT_NEXT_MENU;
+  }
+endstyle;
+
+style
+  .H2OHotKeyModifyPreviousValue hotkey
+  property {
+    visibility                  : true;
+    key-string                  : STRING(L"F5");
+    prompt-image-token          : IMAGE_TOKEN(IMAGE_HOTKEY_MODIFY_VALUE_DOWN);
+    prompt-string-token         : STRING_TOKEN(STR_HOT_KEY_MODIFY_PREVIOUS_VALUE_PROMPT_STRING);
+    help-string-token           : STRING_TOKEN(STR_HOT_KEY_MODIFY_VALUE_HELP_STRING);
+    group-id                    : 3;
+    key-action                  : H2O_HOT_KEY_ACTION_MODIFY_PREVIOUS_VALUE;
+  }
+endstyle;
+
+style
+  .H2OHotKeyModifyNextValue hotkey
+  property {
+    visibility                  : true;
+    key-string                  : STRING(L"F6");
+    prompt-image-token          : IMAGE_TOKEN(IMAGE_HOTKEY_MODIFY_VALUE_UP);
+    prompt-string-token         : STRING_TOKEN(STR_HOT_KEY_MODIFY_NEXT_VALUE_PROMPT_STRING);
+    help-string-token           : STRING_TOKEN(STR_HOT_KEY_MODIFY_VALUE_HELP_STRING);
+    group-id                    : 3;
+    key-action                  : H2O_HOT_KEY_ACTION_MODIFY_NEXT_VALUE;
+  }
+endstyle;
+
+style
+  .H2OHotKeyLoadDefault hotkey
+  property {
+    visibility                  : true;
+    key-string                  : STRING(L"F9");
+    prompt-image-token          : IMAGE_TOKEN(IMAGE_HOTKEY_LOAD_DEFAULT);
+    prompt-string-token         : STRING_TOKEN(STR_HOT_KEY_LOAD_DEFAULT_PROMPT_STRING);
+    help-string-token           : STRING_TOKEN(STR_HOT_KEY_LOAD_DEFAULT_HELP_STRING);
+    key-action                  : H2O_HOT_KEY_ACTION_LOAD_DEFAULT;
+  }
+endstyle;
+
+style
+  .H2OHotKeySaveAndExit hotkey
+  property {
+    visibility                  : true;
+    key-string                  : STRING(L"F10");
+    prompt-image-token          : IMAGE_TOKEN(IMAGE_HOTKEY_SAVE_AND_EXIT);
+    prompt-string-token         : STRING_TOKEN(STR_HOT_KEY_SAVE_AND_EXIT_PROMPT_STRING);
+    help-string-token           : STRING_TOKEN(STR_HOT_KEY_SAVE_AND_EXIT_HELP_STRING);
+    key-action                  : H2O_HOT_KEY_ACTION_SAVE_AND_EXIT;
+  }
+endstyle;
+
+style
+  .H2OHotKeySave hotkey
+  property {
+    visibility                  : true;
+    key-string                  : STRING(L"F10");
+    prompt-image-token          : IMAGE_TOKEN(IMAGE_HOTKEY_SAVE_AND_EXIT);
+    prompt-string-token         : STRING_TOKEN(STR_HOT_KEY_SAVE_PROMPT_STRING);
+    help-string-token           : STRING_TOKEN(STR_HOT_KEY_SAVE_HELP_STRING);
+    key-action                  : H2O_HOT_KEY_ACTION_SAVE;
+  }
+endstyle;
+
+
+vfr
+  formset
+    guid = {0x00000000, 0x0000, 0x0000, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
+    property layout : COMMON_PAGE_LAYOUT_ID;
+    hotkey hotkeyid = 0x101; style = .H2OHotKeyShowHelp;            endhotkey;
+    hotkey hotkeyid = 0x102; style = .H2OHotKeyDiscardAndExit;      endhotkey;
+    hotkey hotkeyid = 0x103; style = .H2OHotKeySelectPreviousItem;  endhotkey;
+    hotkey hotkeyid = 0x104; style = .H2OHotKeySelectNextItem;      endhotkey;
+    hotkey hotkeyid = 0x105; style = .H2OHotKeySelectPreviousMenu;  endhotkey;
+    hotkey hotkeyid = 0x106; style = .H2OHotKeySelectNextMenu;      endhotkey;
+    hotkey hotkeyid = 0x107; style = .H2OHotKeyModifyPreviousValue; endhotkey;
+    hotkey hotkeyid = 0x108; style = .H2OHotKeyModifyNextValue;     endhotkey;
+    hotkey hotkeyid = 0x109; style = .H2OHotKeyEnter;               endhotkey;
+    hotkey hotkeyid = 0x10A; style = .H2OHotKeyLoadDefault;         endhotkey;
+    hotkey hotkeyid = 0x10B; style = .H2OHotKeySave;                endhotkey;
+  endformset;
+
+  formset
+    guid = FRONT_PAGE_FORMSET_GUID;
+    property layout : FRONT_PAGE_LAYOUT_ID;
+    hotkey hotkeyid = 0x201; style = .H2OHotKeyShowHelp;            endhotkey;
+    hotkey hotkeyid = 0x202; style = .H2OHotKeySelectPreviousItem;  endhotkey;
+    hotkey hotkeyid = 0x203; style = .H2OHotKeySelectNextItem;      endhotkey;
+    hotkey hotkeyid = 0x204; style = .H2OHotKeyEnter;               endhotkey;
+  endformset;
+
+  formset
+    guid = BOOT_MANAGER_FORMSET_GUID;
+    property layout : BOOT_MANAGER_LAYOUT_ID;
+
+    hotkey hotkeyid = 0x301; style = .H2OHotKeyShowHelp;            endhotkey;
+    hotkey hotkeyid = 0x302; style = .H2OHotKeyDiscardAndExit;      endhotkey;
+    hotkey hotkeyid = 0x303; style = .H2OHotKeySelectPreviousItem;  endhotkey;
+    hotkey hotkeyid = 0x304; style = .H2OHotKeySelectNextItem;      endhotkey;
+    hotkey hotkeyid = 0x305; style = .H2OHotKeyEnter;               endhotkey;
+  endformset;
+
+  formset
+    guid = DEVICE_MANAGER_FORMSET_GUID;
+    property layout : BOOT_MANAGER_LAYOUT_ID;
+    hotkey hotkeyid = 0x401; style = .H2OHotKeyShowHelp;            endhotkey;
+    hotkey hotkeyid = 0x402; style = .H2OHotKeyDiscardAndExit;      endhotkey;
+    hotkey hotkeyid = 0x403; style = .H2OHotKeySelectPreviousItem;  endhotkey;
+    hotkey hotkeyid = 0x404; style = .H2OHotKeySelectNextItem;      endhotkey;
+    hotkey hotkeyid = 0x405; style = .H2OHotKeyEnter;               endhotkey;
+  endformset;
+
+  formset
+    guid = FILE_EXPLORE_FORMSET_GUID;
+    property layout : BOOT_FROM_FILE_LAYOUT_ID;
+    hotkey hotkeyid = 0x501; style = .H2OHotKeyShowHelp;            endhotkey;
+    hotkey hotkeyid = 0x502; style = .H2OHotKeyDiscardAndExit;      endhotkey;
+    hotkey hotkeyid = 0x503; style = .H2OHotKeySelectPreviousItem;  endhotkey;
+    hotkey hotkeyid = 0x504; style = .H2OHotKeySelectNextItem;      endhotkey;
+    hotkey hotkeyid = 0x505; style = .H2OHotKeyEnter;               endhotkey;
+  endformset;
+
+  formset
+    guid = BOOT_MAINT_FORMSET_GUID;
+    property layout : BOOT_FROM_FILE_LAYOUT_ID;
+  endformset;
+
+  formset
+    guid = SECURE_BOOT_FORMSET_GUID;
+    hotkey hotkeyid = 0x601; style = .H2OHotKeyShowHelp;            endhotkey;
+    hotkey hotkeyid = 0x602; style = .H2OHotKeyDiscardAndExit;      endhotkey;
+    hotkey hotkeyid = 0x603; style = .H2OHotKeySelectPreviousItem;  endhotkey;
+    hotkey hotkeyid = 0x604; style = .H2OHotKeySelectNextItem;      endhotkey;
+    hotkey hotkeyid = 0x605; style = .H2OHotKeySelectPreviousMenu;  endhotkey;
+    hotkey hotkeyid = 0x606; style = .H2OHotKeySelectNextMenu;      endhotkey;
+    hotkey hotkeyid = 0x607; style = .H2OHotKeyModifyPreviousValue; endhotkey;
+    hotkey hotkeyid = 0x608; style = .H2OHotKeyModifyNextValue;     endhotkey;
+    hotkey hotkeyid = 0x609; style = .H2OHotKeyEnter;               endhotkey;
+    hotkey hotkeyid = 0x60A; style = .H2OHotKeyLoadDefault;         endhotkey;
+    hotkey hotkeyid = 0x60B; style = .H2OHotKeySaveAndExit;         endhotkey;
+  endformset;
+
+  formset
+    guid = SETUP_UTILITY_FORMSET_CLASS_GUID;
+    property layout : SCU_LAYOUT_ID;
+
+    hotkey hotkeyid = 0x601; style = .H2OHotKeyShowHelp;            endhotkey;
+    hotkey hotkeyid = 0x602; style = .H2OHotKeyDiscardAndExit;      endhotkey;
+    hotkey hotkeyid = 0x603; style = .H2OHotKeySelectPreviousItem;  endhotkey;
+    hotkey hotkeyid = 0x604; style = .H2OHotKeySelectNextItem;      endhotkey;
+    hotkey hotkeyid = 0x605; style = .H2OHotKeySelectPreviousMenu;  endhotkey;
+    hotkey hotkeyid = 0x606; style = .H2OHotKeySelectNextMenu;      endhotkey;
+    hotkey hotkeyid = 0x607; style = .H2OHotKeyModifyPreviousValue; endhotkey;
+    hotkey hotkeyid = 0x608; style = .H2OHotKeyModifyNextValue;     endhotkey;
+    hotkey hotkeyid = 0x609; style = .H2OHotKeyEnter;               endhotkey;
+    hotkey hotkeyid = 0x60A; style = .H2OHotKeyLoadDefault;         endhotkey;
+    hotkey hotkeyid = 0x60B; style = .H2OHotKeySaveAndExit;         endhotkey;
+  endformset;
+endvfr;
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+//
+// Sample code for register in VfrAppVfr.vfr
+//
+
+//
+// VfrAppVfr Hot key definitions
+//
+style
+  .H2OHotKeyCombinedKeySetQValue hotkey
+  property {
+    visibility                  : false;
+    key-action                  : H2O_HOT_KEY_ACTION_SET_QUESTION_VALUE;
+    help-string-token           : STRING_TOKEN(STR_VFR_APP_HOT_KEY_SET_QUESTION_VALUE_HELP_STRING);
+    action-target-formsetguid   : VFR_APP_FORMSET_GUID;
+    action-target-questionid    : 0x4008;
+    action-target-questionvalue : UINT8(2);
+  }
+endstyle;
+
+vfr
+  formset
+    guid = VFR_APP_FORMSET_GUID;
+    hotkey hotkeyid = 0x1001; style = .H2OHotKeyShowHelp;            endhotkey;
+    hotkey hotkeyid = 0x1002; style = .H2OHotKeyDiscardAndExit;      endhotkey;
+    hotkey hotkeyid = 0x1003; style = .H2OHotKeySelectPreviousItem;  endhotkey;
+    hotkey hotkeyid = 0x1004; style = .H2OHotKeySelectNextItem;      endhotkey;
+    hotkey hotkeyid = 0x1005; style = .H2OHotKeySelectPreviousMenu;  endhotkey;
+    hotkey hotkeyid = 0x1006; style = .H2OHotKeySelectNextMenu;      endhotkey;
+    hotkey hotkeyid = 0x1007; style = .H2OHotKeyModifyPreviousValue; endhotkey;
+    hotkey hotkeyid = 0x1008; style = .H2OHotKeyModifyNextValue;     endhotkey;
+    hotkey hotkeyid = 0x1009; style = .H2OHotKeyEnter;               endhotkey;
+    hotkey hotkeyid = 0x100A; style = .H2OHotKeyLoadDefault;         endhotkey;
+    hotkey hotkeyid = 0x100B; style = .H2OHotKeySave;                endhotkey;
+
+    //
+    // Discard
+    //
+    form formid = 0x4001; // VFR_APP_FORM_HOT_KEY_PANEL_DISCARD
+      hotkey hotkeyid = 0x1010;
+        property {
+          visibility                  : true;
+          key-action                  : H2O_HOT_KEY_ACTION_DISCARD;
+          key-string                  : STRING(L"F2");
+          prompt-string-token         : STRING_TOKEN(STR_VFR_APP_HOT_KEY_DISCARD_FORMSET_PROMPT_STRING);
+          help-string-token           : STRING_TOKEN(STR_VFR_APP_HOT_KEY_DISCARD_FORMSET_HELP_STRING);
+          action-target-formsetguid   : VFR_APP_FORMSET_GUID;
+        }
+      endhotkey;
+
+      hotkey hotkeyid = 0x1011;
+        property {
+          visibility                  : true;
+          key-action                  : H2O_HOT_KEY_ACTION_DISCARD;
+          key-string                  : STRING(L"F3");
+          prompt-string-token         : STRING_TOKEN(STR_VFR_APP_HOT_KEY_DISCARD_FORM_PROMPT_STRING);
+          help-string-token           : STRING_TOKEN(STR_VFR_APP_HOT_KEY_DISCARD_FORM_HELP_STRING);
+          action-target-formsetguid   : VFR_APP_FORMSET_GUID;
+          action-target-formid        : 0x4001; // VFR_APP_FORM_HOT_KEY_PANEL_DISCARD
+        }
+      endhotkey;
+
+      hotkey hotkeyid = 0x1012;
+        property {
+          visibility                  : true;
+          key-action                  : H2O_HOT_KEY_ACTION_DISCARD;
+          key-string                  : STRING(L"F4");
+          prompt-string-token         : STRING_TOKEN(STR_VFR_APP_HOT_KEY_DISCARD_QUESTION_PROMPT_STRING);
+          help-string-token           : STRING_TOKEN(STR_VFR_APP_HOT_KEY_DISCARD_QUESTION_HELP_STRING);
+          action-target-formsetguid   : VFR_APP_FORMSET_GUID;
+          action-target-formid        : 0x4001; // VFR_APP_FORM_HOT_KEY_PANEL_DISCARD
+          action-target-questionid    : 0x4001; // HotKeyPanelNumeric0002
+        }
+      endhotkey;
+    endform;
+
+    //
+    // Load Default
+    //
+    form formid = 0x4002; // VFR_APP_FORM_HOT_KEY_PANEL_LOAD_DEFAULT
+      hotkey hotkeyid = 0x1020;
+        property {
+          visibility                  : true;
+          key-action                  : H2O_HOT_KEY_ACTION_LOAD_DEFAULT;
+          key-string                  : STRING(L"F2");
+          prompt-string-token         : STRING_TOKEN(STR_VFR_APP_HOT_KEY_LOAD_DEFAULT_FORMSET_PROMPT_STRING);
+          help-string-token           : STRING_TOKEN(STR_VFR_APP_HOT_KEY_LOAD_DEFAULT_FORMSET_HELP_STRING);
+          action-target-formsetguid   : VFR_APP_FORMSET_GUID;
+        }
+      endhotkey;
+
+      hotkey hotkeyid = 0x1021;
+        property {
+          visibility                  : true;
+          key-action                  : H2O_HOT_KEY_ACTION_LOAD_DEFAULT;
+          key-string                  : STRING(L"F3");
+          prompt-string-token         : STRING_TOKEN(STR_VFR_APP_HOT_KEY_LOAD_DEFAULT_FORM_PROMPT_STRING);
+          help-string-token           : STRING_TOKEN(STR_VFR_APP_HOT_KEY_LOAD_DEFAULT_FORM_HELP_STRING);
+          action-target-formsetguid   : VFR_APP_FORMSET_GUID;
+          action-target-formid        : 0x4002; // VFR_APP_FORM_HOT_KEY_PANEL_LOAD_DEFAULT
+        }
+      endhotkey;
+
+      hotkey hotkeyid = 0x1022;
+        property {
+          visibility                  : true;
+          key-action                  : H2O_HOT_KEY_ACTION_LOAD_DEFAULT;
+          key-string                  : STRING(L"F4");
+          prompt-string-token         : STRING_TOKEN(STR_VFR_APP_HOT_KEY_LOAD_DEFAULT_QUESTION_PROMPT_STRING);
+          help-string-token           : STRING_TOKEN(STR_VFR_APP_HOT_KEY_LOAD_DEFAULT_QUESTION_HELP_STRING);
+          action-target-formsetguid   : VFR_APP_FORMSET_GUID;
+          action-target-formid        : 0x4002; // VFR_APP_FORM_HOT_KEY_PANEL_LOAD_DEFAULT
+          action-target-questionid    : 0x4002; // HotKeyPanelNumeric0003
+        }
+      endhotkey;
+
+      hotkey hotkeyid = 0x1023;
+        property {
+          visibility                  : true;
+          key-action                  : H2O_HOT_KEY_ACTION_LOAD_DEFAULT;
+          key-string                  : STRING(L"F7");
+          prompt-string-token         : STRING_TOKEN(STR_VFR_APP_HOT_KEY_LOAD_DEFAULT_MANUFACTURING_PROMPT_STRING);
+          help-string-token           : STRING_TOKEN(STR_VFR_APP_HOT_KEY_LOAD_DEFAULT_MANUFACTURING_HELP_STRING);
+          action-target-formsetguid   : VFR_APP_FORMSET_GUID;
+          action-defaultid            : 1; // MANUFACTURING
+        }
+      endhotkey;
+    endform;
+
+    //
+    // Save
+    //
+    form formid = 0x4003; // VFR_APP_FORM_HOT_KEY_PANEL_SAVE
+      hotkey hotkeyid = 0x1030;
+        property {
+          visibility                  : true;
+          key-action                  : H2O_HOT_KEY_ACTION_SAVE;
+          key-string                  : STRING(L"F2");
+          prompt-string-token         : STRING_TOKEN(STR_VFR_APP_HOT_KEY_SAVE_FORMSET_PROMPT_STRING);
+          help-string-token           : STRING_TOKEN(STR_VFR_APP_HOT_KEY_SAVE_FORMSET_HELP_STRING);
+          action-target-formsetguid   : VFR_APP_FORMSET_GUID;
+        }
+      endhotkey;
+
+      hotkey hotkeyid = 0x1031;
+        property {
+          visibility                  : true;
+          key-action                  : H2O_HOT_KEY_ACTION_SAVE;
+          key-string                  : STRING(L"F3");
+          prompt-string-token         : STRING_TOKEN(STR_VFR_APP_HOT_KEY_SAVE_FORM_PROMPT_STRING);
+          help-string-token           : STRING_TOKEN(STR_VFR_APP_HOT_KEY_SAVE_FORM_HELP_STRING);
+          action-target-formsetguid   : VFR_APP_FORMSET_GUID;
+          action-target-formid        : 0x4003; // VFR_APP_FORM_HOT_KEY_PANEL_SAVE
+        }
+      endhotkey;
+
+      hotkey hotkeyid = 0x1032;
+        property {
+          visibility                  : true;
+          key-action                  : H2O_HOT_KEY_ACTION_SAVE;
+          key-string                  : STRING(L"F4");
+          prompt-string-token         : STRING_TOKEN(STR_VFR_APP_HOT_KEY_SAVE_QUESTION_PROMPT_STRING);
+          help-string-token           : STRING_TOKEN(STR_VFR_APP_HOT_KEY_SAVE_QUESTION_HELP_STRING);
+          action-target-formsetguid   : VFR_APP_FORMSET_GUID;
+          action-target-formid        : 0x4003; // VFR_APP_FORM_HOT_KEY_PANEL_SAVE
+          action-target-questionid    : 0x4003; // HotKeyPanelNumeric0004
+        }
+      endhotkey;
+    endform;
+
+    //
+    // Enter
+    //
+    form formid = 0x4004; // VFR_APP_FORM_HOT_KEY_PANEL_ENTER
+      hotkey hotkeyid = 0x1040;
+        property {
+          visibility                  : true;
+          key-action                  : H2O_HOT_KEY_ACTION_ENTER;
+          key-string                  : STRING(L"F2");
+          prompt-string-token         : STRING_TOKEN(STR_VFR_APP_HOT_KEY_ENTER_CURRENT_PROMPT_STRING);
+          help-string-token           : STRING_TOKEN(STR_VFR_APP_HOT_KEY_ENTER_CURRENT_HELP_STRING);
+          action-target-formsetguid   : VFR_APP_FORMSET_GUID;
+          action-target-formid        : 0x4004; // VFR_APP_FORM_HOT_KEY_PANEL_ENTER
+        }
+      endhotkey;
+
+      hotkey hotkeyid = 0x1041;
+        property {
+          visibility                  : true;
+          key-action                  : H2O_HOT_KEY_ACTION_ENTER;
+          key-string                  : STRING(L"F3");
+          prompt-string-token         : STRING_TOKEN(STR_VFR_APP_HOT_KEY_ENTER_TARGET_STRING);
+          help-string-token           : STRING_TOKEN(STR_VFR_APP_HOT_KEY_ENTER_TARGET_HELP_STRING);
+          action-target-formsetguid   : VFR_APP_FORMSET_GUID;
+          action-target-formid        : 0x4004; // VFR_APP_FORM_HOT_KEY_PANEL_ENTER
+          action-target-questionid    : 0x4004; // HotKeyPanelOneOf0005
+        }
+      endhotkey;
+    endform;
+
+    //
+    // Callback
+    //
+    form formid = 0x4005; // H2O_HOT_KEY_ACTION_CALLBACK
+      hotkey hotkeyid = 0x1050;
+        property {
+          visibility                  : true;
+          key-action                  : H2O_HOT_KEY_ACTION_CALLBACK;
+          key-string                  : STRING(L"F2");
+          prompt-string-token         : STRING_TOKEN(STR_VFR_APP_HOT_KEY_CALLBACK_TARGET_STRING);
+          help-string-token           : STRING_TOKEN(STR_VFR_APP_HOT_KEY_CALLBACK_TARGET_HELP_STRING);
+          action-target-formsetguid   : VFR_APP_FORMSET_GUID;
+          action-target-questionid    : 0x4005;
+        }
+      endhotkey;
+    endform;
+
+    //
+    // GoTo
+    //
+    form formid = 0x4006; // H2O_HOT_KEY_ACTION_GOTO
+      hotkey hotkeyid = 0x1060;
+        property {
+          visibility                  : true;
+          key-action                  : H2O_HOT_KEY_ACTION_GOTO;
+          key-string                  : STRING(L"F2");
+          prompt-string-token         : STRING_TOKEN(STR_VFR_APP_HOT_KEY_GOTO_PARENT_PROMPT_STRING);
+          help-string-token           : STRING_TOKEN(STR_VFR_APP_HOT_KEY_GOTO_PARENT_HELP_STRING);
+          action-target-formsetguid   : VFR_APP_FORMSET_GUID;
+          action-target-formid        : 0x4000;
+        }
+      endhotkey;
+
+      hotkey hotkeyid = 0x1061;
+        property {
+          visibility                  : true;
+          key-action                  : H2O_HOT_KEY_ACTION_GOTO;
+          key-string                  : STRING(L"F3");
+          prompt-string-token         : STRING_TOKEN(STR_VFR_APP_HOT_KEY_GOTO_CHILD_STRING);
+          help-string-token           : STRING_TOKEN(STR_VFR_APP_HOT_KEY_GOTO_CHILD_HELP_STRING);
+          action-target-formsetguid   : VFR_APP_FORMSET_GUID;
+          action-target-formid        : 0x4100;
+        }
+      endhotkey;
+    endform;
+
+    //
+    // Set Question Value
+    //
+    form formid = 0x4007; // H2O_HOT_KEY_ACTION_SET_QUESTION_VALUE
+      hotkey hotkeyid = 0x1070;
+        property {
+          visibility                  : true;
+          key-action                  : H2O_HOT_KEY_ACTION_SET_QUESTION_VALUE;
+          key-string                  : STRING(L"F2");
+          prompt-string-token         : STRING_TOKEN(STR_VFR_APP_HOT_KEY_SET_QUESTION_VALUE_STRING);
+          help-string-token           : STRING_TOKEN(STR_VFR_APP_HOT_KEY_SET_QUESTION_VALUE_HELP_STRING);
+          action-target-formsetguid   : VFR_APP_FORMSET_GUID;
+          action-target-questionid    : 0x4007;
+          action-target-questionvalue : UINT8(77);
+        }
+      endhotkey;
+    endform;
+
+    //
+    // Test Form property can override Fromset property
+    //
+    form formid = 0x4101;
+      hotkey hotkeyid = 0x1001;
+        property {
+          enable                      : false;
+        }
+      endhotkey;
+
+      hotkey hotkeyid = 0x1002;
+        property {
+          visibility                  : false;
+        }
+      endhotkey;
+
+      hotkey hotkeyid = 0x1003;
+        property {
+          key-string                  : STRING(L"F2");
+          prompt-string-token         : STRING_TOKEN(STR_VFR_APP_HOT_KEY_OVERRIDE_SELECT_PREVIOUS_ITEM_STRING);
+        }
+      endhotkey;
+
+      hotkey hotkeyid = 0x1004;
+        property {
+          key-string                  : STRING(L"F3");
+          prompt-string-token         : STRING_TOKEN(STR_VFR_APP_HOT_KEY_OVERRIDE_SELECT_NEXT_ITEM_STRING);
+        }
+      endhotkey;
+    endform;
+
+    form formid = 0x4102;
+
+      hotkey hotkeyid = 0x1070; style = .H2OHotKeyCombinedKeySetQValue; property {key-string : STRING(L"ctrl-a");    prompt-string-token : STRING_TOKEN(STR_VFR_APP_HOT_KEY_COMBIND_HOT_KEY_CTRL_A);}     endhotkey;
+      hotkey hotkeyid = 0x1071; style = .H2OHotKeyCombinedKeySetQValue; property {key-string : STRING(L"ctrl-F1");   prompt-string-token : STRING_TOKEN(STR_VFR_APP_HOT_KEY_COMBIND_HOT_KEY_CTRL_F1);}    endhotkey;
+      hotkey hotkeyid = 0x1072; style = .H2OHotKeyCombinedKeySetQValue; property {key-string : STRING(L"ctrl-1");    prompt-string-token : STRING_TOKEN(STR_VFR_APP_HOT_KEY_COMBIND_HOT_KEY_CTRL_1);}     endhotkey;
+      hotkey hotkeyid = 0x1073; style = .H2OHotKeyCombinedKeySetQValue; property {key-string : STRING(L"ctrl-.");    prompt-string-token : STRING_TOKEN(STR_VFR_APP_HOT_KEY_COMBIND_HOT_KEY_CTRL_DOT);}   endhotkey;
+      hotkey hotkeyid = 0x1074; style = .H2OHotKeyCombinedKeySetQValue; property {key-string : STRING(L"alt-a");     prompt-string-token : STRING_TOKEN(STR_VFR_APP_HOT_KEY_COMBIND_HOT_KEY_ALT_A);}      endhotkey;
+      hotkey hotkeyid = 0x1075; style = .H2OHotKeyCombinedKeySetQValue; property {key-string : STRING(L"alt-F1");    prompt-string-token : STRING_TOKEN(STR_VFR_APP_HOT_KEY_COMBIND_HOT_KEY_ALT_F1);}     endhotkey;
+      hotkey hotkeyid = 0x1076; style = .H2OHotKeyCombinedKeySetQValue; property {key-string : STRING(L"alt-1");     prompt-string-token : STRING_TOKEN(STR_VFR_APP_HOT_KEY_COMBIND_HOT_KEY_ALT_1);}      endhotkey;
+      hotkey hotkeyid = 0x1077; style = .H2OHotKeyCombinedKeySetQValue; property {key-string : STRING(L"alt-.");     prompt-string-token : STRING_TOKEN(STR_VFR_APP_HOT_KEY_COMBIND_HOT_KEY_ALT_DOT);}    endhotkey;
+      hotkey hotkeyid = 0x1078; style = .H2OHotKeyCombinedKeySetQValue; property {key-string : STRING(L"logo-a");    prompt-string-token : STRING_TOKEN(STR_VFR_APP_HOT_KEY_COMBIND_HOT_KEY_LOGO_A);}     endhotkey;
+      hotkey hotkeyid = 0x1079; style = .H2OHotKeyCombinedKeySetQValue; property {key-string : STRING(L"logo-F1");   prompt-string-token : STRING_TOKEN(STR_VFR_APP_HOT_KEY_COMBIND_HOT_KEY_LOGO_F1);}    endhotkey;
+      hotkey hotkeyid = 0x107A; style = .H2OHotKeyCombinedKeySetQValue; property {key-string : STRING(L"logo-1");    prompt-string-token : STRING_TOKEN(STR_VFR_APP_HOT_KEY_COMBIND_HOT_KEY_LOGO_1);}     endhotkey;
+      hotkey hotkeyid = 0x107B; style = .H2OHotKeyCombinedKeySetQValue; property {key-string : STRING(L"logo-.");    prompt-string-token : STRING_TOKEN(STR_VFR_APP_HOT_KEY_COMBIND_HOT_KEY_LOGO_DOT);}   endhotkey;
+      hotkey hotkeyid = 0x107C; style = .H2OHotKeyCombinedKeySetQValue; property {key-string : STRING(L"menu-a");    prompt-string-token : STRING_TOKEN(STR_VFR_APP_HOT_KEY_COMBIND_HOT_KEY_MENU_A);}     endhotkey;
+      hotkey hotkeyid = 0x107D; style = .H2OHotKeyCombinedKeySetQValue; property {key-string : STRING(L"menu-F1");   prompt-string-token : STRING_TOKEN(STR_VFR_APP_HOT_KEY_COMBIND_HOT_KEY_MENU_F1);}    endhotkey;
+      hotkey hotkeyid = 0x107E; style = .H2OHotKeyCombinedKeySetQValue; property {key-string : STRING(L"menu-1");    prompt-string-token : STRING_TOKEN(STR_VFR_APP_HOT_KEY_COMBIND_HOT_KEY_MENU_1);}     endhotkey;
+      hotkey hotkeyid = 0x107F; style = .H2OHotKeyCombinedKeySetQValue; property {key-string : STRING(L"menu-.");    prompt-string-token : STRING_TOKEN(STR_VFR_APP_HOT_KEY_COMBIND_HOT_KEY_MENU_DOT);}   endhotkey;
+      hotkey hotkeyid = 0x1080; style = .H2OHotKeyCombinedKeySetQValue; property {key-string : STRING(L"sysreq-a");  prompt-string-token : STRING_TOKEN(STR_VFR_APP_HOT_KEY_COMBIND_HOT_KEY_SYSREQ_A);}   endhotkey;
+      hotkey hotkeyid = 0x1081; style = .H2OHotKeyCombinedKeySetQValue; property {key-string : STRING(L"sysreq-F1"); prompt-string-token : STRING_TOKEN(STR_VFR_APP_HOT_KEY_COMBIND_HOT_KEY_SYSREQ_F1);}  endhotkey;
+      hotkey hotkeyid = 0x1082; style = .H2OHotKeyCombinedKeySetQValue; property {key-string : STRING(L"sysreq-1");  prompt-string-token : STRING_TOKEN(STR_VFR_APP_HOT_KEY_COMBIND_HOT_KEY_SYSREQ_1);}   endhotkey;
+      hotkey hotkeyid = 0x1083; style = .H2OHotKeyCombinedKeySetQValue; property {key-string : STRING(L"sysreq-.");  prompt-string-token : STRING_TOKEN(STR_VFR_APP_HOT_KEY_COMBIND_HOT_KEY_SYSREQ_DOT);} endhotkey;
+
+    endform;
+
+  endformset;
+endvfr;
+

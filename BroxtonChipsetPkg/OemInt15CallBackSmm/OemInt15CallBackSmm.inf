@@ -1,0 +1,64 @@
+## @file
+#  Component description file for Oem INT Callback Driver
+#
+#******************************************************************************
+#* Copyright (c) 2012 - 2014, Insyde Software Corp. All Rights Reserved.
+#*
+#* You may not reproduce, distribute, publish, display, perform, modify, adapt,
+#* transmit, broadcast, present, recite, release, license or otherwise exploit
+#* any part of this publication in any form, by any means, without the prior
+#* written permission of Insyde Software Corporation.
+#*
+#******************************************************************************
+
+[Defines]
+  INF_VERSION                    = 0x00010005
+  BASE_NAME                      = OemInt15CallbackSmm
+  FILE_GUID                      = CFD5D6B3-3C21-4f15-B0E8-088F0128890D
+  MODULE_TYPE                    = DXE_SMM_DRIVER
+  PI_SPECIFICATION_VERSION       = 0x0001000A
+  VERSION_STRING                 = 1.0
+  ENTRY_POINT                    = OemINT15EntryPoint
+
+[Sources]
+  OemInt15CallBackSmm.c
+  OemInt15CallBackSmm.h
+
+[LibraryClasses]
+  UefiDriverEntryPoint
+  SmmServicesTableLib
+  PostCodeLib
+  DebugLib
+  SmmOemSvcChipsetLibDefault
+#[-start-160914-IB07400784-add]#
+  BaseMemoryLib
+#[-end-160914-IB07400784-add]#
+
+[Packages]
+  MdePkg/MdePkg.dec
+  MdeModulePkg/MdeModulePkg.dec
+  InsydeModulePkg/InsydeModulePkg.dec
+  IntelFrameworkPkg/IntelFrameworkPkg.dec
+  $(PROJECT_PKG)/Project.dec
+  $(CHIPSET_PKG)/$(CHIPSET_PKG).dec
+#[-start-160914-IB07400784-add]#
+  $(PLATFORM_RC_PACKAGE)/$(PLATFORM_RC_PACKAGE).dec
+#[-end-160914-IB07400784-add]#
+
+[Protocols]
+  gEfiSmmInt15ServiceProtocolGuid
+#[-start-160914-IB07400784-add]#
+  gEfiSmmVariableProtocolGuid
+#[-end-160914-IB07400784-add]#
+
+#[-start-160914-IB07400784-add]#
+[Guids]
+  gSystemConfigurationGuid
+  
+[Pcd]
+  gChipsetPkgTokenSpaceGuid.PcdSetupConfigSize
+#[-end-160914-IB07400784-add]#
+
+[Depex]
+  TRUE
+  

@@ -1,0 +1,54 @@
+## @file
+# Insyde H2oUve package Declaration file
+#
+#******************************************************************************
+#* Copyright (c) 2016, Insyde Software Corporation. All Rights Reserved.
+#*
+#* You may not reproduce, distribute, publish, display, perform, modify, adapt,
+#* transmit, broadcast, present, recite, release, license or otherwise exploit
+#* any part of this publication in any form, by any means, without the prior
+#* written permission of Insyde Software Corporation.
+#*
+#******************************************************************************
+#
+
+[Defines]
+  DEC_SPECIFICATION              = 0x00010005
+  PACKAGE_NAME                   = InsydeH2oUvePkg
+  PACKAGE_GUID                   = EA733427-E666-4619-9B3E-1F5BAEC76EDA
+  PACKAGE_VERSION                = 0.1
+
+[Includes]
+  Include
+
+[LibraryClasses]
+  SmmOemSvcH2oUveLib|Include/Library/SmmOemSvcH2oUveLib.h
+
+[Guids]
+  # Include/Guid/H2oUvePkgTokenSpace.h
+  gH2oUvePkgTokenSpaceGuid               = { 0xc00f1398, 0x8f7d, 0x44d0, { 0x9b, 0xad, 0x29, 0xd8, 0x1c, 0x8b, 0x13, 0x7d } }
+
+  # Include/Guid/VariableEdit.h
+  gVarableEditGuid                       = {0x97d2f285, 0xb16b, 0x46d6, {0x8a, 0xab, 0x34, 0x1a, 0x84, 0xa6, 0xe6, 0x34}}
+
+  gH2oUveFormsetGuid                     = { 0xd1d7208f, 0x84ec, 0x411a, { 0x9b, 0xed, 0x98, 0xe0, 0x0, 0xba, 0x74, 0x95 }}
+  gH2oUveVarstoreGuid                    = { 0xef0849b6, 0xfad0, 0x40e9, { 0x91, 0x7, 0x97, 0x4a, 0xeb, 0x87, 0x87, 0xa2 }}
+
+  gH2oUveSampleFormVarstoreGuid          = { 0x58ace6de, 0x505f, 0x4bec, { 0xb8, 0x8e, 0x92, 0xe3, 0x54, 0x73, 0x63, 0xf1 }}
+  gH2oUveSampleFormGuid                  = { 0x9139e3cb, 0x4eee, 0x43fc, { 0x80, 0x25, 0xe3, 0x58, 0xdc, 0x94, 0x7d, 0x93 }}
+
+[Ppis]
+
+[Protocols]
+  # Include/Protocol/SetupCallbackSync.h
+  gSetupCallbackSyncGuid                 = {0x08015350, 0x6164, 0x4d64, {0xb1, 0xe0, 0xe7, 0x74, 0xe6, 0x94, 0xfa, 0x06}}
+
+[PcdsFeatureFlag]
+  gH2oUvePkgTokenSpaceGuid.PcdSampleFormSupported|FALSE|BOOLEAN|0x20000003
+
+[PcdsFixedAtBuild,PcdsPatchableInModule,PcdsDynamic, PcdsDynamicEx]
+  gH2oUvePkgTokenSpaceGuid.PcdH2oUveIhisiRegisterTable|{0,0,0}|VOID*|0x20000001
+
+[PcdsDynamic, PcdsDynamicEx]
+  gH2oUvePkgTokenSpaceGuid.PcdH2oUveClassGuid|{0}|VOID*|0x20000002
+

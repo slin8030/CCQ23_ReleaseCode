@@ -1,0 +1,58 @@
+## @file
+#
+#  Component description file for Init SioWpcd374l PEIM.
+#
+#******************************************************************************
+#* Copyright (c) 2014, Insyde Software Corporation. All Rights Reserved.
+#*
+#* You may not reproduce, distribute, publish, display, perform, modify, adapt,
+#* transmit, broadcast, present, recite, release, license or otherwise exploit
+#* any part of this publication in any form, by any means, without the prior
+#* written permission of Insyde Software Corporation.
+#*
+#******************************************************************************
+#
+##
+
+[Defines]
+  INF_VERSION                    = 0x00010005
+  BASE_NAME                      = SioWpcd374lPei
+  FILE_GUID                      = 19C9397D-FD07-4b4b-9A8B-363D184436EE
+  MODULE_TYPE                    = PEIM
+  VERSION_STRING                 = 1.0
+
+  ENTRY_POINT                    = SioInitPeim
+
+[sources]
+  SioMainPei.c
+  SioInitPei.h
+
+[Protocols]
+
+[Packages]
+  MdePkg/MdePkg.dec
+  MdeModulePkg/MdeModulePkg.dec
+  SioWpcd374lPkg/SioWpcd374lPkg.dec
+  InsydeOemServicesPkg/InsydeOemServicesPkg.dec
+  InsydeModulePkg/InsydeModulePkg.dec
+
+[LibraryClasses]
+  IoLib
+  SioLib
+  DebugLib
+  PostCodeLib
+  BaseMemoryLib
+  PeimEntryPoint
+  PeiOemSvcKernelLibDefault 
+
+[Ppis]
+  gPeiSioInitializedPpiGuid
+
+[FixedPcd]
+  gSioGuid.PcdSioWpcd374lCfg
+
+[Depex]
+  gPcdPpiGuid
+
+
+ 

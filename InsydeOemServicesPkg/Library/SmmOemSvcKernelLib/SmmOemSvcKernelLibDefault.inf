@@ -1,0 +1,98 @@
+## @file
+#  Component description file for SmmOemSvcKernelLibDefault instance.
+#
+#******************************************************************************
+#* Copyright (c) 2012 - 2016, Insyde Software Corporation. All Rights Reserved.
+#*
+#* You may not reproduce, distribute, publish, display, perform, modify, adapt,
+#* transmit, broadcast, present, recite, release, license or otherwise exploit
+#* any part of this publication in any form, by any means, without the prior
+#* written permission of Insyde Software Corporation.
+#*
+#******************************************************************************
+
+[Defines]
+  INF_VERSION                    = 0x00010005
+  BASE_NAME                      = SmmOemSvcKernelLibDefault
+  FILE_GUID                      = C6946FFC-17B2-4219-8C5C-9516929AD310
+  MODULE_TYPE                    = DXE_SMM_DRIVER
+  VERSION_STRING                 = 1.0
+  LIBRARY_CLASS                  = SmmOemSvcKernelLibDefault|DXE_SMM_DRIVER SMM_CORE
+
+[Sources]
+  OemSvcDisableAcpiCallback.c
+  OemSvcEnableAcpiCallback.c
+  OemSvcGetAspmOverrideInfo.c
+  OemSvcSmmInstallPnpGpnvTable.c
+  OemSvcSmmInstallPnpStringTable.c
+  OemSvcPowerButtonCallback.c
+  OemSvcRestoreAcpiCallback.c
+  OemSvcS1Callback.c
+  OemSvcS3Callback.c
+  OemSvcS4Callback.c
+  OemSvcS5AcLossCallback.c
+  OemSvcS5Callback.c
+  OemSvcOsResetCallback.c
+  OemSvcVariablePreservedTable.c
+  OemSvcIhisiGetWholeBiosRomMap.c
+  OemSvcUpdateStatusCodeBeep.c
+  OemSvcIhisiS1FHookFbtsApHookForBios.c
+  OemSvcIhisiS10HookGetAcStatus.c
+  OemSvcIhisiS10HookGetBatterylife.c
+  OemSvcIhisiS10HookGetPermission.c
+  OemSvcIhisiS11HookFbtsApCheck.c
+  OemSvcIhisiS12HookGetOemFlashMap.c
+  OemSvcIhisiS20HookFetsDoAfterFlashing.c
+  OemSvcIhisiS20HookFetsDoBeforeFlashing.c
+  OemSvcIhisiS20HookFetsEcFlash.c
+  OemSvcIhisiS20HookFetsEcIdle.c
+  OemSvcIhisiS21HookFetsGetPartInfo.c
+  OemSvcIhisiS41CommonCommuniction.c
+  OemSvcIhisiS41ReservedFunction.c
+  OemSvcIhisiS41T1VbiosFunction.c
+  OemSvcIhisiS41T50HookOa30ReadWriteFunction.c
+  OemSvcIhisiS41T54LogoUpdateFunction.c
+  OemSvcIhisiS41T55CheckBiosSignBySystemBiosFunction.c
+  OemSvcSmmHddPasswordUnlockAllHdd.c
+  OemSvcSmmHddDisablePassword.c
+  OemSvcSmmHddPasswordStringProcess.c
+  OemSvcSmmHddResetSecurityStatus.c
+  OemSvcSmmHddSetPassword.c
+  OemSvcSmmHddUnlockPassword.c
+  OemSvcSmmHddUpdateSecurityStatus.c
+
+[Packages]
+  MdePkg/MdePkg.dec
+  MdeModulePkg/MdeModulePkg.dec
+  InsydeModulePkg/InsydeModulePkg.dec
+  InsydeOemServicesPkg/InsydeOemServicesPkg.dec
+
+[LibraryClasses]
+  SmmOemSvcKernelLib
+  FlashRegionLib
+  
+[Guids]
+  gH2OFlashMapRegionFvGuid
+  gH2OFlashMapRegionDxeFvGuid
+
+[Pcd]
+  gEfiMdeModulePkgTokenSpaceGuid.PcdFlashNvStorageVariableBase
+  gEfiMdeModulePkgTokenSpaceGuid.PcdFlashNvStorageVariableSize
+  gEfiMdeModulePkgTokenSpaceGuid.PcdFlashNvStorageFtwWorkingBase
+  gEfiMdeModulePkgTokenSpaceGuid.PcdFlashNvStorageFtwWorkingSize
+  gEfiMdeModulePkgTokenSpaceGuid.PcdFlashNvStorageFtwSpareBase
+  gEfiMdeModulePkgTokenSpaceGuid.PcdFlashNvStorageFtwSpareSize
+  gInsydeTokenSpaceGuid.PcdFlashFvMainBase
+  gInsydeTokenSpaceGuid.PcdFlashFvMainSize
+  gInsydeTokenSpaceGuid.PcdFlashNvStorageMicrocodeBase
+  gInsydeTokenSpaceGuid.PcdFlashNvStorageMicrocodeSize
+  gInsydeTokenSpaceGuid.PcdFlashNvStorageDmiBase
+  gInsydeTokenSpaceGuid.PcdFlashNvStorageDmiSize
+  gInsydeTokenSpaceGuid.PcdFlashNvStorageMsdmDataBase
+  gInsydeTokenSpaceGuid.PcdFlashNvStorageMsdmDataSize
+  gInsydeTokenSpaceGuid.PcdFlashNvStorageBvdtBase
+  gInsydeTokenSpaceGuid.PcdFlashNvStorageBvdtSize
+  gInsydeTokenSpaceGuid.PcdFlashNvStorageFactoryCopyBase
+  gInsydeTokenSpaceGuid.PcdFlashNvStorageFactoryCopySize
+  gInsydeTokenSpaceGuid.PcdFlashFvRecoveryBase
+  gInsydeTokenSpaceGuid.PcdFlashFvRecoverySize

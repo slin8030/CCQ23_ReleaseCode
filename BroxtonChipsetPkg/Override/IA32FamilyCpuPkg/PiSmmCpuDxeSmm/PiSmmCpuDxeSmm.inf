@@ -1,0 +1,203 @@
+#
+# This file contains an 'Intel Peripheral Driver' and is      
+# licensed for Intel CPUs and chipsets under the terms of your
+# license agreement with Intel or your vendor.  This file may 
+# be modified by the user, subject to additional terms of the 
+# license agreement                                           
+#
+## @file
+#  CPU SMM driver.
+#
+#  This SMM driver performs SMM intialization, deploy SMM Entry Vector, 
+#  provides CPU specific services in SMM.
+#
+#  Copyright (c) 2009 - 2015, Intel Corporation. All rights reserved.<BR>
+#
+#  This software and associated documentation (if any) is furnished
+#  under a license and may only be used or copied in accordance
+#  with the terms of the license. Except as permitted by such
+#  license, no part of this software or documentation may be
+#  reproduced, stored in a retrieval system, or transmitted in any
+#  form or by any means without the express written consent of
+#  Intel Corporation.
+#
+#
+##
+
+[Defines]
+  INF_VERSION                    = 0x00010005
+  BASE_NAME                      = PiSmmCpuDxeSmm
+  MODULE_UNI_FILE                = PiSmmCpuDxeSmm.uni
+  FILE_GUID                      = A3FF0EF5-0C28-42f5-B544-8C7DE1E80014
+  MODULE_TYPE                    = DXE_SMM_DRIVER
+  VERSION_STRING                 = 1.0
+  PI_SPECIFICATION_VERSION       = 0x0001000A  
+  ENTRY_POINT                    = PiCpuSmmEntry
+
+#
+# The following information is for reference only and not required by the build tools.
+#
+#  VALID_ARCHITECTURES           = IA32 X64
+#
+
+[Sources]
+  PiSmmCpuDxeSmm.c
+  PiSmmCpuDxeSmm.h
+  SmmFeatures.c
+  SmmFeatures.h
+  MpService.c
+  SyncTimer.c
+  CpuS3.c
+  CpuService.c
+  CpuService.h
+  SmmProfile.c
+  SmmStateSaveRegister.h
+
+[Sources.Ia32]
+  Ia32/SmmFuncsArch.c
+  Ia32/Semaphore.c
+  Ia32/PageTbl.c
+  Ia32/SmmProfileArch.c
+  Ia32/SmmInit.asm      | MSFT
+  Ia32/SmiException.asm | MSFT
+  Ia32/SmiEntry.asm     | MSFT
+  Ia32/MpFuncs.asm      | MSFT
+
+  Ia32/SmmInit.asm      | INTEL
+  Ia32/SmiException.asm | INTEL
+  Ia32/SmiEntry.asm     | INTEL
+  Ia32/MpFuncs.asm      | INTEL
+  
+  Ia32/SmmInit.S      | GCC
+  Ia32/SmiException.S | GCC
+  Ia32/SmiEntry.S     | GCC
+  Ia32/MpFuncs.S      | GCC
+
+[Sources.X64]
+  X64/SmmFuncsArch.c
+  X64/Semaphore.c
+  X64/PageTbl.c
+  X64/SmmProfileArch.c
+  X64/SmmInit.asm      | MSFT
+  X64/SmiException.asm | MSFT
+  X64/SmiEntry.asm     | MSFT
+  X64/MpFuncs.asm      | MSFT
+
+  X64/SmmInit.asm      | INTEL
+  X64/SmiException.asm | INTEL
+  X64/SmiEntry.asm     | INTEL
+  X64/MpFuncs.asm      | INTEL
+  
+  X64/SmmInit.S      | GCC
+  X64/SmiException.S | GCC
+  X64/SmiEntry.S     | GCC
+  X64/MpFuncs.S      | GCC
+
+[Packages]
+  MdePkg/MdePkg.dec
+  MdeModulePkg/MdeModulePkg.dec
+  UefiCpuPkg/UefiCpuPkg.dec
+  IA32FamilyCpuPkg/IA32FamilyCpuPkg.dec
+  IntelFrameworkPkg/IntelFrameworkPkg.dec
+  $(CHIPSET_PKG)/$(CHIPSET_PKG).dec
+#[-start-170323-IB07400848-add]#
+  InsydeModulePkg/InsydeModulePkg.dec
+#[-end-170323-IB07400848-add]#
+#[-start-170308-IB07400847-add]#
+  $(PLATFORM_RC_PACKAGE)/$(PLATFORM_RC_PACKAGE).dec
+#[-end-170308-IB07400847-add]#
+
+[LibraryClasses]
+  UefiDriverEntryPoint
+  UefiRuntimeServicesTableLib
+  CacheMaintenanceLib
+  PcdLib
+  DebugLib
+  BaseLib
+  SynchronizationLib
+  BaseMemoryLib
+  MtrrLib
+  SmmLib
+  IoLib
+  TimerLib
+  SmmServicesTableLib
+  MemoryAllocationLib
+  DebugAgentLib
+  HobLib
+  CpuConfigLib
+  PciLib
+  LocalApicLib
+  UefiCpuLib
+  SmmCpuPlatformHookLib
+  CpuExceptionHandlerLib
+  UefiLib
+  DxeServicesTableLib
+  CpuLib
+  ReportStatusCodeLib
+
+[Protocols]
+  gEfiSmmAccess2ProtocolGuid               ## CONSUMES
+  gEfiMpServiceProtocolGuid                ## CONSUMES
+  gEfiSmmConfigurationProtocolGuid         ## PRODUCES
+  gEfiSmmCpuProtocolGuid                   ## PRODUCES
+  gEfiSmmReadyToLockProtocolGuid           ## NOTIFY
+  gSmmCpuSyncProtocolGuid                  ## PRODUCES
+  gSmmCpuSync2ProtocolGuid                 ## PRODUCES
+  gEfiSmmCpuServiceProtocolGuid            ## PRODUCES
+  gEfiSmmCpuSaveStateProtocolGuid          ## SOMETIMES_PRODUCES
+
+[Guids]
+  gEfiAcpiVariableGuid                     ## SOMETIMES_CONSUMES ## HOB # it is used for S3 boot. 
+  gEfiGlobalVariableGuid                   ## SOMETIMES_PRODUCES ## Variable:L"SmmProfileData"
+  gEfiAcpi20TableGuid                      ## SOMETIMES_CONSUMES ## SystemTable
+  gEfiAcpi10TableGuid                      ## SOMETIMES_CONSUMES ## SystemTable
+#[-start-170323-IB07400848-add]#
+  gSystemConfigurationGuid                 ## SOMETIMES_CONSUMES ## SetupVariable
+#[-end-170323-IB07400848-add]#
+  
+[FeaturePcd]
+  gEfiMdeModulePkgTokenSpaceGuid.PcdFrameworkCompatibilitySupport  ## CONSUMES
+  gEfiCpuTokenSpaceGuid.PcdCpuSmmBlockStartupThisAp                ## CONSUMES
+  gEfiCpuTokenSpaceGuid.PcdCpuSmmEnableBspElection                 ## CONSUMES
+  gEfiCpuTokenSpaceGuid.PcdCpuSmmDebug                             ## CONSUMES
+  gChipsetPkgTokenSpaceGuid.PcdCpuSmmUncacheCpuSyncData            ## CONSUMES
+  gChipsetPkgTokenSpaceGuid.PcdCpuHotPlugSupport                   ## CONSUMES
+  gEfiCpuTokenSpaceGuid.PcdCpuSmmStackGuard                        ## CONSUMES
+  gEfiCpuTokenSpaceGuid.PcdCpuSmmProfileEnable                     ## CONSUMES
+  gEfiCpuTokenSpaceGuid.PcdCpuSmmProfileRingBuffer                 ## CONSUMES
+  gChipsetPkgTokenSpaceGuid.PcdCpuSmmFeatureControlMsrLock         ## CONSUMES
+
+[Pcd]
+  gEfiCpuTokenSpaceGuid.PcdCpuMaxLogicalProcessorNumber            ## SOMETIMES_CONSUMES
+  gEfiCpuTokenSpaceGuid.PcdCpuSmmProfileSize                       ## SOMETIMES_CONSUMES
+  gEfiCpuTokenSpaceGuid.PcdCpuIEDEnabled                           ## CONSUMES
+  gEfiCpuTokenSpaceGuid.PcdCpuIEDRamSize                           ## SOMETIMES_CONSUMES
+  gEfiCpuTokenSpaceGuid.PcdCpuSmmStackSize                         ## CONSUMES
+  gEfiCpuTokenSpaceGuid.PcdCpuSmmApSyncTimeout                     ## CONSUMES
+  gEfiCpuTokenSpaceGuid.PcdCpuS3DataAddress                        ## SOMETIMES_CONSUMES
+  gChipsetPkgTokenSpaceGuid.PcdCpuHotPlugDataAddress               ## SOMETIMES_PRODUCES
+  gChipsetPkgTokenSpaceGuid.PcdCpuSmmCodeAccessCheckEnable             ## CONSUMES
+  gChipsetPkgTokenSpaceGuid.PcdCpuSmmMsrSaveStateEnable                ## CONSUMES
+  gChipsetPkgTokenSpaceGuid.PcdCpuSmmSmrr2Base                         ## CONSUMES
+  gChipsetPkgTokenSpaceGuid.PcdCpuSmmSmrr2Size                         ## CONSUMES
+  gChipsetPkgTokenSpaceGuid.PcdCpuSmmSmrr2CacheType                    ## CONSUMES
+  gChipsetPkgTokenSpaceGuid.PcdCpuSmmUseDelayIndication                ## CONSUMES
+  gChipsetPkgTokenSpaceGuid.PcdCpuSmmUseBlockIndication                ## CONSUMES
+  gChipsetPkgTokenSpaceGuid.PcdCpuSmmUseSmmEnableIndication            ## CONSUMES
+  gChipsetPkgTokenSpaceGuid.PcdCpuSmmProtectedModeEnable               ## CONSUMES
+#[-start-170308-IB07400847-add]#
+  gEfiMdePkgTokenSpaceGuid.PcdPciExpressBaseAddress  ## CONSUMES
+  gBxtRefCodePkgTokenSpaceGuid.PcdSerialIoUartNumber
+#[-end-170308-IB07400847-add]#
+#[-start-170323-IB07400848-add]#
+  gChipsetPkgTokenSpaceGuid.PcdSetupConfigSize
+#[-end-170323-IB07400848-add]#
+#[-start-170627-IB07400880-add]#
+  gEfiMdeModulePkgTokenSpaceGuid.PcdSerialRegisterBase
+#[-end-170627-IB07400880-add]#
+
+[Depex]
+  gEfiMpServiceProtocolGuid
+
+[UserExtensions.TianoCore."ExtraFiles"]
+  PiSmmCpuDxeSmmExtra.uni

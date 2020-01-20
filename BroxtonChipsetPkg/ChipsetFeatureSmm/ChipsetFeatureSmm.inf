@@ -1,0 +1,129 @@
+#
+#
+#******************************************************************************
+#* Copyright (c) 2013 - 2016, Insyde Software Corp. All Rights Reserved.
+#*
+#* You may not reproduce, distribute, publish, display, perform, modify, adapt,
+#* transmit, broadcast, present, recite, release, license or otherwise exploit
+#* any part of this publication in any form, by any means, without the prior
+#* written permission of Insyde Software Corporation.
+#*
+#******************************************************************************
+#
+#
+#  Module Name:
+#
+#   ChipsetFeatureSmm.inf
+#
+#  Abstract:
+#
+#    Component description file for Chipset Feature SMM handler module
+#
+#--*/
+
+[Defines]
+  INF_VERSION                    = 0x00010005
+  BASE_NAME                      = ChipsetFeatureSmm
+  FILE_GUID                      = 5C887795-7C6C-4D20-9F5D-AD85EAE8BFA5
+  MODULE_TYPE                    = DXE_SMM_DRIVER
+  VERSION_STRING                 = 1.0
+  ENTRY_POINT                    = InitializeChipsetFeatureSmm
+  PI_SPECIFICATION_VERSION       = 0x0001000A
+
+#
+# The following information is for reference only and not required by the build tools.
+#
+#  VALID_ARCHITECTURES           = IA32 X64
+#
+
+[Sources]
+  ChipsetFeatureSmm.c
+  ChipsetFeatureSmm.h
+
+[LibraryClasses]
+  UefiDriverEntryPoint
+  UefiBootServicesTableLib
+  SmmServicesTableLib
+  DebugLib
+  IoLib
+  BaseLib
+  BaseMemoryLib
+  DevicePathLib
+  HobLib
+  S3BootScriptLib
+  SmmOemSvcKernelLibDefault
+  SmmOemSvcChipsetLibDefault
+  MemoryAllocationLib
+  EcMiscLib
+  ReportStatusCodeLib
+  SideBandLib
+  GpioLib
+  PostCodeLib
+  HeciMsgLib
+#[-start-160923-IB07400789-add]#
+  CmosLib
+  PciLib
+#[-end-160923-IB07400789-add]#
+
+[Guids]
+  gSystemConfigurationGuid
+  gDmiDataGuid
+  gEfiAcpiVariableCompatiblityGuid
+  gEfiPciLanInfoGuid
+  gEfiPciLanInfoGuid
+  
+[Protocols]
+  gEfiSmmBase2ProtocolGuid                
+  gEfiSmmIchnDispatchProtocolGuid
+  gEfiGlobalNvsAreaProtocolGuid
+  gEfiSmmSwDispatch2ProtocolGuid
+  gEfiSmmPowerButtonDispatch2ProtocolGuid
+  gEfiSmmSxDispatch2ProtocolGuid
+  gEfiSmmVariableProtocolGuid
+  gH2OSmmChipsetServicesProtocolGuid
+  gAcpiRestoreCallbackStartProtocolGuid
+  gAcpiRestoreCallbackDoneProtocolGuid  
+  gAcpiEnableCallbackStartProtocolGuid
+  gAcpiDisableCallbackStartProtocolGuid
+  gEfiSmmCpuProtocolGuid
+  gEfiOverrideAspmProtocolGuid
+#[-start-170315-IB07400848-add]#
+  gEfiSmmVariableProtocolGuid
+#[-end-170315-IB07400848-add]#
+
+[Packages]
+  MdePkg/MdePkg.dec
+  MdeModulePkg/MdeModulePkg.dec
+  IntelFrameworkPkg/IntelFrameworkPkg.dec
+  $(PLATFORM_RC_PACKAGE)/$(PLATFORM_RC_PACKAGE).dec
+  $(CHIPSET_PKG)/$(CHIPSET_PKG).dec
+  IntelFrameworkModulePkg/IntelFrameworkModulePkg.dec
+  InsydeModulePkg/InsydeModulePkg.dec
+  InsydeOemServicesPkg/InsydeOemServicesPkg.dec
+
+[Pcd.common]
+  gEfiMdePkgTokenSpaceGuid.PcdPciExpressBaseAddress
+  gChipsetPkgTokenSpaceGuid.PcdSetupConfigSize
+  gEfiMdeModulePkgTokenSpaceGuid.PcdProgressCodeS3SuspendStart
+
+[Pcd]
+  gChipsetPkgTokenSpaceGuid.PcdEnableWatchdogSwSmiInputValue
+  gEfiBxtTokenSpaceGuid.PcdPmcGcrBaseAddress
+  gEfiBxtTokenSpaceGuid.PcdScAcpiIoPortBaseAddress
+  gEfiBxtTokenSpaceGuid.PcdP2SBBaseAddress
+  
+[FeaturePcd]
+  gChipsetPkgTokenSpaceGuid.PcdEnableSmiEnableAcpi
+
+[Depex]
+  gEfiSmmBase2ProtocolGuid                 AND
+  gEfiSmmAccess2ProtocolGuid               AND
+  gEfiSmmPowerButtonDispatch2ProtocolGuid  AND
+  gEfiSmmSxDispatch2ProtocolGuid           AND
+  gEfiSmmIchnDispatchProtocolGuid          AND
+  gEfiSmmSwDispatch2ProtocolGuid           AND
+  gEfiVariableArchProtocolGuid             AND
+  gEfiVariableWriteArchProtocolGuid        AND
+  gEfiGlobalNvsAreaProtocolGuid            AND
+  gH2OSmmChipsetServicesProtocolGuid
+

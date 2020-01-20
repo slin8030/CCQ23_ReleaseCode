@@ -1,0 +1,95 @@
+## @file
+#
+#  Component description file for SioWpcd374l Dxe.
+#
+#******************************************************************************
+#* Copyright (c) 2014, Insyde Software Corporation. All Rights Reserved.
+#*
+#* You may not reproduce, distribute, publish, display, perform, modify, adapt,
+#* transmit, broadcast, present, recite, release, license or otherwise exploit
+#* any part of this publication in any form, by any means, without the prior
+#* written permission of Insyde Software Corporation.
+#*
+#******************************************************************************
+#
+##
+
+[Defines]
+  INF_VERSION                    = 0x00010005
+  BASE_NAME                      = SioWpcd374lDxe
+  FILE_GUID                      = 0F4B5117-B7A7-4a64-A7A5-81B29C45B2B6
+  MODULE_TYPE                    = DXE_DRIVER
+  VERSION_STRING                 = 1.0
+  
+  ENTRY_POINT                    = SioDriverEntryPoint
+
+[Sources]
+  SioMainDxe.c
+  SioInitDxe.c
+  Floppy.c
+  Lpt.c
+  Ps2K.c
+  Ps2M.c
+  Uart1.c
+  Uart2.c
+  ProgramDmi.c  
+  SioInitDxe.h
+  SioHiiResource/SioHiiResource.c
+  SioHiiResource/SioHiiResource.h
+  SioHiiResource/SioHiiResourceStrings.uni
+  SioHiiResource/SioHiiResourceNvData.h
+  SioHiiResource/SioHiiResourceVfr.vfr
+  SioAsl/SioWpcd374l.asl
+
+[Packages]
+  MdePkg/MdePkg.dec
+  SioWpcd374lPkg/SioWpcd374lPkg.dec
+  InsydeOemServicesPkg/InsydeOemServicesPkg.dec 
+  InsydeModulePkg/InsydeModulePkg.dec
+  MdeModulePkg/MdeModulePkg.dec
+  IntelFrameworkPkg/IntelFrameworkPkg.dec
+
+[Guids]
+  gSioWpcd374lSetup00FormSetGuid
+  gEfiIfrTianoGuid  
+
+[LibraryClasses]
+  SioLib
+  AcpiPlatformLib
+  BaseMemoryLib
+  DxeServicesLib
+  MemoryAllocationLib
+  UefiDriverEntryPoint
+  UefiBootServicesTableLib 
+  DxeOemSvcKernelLibDefault 
+  HiiLib
+    
+[Protocols]
+  gEfiIsaPnp303DeviceProtocolGuid
+  gEfiIsaPnp401DeviceProtocolGuid
+  gEfiIsaPnp501DeviceProtocolGuid 
+  gEfiIsaPnp604DeviceProtocolGuid 
+  gEfiIsaVoltagleDeviceProtocolGuid   
+  gEfiIsaFanSpeedDeviceProtocolGuid      
+  gEfiIsaTemperatureDeviceProtocolGuid      
+  gEfiHiiConfigRoutingProtocolGuid    
+  gEfiHiiConfigAccessProtocolGuid          
+  gEfiAcpiSupportProtocolGuid
+
+[Pcd]
+  gSioGuid.PcdSioWpcd374lSetup
+  gSioGuid.PcdSioWpcd374lCfg
+  gSioGuid.PcdSioWpcd374lSetupStr
+  gSioGuid.PcdSioWpcd374lUpdateAsl
+  gSioGuid.PcdSioWpcd374lDmi
+
+[Depex]
+  gEfiCpuIo2ProtocolGuid AND 
+#[-start-131028-IB10630092-modify]#
+  gEfiAcpiSupportProtocolGuid AND
+  gEfiVariableArchProtocolGuid
+#[-end-131028-IB10630092-modify]#
+
+#[-start-131115-IB12970034-add]#
+  AND gEfiSetupUtilityProtocolGuid
+#[-end-131115-IB12970034-add]#

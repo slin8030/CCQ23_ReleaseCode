@@ -1,0 +1,104 @@
+#;*************************************************************************************************
+#;* Copyright (c) 1983-2016, Insyde Software Corporation. All Rights Reserved.
+#;*
+#;* You may not reproduce, distribute, publish, display, perform, modify, adapt,
+#;* transmit, broadcast, present, recite, release, license or otherwise exploit
+#;* any part of this publication in any form, by any means, without the prior
+#;* written permission of Insyde Software Corporation.
+#;*
+#;*************************************************************************************************
+#; Revision History:
+#; 
+#;------------------------------------------------------------------------------
+#; Label#: 05.31.08
+#; Status: Tag version
+#; 
+#;------------------------------------------------------------------------------
+#; Label#: 05.31.04
+#; Status: Tag version
+#; 
+#;------------------------------------------------------------------------------
+#; Label#: 05.21.48
+#; Status: Tag version
+#; 
+#;------------------------------------------------------------------------------
+#; Label#: 05.21.44
+#; Status: Tag version
+#; 
+#;------------------------------------------------------------------------------
+#; Label#: 05.21.40
+#; Status: Tag version
+#; 
+#;------------------------------------------------------------------------------
+#; Label#: 05.21.36
+#; Status: Tag version
+#; 
+#;------------------------------------------------------------------------------
+#; Label#: 05.21.32
+#; Status: Tag version
+#; 
+#;------------------------------------------------------------------------------
+#; Label#: 05.21.30
+#; Status: Tag version
+#; 
+#; Tag#: 05.21.30
+#; Issue#: IB10130000
+#; Severity: Feature
+#; Category: H2OCBT
+#; Symptom: None.
+#; RootCause: None.
+#; Description: Init Version.
+#; Solution: None.
+#; SolutionDependency: None.
+#; Reviewer: IB10130000
+#; RelatedFiles:
+#; Added:
+#;   1. Btsinit\
+#;   2. Btsinit\BtsInitDxe\
+#;   3. Btsinit\BtsInitDxe\BtsInitDxe.inf
+#;   4. Btsinit\BtsInitDxe\Ia32\
+#;   5. Btsinit\BtsInitDxe\Ia32\BtsInitDxe.efi
+#;   6. Btsinit\BtsInitDxe\X64\
+#;   7. Btsinit\BtsInitDxe\X64\BtsInitDxe.efi
+#;   8. Btsinit\BtsInitPei\
+#;   9. Btsinit\BtsInitPei\BtsInitPei.inf
+#;   10. Btsinit\BtsInitPei\Ia32\
+#;   11. Btsinit\BtsInitPei\Ia32\BtsInitPei.efi
+#;   12. Btsinit\BtsinitSmm\
+#;   13. Btsinit\BtsinitSmm\BtsinitSmm.inf
+#;   14. Btsinit\BtsinitSmm\Ia32\
+#;   15. Btsinit\BtsinitSmm\Ia32\BtsinitSmm.efi
+#;   16. Btsinit\BtsinitSmm\X64\
+#;   17. Btsinit\BtsinitSmm\X64\BtsinitSmm.efi
+#;   18. History.txt
+#;   19. Include\
+#;   20. Include\Guid\
+#;   21. Include\Guid\BtsInit.h
+#;   22. Include\Guid\BtsVariable.h
+#;   23. Include\Library\
+#;   24. Include\Library\DxeBtsLib.h
+#;   25. Include\Library\DxeBtsLogSaveLib.h
+#;   26. Include\Library\PeiBtsLib.h
+#;   27. Include\Library\PeiBtsLogSaveLib.h
+#;   28. Include\Ppi\
+#;   29. Include\Ppi\BtsInitPei.h
+#;   30. Include\Protocol\
+#;   31. Include\Protocol\BtsInitDxe.h
+#;   32. InsydeCbtPkg.dec
+#;   33. InsydeCbtPkg.dsc
+#;   34. Library\
+#;   35. Library\DxeBtsLib\
+#;   36. Library\DxeBtsLib\DxeBtsLib.c
+#;   37. Library\DxeBtsLib\DxeBtsLib.inf
+#;   38. Library\DxeBtsLogSaveLib\
+#;   39. Library\DxeBtsLogSaveLib\DxeBtsLogSaveLib.c
+#;   40. Library\DxeBtsLogSaveLib\DxeBtsLogSaveLib.inf
+#;   41. Library\PeiBtsLib\
+#;   42. Library\PeiBtsLib\PeiBtsLib.c
+#;   43. Library\PeiBtsLib\PeiBtsLib.inf
+#;   44. Library\PeiBtsLogSaveLib\
+#;   45. Library\PeiBtsLogSaveLib\PeiBtsLogSaveLib.c
+#;   46. Library\PeiBtsLogSaveLib\PeiBtsLogSaveLib.inf
+#;   47. Package.dsc
+#;   48. Package.fdf
+#; 

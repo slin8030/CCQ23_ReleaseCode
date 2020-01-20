@@ -1,0 +1,76 @@
+## @file
+# Component description file for PeiPolicyInit library.
+#
+# @copyright
+# Copyright (c) 2014 - 2015 Intel Corporation. All rights reserved
+# This software and associated documentation (if any) is furnished
+# under a license and may only be used or copied in accordance
+# with the terms of the license. Except as permitted by the
+# license, no part of this software or documentation may be
+# reproduced, stored in a retrieval system, or transmitted in any
+# form or by any means without the express written consent of
+# Intel Corporation.
+# This file contains a 'Sample Driver' and is licensed as such
+# under the terms of your license agreement with Intel or your
+# vendor. This file may be modified by the user, subject to
+# the additional terms of the license agreement.
+# 
+# @par Specification Reference:
+#
+##
+
+
+[Defines]
+  INF_VERSION = 0x00010017
+  BASE_NAME = PeiPolicyInit
+  FILE_GUID = BB1CBA6F-ABB3-445d-801F-2C584C1197D3
+  VERSION_STRING = 1.0
+  MODULE_TYPE = PEIM
+  LIBRARY_CLASS = PeiPolicyInitLib
+
+
+[LibraryClasses]
+  BaseLib
+  DebugLib
+  DebugPrintErrorLevelLib
+  HobLib
+  PeiServicesLib
+  PeiPolicyUpdateLib
+  PeiSaPolicyLib
+  ConfigBlockLib
+#[-start-151228-IB03090424-modify]#
+  #SiPolicyLib
+  SteppingLib
+#[-end-151228-IB03090424-modify]#
+  CpuPolicyLib
+
+
+[Packages]
+#[-start-160216-IB03090424-modify]#
+  MdePkg/MdePkg.dec
+  BroxtonSiPkg/BroxtonSiPkg.dec
+  ClientSiliconPkg/ClientSiliconPkg.dec
+  InsydeModulePkg/InsydeModulePkg.dec
+  $(CHIPSET_PKG)/$(CHIPSET_PKG).dec
+#[-end-160216-IB03090424-modify]#
+
+
+[Sources]
+  PeiPolicyInitPreMem.c
+  PeiPolicyInit.c
+  PeiPolicyInit.h
+  PeiCpuPolicyInit.c
+  PeiCpuPolicyInit.h
+#[-start-151228-IB03090424-remove]#
+#  PeiScPolicyInit.c
+#  PeiScPolicyInit.h
+#[-end-151228-IB03090424-remove]#
+  PeiSaPolicyInit.c
+  PeiSaPolicyInit.h
+  PeiSiPolicyInit.c
+  PeiSiPolicyInit.h
+
+
+[Ppis]
+  gSiSaPolicyPpiGuid 
+  gScPcieDeviceTablePpiGuid

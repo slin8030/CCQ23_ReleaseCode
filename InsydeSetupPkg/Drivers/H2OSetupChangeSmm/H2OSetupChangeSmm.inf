@@ -1,0 +1,58 @@
+#/** @file
+#
+#  Component description file for SetupChange SMM driver.
+#
+#;******************************************************************************
+#;* Copyright (c) 2015, Insyde Software Corporation. All Rights Reserved.
+#;*
+#;* You may not reproduce, distribute, publish, display, perform, modify, adapt,
+#;* transmit, broadcast, present, recite, release, license or otherwise exploit
+#;* any part of this publication in any form, by any means, without the prior
+#;* written permission of Insyde Software Corporation.
+#;*
+#;******************************************************************************
+#*/
+
+[Defines]
+  INF_VERSION                    = 0x00010005
+  BASE_NAME                      = SetupChangeSmm
+  FILE_GUID                      = 55DD8F28-4F04-41BB-87C8-0B3D81AD1603
+  MODULE_TYPE                    = DXE_SMM_DRIVER
+  PI_SPECIFICATION_VERSION       = 0x0001000A
+  VERSION_STRING                 = 1.0
+  ENTRY_POINT                    = SetupChangeSmmEntryPoint
+
+[Sources]
+  H2OSetupChangeSmm.c
+  H2OSetupChangeSmm.h
+
+[Packages]
+  MdePkg/MdePkg.dec
+  MdeModulePkg/MdeModulePkg.dec
+  InsydeModulePkg/InsydeModulePkg.dec
+  InsydeSetupPkg/InsydeSetupPkg.dec
+  
+[LibraryClasses]
+  BaseLib
+  UefiBootServicesTableLib  
+  UefiRuntimeServicesTableLib
+  BaseMemoryLib
+  UefiDriverEntryPoint
+  MemoryAllocationLib
+  DebugLib
+  UefiLib
+  PrintLib
+  VariableLib
+
+[Protocols]
+  gH2OIhisiProtocolGuid                        # CONSUMED
+  
+[Guids]
+  gH2OSetupChangeVariableGuid                  # PRODUCED
+
+[Pcd]
+  gH2OSetupTokenSpaceGuid.PcdMaxSetupChangeVariableSize
+  
+[Depex]
+  gH2OIhisiProtocolGuid
+

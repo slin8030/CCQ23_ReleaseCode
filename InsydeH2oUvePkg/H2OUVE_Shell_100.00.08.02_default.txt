@@ -1,0 +1,140 @@
+#************************************************************************************
+Insyde H2OUVE (UEFI Variable Editor) Version 100.00.08.02
+Copyright (c) 2012 - 2016, Insyde Software Corp. All Rights Reserved.
+
+#************************************************************************************
+#  This file is Setup Utility setting.
+#  Please follow file format to modify Setup setting.
+#
+#  File Format:
+#
+#   a. Sku ID(For checking and Multi-Config feature)
+#   b. Config Name ID(For Multi-Config feature)
+#   c. Config ID(For Multi-Config feature)
+#   d. BIOS version(For checking, Don't modify it)
+#   e. Oneof Question
+#   f. Numeric Question
+#   g. Password Setting (It needs BIOS's support for this feature and please contact with your BIOS contact for the password support)
+#     g-1. Leave all fields won't do any change
+#     g-2. If password doesn't exist
+#       g-2-1. Add password: leave current password empty and fill new/repeat password fields
+#     g-3. If password exists
+#       g-3-1. Change password: all fields need to fill
+#       g-3-2. Clear password: fill current password and leave new/repeat password fields empty
+#   h. Input Question
+# You can modify the contents between the brackets[ ].
+#
+#************************************************************************************
+
+ - Sku ID: [0](In hex)
+ - Config Name ID: [] 
+ - Config ID: [](In hex)
+ - BIOS Version(From BVDT): "Skylake.05.21.30.0000"
+
+#################### H2oUve Sample Form ####################
+********** H2oUve Sample Form **********
+H2oUve Sample Form
+Ver 00.01
+(0xA, 4, 0x9D54B90C34EAA58A) Prompt String0
+  Callback ID = 0x2A01
+  (1)[*] Disabled  (Default)
+  (0)[ ] Enabled
+
+(0xE, 2, 0x9D54B90C34EAA58A) Prompt String1
+  Callback ID = 0x4
+  Minimum: 10
+  Maximum: 1024
+  Step: 1
+  Default: 10
+  Setting: [10]
+
+(0x10, 1, 0x9D54B90C34EAA58A) Prompt String2
+  Callback ID = 0x2A02
+  Default: 1
+  Bool: [1]
+
+(0x11, 4, 0x9D54B90C34EAA58A) Prompt String3
+  Callback ID = 0x5
+  (0)[ ] Option 1
+  (30)[*] Option 2  (Default)
+  (40)[ ] Option 3
+  (50)[ ] Option 4
+  (60)[ ] Option 5
+  (70)[ ] Option 6
+  (80)[ ] Option 7
+
+(0x15, 2, 0x9D54B90C34EAA58A) Prompt String4
+  Callback ID = 0x6
+  Minimum: 20
+  Maximum: 1024
+  Step: 3
+  Default: 0
+  Setting: [0]
+
+(0x17, 4, 0x9D54B90C34EAA58A) Prompt String5
+  Callback ID = 0x2803
+  (0)[ ] Disabled
+  (1)[*] Enabled  (Default)
+
+(0x1B, 1, 0x9D54B90C34EAA58A) Prompt String6
+  Callback ID = 0x7
+  (0)[ ] Option 1
+  (1)[ ] Option 2
+  (3)[ ] Option 3
+  (11)[ ] Option 4
+  (19)[*] Option 5  (Default)
+  (131)[ ] Option 6
+  (139)[ ] Option 7
+
+(0x1C, 1, 0x9D54B90C34EAA58A) Prompt String7
+  Callback ID = 0x8
+  (0)[ ] Disabled
+  (1)[*] Enabled  (Default)
+
+(0x1D, 2, 0x9D54B90C34EAA58A) Prompt String8
+  Callback ID = 0x9
+  Minimum: 0
+  Maximum: 1024
+  Step: 3
+  Default: 50
+  Setting: [50]
+
+(0x1F, 2, 0x9D54B90C34EAA58A) Prompt String9
+  Callback ID = 0xA
+  Minimum: 10
+  Maximum: 1024
+  Step: 3
+  Default: 0
+  Setting: [0]
+
+(0x21, 1, 0x9D54B90C34EAA58A) Prompt String10
+  Callback ID = 0x2A03
+  Default: 1
+  Bool: [1]
+
+(0x22, 2, 0x9D54B90C34EAA58A) Prompt String11
+  Callback ID = 0xB
+  Minimum: 15
+  Maximum: 1024
+  Step: 1
+  Default: 0
+  Setting: [0]
+
+(0x24, 1, 0x9D54B90C34EAA58A) Prompt String12
+  Callback ID = 0xC
+  (0)[ ] Option 1
+  (1)[*] Option 2  (Default)
+  (3)[ ] Option 3
+  (11)[ ] Option 4
+  (19)[ ] Option 5
+  (131)[ ] Option 6
+  (139)[ ] Option 7
+
+(0x25, 2, 0x9D54B90C34EAA58A) Prompt String13
+  Callback ID = 0xD
+  Minimum: 6
+  Maximum: 1024
+  Step: 3
+  Default: 0
+  Setting: [0]
+

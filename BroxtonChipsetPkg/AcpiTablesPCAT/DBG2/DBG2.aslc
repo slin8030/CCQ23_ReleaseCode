@@ -1,0 +1,122 @@
+/**************************************************************************;
+;*                                                                        *;
+;*    Intel Confidential                                                  *;
+;*                                                                        *;
+;*    Intel Corporation - ACPI Reference Code for the Sandy Bridge        *;
+;*    Family of Customer Reference Boards.                                *;
+;*                                                                        *;
+;*                                                                        *;
+;*    Copyright (c) 2012 - 2015 Intel Corporation. All rights reserved    *;
+;*    This software and associated documentation (if any) is furnished    *;
+;*    under a license and may only be used or copied in accordance        *;
+;*    with the terms of the license. Except as permitted by such          *;
+;*    license, no part of this software or documentation may be           *;
+;*    reproduced, stored in a retrieval system, or transmitted in any     *;
+;*    form or by any means without the express written consent of         *;
+;*    Intel Corporation.                                                  *;
+;*                                                                        *;
+;*                                                                        *;
+;**************************************************************************/
+/*++
+  This file contains a 'Sample Driver' and is licensed as such
+  under the terms of your license agreement with Intel or your
+  vendor.  This file may be modified by the user, subject to
+  the additional terms of the license agreement
+--*/
+
+#include "AcpiTablePlatform.h"
+
+#include <Dbg2t.h>
+#include <PiDxe.h>
+
+//
+// Debug Port Table
+//
+EFI_ACPI_DEBUG_PORT_2_TABLE Dbg2 = {
+  {
+    EFI_ACPI_5_0_DEBUG_PORT_2_TABLE_SIGNATURE,
+    sizeof(EFI_ACPI_DEBUG_PORT_2_TABLE),
+    EFI_ACPI_OEM_DBG2_TABLE_REVISION,
+    0,                            // to make sum of entire table == 0
+    EFI_ACPI_OEM_ID,              // OEMID is a 6 bytes long field
+    EFI_ACPI_OEM_TABLE_ID_2,      // OEM table identification(8 bytes long)
+    EFI_ACPI_OEM_REVISION,        // OEM revision
+    EFI_ACPI_CREATOR_ID,          // ASL compiler vendor ID
+    EFI_ACPI_CREATOR_REVISION     // ASL compiler revision number
+  },
+  OFFSET_OF (EFI_ACPI_DEBUG_PORT_2_TABLE, DbgDeviceInfoCom1),
+  NUMBER_DBG_DEVICE_INFO,
+  //
+  // LPSS-UART
+  //
+  {
+    DEBUG_DEVICE_INFORMATION_REVISION,
+    sizeof(DEBUG_DEVICE_INFORMATION),
+    1,            // NumberOfGenericAddressRegisters
+    NAMESPACE_STRING_MAX_LENGTH,
+    OFFSET_OF (DEBUG_DEVICE_INFORMATION, NamespaceString),
+    0,            // OemDataLength
+    0,            // OemDataOffset
+    0x8000,       // PortType - Serial
+    0x0000,       // PortSubtype - 16550 compatible
+    0,            // Reserved
+    OFFSET_OF (DEBUG_DEVICE_INFORMATION, BaseAddressRegister),
+    OFFSET_OF (DEBUG_DEVICE_INFORMATION, AddressSize),
+    {
+      0x00,        // Address_Space_ID = 0 System Memory,  1 System IO
+      0x08,        // Register_Bit_Width = 8 bits
+      0x00,        // Register_Bit_offset
+      0x00,        // Access size
+      0x00000000   // Base address of COM1. NOTE: Updated in AcpiPlatform.
+    },
+    {
+      sizeof (EFI_ACPI_2_0_GENERIC_ADDRESS_STRUCTURE)
+    },
+    ".",
+  }
+
+/*
+    //
+    // USB OTG information
+    //
+    {
+      DEBUG_DEVICE_INFORMATION_REVISION,
+      sizeof(DEBUG_DEVICE_INFORMATION),
+      1,  // NumberOfGenericAddressRegisters
+      NAMESPACE_STRING_MAX_LENGTH,
+      OFFSET_OF (DEBUG_DEVICE_INFORMATION, NamespaceString),
+      0, // OemDataLength
+      0, // OemDataOffset
+      0x08002, // PortType - USB
+      0x0005, // PortSubtype - Chipidea USB OTG
+      0, // Reserved
+      OFFSET_OF (DEBUG_DEVICE_INFORMATION, BaseAddressRegister),
+      OFFSET_OF (DEBUG_DEVICE_INFORMATION, AddressSize),
+      {
+        0x00,        // Address_Space_ID = System Memory
+        0x20,        // Register_Bit_Width = 32 bits
+        0x00,        // Register_Bit_offset
+        0x00,        // Reserved
+        0xFFA60000   // Base addresse of SPI port 0
+      },
+      {
+        sizeof (EFI_ACPI_2_0_GENERIC_ADDRESS_STRUCTURE)
+      },
+      "\\_SB.OTG0",
+      // OemData
+    }
+*/
+
+};
+
+VOID*
+ReferenceAcpiTable (
+  VOID
+  )
+{
+  //
+  // Reference the table being generated to prevent the optimizer from
+  // removing the data structure from the executable
+  //
+  return (VOID*)&Dbg2;
+}

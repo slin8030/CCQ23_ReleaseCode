@@ -1,0 +1,272 @@
+/** @file
+
+  DEBUG Message Config utility DXE VFR for Config Page.
+
+;******************************************************************************
+;* Copyright (c) 2016, Insyde Software Corporation. All Rights Reserved.
+;*
+;* You may not reproduce, distribute, publish, display, perform, modify, adapt,
+;* transmit, broadcast, present, recite, release, license or otherwise exploit
+;* any part of this publication in any form, by any means, without the prior
+;* written permission of Insyde Software Corporation.
+;*
+;******************************************************************************
+*/
+
+#include <Guid/H2OEventLogConfigManagerHii.h>
+#include "DebugMessageConfigUtilSetupConfig.h"
+
+formset
+  guid      = H2O_DEBUG_MESSAGE_CONFIG_UTIL_CONFIG_PAGE_FORMSET_GUID,
+  title     = STRING_TOKEN(STR_SERIAL_DEBUG_MESSAGE_CONFIG_PAGE),
+  help      = STRING_TOKEN(STR_SERIAL_DEBUG_MESSAGE_CONFIG_PAGE_HELP),
+  classguid = LINK_INCLUDE_H2O_EVENT_LOG_CONFIG_PAGE_CLASS_GUID,
+  
+  //
+  // Define a Buffer Storage (EFI_IFR_VARSTORE)
+  //
+  varstore DEBUG_MESSAGE_CONFIG_UTIL_CONFIGURATION,       // This is the data structure type
+    varid = DEBUG_MESSAGE_CONFIG_UTIL_VARSTORE_ID ,       // Optional VarStore ID
+    name  = DebugMessageConfig,                           // Define referenced name in vfr
+    guid  = H2O_DEBUG_MESSAGE_CONFIG_UTIL_VARSTORE_GUID;  // GUID of this buffer storage
+
+  namevaluevarstore DEBUG_MESSAGE_CONFIG_UTIL_NAME_VALUE_CONFIGURATION,
+    name = STRING_TOKEN(STR_NAME_VALUE_VAR_NAME0),
+    guid = H2O_DEBUG_MESSAGE_CONFIG_UTIL_VARSTORE_GUID;
+
+  //
+  // Form VFR_FORMID_DEBUG_MESSAGE_CONFIG_PAGE
+  //
+  form
+    formid = VFR_FORMID_DEBUG_MESSAGE_CONFIG_PAGE, title = STRING_TOKEN(STR_SERIAL_DEBUG_MESSAGE_CONFIG_PAGE);
+  
+    subtitle text = STRING_TOKEN(STR_EFI_DEBUG_MESSAGE_CONFIG);
+    subtitle text = STRING_TOKEN(STR_BLANK_STRING);   
+    
+//[-start-160218-IB08400332-add]//
+    oneof
+      varid       = DebugMessageConfig.EfiDebugMsgAdvancedMode,
+      questionid  = KEY_EFI_DEBUG_MSG_ADVANCED_MODE,
+      prompt      = STRING_TOKEN(STR_DEBUG_ADVANCED_MODE_STRING),
+      help        = STRING_TOKEN(STR_DEBUG_ADVANCED_MODE_HELP),
+      option text = STRING_TOKEN(STR_DISABLED_TEXT),   value = 0, flags = DEFAULT | INTERACTIVE;
+      option text = STRING_TOKEN(STR_ENABLED_TEXT),    value = 1, flags = INTERACTIVE;      
+    endoneof;
+      
+    suppressif
+      ideqvallist DebugMessageConfig.EfiDebugMsgAdvancedMode == 0;
+
+      oneof
+        varid       = DebugMessageConfig.DebugInit,
+        prompt      = STRING_TOKEN(STR_DEBUG_ADV_INIT_STRING),
+        help        = STRING_TOKEN(STR_DEBUG_ADV_INIT_STRING),
+        option text = STRING_TOKEN(STR_DISABLED_TEXT),   value = 0, flags = DEFAULT | INTERACTIVE;
+        option text = STRING_TOKEN(STR_ENABLED_TEXT),    value = 1, flags = INTERACTIVE;      
+      endoneof;
+
+      oneof
+        varid       = DebugMessageConfig.DebugWarn,
+        prompt      = STRING_TOKEN(STR_DEBUG_ADV_WARN_STRING),
+        help        = STRING_TOKEN(STR_DEBUG_ADV_WARN_STRING),
+        option text = STRING_TOKEN(STR_DISABLED_TEXT),   value = 0, flags = DEFAULT | INTERACTIVE;
+        option text = STRING_TOKEN(STR_ENABLED_TEXT),    value = 1, flags = INTERACTIVE;      
+      endoneof;
+
+      oneof
+        varid       = DebugMessageConfig.DebugLoad,
+        prompt      = STRING_TOKEN(STR_DEBUG_ADV_LOAD_STRING),
+        help        = STRING_TOKEN(STR_DEBUG_ADV_LOAD_STRING),
+        option text = STRING_TOKEN(STR_DISABLED_TEXT),   value = 0, flags = DEFAULT | INTERACTIVE;
+        option text = STRING_TOKEN(STR_ENABLED_TEXT),    value = 1, flags = INTERACTIVE;      
+      endoneof;
+
+      oneof
+        varid       = DebugMessageConfig.DebugFs,
+        prompt      = STRING_TOKEN(STR_DEBUG_ADV_FS_STRING),
+        help        = STRING_TOKEN(STR_DEBUG_ADV_FS_STRING),
+        option text = STRING_TOKEN(STR_DISABLED_TEXT),   value = 0, flags = DEFAULT | INTERACTIVE;
+        option text = STRING_TOKEN(STR_ENABLED_TEXT),    value = 1, flags = INTERACTIVE;      
+      endoneof;
+
+      oneof
+        varid       = DebugMessageConfig.DebugInfo,
+        prompt      = STRING_TOKEN(STR_DEBUG_ADV_INFO_STRING),
+        help        = STRING_TOKEN(STR_DEBUG_ADV_INFO_STRING),
+        option text = STRING_TOKEN(STR_DISABLED_TEXT),   value = 0, flags = DEFAULT | INTERACTIVE;
+        option text = STRING_TOKEN(STR_ENABLED_TEXT),    value = 1, flags = INTERACTIVE;      
+      endoneof;
+
+      oneof
+        varid       = DebugMessageConfig.DebugDispatch,
+        prompt      = STRING_TOKEN(STR_DEBUG_ADV_DISPATCH_STRING),
+        help        = STRING_TOKEN(STR_DEBUG_ADV_DISPATCH_STRING),
+        option text = STRING_TOKEN(STR_DISABLED_TEXT),   value = 0, flags = DEFAULT | INTERACTIVE;
+        option text = STRING_TOKEN(STR_ENABLED_TEXT),    value = 1, flags = INTERACTIVE;      
+      endoneof;
+
+      oneof
+        varid       = DebugMessageConfig.DebugVariable,
+        prompt      = STRING_TOKEN(STR_DEBUG_ADV_VARIABLE_STRING),
+        help        = STRING_TOKEN(STR_DEBUG_ADV_VARIABLE_STRING),
+        option text = STRING_TOKEN(STR_DISABLED_TEXT),   value = 0, flags = DEFAULT | INTERACTIVE;
+        option text = STRING_TOKEN(STR_ENABLED_TEXT),    value = 1, flags = INTERACTIVE;      
+      endoneof;
+
+      oneof
+        varid       = DebugMessageConfig.DebugBm,
+        prompt      = STRING_TOKEN(STR_DEBUG_ADV_BM_STRING),
+        help        = STRING_TOKEN(STR_DEBUG_ADV_BM_STRING),
+        option text = STRING_TOKEN(STR_DISABLED_TEXT),   value = 0, flags = DEFAULT | INTERACTIVE;
+        option text = STRING_TOKEN(STR_ENABLED_TEXT),    value = 1, flags = INTERACTIVE;      
+      endoneof;
+
+      oneof
+        varid       = DebugMessageConfig.DebugBlkio,
+        prompt      = STRING_TOKEN(STR_DEBUG_ADV_BLKIO_STRING),
+        help        = STRING_TOKEN(STR_DEBUG_ADV_BLKIO_STRING),
+        option text = STRING_TOKEN(STR_DISABLED_TEXT),   value = 0, flags = DEFAULT | INTERACTIVE;
+        option text = STRING_TOKEN(STR_ENABLED_TEXT),    value = 1, flags = INTERACTIVE;      
+      endoneof;
+
+      oneof
+        varid       = DebugMessageConfig.DebugNet,
+        prompt      = STRING_TOKEN(STR_DEBUG_ADV_NET_STRING),
+        help        = STRING_TOKEN(STR_DEBUG_ADV_NET_STRING),
+        option text = STRING_TOKEN(STR_DISABLED_TEXT),   value = 0, flags = DEFAULT | INTERACTIVE;
+        option text = STRING_TOKEN(STR_ENABLED_TEXT),    value = 1, flags = INTERACTIVE;      
+      endoneof;
+
+      oneof
+        varid       = DebugMessageConfig.DebugUndi,
+        prompt      = STRING_TOKEN(STR_DEBUG_ADV_UNDI_STRING),
+        help        = STRING_TOKEN(STR_DEBUG_ADV_UNDI_STRING),
+        option text = STRING_TOKEN(STR_DISABLED_TEXT),   value = 0, flags = DEFAULT | INTERACTIVE;
+        option text = STRING_TOKEN(STR_ENABLED_TEXT),    value = 1, flags = INTERACTIVE;      
+      endoneof;
+
+      oneof
+        varid       = DebugMessageConfig.DebugLoadFile,
+        prompt      = STRING_TOKEN(STR_DEBUG_ADV_LOADFILE_STRING),
+        help        = STRING_TOKEN(STR_DEBUG_ADV_LOADFILE_STRING),
+        option text = STRING_TOKEN(STR_DISABLED_TEXT),   value = 0, flags = DEFAULT | INTERACTIVE;
+        option text = STRING_TOKEN(STR_ENABLED_TEXT),    value = 1, flags = INTERACTIVE;      
+      endoneof;
+
+      oneof
+        varid       = DebugMessageConfig.DebugEvent,
+        prompt      = STRING_TOKEN(STR_DEBUG_ADV_EVENT_STRING),
+        help        = STRING_TOKEN(STR_DEBUG_ADV_EVENT_STRING),
+        option text = STRING_TOKEN(STR_DISABLED_TEXT),   value = 0, flags = DEFAULT | INTERACTIVE;
+        option text = STRING_TOKEN(STR_ENABLED_TEXT),    value = 1, flags = INTERACTIVE;      
+      endoneof;
+
+      oneof
+        varid       = DebugMessageConfig.DebugGcd,
+        prompt      = STRING_TOKEN(STR_DEBUG_ADV_GCD_STRING),
+        help        = STRING_TOKEN(STR_DEBUG_ADV_GCD_STRING),
+        option text = STRING_TOKEN(STR_DISABLED_TEXT),   value = 0, flags = DEFAULT | INTERACTIVE;
+        option text = STRING_TOKEN(STR_ENABLED_TEXT),    value = 1, flags = INTERACTIVE;      
+      endoneof;
+
+      oneof
+        varid       = DebugMessageConfig.DebugCache,
+        prompt      = STRING_TOKEN(STR_DEBUG_ADV_CACHE_STRING),
+        help        = STRING_TOKEN(STR_DEBUG_ADV_CACHE_STRING),
+        option text = STRING_TOKEN(STR_DISABLED_TEXT),   value = 0, flags = DEFAULT | INTERACTIVE;
+        option text = STRING_TOKEN(STR_ENABLED_TEXT),    value = 1, flags = INTERACTIVE;      
+      endoneof;
+
+      oneof
+        varid       = DebugMessageConfig.DebugVerbose,
+        prompt      = STRING_TOKEN(STR_DEBUG_ADV_VERBOSE_STRING),
+        help        = STRING_TOKEN(STR_DEBUG_ADV_VERBOSE_STRING),
+        option text = STRING_TOKEN(STR_DISABLED_TEXT),   value = 0, flags = DEFAULT | INTERACTIVE;
+        option text = STRING_TOKEN(STR_ENABLED_TEXT),    value = 1, flags = INTERACTIVE;      
+      endoneof;
+
+      oneof
+        varid       = DebugMessageConfig.DebugError,
+        prompt      = STRING_TOKEN(STR_DEBUG_ADV_ERROR_STRING),
+        help        = STRING_TOKEN(STR_DEBUG_ADV_ERROR_STRING),
+        option text = STRING_TOKEN(STR_DISABLED_TEXT),   value = 0, flags = DEFAULT | INTERACTIVE;
+        option text = STRING_TOKEN(STR_ENABLED_TEXT),    value = 1, flags = INTERACTIVE;      
+      endoneof;
+    endif;
+//[-end-160218-IB08400332-add]//
+
+//[-start-160218-IB08400332-modify]//
+    suppressif
+      ideqvallist DebugMessageConfig.EfiDebugMsgAdvancedMode == 1;
+      oneof
+        varid       = DebugMessageConfig.EfiDebugMsgLevel,
+        questionid  = KEY_EFI_DEBUG_MSG_LEVEL,
+        prompt      = STRING_TOKEN(STR_EFI_DEBUG_LEVEL_MSG_PROMPT),
+        help        = STRING_TOKEN(STR_EFI_DEBUG_LEVEL_MSG_HELP),
+        option text = STRING_TOKEN(STR_DEBUG_DEFAULT_STRING), value = 0, flags = DEFAULT | INTERACTIVE;
+        option text = STRING_TOKEN(STR_DEBUG_INFO_STRING),    value = 1, flags = INTERACTIVE;
+        option text = STRING_TOKEN(STR_DEBUG_ERROR_STRING),   value = 2, flags = INTERACTIVE;
+        option text = STRING_TOKEN(STR_DEBUG_WARN_STRING),    value = 3, flags = INTERACTIVE;
+        option text = STRING_TOKEN(STR_DEBUG_VERBOSE_STRING), value = 4, flags = INTERACTIVE;
+        option text = STRING_TOKEN(STR_DEBUG_DISABLE_STRING), value = 0xFF, flags = INTERACTIVE;
+      endoneof;  
+    endif;
+//[-end-160218-IB08400332-modify]//
+
+    subtitle text = STRING_TOKEN(STR_BLANK_STRING);  
+    subtitle text = STRING_TOKEN(STR_BLANK_STRING);  
+    
+    subtitle text = STRING_TOKEN(STR_STATUS_CODE_SERIAL_MESSAGE_CONFIG);
+    subtitle text = STRING_TOKEN(STR_BLANK_STRING);  
+    
+    //
+    // Show Progress Code message
+    //
+    oneof
+      varid       = DebugMessageConfig.ShowProgressCode,
+      prompt      = STRING_TOKEN(STR_SHOW_PROGRESS_CODE_MESSAGE_STRING),
+      help        = STRING_TOKEN(STR_SHOW_PROGRESS_CODE_MESSAGE_HELP),
+      option text = STRING_TOKEN(STR_DISABLED_TEXT),   value = 0, flags = DEFAULT | INTERACTIVE;
+      option text = STRING_TOKEN(STR_ENABLED_TEXT),    value = 1, flags = INTERACTIVE;
+    endoneof;  
+
+    //
+    // Show Error Code message
+    //
+    oneof
+      varid       = DebugMessageConfig.ShowErrorCode,
+      prompt      = STRING_TOKEN(STR_SHOW_ERROR_CODE_MESSAGE_STRING),
+      help        = STRING_TOKEN(STR_SHOW_ERROR_CODE_MESSAGE_HELP),
+      option text = STRING_TOKEN(STR_DISABLED_TEXT),   value = 0, flags = INTERACTIVE;
+      option text = STRING_TOKEN(STR_ENABLED_TEXT),    value = 1, flags = DEFAULT | INTERACTIVE;
+    endoneof;  
+
+    //
+    // Show Debug Code message
+    //
+    oneof
+      varid       = DebugMessageConfig.ShowDebugCode,
+      prompt      = STRING_TOKEN(STR_SHOW_DEBUG_CODE_MESSAGE_STRING),
+      help        = STRING_TOKEN(STR_SHOW_DEBUG_CODE_MESSAGE_HELP),
+      option text = STRING_TOKEN(STR_DISABLED_TEXT),   value = 0, flags = DEFAULT | INTERACTIVE;
+      option text = STRING_TOKEN(STR_ENABLED_TEXT),    value = 1, flags = INTERACTIVE;
+    endoneof;  
+    //
+    // This Opcode is for F9 load default.
+    //
+    suppressif
+      TRUE;
+  
+      numeric varid = DEBUG_MESSAGE_CONFIG_UTIL_NAME_VALUE_CONFIGURATION[0],     // This numeric take NameValueVar0 as storage
+        questionid  = KEY_LOAD_DEFAULT,
+        prompt  = STRING_TOKEN(STR_NAME_VALUE_VAR_NAME0),
+        help    = STRING_TOKEN(STR_NAME_VALUE_VAR_NAME0),
+        flags   = NUMERIC_SIZE_1 | INTERACTIVE,        // Size of this numeric is 1 byte
+        minimum = 0,
+        maximum = 0xff,
+        step    = 0,
+        default = 0,
+      endnumeric;
+    endif;
+  endform;// end of form VFR_FORMID_DEBUG_MESSAGE_CONFIG_PAGE
+endformset;
+

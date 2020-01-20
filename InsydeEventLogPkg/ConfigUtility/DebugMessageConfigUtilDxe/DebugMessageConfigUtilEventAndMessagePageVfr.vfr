@@ -1,0 +1,65 @@
+/** @file
+
+  DEBUG Message Config utility DXE VFR for Event and Message Page.
+
+;******************************************************************************
+;* Copyright (c) 2016, Insyde Software Corporation. All Rights Reserved.
+;*
+;* You may not reproduce, distribute, publish, display, perform, modify, adapt,
+;* transmit, broadcast, present, recite, release, license or otherwise exploit
+;* any part of this publication in any form, by any means, without the prior
+;* written permission of Insyde Software Corporation.
+;*
+;******************************************************************************
+*/
+
+#include <Guid/H2OEventLogConfigManagerHii.h>
+#include "DebugMessageConfigUtilSetupConfig.h"
+
+formset
+  guid      = H2O_DEBUG_MESSAGE_CONFIG_UTIL_EVENT_AND_MESSAGE_PAGE_FORMSET_GUID,
+  title     = STRING_TOKEN(STR_SERIAL_DEBUG_MESSAGE_VIEWER_PAGE),
+  help      = STRING_TOKEN(STR_SERIAL_DEBUG_MESSAGE_VIEWER_PAGE_HELP),
+  classguid = LINK_INCLUDE_H2O_EVENT_LOG_EVENT_AND_MESSAGE_PAGE_CLASS_GUID,
+  
+  //
+  //  Form VFR_FORMID_DEBUG_MESSAGE_EVENT_AND_MESSAGE_PAGE
+  //
+  form
+    formid = VFR_FORMID_DEBUG_MESSAGE_EVENT_AND_MESSAGE_PAGE, title = STRING_TOKEN(STR_SERIAL_DEBUG_MESSAGE_VIEWER_PAGE);
+
+    subtitle text = STRING_TOKEN(STR_BLANK_STRING);
+    subtitle text = STRING_TOKEN(STR_SERIAL_DEBUG_MESSAGE_VIEWER_PAGE);
+    
+    goto VFR_FORMID_SHOW_SERIAL_DEBUG_MESSAGE,
+       prompt = STRING_TOKEN(STR_SERIAL_DEBUG_MESSAGE_VIEWER_SHOW_SERIAL_DEBUG_MSG),
+       help   = STRING_TOKEN(STR_SERIAL_DEBUG_MESSAGE_VIEWER_SHOW_SERIAL_DEBUG_MSG_HELP),
+       flags  = INTERACTIVE,
+       key    = KEY_ELV_SHOW_EFI_DEBUG_MSG;
+
+    text
+      help   = STRING_TOKEN(STR_SERIAL_DEBUG_MESSAGE_VIEWER_SAVE_SERIAL_DEBUG_MSG_HELP),
+      text   = STRING_TOKEN(STR_SERIAL_DEBUG_MESSAGE_VIEWER_SAVE_SERIAL_DEBUG_MSG),
+      flags  = INTERACTIVE,
+      key    = KEY_ELV_SAVE_EFI_DEBUG_MSG;  
+
+  endform; // End of Form VFR_FORMID_DEBUG_MESSAGE_EVENT_AND_MESSAGE_PAGE  
+
+  //
+  //  Form VFR_FORMID_SHOW_SERIAL_DEBUG_MESSAGE : Show Serial DEBUG Message page.
+  //
+  form
+    formid = VFR_FORMID_SHOW_SERIAL_DEBUG_MESSAGE, title = STRING_TOKEN(STR_SERIAL_DEBUG_MESSAGE_VIEWER_PAGE);
+
+    subtitle text = STRING_TOKEN(STR_BLANK_STRING);
+    subtitle text = STRING_TOKEN(STR_SERIAL_DEBUG_MESSAGE_VIEWER_PAGE);
+
+    label ELV_SERIAL_DEBUG_HEADER_START_LABEL;
+    label ELV_SERIAL_DEBUG_HEADER_END_LABEL;
+    
+    label ELV_SERIAL_DEBUG_EVENTS_START_LABEL;
+    label ELV_SERIAL_DEBUG_EVENTS_END_LABEL;
+
+  endform; // End of Form VFR_FORMID_SHOW_SERIAL_DEBUG_MESSAGE    
+endformset;
+

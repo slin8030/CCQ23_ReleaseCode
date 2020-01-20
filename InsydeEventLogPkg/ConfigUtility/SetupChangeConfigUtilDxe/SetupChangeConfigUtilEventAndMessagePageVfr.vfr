@@ -1,0 +1,66 @@
+/** @file
+
+  Setup Change Config utility DXE VFR implementation for Event and Message Page.
+
+;******************************************************************************
+;* Copyright (c) 2016, Insyde Software Corporation. All Rights Reserved.
+;*
+;* You may not reproduce, distribute, publish, display, perform, modify, adapt,
+;* transmit, broadcast, present, recite, release, license or otherwise exploit
+;* any part of this publication in any form, by any means, without the prior
+;* written permission of Insyde Software Corporation.
+;*
+;******************************************************************************
+*/
+
+#include <Guid/H2OEventLogConfigManagerHii.h>
+#include "SetupChangeConfigUtilSetupConfig.h"
+
+formset
+  guid      = H2O_SETUP_CHANGE_CONFIG_UTIL_EVENT_AND_MESSAGE_PAGE_FORMSET_GUID,
+  title     = STRING_TOKEN(STR_SETUP_CHANGE_HISTORY_VIEWER),
+  help      = STRING_TOKEN(STR_SETUP_CHANGE_HISTORY_VIEWER_HELP),
+  classguid = LINK_INCLUDE_H2O_EVENT_LOG_EVENT_AND_MESSAGE_PAGE_CLASS_GUID,
+
+  //
+  //  Form VFR_FORMID_SETUP_CHANGE_EVENT_AND_MESSAGE_PAGE
+  //
+  form
+    formid = VFR_FORMID_SETUP_CHANGE_EVENT_AND_MESSAGE_PAGE, title = STRING_TOKEN(STR_SETUP_CHANGE_EVENT_AND_MESSAGE_PAGE);
+
+    subtitle text = STRING_TOKEN(STR_BLANK_STRING);
+    subtitle text = STRING_TOKEN(STR_SETUP_CHANGE_EVENT_AND_MESSAGE_PAGE);
+
+    goto VFR_FORMID_SETUP_CHANGE_SHOW_HISTORY,
+       prompt = STRING_TOKEN(STR_EVENT_LOG_VIEWER_SHOW_H2O_SETUP_CHANGE_HISTORY),
+       help   = STRING_TOKEN(STR_EVENT_LOG_VIEWER_SHOW_H2O_SETUP_CHANGE_HISTORY_HELP),
+       flags  = INTERACTIVE,
+       key    = KEY_ELV_SHOW_H2O_SETUP_CHANGE;
+
+    text
+      help   = STRING_TOKEN(STR_EVENT_LOG_VIEWER_SAVE_H2O_SETUP_CHANGE_HISTORY_HELP),
+      text   = STRING_TOKEN(STR_EVENT_LOG_VIEWER_SAVE_H2O_SETUP_CHANGE_HISTORY),
+      flags  = INTERACTIVE,
+      key    = KEY_ELV_SAVE_H2O_SETUP_CHANGE;  
+
+  endform; // End of Form VFR_FORMID_SETUP_CHANGE_EVENT_AND_MESSAGE_PAGE  
+  
+  //
+  //  Form VFR_FORMID_SETUP_CHANGE_SHOW_HISTORY
+  //
+  form
+    formid = VFR_FORMID_SETUP_CHANGE_SHOW_HISTORY, title = STRING_TOKEN(STR_SETUP_CHANGE_EVENT_AND_MESSAGE_PAGE);
+
+    subtitle text = STRING_TOKEN(STR_BLANK_STRING);
+    subtitle text = STRING_TOKEN(STR_SETUP_CHANGE_EVENT_AND_MESSAGE_PAGE);
+    
+    label H2O_SETUP_CHANGE_HEADER_START_LABEL;
+    label H2O_SETUP_CHANGE_HEADER_END_LABEL;
+    
+    label H2O_SETUP_CHANGE_EVENTS_START_LABEL;
+    label H2O_SETUP_CHANGE_EVENTS_END_LABEL;
+
+  endform; // End of Form VFR_FORMID_SETUP_CHANGE_SHOW_HISTORY  
+  
+endformset;
+
