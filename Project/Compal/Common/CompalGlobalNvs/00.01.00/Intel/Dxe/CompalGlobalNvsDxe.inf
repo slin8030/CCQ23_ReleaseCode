@@ -1,0 +1,37 @@
+[Defines]
+  INF_VERSION                    = 0x00010005
+  BASE_NAME                      = CompalGlobalNvsDxe
+  FILE_GUID                      = 03d56eec-e196-4815-b91a-c4885a839043
+  MODULE_TYPE                    = DXE_DRIVER
+  VERSION_STRING                 = 1.0
+  ENTRY_POINT                    = CompalGlobalNvsDxeEntryPoint
+
+[Sources]
+  CompalGlobalNvsDxe.c
+    
+[Packages]
+  MdePkg/MdePkg.dec
+  $(COMPAL_COMMON_PATH)/CompalCommon.dec
+  $(PROJECT_PKG)/Project.dec
+
+[LibraryClasses]
+  PcdLib
+  BaseMemoryLib
+  MemoryAllocationLib
+  UefiBootServicesTableLib
+  DebugLib
+  CompalEcLib
+  UefiDriverEntryPoint
+
+[Protocols]
+  gCompalGlobalNvsProtocolGuid
+
+[Pcd]
+  
+[Guids]
+
+[FeaturePcd]
+
+[Depex]
+  TRUE
+

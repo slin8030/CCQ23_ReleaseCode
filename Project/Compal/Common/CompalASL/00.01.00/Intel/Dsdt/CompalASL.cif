@@ -1,0 +1,24 @@
+<component>
+	name = "COMPAL_ASL"
+	category = ModulePart
+	LocalRoot = "Project\Compal\Common\CompalASL\Intel\Dsdt"
+	RefName = "COMPAL_ASL"
+[files]
+"CompalACAD.asl"
+"CompalCMFC.asl"
+"CompalCMFCFunction.asl"
+"CompalCMFC_OEM_Function.ASL"
+"CompalECFILTER.asl"
+"CompalECMMAP.ASL"
+"Compalecname.asl"
+"CompalEC0.asl"
+"CompalSMBATA.ASL"
+"CompalOSTYPE.ASL"
+"CompalSensorHubI2C.ASL"
+"CompalLID.asl"
+"CompalASL.asl"
+"CompalASL.sdl"
+"CompalASL.mak"
+[parts]
+"COMPAL_ISCT_ASL"
+<endComponent>

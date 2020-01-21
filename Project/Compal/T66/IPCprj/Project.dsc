@@ -63,6 +63,7 @@
 #
 !import BroxtonChipsetPkg/Package.dsc
 #[-end-170111-IB07400832-add]#
+!import ../../COMMON/Package.dsc
 
 ################################################################################
 #

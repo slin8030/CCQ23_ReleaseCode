@@ -1,0 +1,30 @@
+TOKEN
+	Name  = "CompalPlatformSmm_SUPPORT"
+	Value  = "1"
+	Help  = "Main switch to enable CompalPlatformSmm support in Project"
+	TokenType = Boolean
+	TargetEQU = Yes
+	TargetMAK = Yes
+	Master = Yes
+	Token = "Compal_Module_SUPPORT" "=" "1"
+End
+
+PATH
+	Name  = "CompalPlatformSmm_DIR"
+End
+
+INFComponent
+	Name  = "CompalPlatformSmm"
+	File  = "CompalPlatformSmm.inf"
+	Package  = "CompalCommonModulePkg"
+	ModuleTypes  = "DXE_SMM_DRIVER"
+	Path  = "CompalPlatformSmm_Path"
+End
+
+FFS_FILE
+	Name  = "CompalPlatformSmm"
+	FD_AREA  = "FV_MAIN"
+	INFComponent  = "CompalCommonModulePkg.CompalPlatformSmm"
+End
+
+

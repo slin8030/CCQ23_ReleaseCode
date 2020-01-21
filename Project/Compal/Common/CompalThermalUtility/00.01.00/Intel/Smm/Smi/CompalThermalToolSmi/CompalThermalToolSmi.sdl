@@ -1,0 +1,30 @@
+TOKEN
+	Name  = "CompalThermalUtility_SUPPORT"
+	Value  = "1"
+	Help  = "Main switch to enable CompalThermalUtility support in Project"
+	TokenType = Boolean
+	TargetEQU = Yes
+	TargetMAK = Yes
+	Master = Yes
+	Token = "COMPAL_COMMON_CODE_SUPPORT" "=" "1"
+End
+
+PATH
+	Name  = "CompalThermalUtility_DIR"
+End
+
+INFComponent
+	Name  = "CompalThermalToolSmi"
+	File  = "CompalThermalToolSmi.inf"
+	Package  = "CompalCommonModulePkg"
+	ModuleTypes  = "DXE_SMM_DRIVER"
+	Path  = "CompalThermalUtility_Path"
+End
+
+FFS_FILE
+	Name  = "CompalThermalUtility"
+	FD_AREA  = "FV_MAIN"
+	INFComponent  = "CompalCommonModulePkg.CompalThermalToolSmi"
+End
+
+

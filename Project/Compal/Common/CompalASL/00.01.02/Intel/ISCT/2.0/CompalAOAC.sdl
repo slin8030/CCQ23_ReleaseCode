@@ -1,0 +1,22 @@
+TOKEN
+	Name  = "COMPAL_ISCT_ASL_2_0_SUPPORT"
+	Value  = "1"
+	Help  = "Main switch to enable COMPAL ASL"
+	TokenType = Boolean
+	TargetEQU = Yes
+	TargetMAK = Yes
+	TargetH = Yes
+	Master = Yes
+	Token = "AOACEnable_SUPPORT" "=" "2"
+End
+
+PATH
+	Name  = "COMPAL_ISCT_ASL_2_0_PATH"
+End
+
+TOKEN
+	Name  = "AOACACPI_ASL_FILE"
+	Value  = "$(COMPAL_ISCT_ASL_2_0_PATH)\CompalAOAC.asl"
+	TokenType = Expression
+	TargetMAK = Yes
+End

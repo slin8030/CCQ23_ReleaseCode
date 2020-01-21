@@ -1,0 +1,5 @@
+===== Compal touchpad =====
+
+Before using compaltouchpad feature, you have to follow below steps.
+1. Please remove PS2 and I2C touchpad device in asl code.
+2. modify the TPD_ID_POLICY and TPAD_ID_TABLE in oemasl.asl for your project used.

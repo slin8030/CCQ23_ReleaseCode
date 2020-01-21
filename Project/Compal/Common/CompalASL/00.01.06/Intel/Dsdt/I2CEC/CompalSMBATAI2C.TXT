@@ -1,0 +1,20 @@
+=========================================================================================================
+ 2016/08/30 Modified I2C battery code for 2nd battery with docking feature.
+=========================================================================================================
+  1. Please add below define to OEMASL.ASL file.
+        #define COMMON_ASL_EC_PATH              \_SB.I2C1       // GEN1 ENE PATH. (Send command to EC)
+        #define COMMON_ASL_I2CBAT1_PATH         \_SB.I2C1       // I2C 1st Battery path
+        #define COMMON_ASL_I2CBAT2_PATH         \_SB.I2C2       // I2C 1st Battery path
+        #define SECOND_BAT_SUPPORT              1               // 2nd Battery function switcher
+        #define DOCK_BAT1_SUPPORT               0               // Docking feature switcher for 1st battery
+        #define DOCK_BAT2_SUPPORT               0               // Docking feature switcher for 2nd battery
+        #define BAT1_FFCC_Support               1               // 1st battery FFCC feature switcher
+        #define BAT2_FFCC_Support               0               // 2nd battery FFCC feature switcher
+
+     Remove define -
+        #define BAT_FFCC_Support        ENABLE
+
+     Note: Docking feature - 
+           When docking + battery unplug, battery device is not showing battery slot, ASL code return (0x00).
+           When docking + battery plug, ASL code return (0x1F) for docking battery status.
+   

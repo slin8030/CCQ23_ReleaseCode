@@ -1,0 +1,9 @@
+<component>
+	name = "COMPAL_ISCT_ASL"
+	category = ModulePart
+	LocalRoot = "$(COMPAL_ISCT_ASL_1_0_PATH)"
+	RefName = "COMPAL_ISCT_ASL"
+[files]
+"CompalAOAC.asl"
+"CompalAOAC.sdl"
+<endComponent>

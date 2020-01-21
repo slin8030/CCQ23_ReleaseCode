@@ -1,0 +1,83 @@
+
+Remove ABO workaround _BST OSYS for win8 battery issue.
+if win8 need, please add by project code.
+-----------------------------------------
+        Method (_BST)
+        {
+                Name(PBST, Package()
+                {                               // Index
+                        0,                      // 0x0, battery state
+                        _Unknown,               // 0x1, battery current (unsigned)
+                        _Unknown,               // 0x2, battery remaining capacity
+                        OEM_DesignCap           // 0x3, battery voltage in mV (must always be known)
+                })
+
+                If(ECOK())
+                {
+//                        // [PRJ] Start 2013/02/07 Thomas_Lin - Workaround for battery status abnormal.
+//                        If(Equal(OSYS, 2012)) // Win8
+//                        {
+//                            if(LEqual(COMMON_ASL_EC_PATH.BST0, 0))
+//                            {
+//                                Store(2, Index(PBST, 0))     // Battery Status
+//                                Sleep(EC_ACCESS_WAIT)
+//                            }
+//                            Else
+//                            {
+//                                Store(COMMON_ASL_EC_PATH.BST0, Index(PBST, 0))     // Battery Status
+//                                Sleep(EC_ACCESS_WAIT)
+//                            }
+//                        }
+//                        Else
+//                        {
+                            Store(COMMON_ASL_EC_PATH.BST0, Index(PBST, 0))     // Battery Status
+                            Sleep(EC_ACCESS_WAIT)
+//                        }
+                        // [PRJ] End 2013/02/07 Thomas_Lin - Workaround for battery status abnormal.
+
+
+
+
+ _BIX function implement
+-------------------------
+     Please add below define to OemASL.asi -
+
+          #define COMMON_WIN8_BIX_SUPPORT         1       // Enable _BIX function.
+
+
+
+
+ _BTP function implement
+-------------------------
+     Please refer below steps -
+
+     1. Add _Q24 method to OEM quary ASL code, please refer below for sample.
+
+          //================================================================
+          // Query 24 - Battery Status update.
+          //================================================================
+          Method (_Q24)
+            {
+
+              Store(0x24, P80H)
+
+              Store("=====QUERY_24=====", Debug)      // DEBUG
+
+              Sleep(1000)
+              Notify (\_SB.PCI0.LPCB.BAT1, 0x80)
+
+            }
+
+
+     2. Add below define to OemASL.asi.
+
+          #define COMMON_WIN8_BTP_SUPPORT         1       // Enable _BTP function.
+
+
+
+ FFCC Workaround enable
+-------------------------
+
+   Please add "#define BAT_FFCC_Support  1" to OEMASL.ASI file. Also EC should support it.
+
+

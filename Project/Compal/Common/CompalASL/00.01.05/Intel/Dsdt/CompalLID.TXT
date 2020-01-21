@@ -1,0 +1,23 @@
+ Q15 function implement
+-------------------------
+     Please Add _Q15 method to OEM quary ASL code.
+     
+//================================================================
+// Query 15 - Lid open close method
+//================================================================
+  Method (_Q15)
+  {
+    Store(0x15, P80H)
+    Store(\_SB.PCI0.LPCB.EC0.LIDF, Local0)
+    Not(Local0, Local0)
+        IF(IGDS)
+        {
+            If(\_SB.PCI0.GFX0.SCIP())   // Check if SCI available.
+            {
+                \_SB.PCI0.GFX0.GLID(Local0)
+            }
+        }
+ 				Notify(\_SB.PCI0.LPCB.LID0,0x80)
+    }
+
+

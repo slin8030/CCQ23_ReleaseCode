@@ -1,0 +1,28 @@
+TOKEN
+	Name  = "COMPAL_EEPROM_SMM_SUPPORT"
+	Value  = "1"
+	Help  = "Main switch to enable CompalEeprom support in Project"
+	TokenType = Boolean
+	TargetEQU = Yes
+	TargetMAK = Yes
+	TargetH = Yes
+	Master = Yes
+	Token = "COMPAL_COMMON_CODE_SUPPORT" "=" "1"
+End
+
+PATH
+	Name  = "COMPAL_EEPROM_SMM_PATH"
+End
+
+INFComponent
+	Name  = "CompalEepromSmm"
+	File  = "CompalEepromSmm.inf"
+	Package  = "CompalCommonModulePkg"
+	ModuleTypes  = "DXE_SMM_DRIVER"
+End
+
+FFS_FILE
+	Name  = "CompalEepromSmm"
+	FD_AREA  = "FV_MAIN"
+	INFComponent  = "CompalCommonModulePkg.CompalEepromSmm"
+End

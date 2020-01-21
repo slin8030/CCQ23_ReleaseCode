@@ -1,0 +1,12 @@
+<component>
+	name = "Compal Common Module - CompalPlatformSmm"
+	category = eModule
+	LocalRoot = "Project\Compal\Common\CompalPlatformSmm\"
+	RefName = "CompalPlatformSmm"
+[INF]
+"CompalPlatformSmm.inf"
+[files]
+"CompalPlatformSmm.c"
+"CompalPlatformSmm.h"
+"CompalPlatformSmm.sdl"
+<endComponent>

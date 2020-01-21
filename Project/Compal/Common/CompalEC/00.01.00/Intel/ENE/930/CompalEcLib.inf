@@ -1,0 +1,41 @@
+
+[Defines]
+  INF_VERSION                    = 0x00010005
+  BASE_NAME                      = CompalEcLib
+  FILE_GUID                      = 0b3c0bc7-4c15-4ec8-926a-d1a168c0805e
+  VERSION_STRING                 = 1.0
+  MODULE_TYPE                    = PEIM
+  LIBRARY_CLASS                  = CompalEcLib|DXE_DRIVER UEFI_DRIVER PEIM DXE_SMM_DRIVER DXE_RUNTIME_DRIVER
+
+[Sources]
+  CompalECAcpiMode.c
+  CompalECIdle.c
+  CompalECLib.c
+  CompalECEeprom.c
+  CompalAcpiStall.c
+  CompalECSpi.c
+  CompalEcInit.c
+
+#[Binaries.Ia32]
+#  LIB|Ia32/CompalEcLib.lib
+#
+#[Binaries.X64]
+#  LIB|X64/CompalEcLib.lib
+#
+#[Binaries.Arm]
+#  LIB|Arm/CompalEcLib.lib
+    
+[Packages]
+  MdePkg/MdePkg.dec
+  $(COMPAL_COMMON_PATH)/CompalCommon.dec
+  $(PROJECT_PKG)/Project.dec
+
+[LibraryClasses]
+  IoLib
+  MemoryAllocationLib
+  PciCf8Lib
+
+[Protocols]
+  
+[Guids]
+  

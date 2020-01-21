@@ -1,0 +1,20 @@
+Please add below code in project _PTS and _WAK method to clear/set ACPI EC driver ready flag
+
+Method(_PTS,1) 
+{        
+  If(Arg0)            //Clear ACPI EC driver ready flag when s3/s4/s5/reboot
+  {
+    COMMON_ASL_LPC_PATH.ECFG(0) //Clear ACPI EC driver ready flag
+  }
+  ...
+}
+    
+Method(_WAK,1,Serialized)
+{
+  If(LOr(LEqual(Arg0,3), LEqual(Arg0,4))) //Set ACPI EC driver ready flag
+  {
+    COMMON_ASL_LPC_PATH.ECFG(1) 
+  }  
+  ...
+}
+  

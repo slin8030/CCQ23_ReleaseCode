@@ -1,0 +1,36 @@
+[Defines]
+  INF_VERSION                    = 0x00010005
+  BASE_NAME                      = CompalThermalDxe
+  FILE_GUID                      = 076fbf50-ef83-4b77-912c-d5bb77075ae3
+  MODULE_TYPE                    = DXE_DRIVER
+  VERSION_STRING                 = 1.0
+  ENTRY_POINT                    = CompalThermalInitDxeEntryPoint
+
+[Sources]
+  CompalThermalDxe.c
+  CompalThermalDxe.h
+    
+[Packages]
+  MdePkg/MdePkg.dec
+  BroadwellRcPkg/ClientRefCodePkg.dec
+  $(COMPAL_COMMON_PATH)/CompalCommon.dec
+  $(PROJECT_PKG)/Project.dec
+
+[LibraryClasses]
+  PcdLib
+  MemoryAllocationLib
+  UefiBootServicesTableLib
+  DebugLib
+  CompalThermalLib
+  UefiDriverEntryPoint
+
+[Protocols]
+
+[Pcd]
+  
+[Guids]
+
+[FeaturePcd]
+
+[Depex]
+  gDxeCpuPlatformPolicyProtocolGuid

@@ -1,0 +1,59 @@
+TOKEN
+	Name  = "COMPAL_EEPROM_DXE_SUPPORT"
+	Value  = "1"
+	Help  = "Main switch to enable CompalEeprom support in Project"
+	TokenType = Boolean
+	TargetMAK = Yes
+	TargetH = Yes
+	Master = Yes
+	Token = "COMPAL_COMMON_CODE_SUPPORT" "=" "1"
+End
+
+PATH
+	Name  = "COMPAL_EEPROM_DXE_PATH"
+End
+
+TOKEN
+	Name  = "EEPROM_BASE"
+	Value  = "$(OEM_NCB_READONLY_REGION_ADDR)"
+	Help  = "Starting address of the EC area"
+	TokenType = Integer
+	TargetEQU = Yes
+	TargetMAK = Yes
+	TargetH = Yes
+	Range  = "From: 4G - FLASH_SIZE To: 4G"
+End
+
+TOKEN
+	Name  = "FLASH_REGION_OEM_EEPROM_STORE_BASE"
+	Value  = "$(EEPROM_BASE)"
+	Help  = "Starting address of the EC area"
+	TokenType = Integer
+	TargetEQU = Yes
+	TargetMAK = Yes
+	TargetH = Yes
+	Range  = "From: 4G - FLASH_SIZE To: 4G"
+End
+
+TOKEN
+	Name  = "FLASH_REGION_OEM_EEPROM_STORE_SIZE"
+	Value  = "$(FLASH_BLOCK_SIZE)"
+	Help  = "Size of the Flash Device Block"
+	TokenType = Integer
+	TargetEQU = Yes
+	TargetMAK = Yes
+	TargetH = Yes
+End
+
+INFComponent
+	Name  = "CompalEepromDxe"
+	File  = "CompalEepromDxe.inf"
+	Package  = "CompalCommonModulePkg"
+	ModuleTypes  = "DXE_DRIVER"
+End
+
+FFS_FILE
+	Name  = "CompalEepromDxe"
+	FD_AREA  = "FV_MAIN"
+	INFComponent  = "CompalCommonModulePkg.CompalEepromDxe"
+End

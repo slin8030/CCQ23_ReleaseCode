@@ -1,0 +1,33 @@
+[Defines]
+  INF_VERSION                    = 0x00010005
+  BASE_NAME                      = CompalEepromSmm
+  FILE_GUID                      = 0C8823D5-93FB-485C-AAFA-FA7B6BF0A27F
+  MODULE_TYPE                    = DXE_SMM_DRIVER
+  PI_SPECIFICATION_VERSION       = 0x0001000A
+  VERSION_STRING                 = 1.0
+  ENTRY_POINT                    = CompalEepromSmmEntryPoint
+  
+[Sources]
+  CompalEepromSmm.c
+  CompalEepromSmm.h
+
+[Packages]
+  MdePkg/MdePkg.dec
+  IntelFrameworkPkg/IntelFrameworkPkg.dec
+  $(COMPAL_COMMON_PATH)/CompalCommon.dec
+  $(PROJECT_PKG)/Project.dec
+  
+[Protocols]
+  gEfiSmmBaseProtocolGuid
+  gCompalEEPROMSmmProtocolGuid
+
+[LibraryClasses]
+  CompalEcLib
+  UefiDriverEntryPoint
+
+[Depex]
+  gEfiSmmBase2ProtocolGuid
+
+[Pcd]
+  gCompalProjectDefinitionGuid.PcdFlashOemEepromBase
+  gCompalProjectDefinitionGuid.PcdFlashOemEepromSize

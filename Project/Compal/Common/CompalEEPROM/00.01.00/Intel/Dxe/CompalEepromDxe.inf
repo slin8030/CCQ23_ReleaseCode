@@ -1,0 +1,33 @@
+[Defines]
+  INF_VERSION                    = 0x00010005
+  BASE_NAME                      = CompalEepromDxe
+  FILE_GUID                      = C937B8BF-ECEB-4F42-907E-37A5D4C17B9D
+  MODULE_TYPE                    = DXE_DRIVER
+  VERSION_STRING                 = 1.0
+  ENTRY_POINT                    = CompalEepromDxeEntryPoint
+
+[Sources]
+  CompalEepromDxe.c
+    
+[Packages]
+  MdePkg/MdePkg.dec
+  $(COMPAL_COMMON_PATH)/CompalCommon.dec
+  $(PROJECT_PKG)/Project.dec
+
+[LibraryClasses]
+  CompalEcLib
+  UefiDriverEntryPoint
+
+[Protocols]
+  gCompalEEPROMDxeProtocolGuid
+
+[Pcd]
+  gCompalProjectDefinitionGuid.PcdFlashOemEepromBase
+  gCompalProjectDefinitionGuid.PcdFlashOemEepromSize
+  
+[Guids]
+
+[FeaturePcd]
+
+[Depex]
+  TRUE

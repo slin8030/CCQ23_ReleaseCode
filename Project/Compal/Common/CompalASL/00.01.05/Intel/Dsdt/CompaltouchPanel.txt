@@ -1,0 +1,39 @@
+===== Compal touchpanel =====
+
+Before using compaltouchpanel feature, you have to follow below steps.
+1. Please remove I2C touchpanel device in asl code.
+2. Past these code at oemasl.asl
+// 
+// [COM] I2C Touchpanel Panel ID selection
+//
+#define TPNL_ID_POLICY            TPNL_DRT_ASSIGN       // Select TPNL_DRT_ASSIGN / TPNL_RD_TPLF
+                                                        // TPD_DRT_ASSIGN : assign the _HID and _CID directly by TPLN.
+                                                        // TPD_RD_TPLF    : read touchpanel flag from TPLF of NVS to
+                                                        //                  select touchpanel _CID and _HID.
+#define TPLN                      0x01                  // Only for TPNL_DRT_ASSIGN policy to assign touchpanel id.
+                                                        // 0xff I2C default _HID and _CID
+//=============================================================================
+// Column1         || Column2  || Column3     || Column4 || Column5
+//-----------------------------------------------------------------------------
+// Touchpanel flag || I2C_SLAV || I2C_HID_ADR || _HID    || _CID
+//=============================================================================
+#define TPNL_ID_TABLE             Package(){0x00, 0x20, 0x20, "SYNA7501", "PNP0C50"},\
+                                  Package(){0x01, 0x20, 0x00, "MELF0400", "PNP0C50"},\
+                                  Package(){0xff, 0x4C, 0x00, "ATML3432", "PNP0C50"} \ //End of Table, return default ID
+
+#define PROJECT_TPNL_I2C_PATH     INTEL_I2C1_PATH       // device path
+#define TPNL_I2C_SPD              400000                // ConnectionSpeed: in Hz
+#define TPNL_I2C_CTL              "\\_SB.PCI0.I2C1"     // ResourceSource: I2C bus controller name
+#define TPNL_I2C_GPIO_CTL         "\\_SB.PCI0.GPI0"     // GPIO controller name
+#define TPNL_I2C_INT_MOD          INTERRUPT             // Selelct GPIOINT / INTERRUPT for INT mode
+#define TPNL_I2C_GPIO_INT         103                   // GPP_E7 : 24 * 4 + 7 = 103
+#define TPNL_I2C_INTERRUPT        31                    // GPP_E7 : ((24 * 4 + 7) mod 96) + 24 = 31
+
+3. modify the TPD_ID_POLICY and TPNL_ID_TABLE in oemasl.asl for your project used.
+4. add flag at project.env
+  EDK_GLOBAL  PROJECT_I2C_TOUCHPNL_ENABLE               = NO    # Enable / Disalbe I2C TouchPanel
+
+!if $(PROJECT_I2C_TOUCHPNL_ENABLE) == YES
+  DEFINE CC_FLAGS   = $(CC_FLAGS) /D PROJECT_I2C_TOUCHPNL_ENABLE
+  DEFINE RC_FLAGS   = $(RC_FLAGS) /D PROJECT_I2C_TOUCHPNL_ENABLE  
+!endif

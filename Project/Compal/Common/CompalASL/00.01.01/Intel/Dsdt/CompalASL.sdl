@@ -1,0 +1,43 @@
+TOKEN
+	Name  = "COMPAL_ASL_SUPPORT"
+	Value  = "1"
+	Help  = "Main switch to enable COMPAL ASL"
+	TokenType = Boolean
+	TargetEQU = Yes
+	TargetMAK = Yes
+	TargetH = Yes
+	Master = Yes
+	Token = "COMPAL_COMMON_CODE_SUPPORT" "=" "1"
+End
+
+TOKEN
+	Name  = "COMPAL_ASL_VERSION"
+	Value  = "00.01.07"
+        TokenType = Expression
+	TargetMAK = Yes
+End
+
+PATH
+	Name  = "COMPAL_ASL_DIR"
+End
+
+TOKEN
+	Name  = "COMPAL_COMMON_THERMAL_SUPPORT"
+	Value  = "1"
+	TokenType = Expression
+	TargetEQU = Yes
+	TargetMAK = Yes
+	TargetH = Yes
+End
+
+MODULE
+	Help  = "Includes CompalASL.cif to Project"
+	File  = "CompalASL.mak"
+End
+
+ELINK
+	Name  = "$(BUILD_DIR)\CompalASL.asl"
+	Parent  = "GENERIC_ASL"
+	InvokeOrder = AfterParent
+End
+

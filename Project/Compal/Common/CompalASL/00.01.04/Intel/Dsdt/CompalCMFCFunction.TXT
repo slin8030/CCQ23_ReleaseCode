@@ -1,0 +1,15 @@
+ CMFC 0x27 function implement
+-------------------------
+     Please add below define to Project.env
+
+EDK_GLOBAL  EC_PLATFORM_SETTING     		= LPC				# LPC/I2C
+
+!if $(EC_PLATFORM_SETTING) == LPC
+  DEFINE CC_FLAGS   = $(CC_FLAGS) /D EC_PLATFORM_SETTING=0
+  DEFINE RC_FLAGS   = $(RC_FLAGS) /D EC_PLATFORM_SETTING=0
+!endif
+
+!if $(EC_PLATFORM_SETTING) == I2C
+  DEFINE CC_FLAGS   = $(CC_FLAGS) /D EC_PLATFORM_SETTING=1
+  DEFINE RC_FLAGS   = $(RC_FLAGS) /D EC_PLATFORM_SETTING=1
+!endif

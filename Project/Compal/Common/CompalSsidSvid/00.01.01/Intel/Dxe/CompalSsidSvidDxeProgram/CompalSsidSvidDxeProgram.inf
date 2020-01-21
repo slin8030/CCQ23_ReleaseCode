@@ -1,0 +1,40 @@
+
+[Defines]
+  INF_VERSION                    = 0x00010005
+  BASE_NAME                      = CompalSsidSvidDxeProgram
+  FILE_GUID                      = 954e2958-ebb2-4687-b98f-844df4fac63a
+  MODULE_TYPE                    = DXE_DRIVER
+  VERSION_STRING                 = 1.0
+  ENTRY_POINT                    = CompalSsidSvidDxeProgramEntryPoint
+
+[Sources]
+  CompalSsidSvidDxeProgram.c
+  CompalSsidSvidDxeProgram.h
+    
+[Packages]
+  MdePkg/MdePkg.dec
+  $(COMPAL_COMMON_PATH)/CompalCommon.dec
+
+[LibraryClasses]
+  PcdLib
+  MemoryAllocationLib
+  UefiBootServicesTableLib
+  DebugLib
+  PciLib
+  UefiDriverEntryPoint
+  S3BootScriptLib
+  CommonPciLib
+  PciExpressLib
+
+[Protocols]
+  gCompalSsidSvidDxeProtocolGuid
+
+[Pcd]
+  
+[Guids]
+
+[FeaturePcd]
+
+[Depex]
+  TRUE
+

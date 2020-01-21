@@ -1,0 +1,6 @@
+ CMFC 0x27 function implement
+-------------------------
+     Please add below define to OemASL.asl -
+
+#define   EC_PLATFORM_SETTING      0x01       // 0x00 LPC 
+                                              // 0x01 I2C

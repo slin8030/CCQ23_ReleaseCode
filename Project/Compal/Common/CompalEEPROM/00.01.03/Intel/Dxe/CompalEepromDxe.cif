@@ -1,0 +1,12 @@
+<component>
+	name = "CompalEepromDxe"
+	category = ModulePart
+	LocalRoot = "Project\Compal\Common\CompalEEPROM\00.01.02\Intel\Dxe"
+	RefName = "CompalEepromDxe"
+
+[INF]
+"CompalEepromDxe.inf"
+
+[files]
+"CompalEepromDxe.sdl"
+<endComponent>

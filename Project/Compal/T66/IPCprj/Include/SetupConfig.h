@@ -80,7 +80,9 @@ typedef struct {
 //----------------------------------------------------------------------------------------------------------
 //OEM_Start
 //Offset(600);
-  UINT8         ODMRSV[100];                       // Reserve for ODM
+  UINT8         ODMRSV[98];                       // Reserve for ODM
+  UINT8         CompalFastBoot;                   // [COM][FastBoot]
+  UINT8         CompalSecureBoot;                 // [COM][Compal SecureBoot]
 //OEM_End
 
 //----------------------------------------------------------------------------------------------------------

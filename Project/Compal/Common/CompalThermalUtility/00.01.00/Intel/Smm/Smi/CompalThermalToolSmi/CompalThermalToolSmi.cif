@@ -1,0 +1,10 @@
+<component>
+	name = "Compal Common Module - CompalThermalUtility"
+	category = eModule
+	LocalRoot = "Project\Compal\Common\CompalThermalUtility\00.01.00\Intel\Smm\Smi\CompalThermalToolSmi"
+	RefName = "CompalThermalUtility"
+[INF]
+"CompalThermalToolSmi.inf"
+[files]
+"CompalThermalToolSmi.sdl"
+<endComponent>

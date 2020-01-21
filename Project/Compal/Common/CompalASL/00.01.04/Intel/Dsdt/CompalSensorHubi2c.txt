@@ -1,0 +1,97 @@
+/*
+ * (C) Copyright 2013-2020 Compal Electronics, Inc.
+ *
+ * This software is the property of Compal Electronics, Inc.
+ * You have to accept the terms in the license file before use.
+ *
+ * Copyright 2011-2012 Compal Electronics, Inc.. All rights reserved.
+
+ By installing or using this software or any portion thereof, you ("You") agrees to be bound by the following terms of use ("Terms of Use").
+ This software, and any portion thereof, is referred to herein as the "Software."
+
+ USE OF SOFTWARE.  This software is the property of Compal Electronics, Inc. (Compal) and is made available by Compal to You, and may be used only by You for personal or project evaluation.
+
+ RESTRICTIONS.  You shall not claim the ownership of the Software and shall not sell the Software. The software shall be distributed as pre-installed software incorporated in the devices manufactured by Compal only, and shall not be distributed separately via internet or any other medium.
+
+ INDEMNITY.  You agree to hold harmless and indemnify Compal and Compal¡¦s subsidiaries, affiliates, officers, agents, and employees from and against any claim, suit, or action arising from or in any way related to Your use of the Software or Your violation of these Terms of Use, including any liability or expense arising from all claims, losses, damages, suits, judgments, litigation costs and attorneys' fees, of every kind and nature.
+ In such a case, Compal will provide You with written notices of such claim, suit, or action.
+
+ DISCLAIMER.  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
+ OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+*/
+
+*****************************************************************************************************************************************
+*****************************************************************************************************************************************
+* Please add below code in oemasl.asl and modify I2C device data for project 															*
+* design. Please remark "Scope path for I2C device" define, if project have  															*
+* supported it.																															*
+*****************************************************************************************************************************************
+*****************************************************************************************************************************************
+
+#define INTEL_I2C0_PATH           \_SB.PCI0.I2C0
+#define INTEL_I2C1_PATH           \_SB.PCI0.I2C1
+#define INTEL_I2C2_PATH           \_SB.PCI0.I2C2
+#define INTEL_I2C3_PATH           \_SB.PCI0.I2C3
+#define INTEL_I2C4_PATH           \_SB.PCI0.I2C4
+#define INTEL_I2C5_PATH           \_SB.PCI0.I2C5
+
+//----------------------------
+// Scope path for I2C device
+//----------------------------
+//#define   PROJECT_I2C_INVN_PATH    INTEL_I2C0_PATH         
+//#define   PROJECT_I2C_CM3218_PATH  INTEL_I2C0_PATH
+//#define   PROJECT_I2C_KM61G_PATH   INTEL_I2C0_PATH
+//#define   PROJECT_I2C_KXCJ9_PATH   INTEL_I2C0_PATH
+//#define   PROJECT_I2C_MTKNFC_PATH  INTEL_I2C0_PATH
+
+//----------------------------
+//  INVN Sensor Solution
+//----------------------------
+#define INVN_SENSORS_HID      "INVN6500"      // Invensense Acelerometer+Gyro+Compass.
+#define GYRO_ADDR             0x68            // Gyro slave address
+#define COMPASS_ADDR          0x0D            // Compass slave address
+#define GYRO_DEVICE_NAME      "MPU6500"       // Invensense Gyro MPU6500
+#define COMPASS_DEVICE_NAME   "AK8963"        // Invensense AK8963
+#define INVN_I2C_CONTR_NAME   "\\_SB.PCI0.I2C0" //I2C bus controller name 
+#define INVN_GPIO_ResourceSource "\\_SB.PCI0.GPI0"   // GPIO device source
+#define INVN_INT_PIN_NUM      35              // Direct IRQ
+//------------------------------
+//  Capella 3218 ALS Solution
+//------------------------------
+#define ALS_SENSORS_HID       "CPLM3218"      // CM32181 ALS
+#define ALS_ADDR              0x10            // Capella 32181 slave address
+#define ALS_I2C_CONTR_NAME    "\\_SB.PCI0.I2C0"     //I2C bus controller name 
+#define ALS_GPIO_ResourceSource "\\_SB.PCI0.GPI0"   // GPIO device source
+#define ALS_INT_PIN_NUM       22              // Direct IRQ [GPP_A22]
+
+//-------------------------------
+//  Kionix KM61G Sensor Solution
+//-------------------------------
+#define KM61G_SENSORS_HID     "KIOX0017"      // Kionix KM61G
+#define KM61G_ADDR            0x0F            // Kionix 61G Slave address
+#define KM61G_I2C_CONTR_NAME  "\\_SB.PCI0.I2C0" //I2C bus controller name 
+#define KM61G_GPIO_ResourceSource "\\_SB.PCI0.GPI0"   // GPIO device source
+#define KM61G_GYRO_INT_PIN_NUM  18            // Direct IRQ [GPP_A18]
+#define KM61G_ACC_INT_PIN_NUM   20            // Direct IRQ [GPP_A20]
+
+//-------------------------------
+//  Kionix KXCJ9 Sensor Solution
+//-------------------------------
+#define KXCJ9_SENSORS_HID     "KIOX000A"      // Kionix Acelerometer
+#define KXCJ9_ADDR            0x0F            // Kionix CJ9 Slave address
+#define KXCJ9_I2C_CONTR_NAME  "\\_SB.PCI0.I2C0" //I2C bus controller name
+#define KXCJ9_GPIO_ResourceSource "\\_SB.PCI0.GPI0"   // GPIO device source
+#define KXCJ9_INT_PIN_NUM     20              // Direct IRQ
+
+//-------------------------------
+//  MTK NFC 6605 Solution
+//-------------------------------
+#define MTK_NFC_HID           "MTK6605"       // MTK NFC 6605
+#define MTK_NFC_ADDR          0x28            // MTK NFC Slave address
+#define NFC_I2C_CONTR_NAME    "\\_SB.PCI0.I2C4" //I2C bus controller name 
+#define MTK_GPIO_ResourceSource "\\_SB.PCI0.GPI0"   // GPIO device source
+#define MTK_NFC_INT_PIN_NUM   126             // Direct IRQ [GPP_F6] 6+(5*24)
+#define MTK_NFC_RST_PIN_NUM   123             // NFC_FW_RESET [GPP_F3] 3+(5*24)
+#define MTK_NFC_EN_PIN_NUM    127              // NFC_ENABLE [GPP_F7] 7+(5*24)
+
+

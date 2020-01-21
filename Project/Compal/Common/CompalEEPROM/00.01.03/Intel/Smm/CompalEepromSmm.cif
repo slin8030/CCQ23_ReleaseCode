@@ -1,0 +1,12 @@
+<component>
+	name = "CompalEepromSmm"
+	category = ModulePart
+	LocalRoot = "Project\Compal\Common\CompalEEPROM\00.01.02\Intel\Smm"
+	RefName = "CompalEepromSmm"
+
+[INF]
+"CompalEepromSmm.inf"
+
+[files]
+"CompalEepromSmm.sdl"
+<endComponent>

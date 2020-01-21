@@ -1,0 +1,10 @@
+Please add below code in project _WAK method to restore OS type in EC name space when S4 resume.
+
+Method(_WAK,1,Serialized)
+{
+  if (LEqual(Arg0, 4))
+  {
+    COMMON_ASL_LPC_PATH.OSTP()
+  }
+  ...
+}  

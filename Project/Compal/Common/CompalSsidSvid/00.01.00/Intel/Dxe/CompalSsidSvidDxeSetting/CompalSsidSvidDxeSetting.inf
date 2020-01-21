@@ -1,0 +1,38 @@
+
+[Defines]
+  INF_VERSION                    = 0x00010005
+  BASE_NAME                      = CompalSsidSvidDxeSetting
+  FILE_GUID                      = 58b8e0bc-05a5-4015-a47b-774a50346c1e
+  MODULE_TYPE                    = DXE_DRIVER
+  VERSION_STRING                 = 1.0
+  ENTRY_POINT                    = CompalSsidSvidDxeSettingEntry
+
+[Sources]
+  CompalSsidSvidDxeSetting.c
+  CompalSsidSvidDxeSetting.h
+    
+[Packages]
+  MdePkg/MdePkg.dec
+  BroadwellRcPkg/ClientRefCodePkg.dec
+  $(COMPAL_COMMON_PATH)/CompalCommon.dec
+  $(PROJECT_PKG)/Project.dec
+
+[LibraryClasses]
+  PcdLib
+  MemoryAllocationLib
+  UefiBootServicesTableLib
+  DebugLib
+  PciLib
+  UefiDriverEntryPoint
+
+[Protocols]
+  gCompalSsidSvidDxeProtocolGuid
+
+[Pcd]
+  
+[Guids]
+
+[FeaturePcd]
+
+[Depex]
+  TRUE

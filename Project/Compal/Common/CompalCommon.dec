@@ -1,0 +1,112 @@
+# * (C) Copyright 2013 Compal Electronics, Inc.
+# *
+# * This software is the property of Compal Electronics, Inc.
+# * You have to accept the terms in the license file before use.
+# *
+# * Copyright 2011-2013 Compal Electronics, Inc.. All rights reserved.
+#
+# By installing or using this software or any portion thereof, you ("You") agrees to be bound by the following terms of use ("Terms of Use").
+# This software, and any portion thereof, is referred to herein as the "Software."
+#
+# USE OF SOFTWARE.  This software is the property of Compal Electronics, Inc. (Compal) and is made available by Compal to You, and may be used only by You for personal or project evaluation.
+#
+# RESTRICTIONS.  You shall not claim the ownership of the Software and shall not sell the Software. The software shall be distributed as pre-installed software incorporated in the devices manufactured by Compal only, and shall not be distributed separately via internet or any other medium.
+#
+# INDEMNITY.  You agree to hold harmless and indemnify Compal and Compal!|s subsidiaries, affiliates, officers, agents, and employees from and against any claim, suit, or action arising from or in any way related to Your use of the Software or Your violation of these Terms of Use, including any liability or expense arising from all claims, losses, damages, suits, judgments, litigation costs and attorneys' fees, of every kind and nature.
+# In such a case, Compal will provide You with written notices of such claim, suit, or action.
+#
+# DISCLAIMER.  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
+# OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+#
+
+#[Defines]
+#  DEC_VERSION                    = 0x00010005
+#  PACKAGE_NAME                   = PlatformPkg
+#  PACKAGE_GUID                   = AD01EEE9-398E-445a-91D4-A3CFF586A086
+#  PACKAGE_VERSION                = 0.1
+
+[Includes]
+  CompalInclude
+  CompalProtocol
+  CompalASL\00.01.06\Intel\Dsdt
+  CompalASL\00.01.06\Intel\Dsdt\Devices
+  CompalASL\00.01.06\Intel\Dsdt\I2CEC
+  CompalEC\00.01.06\Intel\ENE\9012
+  CompalThermal\00.01.03\Intel\Library
+  CompalEEPROM\00.01.03\Intel\Dxe
+  CompalFlash\00.01.00\Intel\Library
+
+[Guids]
+  gEfiGenericVariableGuid            = {0x59d1c24f, 0x50f1, 0x401a, {0xb1, 0x01, 0xf3, 0x3e, 0x0d, 0xae, 0xd4, 0x43}}
+  gCompalISCTPpiGuid                 = {0x54b50a79, 0x1de5, 0x425a, {0x93, 0x5b, 0x95, 0xfa, 0xeb, 0xb3, 0x01, 0xb2}}
+  gCompalPlatformHookPeiPpiGuid      = {0x5097ea4b, 0x7dda, 0x4c99, {0x87, 0xae, 0x09, 0xc5, 0x54, 0x6a, 0x02, 0x01}}
+  gCompalPlatformInitPeiPpiGuid      = {0x59ba9d9d, 0x30b1, 0x4091, {0xb8, 0x8d, 0xcc, 0x70, 0x9f, 0x64, 0x8a, 0x94}}
+  gCompalNTFSFwRecoveryGuid          = {0xf2155b20, 0xb0d6, 0x11df, {0x94, 0xe2, 0x08, 0x00, 0x20, 0x0c, 0x9a, 0x66}}
+  gCompalCommonCodeGuid              = {0x30D70F84, 0x2545, 0x4150, {0x1F, 0xCB, 0xCD, 0x19, 0x10, 0x38, 0x04, 0xE1}}
+
+[Protocols]
+  gCompalEEPROMSmmProtocolGuid       = {0x46632a76, 0xfab0, 0x4bed, {0x8f, 0x4a, 0xa9, 0xca, 0x0b, 0x5e, 0xa9, 0x68}}
+  gCompalEEPROMDxeProtocolGuid       = {0x076f54ec, 0xc230, 0x4fec, {0xbd, 0x0f, 0x2f, 0xc7, 0xd3, 0x98, 0xe3, 0xa2}}
+  gCompalGlobalNvsProtocolGuid       = {0xd3d7c640, 0x1782, 0x475e, {0x8e, 0x7b, 0x52, 0xdf, 0x4a, 0xe9, 0x03, 0xfa}}
+  gCompalSsidSvidDxeProtocolGuid     = {0xe7273837, 0xb16a, 0x4512, {0xaa, 0xa9, 0x70, 0x95, 0xf0, 0x1b, 0x24, 0xa0}}
+  gCompalPlatformHookDxeProtocolGuid = {0x6aea40b8, 0x2b25, 0x4276, {0xbd, 0x00, 0xd7, 0xf2, 0x09, 0x4f, 0x78, 0xe4}}
+  gCompalCMFCSmmHookProtocolGuid     = {0xcbeb63d0, 0x76e3, 0x11e0, {0xa1, 0xf0, 0x08, 0x00, 0x20, 0x0c, 0x9a, 0x66}}
+  gCompalCommonEcFwAutoLoadDxeHookProtocolGuid = { 0x7dc29005, 0x0622, 0x4483, { 0xac, 0x99, 0x4d, 0xfb, 0x19, 0x12, 0xed, 0x67 } }
+  gCompalVariableBank0_GUID          = {0xa86e3b62, 0x28f4, 0x11e4, {0xAB, 0x4c, 0xa6, 0xc5, 0xe4, 0xd2, 0x2f, 0xb7}}
+  gCompalVariableBank1_GUID          = {0xa86e3b0a, 0x28f4, 0x11e4, {0xAB, 0x4c, 0xa6, 0xc5, 0xe4, 0xd2, 0x2f, 0xb7}}
+  gCompalVariableBank2_GUID          = {0xa86e3b7b, 0x28f4, 0x11e4, {0xAB, 0x4c, 0xa6, 0xc5, 0xe4, 0xd2, 0x2f, 0xb7}}
+  gCompalVariableBank3_GUID          = {0xa86e3b39, 0x28f4, 0x11e4, {0xAB, 0x4c, 0xa6, 0xc5, 0xe4, 0xd2, 0x2f, 0xb7}}
+  gCompalVariableBank4_GUID          = {0xa86e3b23, 0x28f4, 0x11e4, {0xAB, 0x4c, 0xa6, 0xc5, 0xe4, 0xd2, 0x2f, 0xb7}}
+  gCompalVariableBank5_GUID          = {0xa86e3b56, 0x28f4, 0x11e4, {0xAB, 0x4c, 0xa6, 0xc5, 0xe4, 0xd2, 0x2f, 0xb7}}
+  gCompalVariableBank6_GUID          = {0xa86e3b17, 0x28f4, 0x11e4, {0xAB, 0x4c, 0xa6, 0xc5, 0xe4, 0xd2, 0x2f, 0xb7}}
+
+
+[Ppis]
+  gCompalISCTPpiGuid                 = {0x54b50a79, 0x1de5, 0x425a, {0x93, 0x5b, 0x95, 0xfa, 0xeb, 0xb3, 0x01, 0xb2}}
+  gCompalPlatformHookPeiPpiGuid      = {0x5097ea4b, 0x7dda, 0x4c99, {0x87, 0xae, 0x09, 0xc5, 0x54, 0x6a, 0x02, 0x01}}
+  gCompalPlatformInitPeiPpiGuid      = {0x59ba9d9d, 0x30b1, 0x4091, {0xb8, 0x8d, 0xcc, 0x70, 0x9f, 0x64, 0x8a, 0x94}}
+
+[PcdsFeatureFlag]
+  
+[PcdsFixedAtBuild]
+# [EC RAM] IO/Memory mapping address
+#  gCompalCommonCodeGuid.PcdEcIoBaseAddress|0xFD40|UINT16|0x00000014                       # Nuvoton index IO
+#  gCompalCommonCodeGuid.PcdEcRamMapAddress|0xFEDF0000|UINT32|0x00000013                   # Small Code
+
+  gCompalCommonCodeGuid.PcdEcRamMapAddress|0xFF000000|UINT32|0x00000013                  # Big Code
+  gCompalCommonCodeGuid.PcdEcIoBaseAddress|0xFD60|UINT32|0x000000014                     # ENE index IO
+  
+# [EC RAM] EC RAM Offset for cmd protocol. 
+  gCompalCommonCodeGuid.PcdEcRamBaseAddress|0xF400|UINT32|0x00000015                     # ENE EC ram base address. 
+  gCompalCommonCodeGuid.PcdEcRamStartAddress|0xEC00|UINT32|0x00000016                    # ENE EC ram start address.
+  gCompalCommonCodeGuid.PcdEcIndexIoCmdCtrlAddress|0xF982|UINT32|0x00000017              # ENE EC command ctrl      
+  gCompalCommonCodeGuid.PcdEcIndexIoCmdBufAddress|0xF98B|UINT32|0x00000018               # ENE EC buffer            
+                             
+#  gCompalCommonCodeGuid.PcdEcRamBaseAddress|0x10800|UINT32|0x00000015                     # Nuvoton EC ram base address.
+#  gCompalCommonCodeGuid.PcdEcRamStartAddress|0x10000|UINT32|0x00000016                    # Nuvoton EC ram start address.
+#  gCompalCommonCodeGuid.PcdEcIndexIoCmdCtrlAddress|0x10D82|UINT32|0x00000017              # Nuvoton EC command ctrl
+#  gCompalCommonCodeGuid.PcdEcIndexIoCmdBufAddress|0x10D8B|UINT32|0x00000018               # Nuvoton EC buffer
+
+# WARNING:
+# TRUE : Resevered FV space for EC EEPROM mapping when set PcdVEEPROMTYPE to 0x01(ROM VEEPROM)
+# FALSE: Don't resevered FW space for EC EEPROM maaping when set PcdVEEPROMTYPE to 0x00/0x02/0x03
+  gCompalCommonCodeGuid.PcdFvOemEEPROMResevered|FALSE|BOOLEAN|0x00000020 
+
+[PcdsDynamic]
+
+  gCompalCommonCodeGuid.PcdCompalAutoLoadEcBase|0x00|UINT32|0x00000004
+  gCompalCommonCodeGuid.PcdCompalAutoLoadEcSize|0x00|UINT32|0x00000005
+  gCompalCommonCodeGuid.PcdCrisisMode|0xFF|UINT8|0x00000021
+[PcdsDynamicEx]
+#
+# WARNING:
+# If you set PcdVEEPROMTYPE to 0x01 for BIOS ROM VEEPROM,
+# Please also update PcdFvOemEEPROMResevered to "TRUE" at [PcdFixedAtBuild]to resevered ROM space for VEEPROM.
+#
+  gCompalCommonCodeGuid.PcdVEEPROMTYPE|0x0|UINT8|0x00000019                # VEEPROM Type
+                                                                           # 0x00 : Not Support (Access EC EEPROM)
+                                                                           # 0x01 : ROM VEEPROM (EC EEPROM with BIOS ROM Mapping)
+                                                                           # 0x02 : BIOS Variable EEPROM (BIOS variable bank0~7)
+                                                                           # 0x03 : Non-EC   VEEPROM (BIOS variable bank0~6)
+
+[LibraryClasses]

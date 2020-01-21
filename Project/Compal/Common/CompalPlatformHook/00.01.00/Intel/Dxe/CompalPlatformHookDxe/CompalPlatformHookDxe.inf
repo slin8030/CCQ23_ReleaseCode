@@ -1,0 +1,45 @@
+
+[Defines]
+  INF_VERSION                    = 0x00010005
+  BASE_NAME                      = CompalPlatformHookDxe
+  FILE_GUID                      = 33C27B86-0A39-48da-9497-68A3E5C3928D
+  MODULE_TYPE                    = DXE_RUNTIME_DRIVER
+  VERSION_STRING                 = 1.0
+  ENTRY_POINT                    = CompalPlatformHookDxeEntryPoint
+
+[Sources]
+  CompalPlatformHookDxe.c
+  CompalPlatformHookDxe.h
+  CompalPlatformHookDxePolicyOverride.c
+    
+[Packages]
+  BroadwellChipsetPkg/BroadwellChipsetPkg.dec
+  MdePkg/MdePkg.dec
+  BroadwellRcPkg/ClientRefCodePkg.dec
+  InsydeModulePkg/InsydeModulePkg.dec
+  $(COMPAL_COMMON_PATH)/CompalCommon.dec
+  $(PROJECT_PKG)/Project.dec
+
+[LibraryClasses]
+  CompalEcLib
+  UefiDriverEntryPoint
+  FlashDevicesLib
+  UefiRuntimeLib
+  SpiAccessLib
+
+[Protocols]
+  gCompalPlatformHookDxeProtocolGuid
+  gCompalEEPROMDxeProtocolGuid
+
+[Pcd]
+#[COM][ZAL20]++ bios eeprom 2013-11-05 17:55:39 --]
+  gCompalProjectDefinitionGuid.PcdFlashOemEepromBase
+  gCompalProjectDefinitionGuid.PcdFlashOemEepromSize
+#[COM][ZAL20]-- bios eeprom 2013-11-05 17:55:43 --]
+  
+[Guids]
+
+[FeaturePcd]
+
+[Depex]
+  gCompalEEPROMDxeProtocolGuid

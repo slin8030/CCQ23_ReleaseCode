@@ -1,0 +1,68 @@
+===== Compal touchpad =====
+
+Before using compaltouchpad feature, you have to follow below steps.
+1. Please remove PS2 and I2C touchpad device in asl code.
+2. Past these code at oemasl.asl
+// 
+// [COM] PS2/I2C Touchpad ID selection
+//
+//-------------------------------------------------------------------------------------------------------------
+// There are two scenario for reference.
+// Usage:
+// case 1 : Set the _HID and _CID direclty by TPDF for project used.
+//          Please fill TPDN and TPAD_ID_TABLE correctly.
+// example:
+// #define TPD_ID_POLICY  TPD_DRT_ASSIGN
+// #define TPDN           0x01
+// #define TPAD_ID_TABLE  Package(){0x01, 0xFF, 0xFF,  EISAID("AUI1643"), Package(){EISAID("PNP0F13")}},\
+//                        Package(){0xfe, 0x2C, 0x20, "MSFT0001", "PNP0C50"},                   \
+//                        Package(){0xff, 0xFF, 0xFF, "MSFT0003", EISAID("PNP0F03")} \ //End of Table, return default ID
+//
+// case 2 : read touchpad flag from CompalGloblNvs.asl to select touchpad
+//          Please make sure we had assigned touchpad flag to TPDF ACPI object
+//          and fill TPAD_ID_TABLE and TPD_ID_POLICY for _CID and _HID.
+// example:
+// #define TPD_ID_POLICY  TPD_RD_TPDF
+// #define TPAD_ID_TABLE  Package(){0x01, 0xFF, 0xFF, EISAID("AUI1643"), Package(){EISAID("PNP0F13")}},\
+//                        Package(){0xfe, 0x2C, 0x20, "MSFT0001", "PNP0C50"},                   \
+//                        Package(){0xff, 0xFF, 0xFF, "MSFT0003", EISAID("PNP0F03")} \ //End of Table, return default ID
+//-------------------------------------------------------------------------------------------------------------
+#define TPD_ID_POLICY             TPD_DRT_ASSIGN        // Select TPD_DRT_ASSIGN / TPD_RD_TPDF
+                                                        // TPD_DRT_ASSIGN : assign the _HID and _CID directly by TPDN.
+                                                        // TPD_RD_TPDF    : read touchpad flag from TPDF of NVS to
+                                                        //                  select touchpad _CID and _HID.
+#define TPDN                      0xfe                  // Only for TPD_DRT_ASSIGN policy to assign touchpad id.
+                                                        // 0xfe I2C default _HID and _CID
+                                                        // 0xff PS2 default _HID and _CID
+
+// Compal Touchpad ID table description
+//=============================================================================
+// Column1       || Column2  || Column3     || Column4 || Column5
+//-----------------------------------------------------------------------------
+// Touchpad flag || I2C_SLAV || I2C_HID_ADR || _HID    || _CID
+//=============================================================================
+#define TPAD_ID_TABLE             Package(){0x00, 0xFF, 0xFF, EISAID("AUI1643"), Package(){EISAID("PNP0F13")}},\
+                                  Package(){0x01, 0xFF, 0xFF, EISAID("AUI1643"), Package(){EISAID("PNP0F13")}},\
+                                  Package(){0x05, 0xFF, 0xFF, EISAID("AUI1642"), Package(){EISAID("SYN2B00"),EISAID("SYN0002"),EISAID("PNP0F13")}},\
+                                  Package(){0x06, 0xFF, 0xFF, EISAID("AUI1642"), Package(){EISAID("SYN2B00"),EISAID("SYN0002"),EISAID("PNP0F13")}},\
+                                  Package(){0x08, 0xFF, 0xFF, EISAID("ETD0651"), Package(){"ETD0000",EISAID("PNP0013")}},\
+                                  Package(){0x09, 0xFF, 0xFF, EISAID("ETD0651"), Package(){"ETD0000",EISAID("PNP0013")}},\
+                                  Package(){0xfe, 0x2C, 0x20, "MSFT0001", "PNP0C50"},\
+                                  Package(){0xff, 0xFF, 0xFF, "MSFT0003", EISAID("PNP0F03")} \ //End of Table, return default ID
+
+#define PROJECT_TPD_I2C_PATH      INTEL_I2C1_PATH       // device path
+#define TPD_I2C_SPD               400000                // ConnectionSpeed: in Hz
+#define TPD_I2C_CTL               "\\_SB.PCI0.I2C1"     // ResourceSource: I2C bus controller name
+#define TPD_I2C_GPIO_CTL          "\\_SB.PCI0.GPI0"     // GPIO controller name
+#define TPD_I2C_INT_MOD           INTERRUPT             // Selelct GPIOINT / INTERRUPT for INT mode
+#define TPD_I2C_GPIO_INT          27                    // GPP_B3 : 24 + 3 = 27
+#define TPD_I2C_INTERRUPT         51                    // GPP_B3 : ((24 * 1 + 3) mod 96) + 24 = 51
+
+3. modify the TPD_ID_POLICY and TPAD_ID_TABLE in oemasl.asl for your project used.
+4. add flag at project.env
+  EDK_GLOBAL  PROJECT_I2C_TOUCHPAD_ENABLE               = YES   # Default NO   - PS2 Touch Pad
+                                                                #         YES  - I2C Touch Pad
+!if $(PROJECT_I2C_TOUCHPAD_ENABLE) == YES
+  DEFINE CC_FLAGS   = $(CC_FLAGS) /D PROJECT_I2C_TOUCHPAD_ENABLE
+  DEFINE RC_FLAGS   = $(RC_FLAGS) /D PROJECT_I2C_TOUCHPAD_ENABLE  
+!endif
