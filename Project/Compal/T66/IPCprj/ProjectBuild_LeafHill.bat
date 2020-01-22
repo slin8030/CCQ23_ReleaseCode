@@ -22,13 +22,13 @@ set TOOL_CHAIN=DEVTLS_VC10
 
 REM Setting Tool Chain Path, example: "B:\BuildCode\DEVTLS-T190"
 REM Tool Chain Drive (C:, D:, E:, etc..)
-set TOOL_DRV=B:
+set TOOL_DRV=C:
 
 REM Tool Chain folder Path
-set DEVTLS_DIR=BuildCode\DEVTLS-T190
+set DEVTLS_DIR=DEVTLS
 
 REM ASL Compiler Path, example: "B:\BuildCode\DEVTLS-T190\Asl\Acpi5.0"
-set ASL_PATH=B:\BuildCode\DEVTLS-T190\Asl\Acpi5.0
+set ASL_PATH=C:\DEVTLS\Asl\Acpi5.0
 
 REM CRB Board Name
 set CRB_BOARD_NAME=LeafHill
@@ -49,7 +49,7 @@ REM BIOS Image Name in BIOS folder. If not defined, use SOC Name & CRB borad Nam
 REM set BIOS_NAME=%SOC_NAME%
 
 REM Include user path, example: "B:\BuildCode\DEVTLS-T190\MyBAT5.0"
-path=B:\BuildCode\DEVTLS-T190\MyBAT5.0;%path%
+path=C:\DEVTLS\MyBAT5.0;%path%
 
 REM Call Original ProjectBuild.bat in Board Package
 ProjectBuild.bat

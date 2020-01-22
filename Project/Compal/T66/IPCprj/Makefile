@@ -31,15 +31,8 @@
 #PROJECT_BUILD_OPTIONS =
 
 BUILD_REPORT = -Y PCD -Y DEPEX -Y LIBRARY -y $(WORKSPACE)/Build/$(PROJECT_PKG)/BuildReport.txt
-#[-start-170331-IB07400855-add]#
-CBT_BUILD    = -D SYMBOLIC_DEBUG=YES -D H2OCBT_SUPPORT=YES
-#[-end-170331-IB07400855-add]#
 
-#[-start-161123-IB07250310-modify]#
-#[-start-170915-IB07400910-modify]#
 !include $(WORKSPACE)\BaseTools\Conf\Makefile
-#[-end-170915-IB07400910-modify]#
-#[-end-161123-IB07250310-modify]#
 
 #[-start-160711-IB07220111-modify]#
 #
@@ -60,63 +53,6 @@ uefi64rmt:
 #[-end-160711-IB07220111-modify]#
 
 #[-start-151122-IB07220012-add]#
-#[-start-160223-IB07400702-remove]#
-#rvp2:
-#  set RVP2=YES
-#[-end-160223-IB07400702-remove]#
+rvp2:
+  set RVP2=YES
 #[-end-151122-IB07220012-add]#
-
-#[-start-160328-IB07400711-add]#
-## @BuildTarget "IA32", DEBUG, Debug build with EFI debug messages via serial port for x86 32-bit CPU Arch. 
-uefi32edbg:
-  @$(MAKE) debug BUILD_TARGET=$@ BUILD_TARGET_OPTIONS="$(EFI_DEBUG)"
- 
-## @BuildTarget "IA32 X64", DEBUG, Debug build with EFI debug messages via serial port for x86 64-bit CPU Arch.
-uefi64edbg:
-  @$(MAKE) debug BUILD_TARGET=$@ BUILD_TARGET_OPTIONS="$(EFI_DEBUG)"
-  
-## @BuildTarget "IA32", DEBUG, Debug build with Insyde Debugger and EFI debug messages via ddt and serial port for x86 32-bit CPU Arch.
-uefi32ddtedbg:
-  @$(MAKE) debug BUILD_TARGET=$@ BUILD_TARGET_OPTIONS="$(EFI_DEBUG_DDT)"
-
-## @BuildTarget "IA32 X64", DEBUG, Debug build with Insyde Debugger and EFI debug messages via ddt and serial port for x86 64-bit CPU Arch.
-uefi64ddtedbg:
-  @$(MAKE) debug BUILD_TARGET=$@ BUILD_TARGET_OPTIONS="$(EFI_DEBUG_DDT)"
-  
-## @BuildTarget "IA32", RELEASE, Release build for x86 32-bit CPU Arch. (without time stamp)
-uefi32nots:
-  @$(MAKE) release BUILD_TARGET=$@
-## @BuildTarget "IA32 X64", RELEASE, Release build for x86 64-bit CPU Arch. (without time stamp)
-uefi64nots:
-  @$(MAKE) release BUILD_TARGET=$@
-#[-end-160328-IB07400711-add]#
-#[-start-160822-IB07400773-add]#
-## @BuildTarget "IA32", RELEASE, Release build with secure flash enabled for x86 32-bit CPU Arch. (without time stamp)
-uefi32sf:
-  @$(MAKE) release BUILD_TARGET=$@
-## @BuildTarget "IA32 X64", RELEASE, Release build with secure flash enabled for x86 64-bit CPU Arch. (without time stamp)
-uefi64sf:
-  @$(MAKE) release BUILD_TARGET=$@
-#[-start-170407-IB07400856-remove]#
-### @BuildTarget "IA32", RELEASE, Release build with secure flash enabled with ESP support for x86 32-bit CPU Arch. (without time stamp)
-#uefi32sfesp:
-#  @$(MAKE) release BUILD_TARGET=$@
-### @BuildTarget "IA32 X64", RELEASE, Release build with secure flash enabled with ESP support for x86 64-bit CPU Arch. (without time stamp)
-#uefi64sfesp:
-#  @$(MAKE) release BUILD_TARGET=$@
-##[-end-160822-IB07400773-add]#
-#[-end-170407-IB07400856-remove]#
-#[-start-170331-IB07400855-add]#
-uefi32cbt:
-  @$(MAKE) debug BUILD_TARGET=$@ BUILD_TARGET_OPTIONS="$(CBT_BUILD)"
-
-uefi64cbt:
-  @$(MAKE) debug BUILD_TARGET=$@ BUILD_TARGET_OPTIONS="$(CBT_BUILD)"
-#[-end-170331-IB07400855-add]#
-#[-start-181120-IB07401039-add]#
-uefi32rvs:
-  @$(MAKE) release BUILD_TARGET=$@
-  
-uefi64rvs:
-  @$(MAKE) release BUILD_TARGET=$@
-#[-end-181120-IB07401039-add]#

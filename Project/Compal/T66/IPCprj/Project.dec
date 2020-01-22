@@ -25,6 +25,7 @@
 
   gEsrtSystemFirmwareGuid                = {0xffd4675e, 0xff47, 0x46d9, {0xac, 0x24, 0x8b, 0x33, 0x1f, 0x93, 0x77, 0x37}}
   gProjectPkgTokenSpaceGuid              = {0x0fb76d37, 0x93bb, 0x4c48, {0xbe, 0xf0, 0xfd, 0xe9, 0x7c, 0x6a, 0x35, 0x28}}
+  gCompalProjectDefinitionGuid           = {0x30D70F84, 0x2545, 0x4149, {0x9E, 0xCA, 0xC9, 0xEE, 0x84, 0xBF, 0x04, 0xE1}}
 
 [Protocols]
 
@@ -35,6 +36,10 @@
 #  gProjectPkgTokenSpaceGuid.PcdProjectSvid|0x00008086|UINT16|0x60000001
 #  gProjectPkgTokenSpaceGuid.PcdProjectSsid|0x00007270|UINT16|0x60000002
 #[-end-170509-IB07400866-remove]#
+  gCompalProjectDefinitionGuid.PcdFlashOemEepromBase|0x00|UINT32|0x00000001
+  gCompalProjectDefinitionGuid.PcdFlashOemEepromSize|0x00|UINT32|0x00000002
+  gCompalProjectDefinitionGuid.PcdFlashOemICTProcessBase|0x00|UINT32|0x00000005
+  gCompalProjectDefinitionGuid.PcdFlashOemICTProcessSize|0x00|UINT32|0x00000006
 
 [PcdsDynamic]
 

@@ -1,0 +1,1009 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Platform>
+  <Tool>
+    <Init>
+      <WIN>1</WIN>
+      <DOS>1</DOS>
+      <EFI>1</EFI>
+      <SECURE>1</SECURE>
+    </Init>
+  </Tool>
+  <PlatformSettings>
+    <Settings name="CommonFlash" caption="ODM Common Flash Settings" supported="WIN,DOS,EFI,SECURE">
+      <Setting name="SwitchString" type="string" max="1024">
+        <Description>
+A switch flag setting string. Ex: "CPVER:[1] ACEN DCEN FHRST"
+Detail parameter please reference following table.
+Parameter    | Description
+-------------+----------------------------------------------
+PTEN         | All protection enable.
+PTDIS        | All protection disable.
+ACEN         | AC protect checking enable.
+ACDIS        | AC protect checking disable.
+DCEN         | DC &amp; Gangue protect checking enable.
+DCDIS        | DC &amp; Gangue protect checking disable.
+RESSEN       | BIOS Regression enable.
+RESSDIS      | BIOS Regression disable.
+PJMDEN       | Project Model string protect checking enable.
+PJMDDIS      | Project Model string protect checking disable.
+FHOS         | System back to OS after flash BIOS completely.
+FHST         | System directly shutdown after flash BIOS completely.
+FHRST        | System directly reboot after flash BIOS completely.
+CPVER:[Num]  | Common Flash Version information
+-------------+----------------------------------------------
+        </Description>
+      </Setting>
+      <Setting name="ErrorMsg00" type="string" max="1024" default="No error!"/>
+      <Setting name="ErrorMsg01" type="string" max="1024" default="AC detect error!"/>
+      <Setting name="ErrorMsg02" type="string" max="1024" default="DC detect error!"/>
+      <Setting name="ErrorMsg03" type="string" max="1024" default="DC gas gauge under xx%!"/>
+      <Setting name="ErrorMsg04" type="string" max="1024" default="BIOS version compare error!"/>
+      <Setting name="ErrorMsg05" type="string" max="1024" default="Model name compare error!"/>
+      <Setting name="ErrorMsg10" type="string" max="1024" default="Not support this version of Flash Common Interface!"/>
+      <Setting name="ErrorMsg11" type="string" max="1024" default="Show BIOS version string length more than xx bytes."/>
+      <Setting name="ErrorMsg12" type="string" max="1024" default="Show model name string length more than xx bytes."/>
+      <Setting name="ErrorMsg[Num]" type="string" max="1024" template="1">
+        <Description>
+        ErrorMsg##=[Message String]
+        The number of ErrorMsg## is in hex.
+        </Description>
+      </Setting>
+    </Settings>
+    <Settings name="PermitFlashConditionalData" caption="Permit Flash Conditional Data" supported="DOS">
+      <Description>
+      This feature will pass conditional setting to BIOS and get compare result from BIOS. Only when the result is failure, flash process will be terminated.
+      </Description>
+      <Setting name="PFCDFunctionEnable" caption="Enable Permit Flash Conditional Check" type="enum" enum="EnableDisableEnum" default="0">
+        <Description>
+        If the flag is disabled, application will keep flash progress without conditional check.
+        </Description>
+      </Setting>
+      <Setting name="Conditionalcount" caption="Conditional Data Count" type="int" min="0" default="3">
+        <Description>
+        Total count of conditional data.
+        </Description>
+      </Setting>
+      <Setting name="Conditionaldata1" type="set" set="PermitFlashConditionalDataSet" default="1,w,0003,The BIOS image does not support the current hardware configuration.\nFlash update is aborted."/>
+      <Setting name="Conditionaldata2" type="set" set="PermitFlashConditionalDataSet" default="2,w,20DD,The BIOS image does not support the current hardware configuration.\nFlash update is aborted."/>
+      <Setting name="Conditionaldata3" type="set" set="PermitFlashConditionalDataSet" default="2,w,20DE,The BIOS image does not support the current hardware configuration.\nFlash update is aborted."/>
+      <Setting name="Conditionaldata[Num]" type="set" set="PermitFlashConditionalDataSet" template="1">
+        <Description>
+Conditionaldata#=[Data Type], [Data Format], [Data Field], [Message String]
+Base on data format you need and to add configure value by below data format field and data field.
+  Conditionaldata# : # support from 1~20.
+       [Data Type] : The type of Conditionaldata, when you have more than one conditional data need to check before flash, you can give them different type.
+                     It will allow flash when all types are pass.
+                     It also can use the same type with more than one conditional data, that means if one of the conditional data is pass, this type is pass.
+                     Ex: We have the following settings, Conditionaldata1 is type 0, others are type 1.
+                     Conditionalcount=3
+                     Conditionaldata1=0,w,"0x1234","This BIOS is not allow to flash."
+                     Conditionaldata2=1,w,"0x1111","This BIOS is not allow to flash."
+                     Conditionaldata3=1,w,"0x1222","This BIOS is not allow to flash."
+                     When Conditionaldata1 is pass and Conditionaldata2 or Conditionaldata 3 is pass that will allow flash.
+                         Allow = data1 pass &amp;&amp; ( data2 pass || data3 pass ).
+     [Data Format] : Can support different as binary, string, WORD, DWORD.
+                 b : The data format is binary.
+                 s : The data format is string.
+                 w : The data format is WORD.
+                 d : The data format is DWORD.
+      [Data Field] : Relative data base on data format.
+            BINARY : If the data format is binary.
+                     Data field is HEX. The data is as like "AA BB 00 12 55".
+            String : If the data format is string.
+                     Data field is string. The data is as like "Data.123.AABE.".
+              WORD : If the data format is WORD.
+                     Data field is HEX and unit is a WORD length. The data is as like "0x1223".
+             DWORD : If the data format is DWORD.
+                     Data field is HEX and unit is a DWORD length. The data is as like "0x12345678".
+  [Message string] : Define customize message string here.
+                     The message is pop up when flash utility get a process interrupted from BIOS.
+                     The message string is optional field.
+                     It will not pop any message if you do not provide message string in this field.
+        </Description>
+      </Setting>
+    </Settings>
+    <Settings name="MULTI_FD" caption="Multi FD" supported="DOS,WIN,EFI">
+      <Setting name="Flag" id="MultiFdFlag" type="enum" enum="EnableDisableEnum" default="0"/>            
+      <Setting name="FD#01" type="set" set="MultiFdSet" default="PCI,0,1F,2,80,FFFFFFFF,00007007,9.fd,ME.fd"/>
+      <Setting name="FD#02" type="set" set="MultiFdSet" default="PCI,2,0,0,4,FFFFFFFF,00100007,7.fd,ME.fd"/>
+      <Setting name="FD#03" type="set" set="MultiFdSet" default="PCI,2,0,0,18,0000000F,0000000E,9.fd,ME.fd"/>
+      <Setting name="FD#04" type="set" set="MultiFdSet" default="MPCIIO,2,PCI,0,1F,0,00,FFFFFFFF,3B0B8086,IO,538,0100,0000,9.fd,ME.fd"/>
+      <Setting name="FD#05" type="set" set="MultiFdSet" default="IO,C0,5AABFE02,5AABFE02,9.fd,ME.fd"/>
+      <Setting name="FD#06" type="set" set="MultiFdSet" default="IO,1F6,E7,E4,7.fd"/>
+      <Setting name="FD#07" type="set" set="MultiFdSet" default="IO,C0,FE03,FE03,7.fd"/>
+      <Setting name="FD#08" type="set" set="MultiFdSet" default="IO,C0,03,01,7.fd"/>
+      <Setting name="FD#09" type="set" set="MultiFdSet" default="PCI,2,0,0,0,00000813,00000812,9.fd"/>
+      <Setting name="FD#10" type="set" set="MultiFdSet" default="ID,ModelName,BIOS.fd"/>
+      <Setting name="FD#11" type="set" set="MultiFdSet" default="OS,32,32bios.bin,,32.ini"/>
+      <Setting name="FD#12" type="set" set="MultiFdSet" default="OS,64,64bios.bin,me.bin,64.ini"/>
+      <Setting name="FD#[Num]" type="set" set="MultiFdSet" template="1">
+        <Description>
+FD#XX                              (dwsDWS)
+                  Integer : XX is decimal number from 01 to 99. (FD#01 ~ FD#99)
+This section supports IO space type, PCI address type and multiple condition type.
+FD#XX=IO,[Offset],[Mask],[Value],[Filename],[ME Filename],[INI Filename]
+FD#XX=PCI,[Bus],[Device],[Function],[Offset],[Mask],[Value],[Filename],[ME Filename],[INI Filename]
+FD#XX=MPCIIO,[Condition Number],PCI-[Bus]-[Device]-[Function]-[Offset]-[Mask]-[Value],IO-[Offset]-[Mask]-[Value],[Filename],[ME Filename],[INI Filename]
+FD#XX=ID,[Model Name],[Filename],[ME Filename],[INI Filename]
+FD#XX=OS,[OS Version],[Filename],[ME Filename],[INI Filename]
+FD#XX=MEMORY,[Physical Address],[Mask],[Value],[Filename],[ME Filename],[INI Filename]
+(dwsDWS)         [Offset] : Offset in hex.
+(dwsDWS)           [Mask] : IO type supports BYTE, WORD and DWORD in hex.
+                              For example, BYTE -> 03, WORD -> 0A01, DWORD 100400D3
+                            PCI type supports DWORD in hex only.
+                            MEMORY type supports BYTE, WORD and DWORD in hex.
+(dwsDWS)          [Value] : IO type supports BYTE, WORD and DWORD in hex.
+                            PCI type supports DWORD in hex only.
+                            MEMORY type supports BYTE, WORD and DWORD in hex.
+(dwsDWS)     [Model Name] : The platform ID, model name string.
+(wW)         [OS Version] : 32bit or 64bit OS. 32 for 32bit OS, 64 for 64bit OS.
+(dws)  [Physical Address] : A DWORD value in hex.
+(dwsDWS)       [Filename] : Filename of FD.
+(w)         [ME Filename] : ME Filename of FD. If it exists, flash utility will run OEMME flash feature.
+(dw)       [INI Filename] : INI Filename for overwrite.
+                            If it exists, flash utility will load the new ini file and overwrite all sections (except [MULTI_FD]) exist in new ini file.
+When [Offset] &amp; [Mask] == [Value], it will flash the following files ([Filename] and [ME Filename]).
+        </Description>
+      </Setting>
+    </Settings>
+    <Settings name="Version" supported="WIN">
+      <Setting name="Version" type="string">
+        <Description>
+It will be show on UI, and append on current version number.
+When current version is 5.01 and this version string set to "12",
+then it will show "H2OFFT V5.01.12" on main dialog caption.
+        </Description>
+      </Setting>
+    </Settings>
+    <Settings name="UI" supported="DOS,WIN,EFI">
+      <Setting name="Silent" id="UISilent" type="enum" enum="SilentEnum" default="0" supported="WIN">
+        <Description>
+0 : Normal mode.
+1 : Silent mode. The dialog display behavior is base on "SilentWithDialog" setting.
+        </Description>
+      </Setting>
+      <Setting name="SilentWithDialog" type="enum" enum="SilentWithDialogEnum" default="2" dependency="UISilentWithDialogDepx" supported="WIN">
+        <Description>
+0 : Don't display any dialog.
+1 : Display main dialog only.
+2 : Display all dialogs except main dialog.
+        </Description>
+      </Setting>
+      <Settings caption="Main UI" supported="WIN">
+        <Setting name="DisplayID" caption="Display BIOS ID" type="enum" enum="YesNoEnum" default="1" supported="WIN"/>
+        <Setting name="InsydeInfo" caption="Display Insyde copyright and URL" type="enum" enum="YesNoEnum" default="1" supported="WIN"/>
+        <Setting name="VersionInfo" caption="Display BIOS Version" type="enum" enum="YesNoEnum" default="1" supported="WIN"/>
+        <Setting name="GroupInfo" caption="Display group box" type="enum" enum="YesNoEnum" default="1" supported="WIN"/>
+        <Setting name="GetFDFileButton" caption="Show the button for browsing FD file" type="enum" enum="YesNoEnum" default="0" supported="WIN"/>
+      </Settings>
+      <Settings caption="Confirm Dialog" supported="WIN">
+        <Setting name="Confirm" id="UIConfirm" type="enum" enum="ConfirmEnum" default="1" supported="WIN"/>
+        <Setting name="ConfirmInfo" caption="Display BIOS version and build date" type="enum" enum="YesNoEnum" default="0" dependency="UIConfirmInfoDepx" supported="WIN"/>
+        <Setting name="ConfirmInfoRDate" caption="Display BIOS version and release date" type="enum" enum="YesNoEnum" default="0" dependency="UIConfirmInfoDepx" supported="WIN">
+          <Description>When this flag set to 1, the ConfirmInfo flag won't be referenced.</Description>
+        </Setting>
+        <Setting name="ConfirmDialogCustomizeMessage" type="string" dependency="UIConfirmInfoDepx" supported="WIN">
+          <Description>For inserting additional notification message in confirm dialog.</Description>
+        </Setting>
+      </Settings>
+      <Settings caption="Beep During Flashing" supported="WIN">
+        <Setting name="OnFlashingBeep" caption="Beep on flashing" type="enum" enum="YesNoEnum" default="0" supported="WIN"/>
+        <Setting name="OnFlashingBeepDelayTime" caption="Beep delay time (Milliseconds)" type="int" min="0" default="800" supported="WIN"/>
+      </Settings>
+      <Settings caption="Delay Settings" supported="WIN">
+        <Setting name="BeforeRunToolDelayTime" caption="Delay number of seconds before flash utility running" type="int" min="0" default="0" supported="WIN"/>
+        <Setting name="DelayBeforeFlash" caption="Delay number of seconds before flashing" type="enum" enum="YesNoEnum" default="0" supported="WIN"/>
+      </Settings>
+      <Setting name="DisableMouseAndKeyboardInput" caption="Disable Mouse and Keyboard Input" type="enum" enum="YesNoEnum" default="0" supported="WIN">
+        <Description>When this flag is set, the mouse and keyboard will no function except "CTRL+ALT+DEL".</Description>
+      </Setting>
+      <Setting name="ProgramStartToWrongMessageBox" caption="Pop-up Warning Dialog Before Flash Process" type="enum" enum="YesNoEnum" default="0" supported="WIN"/>
+	  <Setting name="DisableAccessRightWarningMessage" caption="Disable Access Right Warning Dialog" type="enum" enum="YesNoEnum" default="0" supported="WIN">
+        <Description>
+ No : It will show warning message when any region is locked (such as ME) in input image.
+Yes : Do not show warning message when any region is locked in input image.
+        </Description>
+      </Setting>
+      <Setting name="ShowUpdateROMAddress" caption="Show ROM address when updating BIOS" type="enum" enum="YesNoEnum" default="0" supported="DOS">
+        <Description>
+ No : Show progress bar when updating BIOS.
+Yes : Show ROM address when updating BIOS.
+        </Description>
+      </Setting>
+      <Setting name="Elapse" caption="Show elapse time during progressing BIOS update" type="enum" enum="YesNoEnum" default="0" supported="DOS,WIN,EFI,SECURE"/>
+    </Settings>
+    <Settings name="Option" supported="WIN">
+      <Setting name="Flag" type="enum" enum="OptionFlagEnum" default="0">
+        <Description>
+Options include:
+ * Auto flash mode
+ * User option mode, including option, start, exit buttons. (Option button will disable on secure flash mode.)
+ * User flash mode, including start, exit buttons
+        </Description>
+      </Setting>
+    </Settings>
+    <Settings name="FDFile" supported="WIN">
+      <Setting name="FileName" type="file" filter="FD file (*.*)|*.fd|All file (*.*)|*.*">
+        <Description>
+When this field is not empty, flash utility will always load this file.
+If the FileName is empty and Multi FD feature not enable, flash utility will search current directory and load the first found FD file.
+        </Description>
+      </Setting>
+    </Settings>
+    <Settings name="AC_Adapter" caption="Power Check" supported="DOS,WIN,EFI,SECURE">
+      <Setting name="Flag" caption="AC Check" type="enum" enum="ACAdapterFlagEnum" default="1"/>
+      <Setting name="BatteryCheck" caption="Battery Check" type="enum" enum="ACAdapterBatteryCheckEnum" default="0"/>
+      <Setting name="BatteryBound" caption="Battery Bound" type="int" min="1" max="100" default="20">
+        <Description>Low battery boundary (percentage)\nWhen BatteryCheck=1 this value will be referenced, and only when the battery life percentage is bigger than inputed value, it can do flash.</Description>
+      </Setting>
+      <Setting name="LauncherAcWarning" type="enumid" enumid="MessageString" default="messagestringA02" supported="DOS,EFI"/>
+      <Setting name="SecurityAcWarning" type="enumid" enumid="MessageString" default="messagestringA02"/>
+    </Settings>
+    <Setting caption="Platform Check" supported="DOS,WIN,EFI">
+      <Settings name="Platform_Check" caption="Platform Check" supported="DOS,WIN,EFI">
+        <Setting name="Flag" id="PlatformCheckFlag" type="enum" enum="PlatformCheckFlagEnum" default="3">
+        <Description>
+This flag is the switch of comparing bios project ID with ROM file project ID.
+0 : Don't check project ID.
+1 : Check project ID of new file.
+    If ID is different with current BIOS, the utility will close.
+2 : Utility will compare current platform ID with the PlatformName1 ~ PlatformName20 IDs.
+    If any one is match, it will go ahead, otherwise utility will close.
+3 : Depends on BIOS report to check or not check project ID.
+          </Description>
+        </Setting>
+        <Setting name="PlatformName1" type="string" max="1024"/>
+        <Setting name="PlatformName2" type="string" max="1024"/>
+        <Setting name="PlatformName3" type="string" max="1024"/>
+        <Setting name="PlatformName4" type="string" max="1024"/>
+        <Setting name="PlatformName5" type="string" max="1024"/>
+        <Setting name="PlatformName6" type="string" max="1024"/>
+        <Setting name="PlatformName7" type="string" max="1024"/>
+        <Setting name="PlatformName8" type="string" max="1024"/>
+        <Setting name="PlatformName9" type="string" max="1024"/>
+        <Setting name="PlatformName10" type="string" max="1024"/>
+        <Setting name="PlatformName11" type="string" max="1024"/>
+        <Setting name="PlatformName12" type="string" max="1024"/>
+        <Setting name="PlatformName13" type="string" max="1024"/>
+        <Setting name="PlatformName14" type="string" max="1024"/>
+        <Setting name="PlatformName15" type="string" max="1024"/>
+        <Setting name="PlatformName16" type="string" max="1024"/>
+        <Setting name="PlatformName17" type="string" max="1024"/>
+        <Setting name="PlatformName18" type="string" max="1024"/>
+        <Setting name="PlatformName19" type="string" max="1024"/>
+        <Setting name="PlatformName20" type="string" max="1024"/>
+      </Settings>
+      <Settings name="PlatformVersion" caption="Platform Version" dependency="PlatformVersionDepx" supported="DOS,WIN,EFI">
+        <Description>
+Valid only when [Platform_Check.Flag] is "Flash if any one is matched".
+The Version is pair with the PlatformName.
+For example: When the platform ID matches with PlatformName2, the Version2 will be used.
+        </Description>
+        <Setting name="Flag" type="enum" enum="EnableDisableEnum" default="0">
+          <Description>
+Disable : Don't use multi version.
+Enable  : Use the version in the list instead of the version in file.
+          </Description>
+        </Setting>
+        <Setting name="Version1" type="string" max="1024"/>
+        <Setting name="Version2" type="string" max="1024"/>
+        <Setting name="Version3" type="string" max="1024"/>
+        <Setting name="Version4" type="string" max="1024"/>
+        <Setting name="Version5" type="string" max="1024"/>
+        <Setting name="Version6" type="string" max="1024"/>
+        <Setting name="Version7" type="string" max="1024"/>
+        <Setting name="Version8" type="string" max="1024"/>
+        <Setting name="Version9" type="string" max="1024"/>
+        <Setting name="Version10" type="string" max="1024"/>
+        <Setting name="Version11" type="string" max="1024"/>
+        <Setting name="Version12" type="string" max="1024"/>
+        <Setting name="Version13" type="string" max="1024"/>
+        <Setting name="Version14" type="string" max="1024"/>
+        <Setting name="Version15" type="string" max="1024"/>
+        <Setting name="Version16" type="string" max="1024"/>
+        <Setting name="Version17" type="string" max="1024"/>
+        <Setting name="Version18" type="string" max="1024"/>
+        <Setting name="Version19" type="string" max="1024"/>
+        <Setting name="Version20" type="string" max="1024"/>
+      </Settings>
+    </Setting>
+    <Settings caption="BIOS Version" supported="DOS,WIN,EFI">
+      <Settings name="Bios_Version_Check" caption="BIOS Version Check" supported="DOS,WIN,EFI">
+        <Setting name="Flag" id="BiosVersionCheckFlag" type="enum" enum="BIOSVersionCheckFlagEnum" default="2"/>
+        <Setting name="CheckByBios" type="enum" enum="YesNoEnum" default="0"/>
+        <Setting name="CheckByBiosErrorMessage" type="string" max="1024" default="This BIOS file is not allow to flash. The flash process will be terminated." doublequote="1"/>
+      </Settings>
+      <Settings name="BIOSVersionFormat" caption="BIOS Verision Format" dependency="BIOSVersionFormatDepx" supported="DOS,WIN,EFI">
+        <Setting name="BIOSVFEnable" caption="Enabled" type="enum" enum="EnableDisableEnum" default="0"/>
+        <Setting name="VersionFormat" type="string" valid="xXnNtT.dD" uppercase="1" default="TXXXXXXX.N.NN.NN">
+          <Description xml:space="preserve">
+    X : The field is masked. It will NOT be compared
+    N : The digit field can be ASCII, case-sensitive
+    T : It's the same definition with N. But T is a case-insensitive
+    . : Dot is also a mask. It will NOT be compared
+    D : Don't care field. It will NOT be compared
+  This field can be empty. It only allow to put at start or end of the version format.
+  For example: Onboard version 1.21B flash to 1.22, VersionFormat must be N.NNDN.NND means the valid format is N.NN and N.NNX, the 5th character will be ignore in version compare.
+          </Description>
+        </Setting>
+      </Settings>
+    </Settings>
+    <Settings name="PermitFlashVersion" caption="Permit Flash Version" supported="WIN">
+      <Description>
+This section is for conditional version definition for BIOS update.
+                         
+When this function enabled, flash utility will compare on board BIOS version with conditional version and then decide to continue flash progress or not.
+For example: In following condition PFVFunctionEnable=1, SingleVersion=A03, "Please update to BIOS version A03 first!".
+             When on board BIOS version is older than A03,
+              it will popup the error dialog with the message "Please upate to BIOS version A03 first!" and then terminated.
+             Otherwise it will continue orginal flash process.
+The MultiVersion1~20 are similar as SingleVersion, but they only available when the [Platform_Check] is enable to compare the 20 platform IDs.
+They must be pair of the PlatformName of [Platform_Check] section.
+For example: When the platform ID matches with PlatformName2, the Version2 will be used.
+ The section is depended on other sections if using [PermitFlashVersion].
+               a. If single version is enabled, 
+                  Please also configure section [Bios_Version_Check] for version check
+               b. If multi-version is enabled, 
+                  Please also configure following sections [Bios_Version_Check] for version check, 
+                  section [Platform_Check] for platform name check and section [PlatformVersion] for multi-platform version check
+      </Description>
+      <Setting name="PFVFunctionEnable" caption="Conditional version check" type="enum" enum="EnableDisableEnum" default="0"/>
+      <Setting name="SingleVersion" type="string" max="1024" dependency="PermitFlashVersionSingleVersionDepx">
+        <Description>
+Format : XXXX, "Message String"
+         XXXX is the conditional version, regarding version check rule please refer section "BIOSVersionFormat".
+         "Message String" is the message to show when the on board BIOS version is older than the conditional version.
+        </Description>
+      </Setting>
+      <Setting name="MultiVersion1" type="string" max="1024" dependency="PermitFlashVersionMultiVersionDepx">
+        <Description>
+Format : XXXX, "Message String"
+         XXXX is the conditional version, regarding version check rule please refer section "BIOSVersionFormat".
+         "Message String" is the message to show when the on board BIOS version is older than the conditional version.
+        </Description>
+      </Setting>
+      <Setting name="MultiVersion2" type="string" max="1024" dependency="PermitFlashVersionMultiVersionDepx">
+        <Description>
+Format : XXXX, "Message String"
+         XXXX is the conditional version, regarding version check rule please refer section "BIOSVersionFormat".
+         "Message String" is the message to show when the on board BIOS version is older than the conditional version.
+        </Description>
+      </Setting>
+      <Setting name="MultiVersion3" type="string" max="1024" dependency="PermitFlashVersionMultiVersionDepx">
+        <Description>
+Format : XXXX, "Message String"
+         XXXX is the conditional version, regarding version check rule please refer section "BIOSVersionFormat".
+         "Message String" is the message to show when the on board BIOS version is older than the conditional version.
+        </Description>
+      </Setting>
+      <Setting name="MultiVersion4" type="string" max="1024" dependency="PermitFlashVersionMultiVersionDepx">
+        <Description>
+Format : XXXX, "Message String"
+         XXXX is the conditional version, regarding version check rule please refer section "BIOSVersionFormat".
+         "Message String" is the message to show when the on board BIOS version is older than the conditional version.
+        </Description>
+      </Setting>
+      <Setting name="MultiVersion5" type="string" max="1024" dependency="PermitFlashVersionMultiVersionDepx">
+        <Description>
+Format : XXXX, "Message String"
+         XXXX is the conditional version, regarding version check rule please refer section "BIOSVersionFormat".
+         "Message String" is the message to show when the on board BIOS version is older than the conditional version.
+        </Description>
+      </Setting>
+      <Setting name="MultiVersion6" type="string" max="1024" dependency="PermitFlashVersionMultiVersionDepx">
+        <Description>
+Format : XXXX, "Message String"
+         XXXX is the conditional version, regarding version check rule please refer section "BIOSVersionFormat".
+         "Message String" is the message to show when the on board BIOS version is older than the conditional version.
+        </Description>
+      </Setting>
+      <Setting name="MultiVersion7" type="string" max="1024" dependency="PermitFlashVersionMultiVersionDepx">
+        <Description>
+Format : XXXX, "Message String"
+         XXXX is the conditional version, regarding version check rule please refer section "BIOSVersionFormat".
+         "Message String" is the message to show when the on board BIOS version is older than the conditional version.
+        </Description>
+      </Setting>
+      <Setting name="MultiVersion8" type="string" max="1024" dependency="PermitFlashVersionMultiVersionDepx">
+        <Description>
+Format : XXXX, "Message String"
+         XXXX is the conditional version, regarding version check rule please refer section "BIOSVersionFormat".
+         "Message String" is the message to show when the on board BIOS version is older than the conditional version.
+        </Description>
+      </Setting>
+      <Setting name="MultiVersion9" type="string" max="1024" dependency="PermitFlashVersionMultiVersionDepx">
+        <Description>
+Format : XXXX, "Message String"
+         XXXX is the conditional version, regarding version check rule please refer section "BIOSVersionFormat".
+         "Message String" is the message to show when the on board BIOS version is older than the conditional version.
+        </Description>
+      </Setting>
+      <Setting name="MultiVersion10" type="string" max="1024" dependency="PermitFlashVersionMultiVersionDepx">
+        <Description>
+Format : XXXX, "Message String"
+         XXXX is the conditional version, regarding version check rule please refer section "BIOSVersionFormat".
+         "Message String" is the message to show when the on board BIOS version is older than the conditional version.
+        </Description>
+      </Setting>
+      <Setting name="MultiVersion11" type="string" max="1024" dependency="PermitFlashVersionMultiVersionDepx">
+        <Description>
+Format : XXXX, "Message String"
+         XXXX is the conditional version, regarding version check rule please refer section "BIOSVersionFormat".
+         "Message String" is the message to show when the on board BIOS version is older than the conditional version.
+        </Description>
+      </Setting>
+      <Setting name="MultiVersion12" type="string" max="1024" dependency="PermitFlashVersionMultiVersionDepx">
+        <Description>
+Format : XXXX, "Message String"
+         XXXX is the conditional version, regarding version check rule please refer section "BIOSVersionFormat".
+         "Message String" is the message to show when the on board BIOS version is older than the conditional version.
+        </Description>
+      </Setting>
+      <Setting name="MultiVersion13" type="string" max="1024" dependency="PermitFlashVersionMultiVersionDepx">
+        <Description>
+Format : XXXX, "Message String"
+         XXXX is the conditional version, regarding version check rule please refer section "BIOSVersionFormat".
+         "Message String" is the message to show when the on board BIOS version is older than the conditional version.
+        </Description>
+      </Setting>
+      <Setting name="MultiVersion14" type="string" max="1024" dependency="PermitFlashVersionMultiVersionDepx">
+        <Description>
+Format : XXXX, "Message String"
+         XXXX is the conditional version, regarding version check rule please refer section "BIOSVersionFormat".
+         "Message String" is the message to show when the on board BIOS version is older than the conditional version.
+        </Description>
+      </Setting>
+      <Setting name="MultiVersion15" type="string" max="1024" dependency="PermitFlashVersionMultiVersionDepx">
+        <Description>
+Format : XXXX, "Message String"
+         XXXX is the conditional version, regarding version check rule please refer section "BIOSVersionFormat".
+         "Message String" is the message to show when the on board BIOS version is older than the conditional version.
+        </Description>
+      </Setting>
+      <Setting name="MultiVersion16" type="string" max="1024" dependency="PermitFlashVersionMultiVersionDepx">
+        <Description>
+Format : XXXX, "Message String"
+         XXXX is the conditional version, regarding version check rule please refer section "BIOSVersionFormat".
+         "Message String" is the message to show when the on board BIOS version is older than the conditional version.
+        </Description>
+      </Setting>
+      <Setting name="MultiVersion17" type="string" max="1024" dependency="PermitFlashVersionMultiVersionDepx">
+        <Description>
+Format : XXXX, "Message String"
+         XXXX is the conditional version, regarding version check rule please refer section "BIOSVersionFormat".
+         "Message String" is the message to show when the on board BIOS version is older than the conditional version.
+        </Description>
+      </Setting>
+      <Setting name="MultiVersion18" type="string" max="1024" dependency="PermitFlashVersionMultiVersionDepx">
+        <Description>
+Format : XXXX, "Message String"
+         XXXX is the conditional version, regarding version check rule please refer section "BIOSVersionFormat".
+         "Message String" is the message to show when the on board BIOS version is older than the conditional version.
+        </Description>
+      </Setting>
+      <Setting name="MultiVersion19" type="string" max="1024" dependency="PermitFlashVersionMultiVersionDepx">
+        <Description>
+Format : XXXX, "Message String"
+         XXXX is the conditional version, regarding version check rule please refer section "BIOSVersionFormat".
+         "Message String" is the message to show when the on board BIOS version is older than the conditional version.
+        </Description>
+      </Setting>
+      <Setting name="MultiVersion20" type="string" max="1024" dependency="PermitFlashVersionMultiVersionDepx">
+        <Description>
+Format : XXXX, "Message String"
+         XXXX is the conditional version, regarding version check rule please refer section "BIOSVersionFormat".
+         "Message String" is the message to show when the on board BIOS version is older than the conditional version.
+        </Description>
+      </Setting>
+    </Settings>
+    <Settings name="FlashComplete" caption="Flash Complete" supported="DOS,WIN,EFI,SECURE">
+      <Setting name="Action" type="set" set="FlashCompleteActionSet" supported="DOS,WIN,EFI,SECURE"/>
+      <Settings name="Dialog" supported="WIN">
+        <Setting name="Dialog" caption="Display dialog" id="FlashCompleteDialog" type="enum" enum="FlashCompleteDialogEnum" default="0" supported="WIN"/>
+        <Setting name="Counter" caption="Number of seconds for count down to reboot or shutdown" type="int" min="0" default="15" dependency="FlashCompleteDialogDepx" supported="WIN"/>
+      </Settings>
+      <Setting name="ActionOverride" type="enum" enum="YesNoEnum" default="0" supported="WIN">
+        <Description>
+Yes : Flash utility bases action key setting to do original behavior.
+No  : Flash utility just does close itself in silent mode.
+        </Description>
+      </Setting>
+      <Setting name="Pause" caption="Pause after flash complete" type="enum" enum="YesNoEnum" default="0" supported="DOS,WIN,EFI,SECURE"/>
+      <Setting name="PauseWarning" type="enumid" enumid="MessageString" default="messagestringA03" supported="DOS,WIN,EFI,SECURE">
+        <Description>A key name which list in [MessageStringTable]</Description>
+      </Setting>
+    </Settings>
+    <Settings name="FlashSecureBIOSOverride" caption="Flash Secure BIOS Override" supported="WIN,EFI">
+      <Setting name="EnableFlashSecureBIOSOverride" type="enum" enum="EnableDisableEnum" default="0">
+        <Description>
+Disable : Use the action which returned from BIOS.
+Enable  : Enable the action override when flashing secure BIOS in OS.
+        </Description>
+      </Setting>
+      <Setting name="Action" type="enum" enum="FlashSecureBIOSOverrideActionEnum" default="1"/>
+    </Settings>
+    <Setting caption="Flash Settings">
+      <Settings name="ForceFlash" supported="WIN,EFI,SECURE">
+        <Description>
+These areas are reported by IHISI from BIOS for protection.
+When you set the value to 1, the selected protect area will be force flash.
+BB_PEI, CPU_Microcode, Variable, DXE, EC, Password, OEM_NVS and Logo are the predefined types each one indicate a type value.
+        BB_PEI        = Type#00
+        CPU_Microcode = Type#01
+        Variable      = Type#02
+        DXE           = Type#03
+        EC            = Type#04
+        Password      = Type#0F
+        OEM_NVS       = Type#10
+        Logo          = Type#05
+Type#NN is an extended method for those didn’t have predefine type.
+The NN is a number in Hex.
+For example:
+If BIOS report to protect type 13h from IHISI, and you want to flash this protect area.
+Then the setting in platform.ini can add Type#13=1.
+        </Description>
+        <Setting name="ALL" type="enum" enum="ForceFlashAllEnum" default="0"/>
+        <Setting name="BB_PEI" type="enum" enum="ForceFlashRegionEnum" default="0"/>
+        <Setting name="CPU_Microcode" type="enum" enum="ForceFlashRegionEnum" default="0"/>
+        <Setting name="Variable" type="enum" enum="ForceFlashRegionEnum" default="0"/>
+        <Setting name="DXE" type="enum" enum="ForceFlashRegionEnum" default="0"/>
+        <Setting name="EC" type="enum" enum="ForceFlashRegionEnum" default="0"/>
+        <Setting name="Password" type="enum" enum="ForceFlashRegionEnum" default="0"/>
+        <Setting name="OEM_NVS" type="enum" enum="ForceFlashRegionEnum" default="0"/>
+        <Setting name="Logo" type="enum" enum="ForceFlashRegionEnum" default="0"/>
+        <Setting name="Type#09" type="enum" enum="ForceFlashRegionEnum" default="0"/>
+        <Setting name="Type#08" type="enum" enum="ForceFlashRegionEnum" default="0"/>
+      </Settings>
+      <Settings name="Region" supported="DOS,WIN,EFI,SECURE">
+        <Description>Used to control SPI descriptor mode.
+Default is flash all regions when the values all set to 'No'.
+If any one of the regions set to 'Yes', it will only flash specific region.
+If the BIOS is built without additional Intel firmware as like ME, GBE and Descriptor or BIOS is an AMD firmware which does not support ME, please ignore this section.
+        </Description>
+        <Setting name="BIOS" caption="Flash BIOS region" type="enum" enum="YesNoEnum" default="0"/>
+        <Setting name="GbE" caption="Flash GbE region" type="enum" enum="YesNoEnum" default="0"/>
+        <Setting name="ME" caption="Flash ME region" type="enum" enum="YesNoEnum" default="0"/>
+        <Setting name="DESC" caption="Flash Descriptor region" type="enum" enum="YesNoEnum" default="0"/>
+        <Setting name="Platform_Data" caption="Flash Platform Data region" type="enum" enum="YesNoEnum" default="0"/>
+      </Settings>
+      <Settings name="UpdateEC" supported="DOS,WIN,EFI">
+        <Setting name="Flag" caption="Flash non share EC" type="enum" enum="YesNoEnum" default="0" supported="WIN"/>
+        <Setting name="EC_Dialog" caption="Display EC update confirm dialog" type="enum" enum="YesNoEnum" default="0" supported="WIN"/>
+        <Setting name="BIOS_Only" caption="Only flash BIOS part of the merged file" type="enum" enum="YesNoEnum" default="0" supported="WIN"/>
+        <Setting name="EC_Only" caption="Only flash EC binary file" type="enum" enum="YesNoEnum" default="0" supported="WIN"/>
+        <Setting name="EC_Path" caption="EC Filename" type="string" supported="WIN"/>
+        <Setting name="EC_Compare" caption="Read EC and compare difference before writing" type="enum" enum="YesNoEnum" default="0" supported="WIN"/>
+        <Setting name="EC_Verify" caption="Verify EC data after writing" type="enum" enum="YesNoEnum" default="0" supported="WIN"/>
+        <Setting name="EC_VerifyErrorRetry" caption="Retry times when verirfy error" type="int" min="0" default="3" supported="WIN"/>
+        <Setting name="EC_DockWarning" caption="EC dock warning message" type="enumid" enumid="MessageString" default="messagestringA04" supported="DOS,EFI"/>
+      </Settings>
+      <Settings name="UpdateExtraData" supported="WIN">
+        <Description>
+This feature will let you just input data to update by IHISI. Data type is defined by BIOS OEM.
+If input image is NOT processed by IFIT tool, please do not enable this function.
+        </Description>
+        <Setting name="Flag" caption="Update extra data" type="enum" enum="YesNoEnum" default="0">
+          <Description>If input image is NOT processed by IFIT tool, please do not enable this function.</Description>
+        </Setting>
+        <Setting name="DataType" type="string" default="1">
+          <Description>
+The meaning of data type number is defined by BIOS OEM.
+Current support data range is 1 and 4 ~ C.
+Ex:1,4,6,5 -> Means you want to update 1,4,6,5 four types of data.
+Notice: 2 and 3 cannot be used.
+          </Description>
+        </Setting>
+        <Setting name="type1errorcodeA0" type="string" default="messagestring1">
+          <Description>This key is for customizing error message which occur in update extra data.</Description>
+        </Setting>
+        <Setting name="type[Num]errorcode[Ret]" type="string" template="1">
+          <Description>
+This key is for customizing error message which occur in update extra data.
+For example:
+    When an error occur when updating type 4, BIOS return the error code A2.
+    AP will find the key "type4errorcodeA2" and get the string ID "messagestring4", and find the string in [MessageStringTable].
+    Then shows the message string instead of standard error message.
+  # : The the type number define in DataType. (Hex)
+ ?? : The error code returned by BIOS. Available value range  A0~AF.
+  X : Message string number.
+          </Description>
+        </Setting>
+      </Settings>
+      <Settings name="UpdateOEMME" supported="WIN,EFI">
+        <Description>
+NOTE:
+  The Intel firmware update tool (FWUpdLcl.exe) is dependent on each chipset generation, the tool in release flash package is a sample and may be not suitable for your project.
+  Please remember to replace the FWUpdLcl.exe file with right version before you will utilize function to update Intel firmware (ME or TXE).
+        </Description>
+        <Setting name="MEFileName" type="file" supported="WIN,EFI">
+          <Description>
+If the filename in this field or Multi-FD ME filename exist flash utility will use Intel ME update tool to flash ME.
+          </Description>
+        </Setting>
+        <Setting name="CheckVersion" type="enum" enum="UpdateOEMMECheckVersionEnum" default="0" supported="WIN"/>
+        <Setting name="Command" type="string" max="1024" supported="WIN,EFI">
+          <Description>
+When this field is empty and don't want to check ME version, utility will use "-f %filename -generic -allowsv" as default command.
+The %filename is a keyword which will be replaced with the value in MEFileName within this section or the filename in MULTI_FD section.
+          </Description>
+        </Setting>
+      </Settings>
+    </Setting>
+    <Settings name="Log_file" caption="Log File" supported="WIN,EFI,SECURE">
+      <Setting name="Flag" caption="Log to file" type="enum" enum="YesNoEnum" default="0" supported="WIN,EFI,SECURE"/>
+      <Setting name="FileName" type="file" default="H2OFFT.log" supported="WIN,EFI,SECURE"/>
+      <Settings name="CMOS Log" supported="WIN">
+        <Setting name="CMOS_Flag" caption="CMOS Debug" type="enum" enum="YesNoEnum" default="0" supported="WIN"/>
+        <Setting name="CMOS_INDEX_PORT" caption="Index Port" type="enum" enum="CMOSIndexPortEnum" default="70" supported="WIN"/>
+        <Setting name="CMOS_DATA_PORT" caption="Data Port" type="enum" enum="CMOSDataPortEnum" default="71" supported="WIN"/>
+        <Setting name="CMOS_OFFSET" caption="Offset" type="set" set="CMOSOffsetSet" default="68, 69" supported="WIN"/>
+      </Settings>
+    </Settings>
+    <Settings caption="Return Code" supported="WIN">
+      <Settings name="ReturnErrorCode" supported="WIN">
+        <Setting name="FileNotFound" type="set" set="ReturnErrorCodeSet" default="3,259"/>
+        <Setting name="ErrorBeforeFlash" type="set" set="ReturnErrorCodeSet" default="4,259"/>
+        <Setting name="BatteryNotConnect" type="set" set="ReturnErrorCodeSet" default="4,259"/>
+        <Setting name="BatteryCapacityNotEnough" type="set" set="ReturnErrorCodeSet" default="4,259"/>
+        <Setting name="WriteROMFail" type="set" set="ReturnErrorCodeSet" default="5,259"/>
+        <Setting name="WriteECFail" type="set" set="ReturnErrorCodeSet" default="6,259"/>
+        <Setting name="WriteExtraDataFail" type="set" set="ReturnErrorCodeSet" default="7,259"/>
+      </Settings>
+      <Settings name="ReturnCodeDefinition" caption="Return Code Definition" supported="WIN">
+        <Setting name="RETURN_SUCCESSFUL" caption="Success" type="set" set="ReturnErrorCodeSet" default="0, 3010"/>
+        <Setting name="RETURN_MODEL_CHECK_FAIL" caption="Model check fail" type="set" set="ReturnErrorCodeSet" default="259,259"/>
+        <Setting name="RETURN_USER_CONFIRM_CANCEL" caption="User confirm cancel" type="set" set="ReturnErrorCodeSet" default="1701,259"/>
+        <Setting name="RETURN_AC_NOT_CONNECT" caption="AC not connect" type="set" set="ReturnErrorCodeSet" default="1702,259"/>
+        <Setting name="RETURN_LOAD_DRIVER_FAIL" caption="Load driver fail" type="set" set="ReturnErrorCodeSet" default="1703,259"/>
+        <Setting name="RETURN_NEED_REBOOT" caption="Need reboot" type="set" set="ReturnErrorCodeSet" default="3010,3010"/>
+        <Setting name="RETURN_USER_EXIT" caption="User exit" type="set" set="ReturnErrorCodeSet" default="1704,259"/>
+        <Setting name="RETURN_SAME_VERSION_CHECK" caption="Same version check" type="set" set="ReturnErrorCodeSet" default="99999,259"/>
+      </Settings>
+    </Settings>
+    <Settings caption="Misc">
+      <Settings name="Others" supported="DOS,WIN,EFI,SECURE">
+        <Setting name="DisableCompare" type="enum" enum="YesNoEnum" default="0" supported="WIN,EFI,SECURE">
+          <Description>
+When not disable compare, it will read BIOS and compare difference before writing.
+If the read data is the same as the data we want to write, it will not do the write action.
+When disable compare, it will do write action directly.
+          </Description>
+        </Setting>
+        <Setting name="DisableVerify" type="enum" enum="YesNoEnum" default="0" supported="WIN,EFI,SECURE">
+          <Description>
+When not disable verify, it will read back the write block from BIOS and compare difference after writing.
+If the read data is NOT the same as the data we write, it will display error.
+When disable verify, it will skip verify action.
+          </Description>
+        </Setting>
+        <Setting name="VerifyErrorRetry" type="int" min="0" default="3" supported="WIN,EFI,SECURE">
+          <Description>
+How many times should flash utility retry when write data is mismatch in verify action.
+If the value is not zero means enable verify retry, and will retry setted times.
+0 for disable verify retry.
+          </Description>
+        </Setting>
+        <Setting name="SMIErrorRetryDelay" type="int" min="0" default="100" supported="WIN,EFI,SECURE">
+          <Description>
+Delay time (millisecond) during SMI error retry.
+          </Description>
+        </Setting>
+        <Setting name="SMIErrorRetry" type="int" min="0" default="5" supported="WIN,EFI,SECURE">
+          <Description>
+Retry times when SMI fail.
+Note: This may let flash time become longer.
+          </Description>
+        </Setting>
+        <Setting name="ForceIHISIVersion" type="string" supported="WIN">
+          <Description>
+This setting will force override the IHISI version which will passing to BIOS.
+Ex: 1.9.1
+          </Description>
+        </Setting>
+        <Setting name="EnablePrivateRegionMovement" type="enum" enum="EnableDisableEnum" default="0" supported="WIN,EFI,SECURE">
+          <Description>
+When enable private region movement, it will backup onboard private regions and relocate to new address which defined in input image BVDT when update whole BIOS.
+          </Description>
+        </Setting>
+        <Setting name="EnableProtectionRegionMovement" type="enum" enum="EnableDisableEnum" default="0" supported="WIN,EFI,SECURE">
+          <Description>
+When enable protection region movement, it will backup onboard protection regions and relocate to new address which defined in input image BVDT when update whole BIOS.
+This flag cannot be used with [ForceFlash] all=1.
+          </Description>
+        </Setting>
+        <Setting name="DisableSecureCapsuleFlash" type="enum" enum="EnableDisableEnum" default="0" supported="WIN,DOS,EFI">
+          <Description>
+When this feature disabled, it will only allow to flash normal BIOS on normal platform, and flash secure capsule (signed BIOS) on secure platform.
+When this feature enabled, it allows to flash normal BIOS on normal platform, and flash secure capsule (signed BIOS) on secure and normal platform.
+          </Description>
+        </Setting>
+      </Settings>
+      <Settings name="PasswordCheck" supported="WIN">
+        <Setting name="PasswordCheckEnable" caption="Password check" type="enum" enum="EnableDisableEnum" default="0"/>
+        <Setting name="MsgCaption" caption="Dialog box caption" type="string" default="Password confirmation"/>
+        <Setting name="MsgPreface" caption="The preface of password entering" type="string" default="Please enter password"/>
+        <Setting name="MsgSuccess" caption="Success Message" type="string" default="Password is correct.">
+          <Description>The string displayed when the comparing result returned by BIOS is 0x00.</Description>
+        </Setting>
+        <Setting name="MsgFailure" caption="Failure Message" type="string" default="Password is incorrect. Please retry again.">
+          <Description>The string displayed when the comparing result returned by BIOS is 0x01.</Description>
+        </Setting>
+      </Settings>
+      <Settings name="MessageStringTable" caption="String Table" supported="WIN,DOS,EFI,SECURE">
+        <Setting name="messagestring1" id="MessageString" type="string" doublequote="1" default="Warning message 1"/>
+        <Setting name="messagestringA00" id="MessageString" type="string" doublequote="1" default="It only supports to flash secure BIOS on current platform.\r\nThe image to be updated is not a secure BIOS.\r\n"/>
+        <Setting name="messagestringA01" id="MessageString" type="string" doublequote="1" default="Not allow to flash secure BIOS on current platform.\r\n"/>
+        <Setting name="messagestringA02" id="MessageString" type="string" doublequote="1" default="Please do not remove the AC power!"/>
+        <Setting name="messagestringA03" id="MessageString" type="string" doublequote="1" default="Press any key to continue... "/>
+        <Setting name="messagestringA04" id="MessageString" type="string" doublequote="1" default="Get EC part information fail."/>
+        <Setting name="messagestring[Num]" id="MessageString" type="string" doublequote="1" template="1">
+        <Description>
+The message string must as following format messagestring#="Your message here."
+The # is a number in Decimal or Hex.
+If a multi line message is required, you can use "\ n" in message string for new line.
+        </Description>
+      </Setting>
+      </Settings>
+    </Settings>
+    <Settings name="FactoryCopy" supported="SECURE">
+      <Description>Factory copy is a region in BIOS which is used to store default keys of Secure Boot.</Description>
+      <Setting name="Restore" caption="Restore FACTORY_COPY after flash BIOS" type="enum" enum="YesNoEnum" default="0"/>
+    </Settings>
+    <Settings name="CapsuleAudit" supported="DOS,WIN">
+      <Setting name="Flag" caption="Enable Capsule Update Audit" type="enum" enum="EnableDisableEnum" default="0"/>
+      <Setting name="QAKey" type="string">
+        <Description>Image file signing by Insyde QA test key.</Description>
+      </Setting>
+      <Setting name="OemKey" type="string">
+        <Description>Image file signing by OEM/ODM key.</Description>
+      </Setting>
+    </Settings>
+    <Settings name="SecureUpdate" supported="WIN,EFI">
+      <Setting name="viaESP" caption="Write the capsule to ESP" type="enum" enum="YesNoEnum" default="0">
+        <Description>
+When enable, secure capsule will only copy to ESP (EFI system partition).
+When disable, secure capsule will pass via IHISI.
+        </Description>
+      </Setting>
+    </Settings>
+    <Settings name="AutoWakeup" supported="WIN">
+      <Setting name="Flag" caption="Enable auto power on via RTC" type="enum" enum="EnableDisableEnum" default="0"/>
+      <Setting name="Interval" caption="Interval (sec)" type="int" min="0" default="120">
+        <Description>Unit is second. Interval time after system turn off.</Description>
+      </Setting>
+    </Settings>
+  </PlatformSettings>
+  <Enums>
+    <Enum name="YesNoEnum">
+      <Item caption="Yes" value="1"/>
+      <Item caption="No" value="0"/>
+    </Enum>
+    <Enum name="EnableDisableEnum">
+      <Item caption="Enable" value="1"/>
+      <Item caption="Disable" value="0"/>
+    </Enum>
+    <Enum name="OSArchEnum">
+      <Item caption="32" value="32"/>
+      <Item caption="64" value="64"/>
+    </Enum>
+    <Enum name="PermitFlashConditionalDataFormatEnum">
+      <Item caption="BINARY" value="b"/>
+      <Item caption="STRING" value="s"/>
+      <Item caption="WORD" value="w"/>
+      <Item caption="DWORD" value="d"/>
+    </Enum>
+    <Enum name="MultiFdCheckTypeEnum">
+      <Item caption="PCI" value="PCI"/>
+      <Item caption="IO" value="IO"/>
+      <Item caption="MPCIIO" value="MPCIIO"/>
+      <Item caption="OS" value="OS"/>
+      <Item caption="ID" value="ID"/>
+    </Enum>
+    <Enum name="MultiPciIoCheckTypeEnum">
+      <Item caption="PCI" value="PCI"/>
+      <Item caption="IO" value="IO"/>
+    </Enum>
+    <Enum name="SwitchStringEnum">
+      <Item caption="&lt;empty&gt;" value=""/>
+      <Item caption="All protection enable." value="PTEN"/>
+      <Item caption="All protection disable." value="PTDIS"/>
+    </Enum>
+    <Enum name="SilentWithDialogEnum">
+      <Item caption="Don't display any dialog" value="0"/>
+      <Item caption="Display main dialog only" value="1"/>
+      <Item caption="Display all dialogs except main dialog" value="2"/>
+    </Enum>
+    <Enum name="ConfirmEnum">
+      <Item caption="Don't display confirm dialog" value="0"/>
+      <Item caption="Display confirm dialog" value="1"/>
+    </Enum>
+    <Enum name="SilentEnum">
+      <Item caption="Normal mode" value="0"/>
+      <Item caption="Silent mode, hide main dialog" value="1"/>
+    </Enum>
+    <Enum name="SilentWithDialog">
+      <Item caption="Don't display any dialog" value="0"/>
+      <Item caption="Display main dialog only" value="1"/>
+      <Item caption="Display all dialogs except main dialog" value="2"/>
+    </Enum>
+    <Enum name="OptionFlagEnum">
+      <Item caption="Auto flash mode" value="0"/>
+      <Item caption="User option mode" value="1"/>
+      <Item caption="User flash mode" value="2"/>
+    </Enum>
+    <Enum name="ACAdapterFlagEnum">
+      <Item caption="Don't Check AC Power" value="0"/>
+      <Item caption="Check AC Power" value="1"/>
+    </Enum>
+    <Enum name="ACAdapterBatteryCheckEnum">
+      <Item caption="Don't check battery" value="0"/>
+      <Item caption="Check battery" value="1"/>
+    </Enum>
+    <Enum name="PlatformCheckFlagEnum">
+      <Item caption="Don't check project ID" value="0"/>
+      <Item caption="Check project ID of new file" value="1"/>
+      <Item caption="Flash if any one is matched" value="2"/>
+      <Item caption="Depends on BIOS report" value="3"/>
+    </Enum>
+    <Enum name="BIOSVersionCheckFlagEnum">
+      <Item caption="Don't check rom file version" value="0"/>
+      <Item caption="Check BIOS version" value="1"/>
+      <Item caption="Depend on BIOS report" value="2"/>
+    </Enum>
+    <Enum name="FlashCompleteActionEnum">
+      <Item caption="Do nothing" value="0"/>
+      <Item caption="Shutdown" value="1"/>
+      <Item caption="Reboot" value="2"/>
+    </Enum>
+    <Enum name="FlashCompleteDialogEnum">
+      <Item caption="Don't display dialog" value="0"/>
+      <Item caption="Display dialog" value="1"/>
+      <Item caption="Display dialog and wait several seconds" value="2"/>
+    </Enum>
+    <Enum name="FlashSecureBIOSOverrideActionEnum">
+      <Item caption="S3" value="0"/>
+      <Item caption="Reboot" value="1"/>
+      <Item caption="Shutdown" value="2"/>
+      <Item caption="Do nothing" value="3"/>
+    </Enum>
+    <Enum name="ForceFlashAllEnum">
+      <Item caption="Reserve all protected areas" value="0"/>
+      <Item caption="Flash all protected areas" value="1"/>
+    </Enum>
+    <Enum name="UpdateOEMMECheckVersionEnum">
+      <Item caption="Don't check ME file version" value="0"/>
+      <Item caption="Check ME file version" value="1"/>
+      <Item caption="When ME update error is caused by same or downgrade version, do not show error and continue to flash" value="2"/>
+      <Item caption="When ME update error, show error but continue to flash" value="3"/>
+    </Enum>
+    <Enum name="ForceFlashRegionEnum">
+      <Item caption="Protect this area" value="0"/>
+      <Item caption="Force flash this area" value="1"/>
+    </Enum>
+    <Enum name="CMOSIndexPortEnum">
+      <Item caption="70" value="70"/>
+      <Item caption="72" value="72"/>
+    </Enum>
+    <Enum name="CMOSDataPortEnum">
+      <Item caption="71" value="71"/>
+      <Item caption="73" value="73"/>
+    </Enum>
+  </Enums>
+  <Dependencies>
+    <!-- action=[enabled|showed], condition = [id1 op value1;id2 op value2;...] -->
+    <!-- The supported ops include '==', '!=' -->
+    <Dependency name="UISilentWithDialogDepx">
+      <Item action="showed" condition="UISilent==1"/>
+    </Dependency>
+    <Dependency name="UIConfirmInfoDepx">
+      <Item action="showed" condition="UIConfirm==1"/>
+    </Dependency>
+    <Dependency name="FlashCompleteDialogDepx">
+      <Item action="enabled" condition="FlashCompleteDialog==2"/>
+    </Dependency>
+    <Dependency name="PlatformVersionDepx">
+      <Item action="enabled" condition="PlatformCheckFlag==2"/>
+    </Dependency>
+    <Dependency name="BIOSVersionFormatDepx">
+      <Item action="enabled" condition="BiosVersionCheckFlag!=0"/>
+    </Dependency>
+    <Dependency name="PermitFlashVersionSingleVersionDepx">
+      <Item action="enabled" condition="PlatformCheckFlag!=2"/>
+    </Dependency>
+    <Dependency name="PermitFlashVersionMultiVersionDepx">
+      <Item action="enabled" condition="PlatformCheckFlag==2"/>
+    </Dependency>   
+  </Dependencies>
+  <Sets>
+    <Set name="PermitFlashConditionalDataSet">
+      <Item caption="Data Type" type="int" min="0"/>
+      <Item caption="Data Format" id="DataFormat" type="enum" enum="PermitFlashConditionalDataFormatEnum" default="w"/>
+      <Item caption="Data Field" type="oneof" oneof="PermitFlashConditionalDataFieldOneOf"/>
+      <Item caption="Message" type="string" doublequote="1"/>
+    </Set>
+    <Set name="MultiFdSet">      
+      <Item caption="Check Type" id="MultiFdCheckType" type="enum" enum="MultiFdCheckTypeEnum" default="PCI"/>
+      <Item type="oneof" oneof="MultiFdCheckConditionOneOf"/>
+      <Item caption="BIOS Filename" type="string"/>
+      <Item caption="ME Filename" type="string"/>
+      <Item caption="INI Filename" type="string"/>
+    </Set>
+    <Set name="MultiFdPciCheckSet">
+      <Item caption="Bus" type="binary" fixedsize="1"/>
+      <Item caption="Device" type="binary" fixedsize="1"/>
+      <Item caption="Function" type="binary" fixedsize="1"/>
+      <Item caption="Offset" type="binary" fixedsize="2"/>
+      <Item caption="Mask" type="binary" fixedsize="4"/>
+      <Item caption="Value" type="binary" fixedsize="4"/>
+    </Set>
+    <Set name="MultiFdIoCheckSet">
+      <Item caption="Offset" type="binary" fixedsize="2"/>
+      <Item caption="Mask" type="binary" fixedsize="4"/>
+      <Item caption="Value" type="binary" fixedsize="4"/>
+    </Set>
+    <Set name="MultiFdMPciIoCheckSet">
+      <Item caption="Condition Number" id="ConditionNumber" type="int" min="0"/>
+      <Item caption="Condition(s)" type="list" list="MultiFdMPciIoCheckSetConditionList" count="#ConditionNumber"/>
+    </Set>
+    <Set name="MultiFdIdCheckSet">
+      <Item caption="Model Name" type="string"/>
+    </Set>
+    <Set name="MultiFdOsCheckSet">
+      <Item caption="Arch" type="enum" enum="OSArchEnum"/>
+    </Set>
+    <Set name="FlashCompleteActionSet">
+      <Item caption="Normal Mode" type="enum" enum="FlashCompleteActionEnum" default="2"/>
+      <Item caption="Silent Mode" type="enum" enum="FlashCompleteActionEnum" default="0"/>
+    </Set>
+    <Set name="CMOSOffsetSet">
+      <Item caption="High byte offset" type="int" min="0" max="255"/>
+      <Item caption="Low byte offset" type="int" min="0" max="255"/>
+    </Set>
+    <Set name="ReturnErrorCodeSet">
+      <Item caption="Normal Mode" type="int"/>
+      <Item caption="Silent Mode" type="int"/>
+    </Set>
+    <Set name="MultiPciIoConditionSet" delimiter="-">
+      <Item caption="Check Type" id="MultiFdCheckType" type="enum" enum="MultiPciIoCheckTypeEnum" default="PCI"/>
+      <Item type="oneof" oneof="MultiPciIoOneOf"/>
+    </Set>
+    <Set name="MultiPciIoConditionPciSet" delimiter="-">
+      <Item caption="Bus" type="binary" fixedsize="1"/>
+      <Item caption="Device" type="binary" fixedsize="1"/>
+      <Item caption="Function" type="binary" fixedsize="1"/>
+      <Item caption="Offset" type="binary" fixedsize="2"/>
+      <Item caption="Mask" type="binary" fixedsize="4"/>
+      <Item caption="Value" type="binary" fixedsize="4"/>
+    </Set>
+    <Set name="MultiPciIoConditionIoSet" delimiter="-">
+      <Item caption="Offset" type="binary" fixedsize="2"/>
+      <Item caption="Mask" type="binary" fixedsize="4"/>
+      <Item caption="Value" type="binary" fixedsize="4"/>
+    </Set>
+  </Sets>
+  <Lists>
+    <List name="MultiFdMPciIoCheckSetConditionList">
+      <Item caption="Condition" type="set" set="MultiPciIoConditionSet"/>
+    </List>
+  </Lists>
+  <OneOfs>
+    <OneOf name="PermitFlashConditionalDataFieldOneOf">
+      <Item condition="#DataFormat==b" type="binary" doublequote="1"/>
+      <Item condition="#DataFormat==s" type="string" doublequote="1"/>
+      <Item condition="#DataFormat==w" type="binary" fixedsize="2" prefix="0x" doublequote="1"/>
+      <Item condition="#DataFormat==d" type="binary" fixedsize="4" prefix="0x" doublequote="1"/>
+    </OneOf>
+    <OneOf name="MultiFdCheckConditionOneOf">
+      <Item condition="#MultiFdCheckType==PCI" caption="PCI Setting" type="set" set="MultiFdPciCheckSet"/>
+      <Item condition="#MultiFdCheckType==IO" caption="IO Setting" type="set" set="MultiFdIoCheckSet"/>
+      <Item condition="#MultiFdCheckType==MPCIIO" caption="Multi PCI-IO Setting" type="set" set="MultiFdMPciIoCheckSet"/>
+      <Item condition="#MultiFdCheckType==ID" caption="ID Setting" type="set" set="MultiFdIdCheckSet"/>
+      <Item condition="#MultiFdCheckType==OS" caption="OS Setting" type="set" set="MultiFdOsCheckSet"/>
+    </OneOf>
+    <OneOf name="MultiPciIoOneOf">
+      <Item condition="#MultiFdCheckType==PCI" caption="PCI Setting Test" type="set" set="MultiPciIoConditionPciSet"/>
+      <Item condition="#MultiFdCheckType==IO" caption="IO Setting Test" type="set" set="MultiPciIoConditionIoSet"/>
+    </OneOf>
+  </OneOfs>
+</Platform>
+

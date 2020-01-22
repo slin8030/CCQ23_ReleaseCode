@@ -1,0 +1,1147 @@
+H2OFFT (Flash Firmware Tool) for Windows (Use IHISI)
+
+Version 5.69
+------------
+1. Fix system didn't do reboot when user set viaESP=1 in platform.ini and doing legacy flash.
+2. Fix load driver failed not return correct return code issue.
+
+Version 5.68
+------------
+1. Add [Others] EnableMeLockReadFailErrorRetry=1 setting in platform.ini for reading ROM again when it read failed because ME is locked.
+
+Version 5.67
+------------
+1. Automatically create EFI folder in ESP if the EFI folder does not exists.
+2. Support doing secure flash via S3 method.
+3. Update iFdPacker to v2.4.7
+    3-1. Fix crash problem of program in console mode after packing.
+    3-2. Fix memory leak problem when pack platform.ini in EFI package.
+
+Version 5.66
+------------
+1. Support -h, -?, -l=<path> commands in single package mode (packed with DOS flash tool). [For specific OEM/ODM]
+2. Update iFdPacker to v2.4.6
+    2-1. Fix single package can not pass arguments to flash tool correctly.
+
+Version 5.65
+------------
+1. Support multi-SKU package. [For specific OEM/ODM]
+2. Support -p=<password> command and return code 7: Password Required [For specific OEM/ODM]
+3. Fix multi-SKU via ESP problem. [For specific OEM/ODM]
+
+Version 5.64
+------------
+1. Fix single package cannot run correctly on specific OEM platform. [For specific OEM/ODM]
+2. Update iFdPacker to v2.4.5
+    2-1. Support to protect packed Windows package that will not allow to unzip or modify with third-party program.
+         Check the "Protect Package" in UI or use -protect in command line to enable this feature.
+    2-2. Fix single package cannot run correctly when the running folder has space character.
+    2-3. Fix -winini command not work issue.
+
+Version 5.63
+------------
+1. Modify command -forceit to work at all mode. [For specific OEM/ODM]
+2. Remove command -noreboot. [For specific OEM/ODM]
+3. Modify "No downgrade Dialog". (Grayed out the OK button, only Cancel button could be clicked) [For specific OEM/ODM]
+4. Support IHISI 48h extend flag to block secure flash via BIOS.
+
+Version 5.62
+------------
+1. Combine flsdll into exe.
+2. Update iFdPacker to v2.4.3
+    2-1. Support new release package structure.
+3. Fix permit flash feature not work issue.
+
+Version 5.61
+------------
+1. When update native me only, skip to check model name and version.
+2. Support boot to safe mode feature.
+    Set [Ohters] BootSafeMode=1 to always enable this feature.
+    Set [Ohters] BootSafeMode=1,[LimitVersionString] to enable this feature only when on-board version <= [LimitVersionString].
+
+Version 5.60
+------------
+1. Fix the error message shows twice issue when flashing an unsigned PFAT image on a PFAT enable platform. (ITS#36463)
+2. Support update PFAT image with secure capsule method.
+    It's a secure capsule contains PFAT header and cer data, and will be updated using secure flash process.
+    It will doing PFAT update in secure flash (after reboot) not in OS.
+    NOTE: The new PFAT update method need BIOS to enable secure flash and PFAT feature at the same time when building.
+3. Support BVDT multiple product name and multiple BIOS version.
+4. Normal flash support UseBvdtRomMap feature.
+5. Fix [EnableFlashSecureBIOSOverride] not work issue when doing secure flash via ESP.
+6. Update iFdPacker to v2.4.2
+    6-1. Support packing capsule which without BIOS image (Such as a capsule with Intel native ME only).
+
+Version 5.59
+------------
+1. When input image contains BIOS region only, it don't need to set [Region] bios=1 or use command -bios. AP can auto detect and recognize input image.
+2. Add command -h, -pq, -pr, -pi, -priv, -ppriv.
+3. Fix issue that when [FlashSecureBIOSOverride] Action=0 doesn't into S3.
+4. Fix -g command -base: and -size: no function issue.
+
+Version 5.58
+------------
+1. Fix -edt command string type (unicode string) size incorrect issue.
+2. Update -edt command file type behavior.
+    When file size is larger than 256KB, AP will call IHISI 42h multiple times to pass the data to BIOS and each time transfer 64KB data.
+3. Fix the issue that when setting [UpdateEC] Flag=1 in platform.ini to do secure flash with EC, AP will flash EC in OS and flash it again in UEFI.
+4. Fix issue that doesn't show error message after execute H2OFFT-Wx64 without platform.ini and binary file.
+
+Version 5.57
+------------
+1. ConfirmDialogCustomizeMessage supports both string and message table.
+2. Fix -edt command unusable issue.
+3. Unify message table.
+
+Version 5.56
+------------
+1. Fix the power check and user cancel return code not match OEM requirement issue. [For specific OEM/ODM]
+2. Default return to OS for OEM when using -s command and without -r command. [For specific OEM/ODM]
+3. Fix it always reboot issue when using -s -r command even it is not allow to flash. [For specific OEM/ODM]
+
+Version 5.55
+------------
+1. Fix issue that when only set BIOS_Version_Check=1 can flash BIOS in silent mode. [For specific OEM/ODM] (ITS#33782)
+2. Fix issue that flash utility will show "current platform NOT supports GPT" when [SecureUpdate] viaESP=1 and system HD not on first device.
+3. Fix issue that system will BSOD when doing secure flash and allocate physical memory failed.
+4. Support customize AC/DC error message in platform.ini [AC_Adapter] AcNotConnectError, DcNotConnectError, DcNotEnoughError.
+5. Add [UI] ShowCustomizeMessageOnConfirmDialogOnly to only show ConfirmDialogCustomizeMessage on confirm dialog without default message.
+6. Add [SecureUpdate] PhysicalMemoryAllocateFailRetryTimes and PhysicalMemoryAllocateFailRetryDelay to do retry when allocate physical memory failed during secure capsule update.
+7. Change secure flash block from 512KB to 64KB to reduce allocate physical memory fail rate.
+
+Version 5.54
+------------
+1. Add OEM specific command and return code. [For specific OEM/ODM]
+
+Version 5.53
+------------
+1. Update behavior secure flash via ESP method.
+    Now it will not allocate physical memory for capsule and will passing empty capsule information when viaESP=1.
+2. Fix AP may stop working issue when doing secure flash.
+3. Fix system may hang during long run test issue.
+4. Add -r command to force doing reboot after flash.
+5. Add -n command to force return to OS after flash.
+
+Version 5.52
+------------
+1. Update behavior of [SecureUpdate] viaESP=1, it will call IHISI 48h and also copy capsule file to ESP.
+2. Add PlatformIniEditor tool in tools folder.
+    It's an easy to use platform.ini editor with UI.
+3. Add [UI] DisableAccessRightWarningMessage setting in platform.ini to disable input image ME lock warning dialog.
+4. Fix issue of multi ini not work in [Multi_FD] feature.
+
+Version 5.51
+------------
+1. Support type MEMORY in [Multi_FD].
+2. Update behavior to call Ihisi 1Bh if disable platform check.
+3. Update behavior to NOT call Ihisi 48h if enable viaESP of [SecureUpdate].
+
+Version 5.50
+------------
+1. Support command -NoReboot. [For specific OEM/ODM]
+
+Version 5.49
+------------
+1. Fix AP stop working for warning DC too low message.
+
+Version 5.48
+------------
+1. Support Action_20h in [UpdateEC] for passing action code via Ihisi 20h. [For specific OEM/ODM]
+2. Fix NOT protect region in PFAT update.
+3. Fix update error if Ihisi 41h implemented but not supports PFAT.
+4. Fix warning message for platform check. [For specific OEM/ODM]
+5. Fix not works of command /s. (#31398)
+6. Support ini override for DisableCompare in [Others] (#31399)
+7. Fix NOT works in [Version] (#31400)
+8. Fix NOT call Ihisi 16h in secure update.
+9. Update iFdPacker to v2.4.1
+    9-1. fix issue of extraction fail in dual mode.
+
+Version 5.47
+------------
+1. Fix issue of execute without parameter in console if command filter enable.
+
+Version 5.46
+------------
+1. Update iFdPacker to v2.4.0
+    1-1. fix issue of exception occurred in packing EFI flash.
+    1-2. disable UAC.
+
+Version 5.45
+------------
+1. Support command -OemCus for specific string of Ihisi 19h. [For specific OEM/ODM]
+2. Fix NOT disable check AC if command -forceit enable. [For specific OEM/ODM]
+3. Fix update error in command -pbi. [For specific OEM/ODM]
+4. Support command -pbi in secure platform. [For specific OEM/ODM]
+
+Version 5.44
+------------
+1. Add to display percentage in progress bar.
+2. Support EC size un-defined in IHISI 21h. (IHISI version required: 2.0.4)
+3. Support command "-extrFD" to extract FD in package mode. (IFDPacker version required: 2.3.8)
+    useage: -extrFD [path].
+4. Update iFdPacker to v2.3.8
+    4-1. supports command "-extrFD".
+5. Update the IHISI version for funcation 10h to 204.
+                    Platforms support 0x1F
+                   ------------+--------------------
+                     Broadwell  05.03.51.0014
+                      SharkBay  03.73.06.1067
+                   Bay Trail-T  05.03.47.0033
+                   Bay Trail-M  05.03.47.0021
+                        Kaveri  03.74.03.1015
+                       Mullins  03.74.03.1009
+                        Kabini  03.74.03.2047
+                      Richland  03.74.03.1052
+
+Version 5.43
+------------
+1. Add new section [AutoWakeup] with key that can enable auto power on via RTC.
+2. Update iFdPacker to v2.3.7
+    2-1. fixs issue CANNOT pack dual mode on OS win8.1. (#0029474)
+    2-2. fixs pack fail via command line.
+    2-3. fixs pack dual mode fail if working folder NOT the same with application folder.
+
+Version 5.42
+------------
+1. Fix issue: CANNOT launch Intel ME utility by flash utility to update ME.
+2. Add IHISI 1Fh to notice BIOS can enter/leave EC idle mode .
+3. Add new key "Elapse" under [UI] which can enable to show Elapse time on screen.
+
+Version 5.41
+------------
+1. Support command "-mfg".
+2. Apply new naming to H2OFFT-W.exe/H2OFFT-Wx64.exe.
+3. Update iFdPacker to v2.3.5
+    3-1. Update UI
+    3-2. Fix issue to avoid to add duplicate file in H2OFFT folder.
+    3-3. Support new utility nameing.
+    3-4. Support drag to select file or folder.
+
+Version 5.40
+------------
+1. Fix issue of update with previous version that shows incorrect message if flag=2 in [BIOS_Version_Check].
+2. Support multi NV Storage from Ihisi 1Eh.
+3. Support multi PEI from Ihisi 12h.
+3. Support viaESP in [SecureUpdate]. (note: specific BIOS version required)
+4. Update iFdPacker to v2.3.4
+    4-1. Fix issue of incorrent warning message in shell mode.
+
+Version 5.39
+------------
+1. Support: Update BIOS according to 32-bit or 64-bit OS(Multi-FD).
+2. Solving exception occurrence when Window 8.1 system is rebooting.
+   (Using another method to prevent this error occur.)
+
+Version 5.38
+------------
+1. Fix issue: Flash tool will pop up an error message when rebooting (32bit application).
+
+Version 5.37
+------------
+1. Update [CapsuleAudit] behavior to searching GUID in firmware volume.
+2. Update iFdPacker to v2.3.2
+    2-1. Support packing dll for [CapsuleAudit].
+3. Fix progress bar display issue in normal update.
+4. Fix issue of update PEI region fail if [Force flash] BB_PEI=1.
+5. Fix issue of update NV Storage if Secure boot supports.
+
+Version 5.36
+------------
+1. Fix -forceit, -nopause no function issue. [For specific OEM/ODM]
+2. Support [CapsuleAudit] in platform.ini.
+3. Update EC flash behavior.
+    When flashing EC, BIOS must provide EC part information by IHISI.
+    Otherwize it will get a "Get EC part infromation fail." error.
+4. Support Pause in [FlashComplete].
+5. Support EC_DockWarning in [UpdateEC].
+
+Version 5.35
+------------
+1. Support update OEM ME when doing secure flash (BIOS and BIOS+EC case).
+
+Version 5.34
+------------
+1. When flashing an unsigned PFAT image, display "The image is PFAT image but not signed" error message.
+2. Support PFAT update with region protection.
+3. Fix error of [AC_Adapter] for AC warning message for secure capsule update.
+
+Version 5.33
+------------
+1. Support ConfirmDialogCustomizeMessage of [UI] for additional notification in confirm dialog.
+2. Add to pass EC flash flag to BIOS by IHISI 19h when security image on noraml platform. [For specific OEM/ODM]
+
+Version 5.32
+------------
+1. Update OEM message when flashing secure image on normal platform and normal image on secure platform. [For specific OEM/ODM]
+2. Fix when [UI] ConfirmInfo and ConfirmInfoRDate set to 1, utility will BSoD.
+3. Update [BIOSVersionFormat] to support new type D (Don't care field). Detail usage please reference the descriptions in platform.ini
+
+Version 5.31
+------------
+1. Fix can't get correct vendor ID issue.
+2. Notify BIOS the flash result by IHISI 1Ah.
+3. Passing flash status to BIOS when flash complete by IHISI 16h.
+
+Version 5.30
+------------
+1. Support -unvs, -ufc, -skipsbp in command filter feature.
+2. Add warning message in save BIOS command (-g) when ME is locked.
+3. Update iFdPacker to v2.2.8
+    3-1. Support packing multi FD for SHELL package.
+    3-2. Remove argument filter check box.
+
+Version 5.29
+------------
+1. Supports command filter feature.
+
+Version 5.28
+------------
+1. Supports PFAT image flash on platform PFAT feature disable. (BIOS version required: SharkBay 03.72.37.0018)
+2. Supports PFAT checksum verify.
+3. Adding [UI] ConfirmInfoRDate to support showing release date on confirm dialog. (BIOS version required: 03.72.43)
+4. Fix missing last section of platform.ini in ini overwrite feature.
+
+Version 5.27
+------------
+1. Support PFAT image update. (BIOS version required: SharkBay 03.72.37.0018)
+2. Fix -edt#@:"Value" command may fail issue.
+3. Support ini override for secure capsule update.
+4. Fix can't get secure capsule model name and version issue on Strawberry Mountain 05.02.34.
+5. Update iFdPacker to v2.2.7
+    5-1. Support packing multi FD for DOS package.
+    5-2. Update the behavior of pack platform.ini for secure image for DOS and Shell package.
+         (Don't disable platform.ini pack option when secure image detected for DOS and Shell package.)
+
+Version 5.26
+------------
+1. Add command -edt#@:"Value" for update customize data (such as logo with signature) by IHISI.
+    #: from 4 ~ C, @: F, S, W, DW (F means file, S means string, W means word value, DW means double word value)
+2. Support compare model name method in [Multi-FD] section.
+3. Fix the system hang issue that flashing secure image (include BIOS + EC) on normal platform it may hang after EC flash complete and before restart.
+4. Update iFdPacker to v2.2.6
+    4-1. Fix Message error of windows package run in DOS mode.
+    4-2. Fix pack error in fd path with space.
+    4-3. Fix help message error.
+
+Version 5.25
+------------
+1. Update version check behavior for OEM. [For specific OEM/ODM]
+2. Fix OEM flash image size error issue. [For specific OEM/ODM]
+
+Version 5.24
+------------
+1. Support OEM message when flashing secure image on normal platform and normal image on secure platform. [For specific OEM/ODM]
+2. Update iFdPacker to v2.2.5.
+    2-1. Add platform.ini pcak option in UI for Windows package.
+    2-2. Modify ini pack flag for command line.
+    2-3. Disable platform.ini pack option when secure image detected for DOS and Shell package.
+    2-4. Fix the parameter checking behavior for command line mode.
+
+Version 5.23
+------------
+1. Add DisableSecureCapsuleFlash flag in [Others] section in platform.ini to enable/disable flash secure BIOS on normal platform.
+2. Supports OEM secure flash behavior. [For specific OEM/ODM]
+3. Add version check rule for OEM. (it must base on BIOS report.) [For specific OEM/ODM]
+4. Fix CommonFlash will be disabled when using Multi-FD feature. [For specific OEM/ODM]
+5. Update AT-p behavior. It does NOT check AT-p signature in plaform supported when flash EC only.
+
+Version 5.22
+------------
+1. Fix can not update issue when input image is a secure capsule with BIOS and EC.
+2. Fix showing "The secure BIOS is signed by older version of security flash." issue when flashing a normal image on secure platform.
+3. Disable option button on secure flash mode.
+4. Update AT-p behavior. It can allow to flash when enrolled. The function is enabled by BIOS and BIOS must report the Dtimer status in IHISI.
+5. Add [UpdateOEMME] CheckVersion=3 setting, let it continue to flash when OEM ME update fail.
+
+Version 5.21
+------------
+1. Support to flash a secure capsule on a normal platform by normal flash method.
+2. Update iFdPacker to v2.2.4.
+     2-1. Add auto save previous settings feature.
+     2-2. Add shell single package support.
+     2-3. Add command line support. (Use "iFdPacker -h" to see the usage.)
+
+Version 5.20
+------------
+1. Update Intel ME flash tool and add a Command setting in platform.ini [UpdateOEMME] section for customizing command.
+2. Fix issue of NV storage area still be cleaned even BIOS already report the area information by IHISI 1Eh on secure boot support platform.
+
+Version 5.19
+------------
+1. Fix cannot flash secure BIOS which pack with EC image and set [UpdateEC] Flag=1 in secure flash mode.
+2. Fix flash complete call twice issue.
+3. Add all console command support -option.
+4. On the platform which supports secure boot feature, utility will not flash the NV storage area which reported in IHISI 1Eh.
+5. Fix secure flash 16MB+EC image cannot flash issue.
+6. Fix issue of power saving set is changed after update BIOS with enabling to lock mouse and keyboard.
+7. Fix private region is not protected when -pbi command is executing.
+
+Version 5.18
+------------
+1. Add do nothing action for 48h. And add some command for secure flash action override. [FlashSecureBIOSOverride] Action=0 for S3, Action=1 for reboot, Action=2 for shutdown, Action=3 for do nothing.
+2. Add EFI driver version check for secure BIOS flash.
+3. Detect current platform support secure update or not. It only allow to update secure BIOS on secure platform.
+
+Version 5.17
+------------
+1. Update OA function behavior to meet Microsoft new requirement.
+
+Version 5.16
+------------
+1. Support "InsydeFlash.exe BIOSFile.bin" command.
+2. Fix issue of Windows flash can run with guest account after run once with administrator account.
+3. Modify AT-p error message.
+4. Remove flash by AP feature. And remove platform.ini [ApplicatonFlash] section.
+
+Version 5.15
+------------
+1. Remove flash progress message console output when it's running in silent mode.
+2. Update iFDPacker to v2.2.1. Support packing DOS & Windows flash utility in single package.
+    I.e. the sinagle package can runs on DOS and Windows.
+
+Version 5.14
+------------
+1. The setting always show "BatteryBound=20" after set "[AC_Adapter] BatteryBound=30" in User option mode.
+2. Modify -pbi to support all protection type.
+3. Update driver for new interface of secure capsule flash.
+
+Version 5.13
+------------
+1. Update -nopause behavior for OEM.
+
+Version 5.12
+------------
+1. Add BatteryNotConnect, BatteryCapacityNotEnough in platform.ini.
+2. Support 16M BIOS in secure capsule flash mode.
+3. Update AT-p check behavior in WinPE.
+
+Version 5.11
+------------
+1. Fix can not get correct SMI port issue in VIA VX900 platform.
+2. Reduce memory usage of driver in non-secure flash mode.
+3. Revise OEM specific error message for profile update (-pbi:Type command).
+
+Version 5.10
+------------
+1. Support OEM specific error message for profile update (-pbi:Type command).
+2. Fix the region may not be protected when start address + size equal to 0x100000000 which overflow of DWORD size.
+
+Version 5.09
+------------
+1. Add Insyde Secure BIOS identify.
+2. Update message of running secure capsule flash fail(call 48h fail).
+
+Version 5.08
+------------
+1. Add conditional data check by BIOS (45h) feature. Enable/Disable flag is CheckByBios of [Bios_Version_Check] section in platform.ini.
+2. Add user define error message for conditional data check by BIOS feature. The message is defined in CheckByBiosErrorMessage of [Bios_Version_Check] section in platform.ini.
+3. Enlarge file size limitation of non-share EC size from 64KB to 256KB with single block write method.
+4. Modify the default value of Version in [Version] section from "00" to empty string. On main dialog, it will show "InsydeFlash V5.08" as default not "InsydeFlash V5.08.00".
+5. Add admin password check in flash protected region feature (with -pbi:Type) for OEM.
+6. Support specified size of flash rom. Such as 5M(1M+4M), 6M(2M+4M) flash rom.
+7. In secure flash mode add re-boot/shutdown function for WinPE.
+
+Version 5.07
+------------
+1. Update message string.
+2. Fix issue of [Bios_Version_Check] flag=2 and BIOS allow same version to flash, when flash the same version it will show error message "Warning: cannot check BIOS version.".
+
+Version 5.06
+------------
+1. Add EC compare and verify feature. The settings in platform.ini [UpdateEC] section, EC_Compare, EC_Verify and EC_VerifyErrorRetry.
+2. Support passing multi project name to BIOS in CommonFlash feature for OEM.
+3. Fix Hook functions can't correctly work (include mouse, keyboard, power button, sleep button, lid closed) on Win7 environment
+4. Update iFDPacker to v2.2.0.0
+
+Version 5.05
+------------
+1. Update AP pass to BIOS structure in CommonFlash feature for OEM.
+2. Reduce initial time which cause by searching BVDT of on board BIOS.
+
+Version 5.04
+------------
+1. Support move private map feature.
+2. Disable Power button, Sleep button, and Lid closed function during flashing (controlled by DisableMouseAndKeyboardInput flag)
+3. Fix EC can't update issue when EC image size is bigger than 64KB.
+4. Fix that run iFdPacker.exe and click the Add button, "Encountered an improper argument" error message will occur
+
+Version 5.03
+------------
+1. Remove update logo feature.
+2. Add -forcetype, -forceit, -nopause for OEM menufacture mode.
+3. Add error message when protected region type not found with -pbi:Type.
+
+Version 5.02
+------------
+1. Update AtpTimerInfo.dll from v3.0.0.18 to v3.0.0.20, fix the load driver fail issue in Windows XP.
+2. Fix issue of utility always shows the same version and won't flash when PermitFlashVersion is enabled and the value of SingleVersion is the same as on board BIOS version.
+3. Update iFDPacker to v2.1.8.0, fix single package won't ask for administrator privilege in x64 OS issue.
+4. Add profile flash support by command line "InsydeFlash profile.fv -pbi:Type". It can be used to update partial region base on protecting map.
+
+Version 5.01
+------------
+1. Fix -wb issue that writing variable from file didn't actually write the data
+    (the data field of the variable is empty after using -wb parameter).
+2. Add to pass EC flash flag to BIOS by IHISI 19h.
+3. Fix issue of flash utility didn't pop up warning message and do flash directly in DC mode on WinPE.
+4. Fix -forcetype not workable issue.
+
+Version 5.00
+------------
+1. Update AtpTimerInfo.dll, AtpTimerInfoX64.dll.
+2. Add return code for [CommonFlash] interface when there is an error occur in the interface.
+3. Fix to flash partial image will fail.
+4. If filename has "\/:*?"<>|",tool will change to "_" in BackupROM.
+5. Fix issue of update same version ME will show an error message but the message end with some unreadable characters.
+6. Add multi ini support. It can support ini settings overwrite by adding ini filename in [MULTI_FD] section.
+7. Fix cannot show SMI error dialog.
+8. Update iFDPacker to v2.1.6.0.
+
+Version 4.04
+------------
+1. Support customize error message in [UpdateExtraData] section.
+2. Fix passing platform.ini to BIOS data error. 
+
+Version 4.03
+------------
+1. Add a command line parameter /noconfirm to disable confirm dialog. (This command must add as latest parameter.)
+2. Modify Silent flag to match "-s" silent mode.
+3. Update iFDPacker to v2.1.5.0. Fix v2.1.3.0 cannot work in Windows 7 issue.
+
+Version 4.02
+------------
+1. Fix issue of InsydeFlash settings in "Option" and "Browse FD File" buttons won't effect until next launch.
+2. Fix /cpf will load driver twice error.
+3. Modify iFDPacker to package FlsHook.exe and FlsHook.dll.
+
+Version 4.01
+------------
+1. Change sequence of id and size check function, and remove flag "Check_Before_ROM_Size".
+2. Add to check extra data image and pop error message.
+3. Fix cannot show confirm dialog in silent mode with "SilentWithDialog=2".
+4. Fix cannot check BIOS size when image with header.
+5. Add UI for silent mode normal flash process.
+6. Fix do not show error when cannot found match file in multi-fd feature.
+7. Fix issue of AC power will be checked in UEFI flash when [CommonFlash] is removed.
+8. Fix cannot show date in confirm dialog.
+9. Support log status code to CMOS. The settings are in [Log_file] section with prefix CMOS_.
+10. Fix issue of USB mouse can work when flashing VBIOS region.
+11. Fix will show <N/A> in new version edit.
+
+Version 4.00
+------------
+1. Fix return code error issue when driver load fail.
+2. Fix cannot run EFI flash issue when [BIOSVersionFormat] BIOSVFEnable=1.
+
+Version 3.99
+------------
+1. Modify warning message to "Do Not Remove the AC Power and Turn Off Computer During BIOS Flashing!" for OEM.
+2. Modify definition of [Others] VerifyErrorRetry key from enable/disable retry to retry times.
+3. Fix flash extra data with no data in image will error.
+4. Fix show dialog with "DisableMouseAndKeyboardInput" will lock keyboard and mouse.
+5. Don't check AC power in UEFI flash.
+6. Allow same version flash in non-silent mode when [Bios_Version_Check] Flag=1 for OEM behavior.
+
+Version 3.98
+------------
+1. Fix flash data size error in extra data feature.
+2. Fix x64 common flash interface fail issue.
+
+Version 3.97
+------------
+1. Fix UEFI flash will get error data with non-share EC update.
+2. Fix that cannot flash BIOS after Intel ME update.
+3. Support password check by BIOS feature (IHISI 43h).
+4. Support flash by BIOS check feature (IHISI 44h).
+5. Add new return error code in [ReturnErrorCode].
+6. Fix 3D feature cannot flash VBIOS data.
+
+Version 3.96
+------------
+1. Support show IHISI version.
+2. Modify "UpdateExtraData" feature to support 3D panel.
+3. Fix Windows PE cannot shutdown and reboot.
+4. Fix the issues cause by Unicode feature.
+
+Version 3.95
+------------
+1. Fix /ecp cannot get IHISI version from BIOS.
+2. Modify to support flash EC only.
+3. Extracting image size is incorrect for OEM feature.
+4. Add a section [PermitFlashVersion] to support conditional process of BIOS update.
+   When a serial BIOS from old to new is version A B C,
+    the newest BIOS update package is version C,
+    and version C only can update from version B.
+   Then you can use this feature to warning user of version A on board to update to version B first.
+5. Add EC_Path key of [UpdateEC] section to support update EC by inputed file path.
+6. Fix bug: When CheckVersion=2 and the ME FW is the same, it will close intel tool and doesn't continue to update BIOS.
+7. Fix bug: Set Platform_Check flag=1 and Bios_Version_Check flag=1 to platform.ini,
+    when BIOS version check is pass and platform ID is different, then WinFlash will flash the BIOS.
+
+Version 3.94
+------------
+1. Fix cannot flash DXE region when you set "DXE=1" in 32 bit OS.
+2. Fix flash in silent mode with not SilentWithDialog=1 and ActionOverride=1 will return error return code.
+3. Add "/ECP" feature to flash non-share EC only.
+4. Modify ATp feature.
+5. Version check enhancement, add [BIOSVersionFormat] section in platfrom.ini.
+6. Modify to flash ME before BIOS.
+
+Version 3.93
+------------
+1. Fix "Reboot!" dialog cannot popup after flash in command silent mode if set 
+    "SilentWithDialog=2, [FlashFlashComplete]Action=2, Dialog=1" 
+2. Fix will pop EC auto close dialog in silent mode with SilentWithDialog=1.
+3. Fix will not passing ini to BIOS when run OEM1 special flash rule.
+4. Add "ForceIHISIVersion" in "Others" section.
+
+Version 3.92
+------------
+1. Add "ActionOverride" flag.
+   Flash utility bases action key setting to do original behavior.
+2. Fix /cpf cannot process issue.
+3. Fix when flash extra data with "DisableMouseAndKeyboardInput=1" will show error.
+4. Add a section [PlatformVersion] in platform.ini.
+   When the Flag=1 and platform check enabled, it will display the version string
+    list in this [PlatformVersion] section and use it to compare.
+   The Version is pair with the PlatformName.
+   For example: When the platform ID matches with PlatformName2, the Version2 will be used.
+
+Version 3.91
+------------
+1. Add new action definition when EC update completely.
+2. Fix cannot copy correct BIOS image with sign file to USB dangle in Window XP system.
+
+Version 3.90
+------------
+1. Add 16M ROM support
+2. Add feature to pass parameter setting in platform.ini to BIOS.
+3. Fix incorrect dialog pop up that cause when AT-P function enable and BIOS update only.
+4. Fix update non-share EC feature error.
+
+Version 3.89
+------------
+1. Rename "ErrorRetryDelay" to "SMIErrorRetryDelay".
+2. Rename "ErrorRetry" to "VerifyErrorRetry".
+3. Fixed some situation will not return error code.
+4. Update AtpTimerInfo.dll to 2.0.2.24.
+5. Added silent mode return code and flash complete action.
+
+Version 3.88
+------------
+1. Fixed some error return bugs.
+2. Modify OEM special feature in silent mode with SilentWithDialog=1.
+3. Updated 32bits AT-p component (AtpTimerInfo.dll).
+4. Fix file path conver from unicode to ansi string will lose the non-English words issue.
+
+Version 3.87
+------------
+1. Pure 64bits application support AT-p utility.
+2. Added update extra data feature to update VBIOS.
+
+Version 3.86
+------------
+1. Fix issue of system will crash after flashing when Check_Before_ROM_Size = 1.
+
+Version 3.85
+------------
+1. Added "AllowVersion" to support OEM1 EFI update feature.
+2. Fixed flash non-share EC, EC cannot shutdown/Reboot. Update from 3.84.
+3. Fix incorrect spelling in "The BIOS image is corrupted or does not contain the correct digital signature. The system BIOS will not be updated."
+
+Version 3.84
+------------
+1. Added check platform ID for UEFI update.
+2. Add new warning/error message for AC/DC and Platform/Version check.
+   (OEM specified message requirement)
+3. Fixed flash whole BIOS with non-share EC or only BIOS region will show file size may not match.
+
+Version 3.83
+------------
+1. Fixed Can not flash only BIOS region and non-share EC.
+2. Support up to 20 PlatformName in platform.ini.
+
+Version 3.82
+------------
+1. Add /cpf command for copy file to specific partition and folder.
+
+Version 3.81
+------------
+1. Fixed IHISI failed when run /g command then run InsydeFlash again.
+2. Fixed cannot run InsydeFlash from different folder.
+
+Version 3.80
+------------
+1. Modify "CheckVersion". If set 2, tool will not show error and continue to flash
+    when ME flash error is cause of same version and downgrade version.
+2. Fixed flash only BIOS region with only BIOS region data will not show new version and check version.
+3. Removed SMI error code in SMI error message.
+4. Fixed flash BIOS failed with AT-p utility.
+5. Fixed EC size error.
+
+Version 3.79
+------------
+1. Added "ErrorRetryDelay" and "SMIErrorRetry" at section "Others" in "Pltform.ini".
+2. Modify behavior of OEM special signed feature.
+3. Added solution that tool cannot identify BIOS binary (single BIOS region) is ATp or non-ATp BIOS.
+4. Fixed that finished updating single BIOS region cause fail with AT-P utility.
+5. Fixed that execute tool casue fail on Windows XP.
+
+Version 3.78
+------------
+1. Added Calpella ME feature.
+   [UpdateOEMME]
+   MEFileName=
+   CheckVersion=0
+2. Added option "/ecr" and "/ecw" to access extend CMOS.
+3. Modified "UpdateME" to "UpdateOEMME" and run Calpella ME feature.
+4. Modified behavior about ATp feature in tool.
+5. "BeforeRunToolDelayTime" will Delay before UI dispaly.
+
+Version 3.77
+------------
+1. Fixed get IHISI version error.
+2. Added "MPCIIO" in Multi-FD.
+   You can input many "PCI" or "IO" to check, even if "PCI" and "IO".
+   If all of them match, tool will get this file to flash.
+
+Version 3.76
+------------
+1. Modify when flash EC, tool will check EC rom size before flash BIOS.
+   This is depended on IHISI version.
+   When IHISI is newer than 1.8.6, it will check before BIOS flash.
+   If not, it will check after BIOS flash.
+2. Fixed flash EC with BIOS will flash many times error.
+4. Added "DelayBeforeFlash" to delay before flash.
+5. Modify "BeforeFlashDelayTime" to "BeforeRunToolDelayTime".
+6. Added some messages and modified behavior about ATp feature in tool.
+8. Modify confirm message.
+
+Version 3.75
+------------
+1. Fixed tool will send wrong EC size to BIOS with non-share EC.
+2. Extended the EC buffer size to 2M.
+3. Support OEM special request about check RSA check sign feature.
+4. Skip check platform name and version feature will confirm BIOS.
+5. Modify when flash EC, tool will check EC rom size before flash BIOS.
+6. Add Platform data region access feature.
+7. Add Platform_Check = 3 and Bios_Version_Check = 2 will get BIOS setting.
+8. Modify default value of Platform_Check, Bios_Version_Check and ALL.
+
+Version 3.74
+------------
+1. Modify main dialog logo and string font.
+2. Added tool and BIOS hand shaking feature.
+   Tool send BIOS information that include tool and OS version by functoin 10h.
+   Get the customer vendor ID in function 10h.
+
+Version 3.73
+------------
+1. Fixed to use /base /size option will hang.
+2. Fixed to erase variable by ini will hang.
+3. Fixed when setting "flag=2" in the section name "PlatformCheck" will get new name when current 
+    platform name and new platform name are match.
+
+Version 3.72
+------------
+1. Fixed tool will show "Winodws 7" when it cannot load driver in Windows XP.
+2. Fixed tool will wait when using silent mode with no AC plug in.
+3. Fixed error message when binary file not with EC part in UpdateEC feature.
+   Change show "Error:File may not have ME rom" to "Error:File may not have EC rom".
+4. Fixed platform check get ID fail, when updateEC flag = 2.
+5. Add "/base:" and "/size:" to input base and size when use "/g" to read BIOS.
+6. Modify Silent mode behavier: 
+   When SilentWithDialog=0, Not show any dialog.
+   When SilentWithDialog=1, Show main dialog only.
+   When SilentWithDialog=2, Show all dialogs without main dialog.
+7. When SilentWithDialog=1 and run in silent mode, tool will check same version and not flash.
+   (This Silent mode is mean use "-s" in command line)
+
+Version 3.71
+------------
+1. Add "/lg:" to input the GUID.
+
+Version 3.70
+------------
+1. Fixed the situation that tool will hang in XP on some platforms.
+
+Version 3.69
+------------
+1. Modify Me flash feature.
+   Support separate ME binary, and two type of Me:
+   1. FULL SKU.
+   2. Ignition SKU.
+
+Version 3.67
+------------
+1. Add "/cr" and "/cw" to access CMOS in console mode.
+2. Fixed some error word in status message when option flag set.
+
+Version 3.66
+------------
+1. Add flash Me feature.
+2. Fixed message from "If you are running this utility in Vista" to
+    "If you are running this utility in Windows 7" for Windows 7 system.
+
+Version 3.65
+------------
+1. Do not show dialog with "-s".
+2. Fixed the problem cannot get the return code.
+3. Add flag "SilentWithDialog".
+
+Version 3.64
+------------
+1. Modify the EC shutdown and reboot to get the "Action" in "FlashComplete".
+2. Change "flag" in "Platform_Check". If flag=1 compare new rom platform name 
+    and current platform, else if flag=2 get the below names to compare.
+
+Version 3.63
+------------
+1. Add "Progress_Bar" in ini file: Flash EC with draw progress bar.
+
+Version 3.62
+------------
+1. Add "BIOS_Only" in ini file: Only flash BIOS when EC and BIOS are merge in the same file.
+
+Version 3.61
+------------
+1. Before update EC after flash BIOS show dialog, change status and add flag "EC_Dialog=0" in ini file.
+2. Fixed when tool flash on Calpella, the SMI will fail sometimes.
+
+Version 3.60
+------------
+1. Expand EC buffer to 0x100000.
+
+Version 3.59
+------------
+1. Fixed cannot flash when rom file with platform region.
+
+Version 3.58
+------------
+1. Fix the tool cound not run in UEFI OS (GPT format).
+
+Version 3.57
+------------
+1. 8M support.
+2. Fixed the error message when you flash same BIOS.
+3. Fixed UpdateBlock feature about coundn't flash if physical address small than 0xFFF00000.
+4. Fixed the processbar action problem, sometimes cound not process.
+
+Version 3.56
+------------
+1. Fix BVDT Protect when the move region size smaller than 0x1000.
+
+Version 3.55
+------------
+1. Fix BVDT protect function.
+
+Version 3.54
+------------
+1. Fix some bug and some dialog string.
+2. Modify backup rules.
+   [BackupROM]
+   Flag=0
+   FilePath=
+   FileName=
+
+   Flag 1   -> Backup current BIOS and new BIOS binary
+   FilePath -> If user does not enter the file path, utility will use current directory.
+   FileName -> If user does not enter the filename, utility will use platform ID.
+   xxx.xxx = Current BIOS image
+   xxx_01.xxx = Previous BIOS image
+   xxx_new.xxx = New BIOS image
+
+Version 3.53
+------------
+1. Fix a bug in FlashTester.
+   Counter is not correct.
+2. Add mew BVDT protect function
+3. Modify "Error:No FD match in INI settings." to "It is not for your notebook."
+
+Version 3.52
+------------
+1. Add new key in INI setting.
+   The "Disable read" function in DOS Flashit will skip "Compare" and "Verify" steps.
+   In INI file, "DisableCompare" only skip "Compare" step.
+   However, some OEM/ODM projects cannot read binary from flash part.
+   Windows version add "DisableVerify" key in INI, It will disable "Verify" step if this key is 1.
+2. Add BIOS binary selection in INI file.
+
+   [MULTI_FD]
+   Flag=1
+   FD#01=PCI,0,1F,2,80,7006,7007,9.fd
+   FD#02=PCI,2,0,0,4,100006,100007,7.fd
+   FD#03=PCI,2,0,0,18,0c,0e,9.fd
+   FD#04=PCI,0,1f,0,0,0015808F,2815808F,8.fd
+   FD#05=IO,C0,5AABFE02,5AABFE02,9.fd
+   FD#06=IO,1F6,E7,E4,7.fd
+   FD#07=IO,C0,fe03,fe03,7.fd
+   FD#08=IO,C0,03,01,7.fd
+   FD#09=PCI,2,0,0,0,813,812,9.fd
+
+   Flag 1 -> Multi-FD mode, 0 -> normal mode
+   FD#XX support 99 files FD#01 ~ FD#99
+   FD#XX=IO Type,Offset,Mask,Value,Filename
+   FD#XX=PCI Type,Bus,Device,Function,Offset,Mask,Value,Filename
+   Type -> Support IO space and PCI address type
+   Offset -> Offset (HEX)
+   Mask -> IO type support BYTE, WORD, DWORD (HEX). For example, BYTE -> 03, WORD -> 0A01, DWORD 100400D3 
+        -> PCI type support DWORD only
+   Filename -> Filename of FD
+   If [Offset] & Mask == Value, then flash the following file.
+
+3. Support Windows PE 2.0 x64 version.
+   User must run InsydeFlashx64.exe in x64 PE.
+   The user can make pure x64 InsydeFlash in FD Packer.
+4. Support FD argument.
+   For example: Run InsydeFlash.exe xxx.fd
+   It will skip MULTI_FD in INI and auto-searching FD.
+5. Support /g argument.
+   For example: Run InsydeFlash.exe xxx.fd /g
+   Just like DOS version, user can read current ROM to a file.
+6. Verify regions (descriptor mode) in ROM file.
+
+Version 3.48
+------------
+1. When user enable UAC in Vista, the user need to "Run as administrator" with InsydeFlash.
+   Now, InsydeFlash will notice Vista. Vista will pop up message box.
+2. Fix unstable place when InsydeFlash is initializing.
+
+Version 3.47
+------------
+1. Change InsydeFlash behavior.
+   OLD: Even AC flag is 1, AC adapter does not plugged but battery life percent is fine. InsydeFlash allow flash process.
+   NEW: If AC flag is 1, AC adapter should be plugged.
+
+Version 3.46
+------------
+1. Fix a battery detection bug.
+   InsydeFlash will get current battery life percent value from OS and compare with value in platform.ini.
+
+   [AC_Adapter]
+   BatteryCheck=1
+   BatteryBound=20
+
+   Also, if battery life percent is not enough, it will display the value in message box.
+
+Version 3.45
+------------
+1. In platform.ini, InsydeFlash add more keys for model checking process.
+   For example, ODM may have one BIOS for different model.
+   They need to use different ID in different model.
+
+   There are two kinds of solutions.
+   First, user add ID list in ini file. User set Flag to 2.
+
+   [Platform_Check]
+   flag=2
+   PlatformName=AAA1
+   PlatformName2=AAA2
+   PlatformName3=AAA3
+   PlatformName4=AAA4
+   PlatformName5=AAA5
+   PlatformName6=AAA6
+   PlatformName7=
+   PlatformName8=
+   PlatformName9=
+
+   Second, ODM reports all IDs in one string at IHISI function 11h and BVDT.
+   For example, the string will be like "AAA1AAA2AAA3AAA4AAA5AAA6".
+   Also, some share ROM model need check EC's id, ODM can combine the ID with this string.
+
+2. iFdPacker version 2.0.5
+   The single execution file's icon change to official Insyde icon.
+
+Version 3.44
+------------
+1. Platform.ini add [VARIABLE] to erase variable.
+
+Version 3.43
+------------
+1. Fix flash after platform cannot boot to OS.
+
+Version 3.42
+------------
+1. Confirm dialog always on top.
+
+Version 3.41
+------------
+1. Fix fail issue that user press start button.
+
+Version 3.40
+------------
+1. Add a GET FD file button.
+   [UI]
+   GetFDFileButton=0
+
+Version 3.39
+------------
+1. Add a wrong mesage box.
+
+Version 3.38
+------------
+1. Add when error message occur, unlock keyboard and mouse.
+2. Fix PlatformName by ini display error.
+
+Version 3.37
+------------
+1. Fix "Alone Flash Region binary file" function cannot flash EC.
+2. Fix "Alone Flash Region binary file" function flash protect area issue.
+
+Version 3.36
+------------
+1. Fix "Alone Flash Region binary file" function issue.
+
+Version 3.35
+------------
+1. Add "Alone Flash Region binary file" function.
+2. Modify "write HDCP key" function read file rule.
+
+Version 3.34
+------------
+1. Remove program window (X) button.
+2. Add Retry checking AC power function.
+3. Modify some wrong message.
+4. Add on flashing playing wav file.
+5. Support IHISI function 19h.
+6. Lock all input without system key ("CTRL+ALT+DEL").
+7. Add check platform name by .INI function.
+8. Add return code set by .INI.
+9. Add a new argument(/WH) for "write HDCP key function".
+10. Support IHISI 1.7.4 (OEM/ODM customization-2).
+
+Version 3.33
+------------
+1. Fix driver bug.
+2. Add /EV arguments.
+
+Version 3.32
+------------
+1. Add Disable read compare by IHISI (function 11h).
+2. Add new Variable (SLP2M & SLP2P).
+3. Add support IHISI spec 1.7.1 new feature.
+4. Add Disable model name & Version display by IHISI (function 11h).
+
+Version 3.31
+------------
+1. Add Display Wrong message on Dialog "Do not turn off your computer".
+
+Version 3.30
+------------
+1. Support R3.5 code base for "patch logo function".
+
+Version 3.29
+------------
+1. Add Region map arguments (BIOS, GbE, ME, DESC).
+
+Version 3.28
+------------
+1. Add DLL_AP_FlashComplete function.
+2. Add ICL50_M005_TURN_OFF_DTS.
+3. Add APTURN_OFF_DTS.
+4. Add AP_Read_Memory_Buffer.
+
+Version 3.27
+------------
+1. Add error code configuration.
+2. Add silent style in console mode (-s).
+
+Version 3.26
+------------
+1. Add application flash (64bit).
+
+Version 3.25
+------------
+1. Fix 64bit driver bug.
+
+Version 3.24
+------------
+1. Add application flash (32bit).
+
+Version 3.23
+------------
+1. Fix driver bug.
+2. Add retry function.
+3. Add read compare switch.
+
+Version 3.22
+------------
+1. Add error return code.
+2. Support binary variable access.
+
+Version 3.21
+------------
+1. Add /C arguments
+
+Version 3.20
+------------
+1. Add UI configurations.
+
+Version 3.19
+------------
+1. Dynamic find IHISI main function number.
+2. Add UI configurations.
+
+Version 3.18
+------------
+1. Add BVDT.
+2. Add ID display.
+
+Version 3.17
+------------
+1. Fix buffer overflow bug.
+
+Version 3.16
+------------
+1. Modify iFdPacker function.
+
+Version 3.15
+------------
+1. Add /1 /2 /4 /8 arguments.
+
+Version 3.14
+------------
+1. Add command line argument for iFdPacker.
+2. Add FV ID protection.
+
+Version 3.13
+------------
+1. Support BIOS IHISI 1.6.2.
+2. Add log file argument.
+
+Version 3.12
+------------
+1. Add command line arguments.
+
+Version 3.11
+------------
+1. Fix UI block problem.
+
+Version 3.10
+------------
+1. Add silent mode.
+2. Add tool: InsydeFdPacker.
+
+Version 3.06
+------------
+1. Add a key in INI for turn on/off end dialog.
+2. Fix file not found bug.
+
+Version 3.05
+------------
+1. Support BIOS IHISI 1.5.8.
+2. Add FV update mode.
+
+Version 3.04
+------------
+1. Support BIOS IHISI 1.5.7.
+
+Version 3.03
+------------
+1. Support BIOS IHISI 1.5.6.
+
+Version 3.02
+------------
+1. Supprt BIOS IHISI 1.5.5.
+2. Utility can covert logo image.
