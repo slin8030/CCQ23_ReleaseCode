@@ -77,6 +77,34 @@ InitialPostkeyTable (
   }
 
   //
+  // Boot manager hotkey (F2).
+  //
+  OldPostOperationCount = mPostOperationCount;
+  mPostOperationCount++;
+  mPostKeyToOperation = ReallocatePool (
+                          OldPostOperationCount*sizeof(SCAN_TO_OPERATION),
+                          sizeof(SCAN_TO_OPERATION)*mPostOperationCount,
+                          mPostKeyToOperation
+                          );
+  mPostKeyToOperation[Index].KeyBit = F2_KEY_BIT;
+  mPostKeyToOperation[Index].ScanCode = SCAN_NULL;
+  mPostKeyToOperation[Index].PostOperation = SETUP_HOT_KEY;
+  Index++;
+  //
+  // Boot manager hotkey (F12).
+  //
+  OldPostOperationCount = mPostOperationCount;
+  mPostOperationCount++;
+  mPostKeyToOperation = ReallocatePool (
+                          OldPostOperationCount * sizeof (SCAN_TO_OPERATION),
+                          sizeof (SCAN_TO_OPERATION) * mPostOperationCount,
+                          mPostKeyToOperation
+                          );
+  mPostKeyToOperation[Index].KeyBit        = F12_KEY_BIT;
+  mPostKeyToOperation[Index].ScanCode      = SCAN_NULL;
+  mPostKeyToOperation[Index].PostOperation = BOOT_MANAGER_HOT_KEY;
+  Index++;    
+  
   // Add the end of table.
   //
   OldPostOperationCount = mPostOperationCount;

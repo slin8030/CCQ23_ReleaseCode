@@ -1,0 +1,52 @@
+## @file
+#  Component description file for OemBadgingSupportDxe Module
+#
+#******************************************************************************
+#* Copyright (c) 2014, Insyde Software Corp. All Rights Reserved.
+#*
+#* You may not reproduce, distribute, publish, display, perform, modify, adapt,
+#* transmit, broadcast, present, recite, release, license or otherwise exploit
+#* any part of this publication in any form, by any means, without the prior
+#* written permission of Insyde Software Corporation.
+#*
+#******************************************************************************
+
+[Defines]
+  INF_VERSION                    = 0x00010005
+  BASE_NAME                      = OemBadgingSupportDxe
+  FILE_GUID                      = 12AEDBEA-392D-4e2a-8789-5F6DC6B23661
+  MODULE_TYPE                    = DXE_DRIVER
+  VERSION_STRING                 = 1.0
+  ENTRY_POINT                    = OEMBadgingEntryPoint
+
+[Sources]
+  OEMBadgingString/OEMBadgingString.uni
+  OEMBadgingString/OEMBadgingString.c
+  OEMBadgingString/OEMBadgingString.h
+  OEMBadgingSupportDxe.h
+  OEMBadgingSupportDxe.c
+   
+[Packages]
+  $(PLATFORM_RC_PACKAGE)/$(PLATFORM_RC_PACKAGE).dec
+#[-start-160216-IB03090424-add]#
+  ClientSiliconPkg/ClientSiliconPkg.dec
+#[-end-160216-IB03090424-add]#
+  $(CHIPSET_PKG)/$(CHIPSET_PKG).dec
+  MdePkg/MdePkg.dec
+  MdeModulePkg/MdeModulePkg.dec
+  InsydeModulePkg/InsydeModulePkg.dec
+  IntelFrameworkPkg/IntelFrameworkPkg.dec
+
+[LibraryClasses]
+  UefiDriverEntryPoint
+  UefiBootServicesTableLib 
+  MemoryAllocationLib
+  BadgingSupportLib
+  DebugLib
+  DxeOemSvcChipsetLibDefault
+[Protocols]
+  gEfiSetupUtilityProtocolGuid
+
+[Depex]
+  gEfiSetupUtilityProtocolGuid
+  

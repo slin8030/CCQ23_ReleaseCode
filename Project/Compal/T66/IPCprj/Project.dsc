@@ -990,6 +990,11 @@
 ################################################################################
 [LibraryClasses]
 
+  !disable PlatformBdsLib|$(CHIPSET_PKG)/Library/PlatformBdsLib/PlatformBdsLib.inf
+  PlatformBdsLib|$(CHIPSET_PKG)/Library/PlatformBdsLib/PlatformBdsLib.inf{
+    <SOURCE_OVERRIDE_PATH>
+      $(PROJECT_PKG)/Override/$(CHIPSET_PKG)/Library/PlatformBdsLib/
+  }
 [LibraryClasses.common]
   
 [LibraryClasses.common.SEC]
@@ -1087,6 +1092,11 @@ $(PROJECT_OVERRIDE)/InsydeModulePkg/H2ODebug/DebugEngineDxe/DebugEngineDxe.inf
 ApolloLakeBoardPkg/Tools/Source/Shell/TriggerRecovery/TriggerRecovery.inf
 #[-end-190722-IB16530042-add]#
 
+  !disable $(CHIPSET_PKG)/OEMBadgingSupportDxe/OEMBadgingSupportDxe.inf
+  $(CHIPSET_PKG)/OEMBadgingSupportDxe/OEMBadgingSupportDxe.inf {
+    <SOURCE_OVERRIDE_PATH>
+    $(PROJECT_PKG)/Override/$(CHIPSET_PKG)/OEMBadgingSupportDxe/
+  }
 #[-start-160217-IB07400702-add]#
 [BuildOptions]
   DEFINE EDK_EDKII_DSC_FEATURE_BUILD_OPTIONS      = $(EDK_EDKII_DSC_FEATURE_BUILD_OPTIONS) $(CC_FLAGS)     
