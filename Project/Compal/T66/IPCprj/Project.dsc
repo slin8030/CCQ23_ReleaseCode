@@ -1030,6 +1030,13 @@
   DxeOemSvcKernelLib|$(PROJECT_PKG)/Library/DxeOemSvcKernelLib/DxeOemSvcKernelLib.inf
   
 [LibraryClasses.common.DXE_DRIVER]  
+
+  !disable BadgingSupportLib|InsydeModulePkg/Library/CommonPlatformLib/BadgingSupportLib/BadgingSupportLib.inf
+  BadgingSupportLib|InsydeModulePkg/Library/CommonPlatformLib/BadgingSupportLib/BadgingSupportLib.inf {
+    <SOURCE_OVERRIDE_PATH>
+      $(PROJECT_PKG)/Override/InsydeModulePkg/Library/CommonPlatformLib/BadgingSupportLib
+  }
+
   DxeOemSvcKernelLib|$(PROJECT_PKG)/Library/DxeOemSvcKernelLib/DxeOemSvcKernelLib.inf
   
 [LibraryClasses.common.UEFI_DRIVER]

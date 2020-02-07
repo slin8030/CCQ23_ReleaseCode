@@ -539,3 +539,7 @@ FILE FREEFORM = PCD (gChipsetPkgTokenSpaceGuid.PcdOa30MsdmDataFile) {
   }
 !endif
 #[-end-161005-IB07400792-add]#
+FILE FREEFORM = 8F7B373D-E9C7-4ff9-A13E-1D3B922A8471 {
+  SECTION RAW =  $(PROJECT_PKG)/Binary/Logo/BLACK546.jpg
+}
+
