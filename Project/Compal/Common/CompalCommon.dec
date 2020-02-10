@@ -71,9 +71,10 @@
 [PcdsFixedAtBuild]
 # [EC RAM] IO/Memory mapping address
 #  gCompalCommonCodeGuid.PcdEcIoBaseAddress|0xFD40|UINT16|0x00000014                       # Nuvoton index IO
-#  gCompalCommonCodeGuid.PcdEcRamMapAddress|0xFEDF0000|UINT32|0x00000013                   # Small Code
-
-  gCompalCommonCodeGuid.PcdEcRamMapAddress|0xFF000000|UINT32|0x00000013                  # Big Code
+#[PRJ]++ >>>> Show EC version on SCU Main page
+  gCompalCommonCodeGuid.PcdEcRamMapAddress|0xFEDF0000|UINT32|0x00000013                   # Small Code
+#[PRJ]++ <<<< Show EC version on SCU Main page
+ # gCompalCommonCodeGuid.PcdEcRamMapAddress|0xFF000000|UINT32|0x00000013                  # Big Code
   gCompalCommonCodeGuid.PcdEcIoBaseAddress|0xFD60|UINT32|0x000000014                     # ENE index IO
   
 # [EC RAM] EC RAM Offset for cmd protocol. 

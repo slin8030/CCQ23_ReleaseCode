@@ -989,7 +989,14 @@
 #
 ################################################################################
 [LibraryClasses]
-
+#[PRJ]++ >>>> Show EC version on SCU Main page
+  !disable PlatformVfrLib|$(CHIPSET_PKG)/UefiSetupUtilityDxe/PlatformVfrLib.inf
+  PlatformVfrLib|$(CHIPSET_PKG)/UefiSetupUtilityDxe/PlatformVfrLib.inf{
+    <SOURCE_OVERRIDE_PATH>
+     $(PROJECT_PKG)/Override/$(CHIPSET_PKG)/UefiSetupUtilityDxe/
+  }
+  BaseOemSvcKernelLib|$(PROJECT_PKG)/Library/BaseOemSvcKernelLib/BaseOemSvcKernelLib.inf
+#[PRJ]++ <<<< Show EC version on SCU Main page
   !disable PlatformBdsLib|$(CHIPSET_PKG)/Library/PlatformBdsLib/PlatformBdsLib.inf
   PlatformBdsLib|$(CHIPSET_PKG)/Library/PlatformBdsLib/PlatformBdsLib.inf{
     <SOURCE_OVERRIDE_PATH>
@@ -1104,6 +1111,14 @@ ApolloLakeBoardPkg/Tools/Source/Shell/TriggerRecovery/TriggerRecovery.inf
     <SOURCE_OVERRIDE_PATH>
     $(PROJECT_PKG)/Override/$(CHIPSET_PKG)/OEMBadgingSupportDxe/
   }
+  
+#[PRJ]++ >>>> Show EC version on SCU Main page
+  !disable $(CHIPSET_PKG)/UefiSetupUtilityDxe/SetupUtilityDxe.inf
+  $(CHIPSET_PKG)/UefiSetupUtilityDxe/SetupUtilityDxe.inf {
+    <SOURCE_OVERRIDE_PATH>
+    $(PROJECT_PKG)/Override/$(CHIPSET_PKG)/UefiSetupUtilityDxe/
+  }  
+#[PRJ]++ <<<< Show EC version on SCU Main page  
 #[-start-160217-IB07400702-add]#
 [BuildOptions]
   DEFINE EDK_EDKII_DSC_FEATURE_BUILD_OPTIONS      = $(EDK_EDKII_DSC_FEATURE_BUILD_OPTIONS) $(CC_FLAGS)     
@@ -1118,3 +1133,4 @@ ApolloLakeBoardPkg/Tools/Source/Shell/TriggerRecovery/TriggerRecovery.inf
 #[-end-190722-IB16530042-remove]#
 #[-end-190402-H2OIDE-5.0.14.52-IB16530009-add]#
 #[-end-190722-IB16530041-modify]#
+

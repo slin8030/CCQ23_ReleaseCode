@@ -1,0 +1,272 @@
+## @file
+#
+#  Component description file for SetupUtilityDxe module
+#
+#******************************************************************************
+#* Copyright (c) 2012 - 2015, Insyde Software Corp. All Rights Reserved.
+#*
+#* You may not reproduce, distribute, publish, display, perform, modify, adapt,
+#* transmit, broadcast, present, recite, release, license or otherwise exploit
+#* any part of this publication in any form, by any means, without the prior
+#* written permission of Insyde Software Corporation.
+#*
+#******************************************************************************
+
+
+[Defines]
+  INF_VERSION                    = 0x00010005
+  BASE_NAME                      = SetupUtility
+  FILE_GUID                      = FE3542FE-C1D3-4EF8-657C-8048606FF670
+  MODULE_TYPE                    = DXE_DRIVER
+  VERSION_STRING                 = 1.0
+  ENTRY_POINT                    = SetupUtilityInit
+  STRGATHER_RESERVE_SIZE         = 0x1000
+[Sources]
+  Images/SetupImage.idf
+  SetupUtility.c
+  SetupFuncs.c
+  GenericCallback.c
+
+  Advance/Advance.c
+!if $(ENBDT_PF_BUILD) == YES
+  Advance/IdeConfig.c
+#[-start-160816-IB10860206-add]#
+  Advance/SataConfig.c
+#[-end-160816-IB10860206-add]#
+!endif
+
+  Power/Power.c
+  Main/PlatformInfo.c
+
+
+  SetupVfrStrings.uni
+  Advance/AdvanceVfr.vfr
+  Advance/BootHfr.hfr
+
+
+  Advance/UnCore.vfi
+  Advance/SouthClusterConfig.vfi
+
+  Advance/Thermal.vfi
+#[-start-151231-IB03090424-add]#
+  Advance/DptfPolicy.vfi
+#[-end-151231-IB03090424-add]#
+  Advance/SystemComponent.vfi
+  Advance/DebugConfig.vfi
+  Advance/AcpiSetup.vfi
+  Advance/RTD3.vfi
+#[-start-160523-IB07220085-add]#
+  Advance/MemorySystem.vfi
+#[-end-160523-IB07220085-add]#
+  Advance/Security.vfi
+
+  Advance/AcpiFeature.hfr
+#[-start-160725-IB07400761-add]#
+!if $(VBT_HOOK_SUPPORT) == YES
+  Advance/VbtHook.vfi
+!endif
+#[-end-160725-IB07400761-add]#
+#[-start-160923-IB07400789-add]#
+  Advance/SegChipsetFeature.vfi
+#[-end-160923-IB07400789-add]#
+  Power/PowerVfr.vfr
+  Power/Cpu.vfi
+  Power/CpuPower.vfi
+
+[Packages]
+  $(CHIPSET_PKG)/$(CHIPSET_PKG).dec
+  $(PROJECT_PKG)/Project.dec
+  MdePkg/MdePkg.dec
+  MdeModulePkg/MdeModulePkg.dec
+  InsydeModulePkg/InsydeModulePkg.dec
+  IntelFrameworkPkg/IntelFrameworkPkg.dec
+  InsydeOemServicesPkg/InsydeOemServicesPkg.dec
+  $(PLATFORM_RC_PACKAGE)/$(PLATFORM_RC_PACKAGE).dec
+  ClientSiliconPkg/ClientSiliconPkg.dec
+#[-start-160704-IB07220103-add]#
+  $(PLATFORM_RC_PACKAGE)/NorthCluster/MemoryInit/MemoryInit.dec
+#[-end-160704-IB07220103-add]#
+#[PRJ] ++ >>>> Add EC version on SCU Main page
+  $(COMPAL_COMMON_PATH)/CompalCommon.dec
+#[PRJ] ++ <<<< Add EC version on SCU Main page
+[LibraryClasses]
+  BaseLib
+  MemoryAllocationLib
+  UefiBootServicesTableLib
+  UefiDriverEntryPoint
+  UefiRuntimeServicesTableLib
+  BaseMemoryLib
+  DebugLib
+  HiiLib
+  PrintLib
+  OemGraphicsLib
+  PostCodeLib
+  UefiLib
+  SetupUtilityLib
+  HobLib
+  DxeOemSvcKernelLibDefault
+  DxeOemSvcChipsetLibDefault
+  DxeInsydeChipsetLib
+!if $(TABLET_PF_BUILD) == YES      
+  SeCLib
+!endif
+  MultiConfigBaseLib
+  VariableSupportLib
+  VariableLib
+!if $(ENBDT_PF_BUILD) == YES
+  DxeKscLib
+!endif
+#[-start-160803-IB07220122-remove]#
+#   PlatformConfigDataLib
+#[-end-160803-IB07220122-remove]#
+#[-start-160218-IB03090424-add]#
+  HeciMsgLib
+#[-end-160218-IB03090424-add]#
+#[-start-160704-IB07220103-add]#
+  BaseIpcLib
+  SteppingLib
+#[-end-160704-IB07220103-add]#
+#[-start-160816-IB10860206-add]#
+  MmPciLib
+#[-end-160816-IB10860206-add]#
+#[-start-161114-IB07400814-add]#
+  IoLib
+#[-end-161114-IB07400814-add]#
+#[PRJ] ++ >>>> Add EC version on SCU Main page
+  CompalEcLib
+#[PRJ] ++ <<<< Add EC version on SCU Main page
+
+
+[Guids]
+  gEfiIfrTianoGuid                              ## CONSUMES ## Guid
+  gEfiIfrFrameworkGuid
+  gEfiGlobalVariableGuid
+  gEfiPowerOnPwSCUHobGuid
+  gEfiDiskInfoIdeInterfaceGuid
+  gEfiDiskInfoAhciInterfaceGuid
+  gEfiGenericVariableGuid
+  gEfiPlatformInfoGuid
+  gEfiDiskInfoNvmeInterfaceGuid
+#[-start-160704-IB07220103-add]#
+  gEfiMemoryConfigDataGuid
+#[-end-160704-IB07220103-add]#
+
+[Protocols]
+  gEfiHiiStringProtocolGuid                     ## CONSUMES
+  gEfiHiiConfigRoutingProtocolGuid              ## CONSUMES
+  gEfiHiiConfigAccessProtocolGuid               ## PRODUCES
+  gEfiFormBrowser2ProtocolGuid                  ## CONSUMES
+  gEfiHiiDatabaseProtocolGuid                   ## CONSUMES
+  gEfiSimpleTextInputExProtocolGuid             ## CONSUMES
+  gEfiSetupUtilityProtocolGuid
+  gEfiHiiProtocolGuid
+  gEfiHiiCompatibilityProtocolGuid
+  gEfiSmbiosProtocolGuid
+  gEfiSetupUtilityBrowserProtocolGuid
+  gH2ODialogProtocolGuid
+  gEfiAlertStandardFormatProtocolGuid
+  gSetupMouseProtocolGuid
+  gEfiDataHubProtocolGuid
+  gEfiSeCOperationProtocolGuid
+  gEfiSetupUtilityApplicationProtocolGuid  
+#[-start-161215-IB08450359-remove]#
+#  gVariableEditProtocolGuid 
+#[-end-161215-IB08450359-remove]#
+  gEdkiiFormBrowserEx2ProtocolGuid
+  gH2OFormBrowserProtocolGuid
+#[-start-150506-IB10860198-add]#
+#[-start-161215-IB08450359-remove]#
+#  gVariableEditBootTypeInfoProtocolGuid
+#[-end-161215-IB08450359-remove]#
+#[-end-150506-IB10860198-add]#
+#[-start-160816-IB10860206-add]#
+  gEfiPciIoProtocolGuid
+  gEfiDiskInfoProtocolGuid
+  gEfiDevicePathProtocolGuid
+#[-end-160816-IB10860206-add]#
+#[-start-160608-IB05400680-add]#
+  gEfiHeciSmmRuntimeProtocolGuid
+#[-end-160608-IB05400680-add]#
+#[-start-161027-IB07400806-add]#
+  gCpuGlobalNvsAreaProtocolGuid
+#[-end-161027-IB07400806-add]#
+
+[Pcd]
+  gEfiMdePkgTokenSpaceGuid.PcdUefiVariableDefaultPlatformLang
+  gInsydeTokenSpaceGuid.PcdPlatformBootTimeOut
+  gInsydeTokenSpaceGuid.PcdPortNumberMapTable
+  gInsydeTokenSpaceGuid.PcdH2ODdtSupported
+#[-start-171002-IB07400914-remove]#
+#  gChipsetPkgTokenSpaceGuid.FtpmSupport
+#[-end-171002-IB07400914-remove]#
+  gInsydeTokenSpaceGuid.PcdStatusCodeUseUsb
+  gChipsetPkgTokenSpaceGuid.PcdSetupConfigSize
+  gChipsetPkgTokenSpaceGuid.PcdSwitchableGraphicsSupported
+  gChipsetPkgTokenSpaceGuid.MrcRmtEfiDebug
+  gEfiMdePkgTokenSpaceGuid.PcdPciExpressBaseAddress
+  gEfiBxtTokenSpaceGuid.PcdPmcGcrBaseAddress
+#[-start-151124-IB07220021-remove]#
+#   gChipsetPkgTokenSpaceGuid.PcdH2OConsoleRedirectionClassGuid
+#[-end-151124-IB07220021-remove]#
+#[-start-150506-IB10860198-add]#
+  gInsydeTokenSpaceGuid.PcdLegacyBootTypeOrder
+#[-end-150506-IB10860198-add]#
+#[-start-160419-IB07400718-add]#
+  gChipsetPkgTokenSpaceGuid.PcdPmcFwVersion
+#[-end-160419-IB07400718-add]#
+#[-start-160726-IB07400762-add]#
+  gSiPkgTokenSpaceGuid.PcdSiliconRefCodeVersion
+#[-end-160726-IB07400762-add]#
+#[-start-180115-IB07400945-add]#
+  gSiPkgTokenSpaceGuid.PcdIotgSiliconRefCodeVersion
+#[-end-180115-IB07400945-add]#
+#[-start-160602-IB07400739-add]#
+  gLinkAdvancedTokenSpaceGuid
+  gLinkPowerTokenSpaceGuid
+#[-end-160602-IB07400739-add]#
+#[-start-161114-IB07400814-add]#
+  gEfiBxtTokenSpaceGuid.PcdPmcIpc1BaseAddress0
+#[-end-161114-IB07400814-add]#
+#[-start-161205-IB07400822-add]#
+#[-start-170111-IB07400832-remove]#
+#  gChipsetPkgTokenSpaceGuid.PcdKscSupport
+#[-end-170111-IB07400832-remove]#
+#[-end-161205-IB07400822-add]#
+#[-start-181001-IB07401020-add]#
+  gChipsetPkgTokenSpaceGuid.PcdFlashSpiRomSize
+#[-end-181001-IB07401020-add]#
+
+[FeaturePcd]
+  gInsydeTokenSpaceGuid.PcdMultiConfigSupported
+  gInsydeTokenSpaceGuid.PcdH2OFormBrowserSupported
+  gInsydeTokenSpaceGuid.PcdH2OFormBrowserLocalMetroDESupported  
+  gChipsetPkgTokenSpaceGuid.PcdRuntimeFtpmDtpmSwitch
+#[-start-161201-IB11270170-remove]#
+##[-start-161007-IB11270165-add]#
+#  gInsydeTokenSpaceGuid.PcdH2OSdhcSupported
+##[-end-161007-IB11270165-add]#
+#[-end-161201-IB11270170-remove]#
+#[-start-160914-IB07400784-add]#
+  gInsydeTokenSpaceGuid.PcdSecureFlashSupported
+#[-end-160914-IB07400784-add]#
+#[-start-170124-IB07400837-add]#
+  gInsydeTokenSpaceGuid.PcdH2ORotateScreenSupported
+#[-end-170124-IB07400837-add]#
+#[-start-171002-IB07400914-add]#
+  gChipsetPkgTokenSpaceGuid.FtpmSupport
+#[-end-171002-IB07400914-add]#
+
+[Depex]
+!if $(TABLET_PF_BUILD) == YES
+   gEfiVariableArchProtocolGuid       AND
+   gEfiVariableWriteArchProtocolGuid  AND
+   gEfiHeciProtocolGuid
+!else
+   gEfiVariableArchProtocolGuid       AND
+   gEfiVariableWriteArchProtocolGuid
+!endif
+[BuildOptions]
+  MSFT:*_*_*_CC_FLAGS = /GL-
+  MSFT:*_*_*_VFRPP_FLAGS = -DSETUP_IMAGE_SUPPORT /FI$(MODULE_NAME)IdfDefs.h
+  GCC:*_*_*_VFRPP_FLAGS  = -DSETUP_IMAGE_SUPPORT --include $(DEST_DIR_DEBUG)/$(MODULE_NAME)IdfDefs.h
+
