@@ -1,0 +1,168 @@
+/** @file
+
+ Form set for Advance page of SetupUtilityDxe driver
+
+;******************************************************************************
+;* Copyright (c) 2012 - 2014, Insyde Software Corp. All Rights Reserved.
+;*
+;* You may not reproduce, distribute, publish, display, perform, modify, adapt,
+;* transmit, broadcast, present, recite, release, license or otherwise exploit
+;* any part of this publication in any form, by any means, without the prior
+;* written permission of Insyde Software Corporation.
+;*
+;******************************************************************************
+*/
+
+#include "Configuration.h"
+#include "ChipsetSetupConfig.h"
+
+//
+//          Form 2: Advanced Menu
+//
+formset
+#if FeaturePcdGet(PcdH2OFormBrowserSupported)
+  guid      = FORMSET_ID_GUID_ADVANCE,
+#else
+  guid      = SYSTEM_CONFIGURATION_GUID,
+#endif
+  title     = STRING_TOKEN(STR_ADVANCED_TITLE),
+  help      = STRING_TOKEN(STR_BLANK_STRING),
+  classguid = SETUP_UTILITY_FORMSET_CLASS_GUID,
+  class     = SETUP_UTILITY_CLASS,
+  subclass  = EFI_USER_ACCESS_THREE,
+#if defined(SETUP_IMAGE_SUPPORT) && FeaturePcdGet(PcdH2OFormBrowserLocalMetroDESupported)
+  image     = IMAGE_TOKEN (IMAGE_ADVANCE);
+#endif
+
+  varstore CHIPSET_CONFIGURATION,            // This is the data structure type
+    varid = CONFIGURATION_VARSTORE_ID,      // Optional VarStore ID
+    name  = SystemConfig,                    // Define referenced name in vfr
+    guid  = SYSTEM_CONFIGURATION_GUID;      // GUID of this buffer storage
+
+
+
+form formid = ROOT_FORM_ID,
+
+    title = STRING_TOKEN(STR_ADVANCED_TITLE);
+
+    subtitle
+      text = STRING_TOKEN(STR_BLANK_STRING);
+
+    goto BOOT_CONFIGUATION_FORM_ID,  //
+      prompt = STRING_TOKEN(STR_BOOT_CONFIG_STRING),
+      help = STRING_TOKEN(STR_BOOT_CONFIG_HELP);
+
+    //
+    // Jump to  3)Uncore Configuration Form
+    //
+    goto UNCORE_FORM_ID,
+      prompt = STRING_TOKEN(STR_UNCORE_CONFIGURATION_TITLE),
+#if defined(SETUP_IMAGE_SUPPORT) && FeaturePcdGet(PcdH2OFormBrowserLocalMetroDESupported)
+      help   = STRING_TOKEN(STR_UNCORE_CONFIGURATION_HELP);
+      image = IMAGE_TOKEN (IMAGE_VIDEO_CONFIG);
+#else
+      help   = STRING_TOKEN(STR_UNCORE_CONFIGURATION_HELP);
+#endif
+
+    //
+    // Jump to  4)South Cluster  Configuration Form
+    //
+    goto SOUTH_CLUSTER_FORM_ID,
+      prompt = STRING_TOKEN(STR_SOUTH_CLUSTER_TITLE),
+      help   = STRING_TOKEN(STR_SOUTH_CLUSTER_HELP);
+
+    //
+    // Jump to  6)Security Configuration Form  (Skip, Used kernel page)
+    //
+    goto SECURITY_CONFIGURATION_FORM_ID,
+      prompt = STRING_TOKEN(STR_SECURITY_CONFIGURATION_TITLE),
+      help   = STRING_TOKEN(STR_SECURITY_CONFIGURATION_HELP);
+
+    //
+    // Jump to  7)Thermal Form
+    //
+    goto THERMAL_FORM_ID,
+//[-start-170322-IB07400848-modify]//
+      prompt = STRING_TOKEN(STR_THERMAL_TITLE2),
+//[-end-170322-IB07400848-modify]//
+      help   = STRING_TOKEN(STR_THERMAL_HELP);
+
+    //
+    // Jump to 8) System Component Form
+    goto SYSTEM_COMPONENT_FORM_ID,
+      prompt = STRING_TOKEN(STR_SYSTEM_COMPONENT_TITLE),
+      help   = STRING_TOKEN(STR_SYSTEM_COMPONENT_HELP);
+
+    //
+    // Jump to  10)Debug Configuration Form
+    //
+    goto DEBUG_CONFIGURATION_FORM_ID,
+      prompt = STRING_TOKEN(STR_DEBUG_CONFIGURATION_TITLE),
+      help   = STRING_TOKEN(STR_DEBUG_CONFIGURATION_HELP);
+
+
+    //
+    // Jump to  12)RTD3 Configuration Form
+    //
+    goto RTD3_FORM_ID,
+      prompt = STRING_TOKEN(STR_RTD3_FORM),
+      help   = STRING_TOKEN(STR_RTD3_FORM_HELP);
+
+//[-start-160523-IB07220085-add]//
+//[-start-161001-IB07400791-modify]//
+    //
+    // Jump to Memory System Configuration Form 
+    //
+#ifdef BIOS_SETUP_DRAM_POLICY    
+    goto MEMORY_SYSTEM_FORM_ID,
+      prompt = STRING_TOKEN(STR_MEMORY_SYSTEM_CONFIGURATION_TITLE),
+      help   = STRING_TOKEN(STR_MEMORY_SYSTEM_CONFIGURATION_HELP);
+#endif      
+//[-end-161001-IB07400791-modify]//
+//[-end-160523-IB07220085-add]//
+
+
+#if (ENBDT_PF_ENABLE==1)
+    goto ACPI_FEATURE_FORM_ID,
+      prompt = STRING_TOKEN(STR_ACPI_TABLE_STRING),
+  #if defined(SETUP_IMAGE_SUPPORT) && FeaturePcdGet(PcdH2OFormBrowserLocalMetroDESupported)
+      help = STRING_TOKEN(STR_ACPI_TABLE_HELP),
+      image = IMAGE_TOKEN (IMAGE_ACPI_CONFIG),;
+  #else
+      help = STRING_TOKEN(STR_ACPI_TABLE_HELP);
+  #endif
+
+#endif
+//[-start-160923-IB07400789-add]//
+    goto SEG_CHIPSET_FEATURE_FORM_ID,
+      prompt = STRING_TOKEN(STR_SEG_CHIPSET_FEATURE_TITLE),
+      help   = STRING_TOKEN(STR_SEG_CHIPSET_FEATURE_TITLE);
+//[-end-160923-IB07400789-add]//
+
+  endform;
+
+#include "BootHfr.hfr"
+
+#include "UnCore.vfi"
+#include "SouthClusterConfig.vfi"
+
+#include "Security.vfi"
+#include "Thermal.vfi"
+#include "SystemComponent.vfi"
+
+#include "DebugConfig.vfi"
+#include "AcpiSetup.vfi"
+#include "RTD3.vfi"
+//[-start-160523-IB07220085-add]//
+#include "MemorySystem.vfi"
+//[-end-160523-IB07220085-add]//
+
+#include "AcpiFeature.hfr"
+
+//[-start-160923-IB07400789-add]//
+#include "SegChipsetFeature.vfi"
+//[-end-160923-IB07400789-add]//
+
+link;
+
+endformset;
