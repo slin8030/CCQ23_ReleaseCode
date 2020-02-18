@@ -75,16 +75,12 @@
             <UfsGppLunId value="6" value_list="0,,1,,2,,3,,4,,5,,6,,7" label="UFS GPP LUN ID" help_text="The UFS GPP LUN ID is a single byte value stored in the UFS GPP LUN Sub-Partition" />
         </UfsSettings>
         <HostCpuBiosMasterAccess label="Host CPU / BIOS Master Access">
-            <HostCpuWriteAccess value="0xFFF" value_list="0xFFF,,0x002,,0x012,,Custom" label="Host CPU / BIOS Write Access" help_text="This setting determines write access control for the Host CPU / BIOS.  For further details on Region Access Control see the SPI and SMIP Programming Guide" />
-            <HostCpuWriteAccessCustom value="0x0" label="Host CPU / BIOS Write Access Custom" help_text="This setting determines write access control for the Host CPU / BIOS.  For further details on Region Access Control see the SPI and SMIP Programming Guide" />
-            <HostCpuReadAccess value="0xFFF" value_list="0xFFF,,0x003,,0x013,,Custom" label="Host CPU / BIOS Read Access" help_text="This setting determines read access control for the Host CPU / BIOS.  For further details on Region Access Control see the SPI and SMIP Programming Guide" />
-            <HostCpuReadAccessCustom value="0x0" label="Host CPU / BIOS Read Access Custom" help_text="This setting determines read access control for the Host CPU / BIOS.  For further details on Region Access Control see the SPI and SMIP Programming Guide" />
+            <HostCpuWriteAccess value="0xFFF" value_list="0xFFF,,0x002,,0x012" label="Host CPU / BIOS Write Access" help_text="This setting determines write access control for the Host CPU / BIOS.  For further details on Region Access Control see the SPI and SMIP Programming Guide" />
+            <HostCpuReadAccess value="0xFFF" value_list="0xFFF,,0x003,,0x013" label="Host CPU / BIOS Read Access" help_text="This setting determines read access control for the Host CPU / BIOS.  For further details on Region Access Control see the SPI and SMIP Programming Guide" />
         </HostCpuBiosMasterAccess>
         <IntelTxeMasterAccess label="Intel(R) TXE Master Access">
-            <TxeWriteAccess value="0xFFF" value_list="0xFFF,,0x024,,Custom" label="Intel(R) TXE Write Access" help_text="This setting determines write access control for the TXE.  For further details on Region Access Control see the SPI and SMIP Programming Guide" />
-            <TxeWriteAccessCustom value="0x0" label="Intel(R) TXE Write Access Custom" help_text="This setting determines write access control for the TXE.  For further details on Region Access Control see the SPI and SMIP Programming Guide" />
-            <TxeReadAccess value="0xFFF" value_list="0xFFF,,0x027,,Custom" label="Intel(R) TXE Read Access" help_text="This setting determines read access control for the TXE.  For further details on Region Access Control see the SPI and SMIP Programming Guide" />
-            <TxeReadAccessCustom value="0x0" label="Intel(R) TXE Read Access Custom" help_text="This setting determines read access control for the TXE.  For further details on Region Access Control see the SPI and SMIP Programming Guide" />
+            <TxeWriteAccess value="0xFFF" value_list="0xFFF,,0x024" label="Intel(R) TXE Write Access" help_text="This setting determines write access control for the TXE.  For further details on Region Access Control see the SPI and SMIP Programming Guide" />
+            <TxeReadAccess value="0xFFF" value_list="0xFFF,,0x027" label="Intel(R) TXE Read Access" help_text="This setting determines read access control for the TXE.  For further details on Region Access Control see the SPI and SMIP Programming Guide" />
         </IntelTxeMasterAccess>
         <FlashConfiguration label="Flash Configuration">
             <BootBlockSize value="64KB" value_list="64KB,,128KB,,256KB,,512KB,,1MB" label="Boot Block Size" help_text="This soft strap only applies when booting from SPI. Boot from LPC (FWH) only supports a 64KB boot block size (Invert A16) and this soft strap value is a don't care. Note No bits are inverted if a Reserved encoding is programmed." />

@@ -98,9 +98,7 @@ pushd Stitch\
 call Stitch.bat > NUL
 popd
 if NOT "%errorlevel%" == "0" goto error 
-REM [-start-180531-IB07400971-modify]REM
 REM [-start-160713-IB07400757-modify]REM
-if exist SkipGenIfwiBios.txt goto SkipGenIfwiBios
 pushd Bios\
 REM [-start-170214-IB07400840-modify]REM
 REM Gen Integrated Firmware Image (IFWI)
@@ -110,11 +108,9 @@ popd
 REM [-start-160913-IB07400783-add]REM
 if NOT "%errorlevel%" == "0" goto error 
 REM [-end-160913-IB07400783-add]REM
-call SetupGenFullBiosPackage.bat
+REM call SetupGenFullBiosPackage.bat
 @echo.
-:SkipGenIfwiBios
 REM [-end-160713-IB07400757-modify]REM
-REM [-end-180531-IB07400971-modify]REM
 REM [-end-160420-IB07400719-modify]REM
 REM[-start-161123-IB07250310-add]REM
 REM ------------Restore ApolloLakeBoardPkg\Project.env file -------------#

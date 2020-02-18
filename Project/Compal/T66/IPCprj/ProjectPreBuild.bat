@@ -35,6 +35,12 @@ REM [-end-161207-IB07400824-add]REM
 
 @REM Run IBB override pre-build process
 @if exist %WORKSPACE%\%CHIPSET_PKG%\Override\IBBOverridePreBuild.bat call %WORKSPACE%\%CHIPSET_PKG%\Override\IBBOverridePreBuild.bat %1
+@if exist %WORKSPACE%\Conf\tools_def_.txt (
+        copy %WORKSPACE%\%T66_COMMON_PATH%\Override\Conf\tools_def.txt %WORKSPACE%\Conf\tools_def.txt /y
+    ) else (
+        copy %WORKSPACE%\Conf\tools_def.txt %WORKSPACE%\Conf\tools_def_.txt /y
+        copy %WORKSPACE%\%T66_COMMON_PATH%\Override\Conf\tools_def.txt %WORKSPACE%\Conf\tools_def.txt /y
+    )
 @if not errorlevel 0 goto error
 
 @REM Run kernel pre-build process
@@ -84,6 +90,7 @@ if exist %WORKSPACE%\%CHIPSET_PKG%\Override2\BaseTools (
 REM [-start-170519-IB07400868-add]REM
   xcopy /S /Y %WORKSPACE%\%CHIPSET_PKG%\Override2\Conf %WORKSPACE%\Conf > NUL
 REM [-end-170519-IB07400868-add]REM
+  xcopy /S /Y %WORKSPACE%\%T66_COMMON_PATH%\Override\Conf %WORKSPACE%\Conf > NUL
 )
 REM [-end-170512-IB07400866-add]REM
 REM [-start-190102-IB07401061-add]REM

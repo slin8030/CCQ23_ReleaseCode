@@ -15,7 +15,7 @@
 
 REM [-start-160518-IB07400730-modify]REM
 REM [-start-160713-IB07400758-modify]REM
-title InsydeH2O 5.1 Build Environment (%SOC_NAME%_%CRB_BOARD_NAME%)
+title InsydeH2O 5.1 Build Environment (%SOC_NAME%_%CRB_BOARD_NAME%) (%OemPath%)
 REM [-end-160713-IB07400758-modify]REM
 REM [-end-160518-IB07400730-modify]REM
 

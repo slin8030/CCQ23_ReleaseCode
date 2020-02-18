@@ -70,6 +70,7 @@ if exist %WORKSPACE%\%CHIPSET_PKG%\Override2\BaseTools (
 REM [-start-170519-IB07400868-add]REM
   xcopy /S /Y %WORKSPACE%\%CHIPSET_PKG%\Override2\Conf %WORKSPACE%\Conf > NUL
 REM [-end-170519-IB07400868-add]REM
+  xcopy /S /Y %WORKSPACE%\%T66_COMMON_PATH%\Override\Conf %WORKSPACE%\Conf > NUL
 )
 REM [-end-170327-IB07400850-add]REM
 REM[-start-161123-IB07250310-add]REM
@@ -97,7 +98,17 @@ if "%FSP_ENABLE%" == "YES" (
 )
 REM [-end-170915-IB07400910-modify]REM
 REM[-end-161123-IB07250310-add]REM
+
 REM [-start-180425-IB07400961-add]REM
 set BUILD_TOOL_CHAIN=%TOOL_CHAIN%
 REM [-end-180425-IB07400961-add]REM
+
 call %WORKSPACE%\BaseTools\H2ORev50.bat
+
+if '%AutoBuildEn%'=='1'  (
+  nmake clean
+  nm %AutoBuildCmd%
+  C:\Projects\Script\WinSCP.com /script=C:\Projects\Script\%OemPath%.txt
+)
+
+

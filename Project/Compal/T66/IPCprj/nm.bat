@@ -1,7 +1,10 @@
 @echo off
+SETLOCAL ENABLEDELAYEDEXPANSION
+
 set INTEXTFILE=Project.uni
 set OUTTEXTFILE=Project.tmp
 set PAR1=%1
+set tempfd=
 
 if '%1'==''      goto Build64
 if '%1'=='32'    goto Build32
@@ -71,8 +74,8 @@ if "%BIOSBuild%"=="IA32" (
 powershell -Command "(gc %INTEXTFILE%) -replace '%SEARCHTEXT%', '%REPLACETEXT%' | Out-File %OUTTEXTFILE%"
 del %INTEXTFILE%
 rename %OUTTEXTFILE% %INTEXTFILE%
-powershell -Command "(gc .\WinFlash\platform_FORM.ini) -replace '%SEARCHTEXT%', '%REPLACETEXT%' | Out-File .\WinFlash\platform_FORM.ini"
-powershell -Command "(gc .\WinFlash\platform_SWDL.ini) -replace '%SEARCHTEXT%', '%REPLACETEXT%' | Out-File .\WinFlash\platform_SWDL.ini"
+powershell -Command "(gc .\WinFlash\platform_FORM.ini) -replace '%SEARCHTEXT%', '%REPLACETEXT%' | Out-File .\WinFlash\platform_FORM.ini -Encoding oem"
+powershell -Command "(gc .\WinFlash\platform_SWDL.ini) -replace '%SEARCHTEXT%', '%REPLACETEXT%' | Out-File .\WinFlash\platform_SWDL.ini -Encoding oem"
 Goto :eof
 
 :BuildAll
@@ -110,11 +113,13 @@ nmake clean
 :Build64
 Set BIOSBuild=IA32 X64
 set ARCH=%BIOSBuild%
+
 CALL :ReplaceTarg
-del /q %WORKSPACE%%PROJECT_PKG%\Bios\%OemPath%_8M.%REPLACETEXT%.bin >NUL
-nmake uefi64
-echo %WORKSPACE%%PROJECT_PKG%\Bios\%OemPath%_8M.%REPLACETEXT%.bin
-IF NOT EXIST %WORKSPACE%%PROJECT_PKG%\Bios\%OemPath%_8M.%REPLACETEXT%.bin GOTO ERROR
+del /q %WORKSPACE%%PROJECT_PKG%\Bios\BIOS_Full\bxt_spi_8mb_OxbowHill\BX\*.* >NUL
+nmake uefi64debug
+echo BiosBin=%WORKSPACE%%PROJECT_PKG%\Bios\BIOS_Full\bxt_spi_8mb_OxbowHill\BX\%SOC_NAME%_%CRB_BOARD_NAME%_X64_EFIDEBUG.bin 
+IF NOT EXIST %WORKSPACE%%PROJECT_PKG%\Bios\BIOS_Full\bxt_spi_8mb_OxbowHill\BX\%SOC_NAME%_%CRB_BOARD_NAME%_X64_EFIDEBUG.bin GOTO ERROR 
+Copy /v /y %WORKSPACE%%PROJECT_PKG%\Bios\BIOS_Full\bxt_spi_8mb_OxbowHill\BX\%SOC_NAME%_%CRB_BOARD_NAME%_X64_EFIDEBUG.bin %WORKSPACE%%PROJECT_PKG%\Bios\%OemPath%_B0_8M.%REPLACETEXT%.bin
 CALL :BuildWinFlash
 echo build winflash done
 CALL :CopyReleasePackage 64
@@ -176,44 +181,74 @@ if not %ERRORLEVEL%==0 (
     goto ERROR
 )
 echo BuildWinFlash.
-echo %WORKSPACE%%PROJECT_PKG%\Bios\%OemPath%_8M.%REPLACETEXT%.bin
-echo %WORKSPACE%%PROJECT_PKG%\Bios\%OemPath%.%REPLACETEXT%.EXE
-pushd .\WinFlash\tools
-Copy /v /y %WORKSPACE%%PROJECT_PKG%\WinFlash\platform_FORM.ini %WORKSPACE%%PROJECT_PKG%\WinFlash\platform.ini
-iFdPacker.exe -winsrc .. -winini -b 3264 -fv %WORKSPACE%%PROJECT_PKG%\Bios\%OemPath%_8M.%REPLACETEXT%.bin -output %WORKSPACE%%PROJECT_PKG%\Bios\%OemPath%%REPLACETEXT%Win.EXE
-echo BuildWinFlash Done.
+SET BIOS_Ver=
+SET BIOS_SUB_Ver=
+type Project.uni |find "STR_MISC_BIOS_VERSION" > temp.txt
+FOR /F "tokens=6" %%i IN (temp.txt) DO (
+   set tempfd=%%i
+   SET BIOS_Ver=!tempfd:~0,-5!
+)
+DEL /Q temp.txt
 
+rem Setlocal
+CALL :dequote BIOS_Ver
+SET BIOS_Ver=%BIOS_Ver:~1%
+SET BIOS_Ver=%BIOS_Ver:.=%
+@echo.
+pushd .\WinFlash\Packer
+@echo Build Formal Release Winflash: %WORKSPACE%%PROJECT_PKG%\Bios\%OemPath%%BIOS_Ver%%REPLACETEXT%.EXE
+Copy /v /y %WORKSPACE%%PROJECT_PKG%\WinFlash\platform_FORM.ini %WORKSPACE%%PROJECT_PKG%\WinFlash\platform.ini
+iFdPacker.exe -winsrc .. -winini -b 64 -fv %WORKSPACE%%PROJECT_PKG%\Bios\%OemPath%_B0_8M.%REPLACETEXT%.bin -fv %WORKSPACE%%PROJECT_PKG%\Binary\Ec\ecb.bin -output %WORKSPACE%%PROJECT_PKG%\Bios\%OemPath%%BIOS_Ver%%REPLACETEXT%.EXE
+
+@echo Build SWDL Winflash: %WORKSPACE%%PROJECT_PKG%\Bios\%OemPath%%BIOS_Ver%%REPLACETEXT%_SWDL.EXE
 Copy /v /y %WORKSPACE%%PROJECT_PKG%\WinFlash\platform_SWDL.ini %WORKSPACE%%PROJECT_PKG%\WinFlash\platform.ini
-iFdPacker.exe -winsrc .. -winini -b 3264 -fv %WORKSPACE%%PROJECT_PKG%\Bios\%OemPath%_8M.%REPLACETEXT%.bin -output  %WORKSPACE%%PROJECT_PKG%\Bios\%OemPath%%REPLACETEXT%_SWDL.EXE
+iFdPacker.exe -winsrc .. -winini -b 64 -fv %WORKSPACE%%PROJECT_PKG%\Bios\%OemPath%_B0_8M.%REPLACETEXT%.bin -fv %WORKSPACE%%PROJECT_PKG%\Binary\Ec\ecb.bin -output  %WORKSPACE%%PROJECT_PKG%\Bios\%OemPath%%BIOS_Ver%%REPLACETEXT%_SWDL.EXE
 popd
+echo BuildWinFlash Done.
 Goto :eof
 
 :CopyReleasePackage
-rem SET BIOS_Ver=
-rem SET BIOS_SUB_Ver=
-rem type Project.uni |find "STR_MISC_BIOS_VERSION" > temp.txt
-rem FOR /F "tokens=5" %%i IN (temp.txt) DO SET BIOS_Ver=%%i
-rem DEL /Q temp.txt
+if not %ERRORLEVEL%==0 (
+   goto ERROR
+)
+
+SET BIOS_Ver=
+SET BIOS_SUB_Ver=
+type Project.uni |find "STR_MISC_BIOS_VERSION" > temp.txt
+FOR /F "tokens=6" %%i IN (temp.txt) DO (
+   set tempfd=%%i
+   SET BIOS_Ver=!tempfd:~0,-5!
+)
+DEL /Q temp.txt
 
 rem Setlocal
-rem CALL :dequote BIOS_Ver
-rem SET BIOS_Ver=%BIOS_Ver:~1%
-rem SET BIOS_Ver=%BIOS_Ver:.=%
-rem @echo.
+CALL :dequote BIOS_Ver
+SET BIOS_Ver=%BIOS_Ver:~1%
+SET BIOS_Ver=%BIOS_Ver:.=%
+@echo.
 
-rem IF "%PAR1%" == "ALL" SET BIOS_Ver=%BIOS_Ver%.%1
-rem IF "%PAR1%" == "all" SET BIOS_Ver=%BIOS_Ver%.%1
-rem echo %BIOS_Ver%
-rem IF EXIST %WORKSPACE%%PROJECT_PKG%\Bios\%BIOS_Ver% RD /s/q %WORKSPACE%%PROJECT_PKG%\Bios\%BIOS_Ver%
-rem md %WORKSPACE%%PROJECT_PKG%\Bios\%BIOS_Ver%
-rem md %WORKSPACE%%PROJECT_PKG%\Bios\%BIOS_Ver%\Shell
-rem md %WORKSPACE%%PROJECT_PKG%\Bios\%BIOS_Ver%\Win
-rem copy %WORKSPACE%%PROJECT_PKG%\Bios\%OemPath%_8M.%REPLACETEXT%.bin %WORKSPACE%%PROJECT_PKG%\Bios\%BIOS_Ver%\Shell >NUL
-rem copy /b %WORKSPACE%%PROJECT_PKG%\Binary\Ec\Ecb.bin+%WORKSPACE%%PROJECT_PKG%\Bios\%OemPath%_8M.%REPLACETEXT%.bin %WORKSPACE%%PROJECT_PKG%\Bios\%BIOS_Ver%\Shell\%OemPath%%BIOS_Ver%.bin >NUL
-rem echo flash64.efi %OemPath%%BIOS_Ver%.bin /ecb /all > %WORKSPACE%%PROJECT_PKG%\Bios\%BIOS_Ver%\Shell\Bios.nsh
-rem copy %WORKSPACE%%PROJECT_PKG%\Bios\flash64.efi %WORKSPACE%%PROJECT_PKG%\Bios\%BIOS_Ver%\Shell\flash64.efi >NUL
-rem copy %WORKSPACE%%PROJECT_PKG%\Bios\%OemPath%Win.EXE %WORKSPACE%%PROJECT_PKG%\Bios\%BIOS_Ver%\Win\%OemPath%%BIOS_Ver%.EXE >NUL
-rem @echo Output success to: %WORKSPACE%%PROJECT_PKG%\Bios\%BIOS_Ver%
+IF "%PAR1%" == "ALL" SET BIOS_Ver=%BIOS_Ver%.%1
+IF "%PAR1%" == "all" SET BIOS_Ver=%BIOS_Ver%.%1
+echo %BIOS_Ver%
+for /f "skip=7 tokens=5" %%a in ('dir .\Bios /a:d') do (
+  IF EXIST %WORKSPACE%%PROJECT_PKG%\Bios\%%a RD /s/q %WORKSPACE%%PROJECT_PKG%\Bios\%%a
+)
+mkdir %WORKSPACE%%PROJECT_PKG%\Bios\%BIOS_Ver%
+mkdir %WORKSPACE%%PROJECT_PKG%\Bios\%BIOS_Ver%\Shell
+mkdir %WORKSPACE%%PROJECT_PKG%\Bios\%BIOS_Ver%\Win
+mkdir %WORKSPACE%%PROJECT_PKG%\Bios\%BIOS_Ver%\SWDL
+copy /v /y .\WinFlash\H2OFFT-Sx64.efi %WORKSPACE%%PROJECT_PKG%\Bios\%BIOS_Ver%\Shell
+rem copy .\WinFlash\platform_FORM.ini %WORKSPACE%%PROJECT_PKG%\Bios\%BIOS_Ver%\Shell\platform.ini
+copy /v /y %WORKSPACE%%PROJECT_PKG%\Bios\%OemPath%_B0_8M.%REPLACETEXT%.bin %WORKSPACE%%PROJECT_PKG%\Bios\%BIOS_Ver%\Shell\%OemPath%%BIOS_Ver%.bin >NUL
+copy /b %WORKSPACE%%PROJECT_PKG%\Binary\Ec\Ecb.bin+%WORKSPACE%%PROJECT_PKG%\Bios\%OemPath%_B0_8M.%REPLACETEXT%.bin %WORKSPACE%%PROJECT_PKG%\Bios\%BIOS_Ver%\Shell\%OemPath%%BIOS_Ver%EC.bin >NUL
+echo H2OFFT-Sx64.efi %OemPath%%BIOS_Ver%EC.bin -ecb -bios > %WORKSPACE%%PROJECT_PKG%\Bios\%BIOS_Ver%\Shell\BiosEC.nsh
+copy /v /y %WORKSPACE%%PROJECT_PKG%\Bios\%OemPath%%BIOS_Ver%%REPLACETEXT%.EXE %WORKSPACE%%PROJECT_PKG%\Bios\%BIOS_Ver%\Win\
+copy /v /y %WORKSPACE%%PROJECT_PKG%\Bios\%OemPath%%BIOS_Ver%%REPLACETEXT%_SWDL.EXE %WORKSPACE%%PROJECT_PKG%\Bios\%BIOS_Ver%\SWDL\
+ 
+@echo Output success to: %WORKSPACE%%PROJECT_PKG%\Bios\%BIOS_Ver%
+
+IF EXIST *.7z del /q *.7z >NUL
+%TOOL_DRV%\%DEVTLS_DIR%\TOOLS\7z a %BIOS_Ver%.7z .\Bios\%BIOS_Ver% 
 Goto :eof
 
 :ERROR

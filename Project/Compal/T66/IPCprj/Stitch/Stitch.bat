@@ -85,6 +85,10 @@ pushd CSE\%CSE_Version%\APLK\MEU
 if not exist input\module_bin\ (
     mkdir input\module_bin\
 )
+
+REM Gen Alignment Ec
+if exist input\module_bin\AlignmentEc.bin del input\module_bin\AlignmentEc.bin /F/Q
+Copy /b %WORKSPACE%%PROJECT_PKG%\Binary\Ec\Alignment.bin + %WORKSPACE%%PROJECT_PKG%\Binary\Ec\ecb.bin input\module_bin\AlignmentEc.bin
 REM[-start-161123-IB07250310-modify]REM
 if "%FSP_ENABLE%" == "YES" (
   copy /y /b %SOURCE_FV_FOLDER_PATH%\IBBM.Fv input\module_bin
