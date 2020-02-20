@@ -24,6 +24,9 @@ goto END
 echo subst directory : %1
 echo project name    : %2
 echo virtual drive   : %3
+REM ++ >>>> Modify for build server process.
+echo Auto build cmd  : %4
+REM ++ <<<< Modify for build server process.
 echo.
 
 subst %3: /D
@@ -32,6 +35,12 @@ subst %3: %1
 Set OemPath=%2
 Set tagfile=%3:
 
+REM ++ >>>> Modify for build server process.
+If NOT "%4" == "" (
+  Set AutoBuildEn=1
+  Set AutoBuildCmd=%4
+)
+REM ++ <<<< Modify for build server process.
 REM Check Parent directory exist the tool or not.
 REM If not exist, use default D: drive or C: drive root directory.
 REM Base on new define for easy get code/compiler, we define each compiler tool set with code.
@@ -71,8 +80,9 @@ goto SetTOOLDone
 :SetTOOLDone
 set TOOL_DRV=%TOOL_DIR%
 %3:
-set WORKSPACE=%cd:~0,3%
+set WORKSPACE=%cd:~0,2%
 set PROJECT_PKG=Project\Compal\T66\IPCprj
+set T66_COMMON_PATH=Project\Compal\T66\COMMON
 cd %PROJECT_PKG%
 
 echo WORKSPACE=%WORKSPACE%

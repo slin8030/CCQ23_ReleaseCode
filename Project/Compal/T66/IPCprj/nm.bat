@@ -248,7 +248,9 @@ copy /v /y %WORKSPACE%%PROJECT_PKG%\Bios\%OemPath%%BIOS_Ver%%REPLACETEXT%_SWDL.E
 @echo Output success to: %WORKSPACE%%PROJECT_PKG%\Bios\%BIOS_Ver%
 
 IF EXIST *.7z del /q *.7z >NUL
+REM ++ >>>> Modify for build server process.
 %TOOL_DRV%\%DEVTLS_DIR%\TOOLS\7z a %BIOS_Ver%.7z .\Bios\%BIOS_Ver% 
+REM ++ >>>> Modify for build server process.
 Goto :eof
 
 :ERROR

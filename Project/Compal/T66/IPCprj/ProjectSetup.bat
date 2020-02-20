@@ -1,4 +1,4 @@
-@REM
+	@REM
 @REM Project setup batch file
 @REM
 @REM ******************************************************************************
@@ -105,10 +105,11 @@ REM [-end-180425-IB07400961-add]REM
 
 call %WORKSPACE%\BaseTools\H2ORev50.bat
 
+REM ++ >>>> Modify for build server process.
 if '%AutoBuildEn%'=='1'  (
   nmake clean
   nm %AutoBuildCmd%
   C:\Projects\Script\WinSCP.com /script=C:\Projects\Script\%OemPath%.txt
 )
-
+REM ++ <<<< Modify for build server process.
 
