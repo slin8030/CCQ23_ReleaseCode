@@ -48,6 +48,9 @@
             <DataModule name="NvCommon" enabled="true">
                 <InputFile value="$SourceDir/module_bin/NVCOMMON.fd" />
             </DataModule>
+            <DataModule name="EC" enabled="true">
+                <InputFile value="$SourceDir/module_bin/AlignmentEc.bin" />
+            </DataModule>
             <DataModule name="OBB" enabled="true">
                 <InputFile value="$SourceDir/module_bin/FVMAIN_COMPACT.Fv" />
             </DataModule>
