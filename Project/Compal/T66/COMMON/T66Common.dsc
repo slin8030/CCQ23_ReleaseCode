@@ -17,6 +17,7 @@
 #
 ################################################################################
 [LibraryClasses]
+  EcSpiLib|$(T66_COMMON_PATH)/Library/EcLib/$(EC_CHIPSET_VENDOR)/EcSpiLib/EcSpiLib.inf
 
 [LibraryClasses.common]
 

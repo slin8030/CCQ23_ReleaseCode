@@ -1,0 +1,42 @@
+## @file
+#  Component description file for EcSpiLib.
+#
+#******************************************************************************
+#* Copyright (c) 2012, Insyde Software Corp. All Rights Reserved.
+#*
+#* You may not reproduce, distribute, publish, display, perform, modify, adapt,
+#* transmit, broadcast, present, recite, release, license or otherwise exploit
+#* any part of this publication in any form, by any means, without the prior
+#* written permission of Insyde Software Corporation.
+#*
+#******************************************************************************
+
+[Defines]
+  INF_VERSION                    = 0x00010005
+  BASE_NAME                      = EcSpiLib
+  FILE_GUID                      = A3A93C32-10D0-48cc-86BF-69EF250944BA
+  MODULE_TYPE                    = DXE_CORE
+  VERSION_STRING                 = 1.0
+  LIBRARY_CLASS                  = EcSpiLib|DXE_CORE DXE_DRIVER UEFI_DRIVER DXE_SMM_DRIVER
+
+[Sources]
+  EcSpiLib.c
+
+[Packages]
+  MdePkg/MdePkg.dec
+  $(CHIPSET_PKG)/$(CHIPSET_PKG).dec
+  InsydeModulePkg/InsydeModulePkg.dec
+  IntelFrameworkPkg/IntelFrameworkPkg.dec
+  $(PROJECT_PKG)/Project.dec
+  $(COMPAL_COMMON_PATH)/CompalCommon.dec
+
+[LibraryClasses]
+  IoLib
+  CompalEcLib
+
+[FixedPcd]
+  gCompalCommonCodeGuid.PcdEcIoBaseAddress
+
+[Protocols]
+
+

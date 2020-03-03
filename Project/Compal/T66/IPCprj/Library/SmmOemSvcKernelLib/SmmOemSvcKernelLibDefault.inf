@@ -1,8 +1,8 @@
 ## @file
-#  Component description file for SmmOemSvcKernelLib instance.
+#  Component description file for SmmOemSvcKernelLibDefault instance.
 #
 #******************************************************************************
-#* Copyright (c) 2012-2014, Insyde Software Corp. All Rights Reserved.
+#* Copyright (c) 2012 - 2016, Insyde Software Corporation. All Rights Reserved.
 #*
 #* You may not reproduce, distribute, publish, display, perform, modify, adapt,
 #* transmit, broadcast, present, recite, release, license or otherwise exploit
@@ -13,14 +13,13 @@
 
 [Defines]
   INF_VERSION                    = 0x00010005
-  BASE_NAME                      = SmmOemSvcKernelLib
-  FILE_GUID                      = 9B96DBDD-979D-4cfa-AEC2-0D3730FA68EF
+  BASE_NAME                      = SmmOemSvcKernelLibDefault
+  FILE_GUID                      = C6946FFC-17B2-4219-8C5C-9516929AD310
   MODULE_TYPE                    = DXE_SMM_DRIVER
   VERSION_STRING                 = 1.0
-  LIBRARY_CLASS                  = SmmOemSvcKernelLib|DXE_SMM_DRIVER SMM_CORE
-  
+  LIBRARY_CLASS                  = SmmOemSvcKernelLibDefault|DXE_SMM_DRIVER SMM_CORE
+
 [Sources]
-  OemSvcVariablePreservedTable.c
   OemSvcDisableAcpiCallback.c
   OemSvcEnableAcpiCallback.c
   OemSvcGetAspmOverrideInfo.c
@@ -63,57 +62,24 @@
   OemSvcSmmHddUpdateSecurityStatus.c
 
 [Packages]
-  $(PROJECT_PKG)/Project.dec
   MdePkg/MdePkg.dec
   MdeModulePkg/MdeModulePkg.dec
   InsydeModulePkg/InsydeModulePkg.dec
   InsydeOemServicesPkg/InsydeOemServicesPkg.dec
-  $(CHIPSET_PKG)/$(CHIPSET_PKG).dec
   $(COMPAL_COMMON_PATH)/CompalCommon.dec
-
-#[-start-190220-IB07401083-add]#
-  $(PLATFORM_RC_PACKAGE)/$(PLATFORM_RC_PACKAGE).dec
-#[-end-190220-IB07401083-add]#
+  $(PROJECT_PKG)/Project.dec
 
 [LibraryClasses]
-#[-start-160809-IB11270161-add]#
+  SmmOemSvcKernelLib
   FlashRegionLib
-#[-end-160809-IB11270161-add]#
-  CmosLib
-  IoLib
-  PciExpressLib
-  EcSpiLib
-  CompalEcLib
   CompalFlashLib
-#[-start-190220-IB07401083-add]#
-  BootMediaLib
-#[-end-190220-IB07401083-add]#
+  CompalEcLib
+  EcSpiLib
+
 [Guids]
-  gH2OFlashMapRegionBvdtGuid
-  gH2OFlashMapRegionEcGuid
-  gH2OFlashMapRegionFlashMapGuid
-  gH2OFlashMapRegionFtwBackupGuid
-  gH2OFlashMapRegionFtwStateGuid
-  gH2OFlashMapRegionBvdtGuid
   gH2OFlashMapRegionFvGuid
-  gH2OFlashMapRegionFlashMapGuid
-  gH2OFlashMapRegionGpnvGuid
-  gH2OFlashMapRegionLogoGuid
-  gH2OFlashMapRegionMicrocodeGuid
-  gH2OFlashMapRegionMultiConfigGuid
-  gH2OFlashMapRegionMsdmGuid
-  gH2OFlashMapRegionOdmGuid
-  gH2OFlashMapRegionOemGuid
-  gH2OFlashMapRegionPasswordGuid
-  gH2OFlashMapRegionSmbiosEventLogGuid
-  gH2OFlashMapRegionSmbiosUpdateGuid
-  gH2OFlashMapRegionVarGuid
-  gH2OFlashMapRegionUnknownGuid
-  gH2OFlashMapRegionUnusedGuid
   gH2OFlashMapRegionDxeFvGuid
-  gH2OFlashMapRegionPeiFvGuid
-  gH2OFlashMapRegionUnsignedFvGuid
-  
+
 [Pcd]
   gEfiMdeModulePkgTokenSpaceGuid.PcdFlashNvStorageVariableBase
   gEfiMdeModulePkgTokenSpaceGuid.PcdFlashNvStorageVariableSize
@@ -135,16 +101,3 @@
   gInsydeTokenSpaceGuid.PcdFlashNvStorageFactoryCopySize
   gInsydeTokenSpaceGuid.PcdFlashFvRecoveryBase
   gInsydeTokenSpaceGuid.PcdFlashFvRecoverySize
-  gChipsetPkgTokenSpaceGuid.PcdFlashFvRecovery2Base
-  gChipsetPkgTokenSpaceGuid.PcdFlashFvRecovery2Size    
-#[-start-190220-IB07401083-add]#
-  gChipsetPkgTokenSpaceGuid.PcdFlashDeviceExpansionBase
-  gChipsetPkgTokenSpaceGuid.PcdFlashDeviceExpansionSize
-  gChipsetPkgTokenSpaceGuid.PcdFlashIfwiRegionBase
-  gChipsetPkgTokenSpaceGuid.PcdFlashIfwiRegionSize
-  gChipsetPkgTokenSpaceGuid.PcdFlashBootPartition2Base
-#  gChipsetPkgTokenSpaceGuid.PcdSpiRomComponentSize
-#  gChipsetPkgTokenSpaceGuid.PcdBp2MemoryAddress
-  gChipsetPkgTokenSpaceGuid.PcdH2OFlashDeviceMapBp2Start
-  gChipsetPkgTokenSpaceGuid.PcdFlashSpiRomSize
-#[-end-190220-IB07401083-add]#

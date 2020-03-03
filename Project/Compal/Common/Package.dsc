@@ -20,6 +20,11 @@
   CompalFlashLib|$(COMPAL_COMMON_PATH)/CompalFlash/$(COMPAL_FLASH_VERSION)/$(COMPAL_CHIPSET_VENDOR)/Library/CompalFlash.inf
 !endif
 
+[LibraryClasses.common.COMBINED_SMM_DXE]
+!if $(COMPAL_COMMON_CODE_SUPPORT) == YES
+  CompalFlashLib|$(COMPAL_COMMON_PATH)/CompalFlash/$(COMPAL_FLASH_VERSION)/$(COMPAL_CHIPSET_VENDOR)/Library/CompalFlash.inf
+!endif
+
 [LibraryClasses.common.SMM_CORE]
 !if $(COMPAL_COMMON_CODE_SUPPORT) == YES
   CompalFlashLib|$(COMPAL_COMMON_PATH)/CompalFlash/$(COMPAL_FLASH_VERSION)/$(COMPAL_CHIPSET_VENDOR)/Library/CompalFlash.inf
