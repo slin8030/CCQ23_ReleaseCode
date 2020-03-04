@@ -513,7 +513,7 @@ FILE FREEFORM = PCD (gChipsetPkgTokenSpaceGuid.PcdSlpP20MarkerFile) {
 FILE FREEFORM = PCD (gChipsetPkgTokenSpaceGuid.PcdOa30MsdmDataFile) {
     SECTION RAW = $(PROJECT_PKG)/Binary/Oa30MsdmData/Oa30MsdmData.bin
   }
-
+  INF $(PROJECT_PKG)/OemConfig/Smm/IhisiOemSmm/IhisiOemSmm.inf
 #[-start-161005-IB07400792-add]#
 #
 # Intel PCIe Gigabit UEFI UNDI Driver

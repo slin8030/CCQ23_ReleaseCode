@@ -35,7 +35,5 @@ OemSvcIhisiS20HookFetsDoAfterFlashing (
   Todo:
   Add project specific code in here.
 --*/
-  OemFlashCompletely();
-
   return EFI_SUCCESS;
 }

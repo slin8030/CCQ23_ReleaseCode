@@ -12,7 +12,6 @@
 */
 
 #include <Library/SmmOemSvcKernelLib.h>
-#include <CompalEclib.h>
 
 /**
  This function offers an interface to Hook IHISI Sub function AH=20h,function "FetsEcIdle"
@@ -36,7 +35,6 @@ OemSvcIhisiS20HookFetsEcIdle (
   Todo:
   Add project specific code in here.
 --*/
-  CompalECIdle (Idle);
 
-  return EFI_SUCCESS;
+  return EFI_UNSUPPORTED;
 }

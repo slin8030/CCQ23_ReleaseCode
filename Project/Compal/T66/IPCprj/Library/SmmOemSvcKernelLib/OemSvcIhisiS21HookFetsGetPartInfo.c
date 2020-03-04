@@ -38,7 +38,7 @@ OemSvcIhisiS21HookFetsGetPartInfo (
   Add project specific code in here.
 --*/
   *EcPartSize = EC128K;
-  IhisiStatus = IHISI_SUCCESS;
+  *IhisiStatus = IHISI_SUCCESS;
 
   return EFI_MEDIA_CHANGED;
 }

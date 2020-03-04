@@ -62,20 +62,24 @@
   OemSvcSmmHddUpdateSecurityStatus.c
 
 [Packages]
+  $(PROJECT_PKG)/Project.dec
   MdePkg/MdePkg.dec
   MdeModulePkg/MdeModulePkg.dec
   InsydeModulePkg/InsydeModulePkg.dec
   InsydeOemServicesPkg/InsydeOemServicesPkg.dec
+  $(CHIPSET_PKG)/$(CHIPSET_PKG).dec
   $(COMPAL_COMMON_PATH)/CompalCommon.dec
-  $(PROJECT_PKG)/Project.dec
-
+  
 [LibraryClasses]
   SmmOemSvcKernelLib
   FlashRegionLib
-  CompalFlashLib
-  CompalEcLib
+  CmosLib
+  IoLib
+  PciExpressLib
   EcSpiLib
-
+  CompalEcLib
+  CompalFlashLib
+  
 [Guids]
   gH2OFlashMapRegionFvGuid
   gH2OFlashMapRegionDxeFvGuid
@@ -101,3 +105,5 @@
   gInsydeTokenSpaceGuid.PcdFlashNvStorageFactoryCopySize
   gInsydeTokenSpaceGuid.PcdFlashFvRecoveryBase
   gInsydeTokenSpaceGuid.PcdFlashFvRecoverySize
+  gChipsetPkgTokenSpaceGuid.PcdFlashFvRecovery2Base
+  gChipsetPkgTokenSpaceGuid.PcdFlashFvRecovery2Size    

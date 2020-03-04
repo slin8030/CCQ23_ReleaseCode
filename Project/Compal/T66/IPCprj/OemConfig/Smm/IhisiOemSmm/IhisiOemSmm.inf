@@ -1,0 +1,62 @@
+## @file
+#  Component description file for IhisiSmm module
+#
+#******************************************************************************
+#* Copyright (c) 2014 - 2015, Insyde Software Corp. All Rights Reserved.
+#*
+#* You may not reproduce, distribute, publish, display, perform, modify, adapt,
+#* transmit, broadcast, present, recite, release, license or otherwise exploit
+#* any part of this publication in any form, by any means, without the prior
+#* written permission of Insyde Software Corporation.
+#*
+#******************************************************************************
+
+[Defines]
+  INF_VERSION                    = 0x00010005
+  BASE_NAME                      = IhisiOemSmm
+  FILE_GUID                      = 18F3187A-4F46-46D0-A0C6-9F048EA0BD23
+  MODULE_TYPE                    = DXE_SMM_DRIVER
+  PI_SPECIFICATION_VERSION       = 0x0001000A
+  VERSION_STRING                 = 1.0
+  ENTRY_POINT                    = IhisiOemSmmEntry
+
+#
+# The following information is for reference only and not required by the build tools.
+#
+#  VALID_ARCHITECTURES           = IA32 X64
+#
+
+[Sources]
+  IhisiOemFbts.h
+  IhisiOemFbts.c
+  IhisiOemSmm.c
+
+[Packages]
+  MdePkg/MdePkg.dec
+  MdeModulePkg/MdeModulePkg.dec
+  InsydeModulePkg/InsydeModulePkg.dec
+  InsydeOemServicesPkg/InsydeOemServicesPkg.dec
+  $(COMPAL_COMMON_PATH)/CompalCommon.dec
+
+[LibraryClasses]
+  UefiDriverEntryPoint
+  SmmServicesTableLib
+  BaseLib
+  PcdLib
+  DebugLib
+  CompalEcLib
+  CompalFlashLib
+
+[Protocols]
+  gH2OIhisiProtocolGuid
+
+[Guids]
+
+[Pcd]
+  gInsydeTokenSpaceGuid.PcdIhisiRegisterTable
+
+[FeaturePcd]
+
+[Depex]
+  gH2OIhisiProtocolGuid
+

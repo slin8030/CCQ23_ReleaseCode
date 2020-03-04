@@ -20,7 +20,6 @@
   LIBRARY_CLASS                  = SmmOemSvcKernelLib|DXE_SMM_DRIVER SMM_CORE
   
 [Sources]
-  OemSvcVariablePreservedTable.c
   OemSvcDisableAcpiCallback.c
   OemSvcEnableAcpiCallback.c
   OemSvcGetAspmOverrideInfo.c
@@ -91,10 +90,8 @@
 [Guids]
   gH2OFlashMapRegionBvdtGuid
   gH2OFlashMapRegionEcGuid
-  gH2OFlashMapRegionFlashMapGuid
   gH2OFlashMapRegionFtwBackupGuid
   gH2OFlashMapRegionFtwStateGuid
-  gH2OFlashMapRegionBvdtGuid
   gH2OFlashMapRegionFvGuid
   gH2OFlashMapRegionFlashMapGuid
   gH2OFlashMapRegionGpnvGuid

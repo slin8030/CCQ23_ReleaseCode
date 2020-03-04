@@ -1118,6 +1118,8 @@ ApolloLakeBoardPkg/Tools/Source/Shell/TriggerRecovery/TriggerRecovery.inf
     <SOURCE_OVERRIDE_PATH>
     $(PROJECT_PKG)/Override/$(CHIPSET_PKG)/UefiSetupUtilityDxe/
   }  
+  $(PROJECT_PKG)/OemConfig/Smm/IhisiOemSmm/IhisiOemSmm.inf
+
 #[PRJ]++ <<<< Show EC version on SCU Main page  
 #[-start-160217-IB07400702-add]#
 [BuildOptions]
