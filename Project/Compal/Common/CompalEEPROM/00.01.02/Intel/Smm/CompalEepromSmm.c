@@ -41,10 +41,13 @@
 #include "CompalSMMVarEeprom.h"
 #include <CompalEepromSmm.h>
 #include <CompalEEPROMSmmProtocol.h>
+#include <Library/DebugLib.h>
 
 EFI_SMM_SYSTEM_TABLE2              *mSmst;
 COMPAL_EEPROM_SMM_PROTOCOL         *CompalEepromSmmProtocol;
-
+//[PRJ]++ >>>> Modify for support VirtualEEPROMVerifyTool and CMFCVerify  
+STATIC
+//[PRJ]++ <<<< Modify for support VirtualEEPROMVerifyTool and CMFCVerify  
 EFI_STATUS
 CompalEepromSmmRead (
     IN  COMPAL_EEPROM_SMM_PROTOCOL    *This,
@@ -134,7 +137,9 @@ CompalEepromSmmRead (
 
     return EFI_SUCCESS;
 }
-
+//[PRJ]++ >>>> Modify for support VirtualEEPROMVerifyTool and CMFCVerify  
+STATIC
+//[PRJ]++ <<<< Modify for support VirtualEEPROMVerifyTool and CMFCVerify   
 EFI_STATUS
 CompalEepromSmmWrite (
     IN COMPAL_EEPROM_SMM_PROTOCOL     * This,
@@ -219,6 +224,10 @@ Returns:
     EFI_STATUS                            Status;
     EFI_SMM_BASE2_PROTOCOL                *mSmmBase;
     BOOLEAN                               InSmm;
+//[PRJ]++ >>>> Modify for support VirtualEEPROMVerifyTool and CMFCVerify  	
+    EFI_HANDLE                            Handle;
+
+    DEBUG((DEBUG_ERROR, "Into CompalEepromSmmEntryPoint \n"));
 
     InSmm        = FALSE;
     mSmmBase      = NULL;
@@ -230,51 +239,59 @@ Returns:
     if (!EFI_ERROR (Status)) {
       mSmmBase->InSmm (mSmmBase, &InSmm);
     }
+  
+    if (!InSmm) {
+      Status = EFI_NOT_READY;
+      goto EXIT;
+    }
+    //
+    // Great!  We're now in SMM!
+    //
+    //
+    mSmmBase->GetSmstLocation (mSmmBase, &mSmst);
 
-    if (InSmm) {
-        //
-        // Great!  We're now in SMM!
-        //
-        //
-        mSmmBase->GetSmstLocation (mSmmBase, &mSmst);
+    //
+    // Allocate SMM Pool for CompalEepromSmmProtocol
+    //
+    CompalEepromSmmProtocol = NULL;
+    Status = mSmst->SmmAllocatePool (
+                 EfiRuntimeServicesData,
+                 sizeof (COMPAL_EEPROM_SMM_PROTOCOL),
+                 &CompalEepromSmmProtocol
+             );
 
-        //
-        // Allocate SMM Pool for CompalEepromSmmProtocol
-        //
-        Status = mSmst->SmmAllocatePool (
-                     EfiRuntimeServicesData,
-                     sizeof (COMPAL_EEPROM_SMM_PROTOCOL),
-                     &CompalEepromSmmProtocol
-                 );
-
-        if ( EFI_ERROR (Status) ) {
-            return Status;
-    	}
+    if ( EFI_ERROR (Status) ) {
+        goto EXIT;
     }
 
     //
     // Initialize the CompalEepromSmmProtocol
     //
-    //------------------------------------ 
-    // For ROM block access.     
-    //------------------------------------ 
-    CompalEepromSmmProtocol->CompalEepromSmmBaseAddr = (UINTN) FixedPcdGet32 (PcdFlashOemEepromBase);   
+    //------------------------------------
+    // For ROM block access.
+    //------------------------------------
+    CompalEepromSmmProtocol->CompalEepromSmmBaseAddr = (UINTN) FixedPcdGet32 (PcdFlashOemEepromBase);
     CompalEepromSmmProtocol->CompalEepromSmmRead = CompalEepromSmmRead;
     CompalEepromSmmProtocol->CompalEepromSmmWrite = CompalEepromSmmWrite;
 
     //
     // Install the CompalEepromSmmProtocol
     //
-    Status = gBS->InstallMultipleProtocolInterfaces (
-                 &ImageHandle,
-                 &gCompalEEPROMSmmProtocolGuid,
-                 CompalEepromSmmProtocol,
-                 NULL
-             );
-
+    Handle = NULL;
+    Status = mSmst->SmmInstallProtocolInterface (
+                  &Handle,
+                  &gCompalEEPROMSmmProtocolGuid,
+                  EFI_NATIVE_INTERFACE,
+                  CompalEepromSmmProtocol
+                  );
     if ( EFI_ERROR (Status) ) {
-        return Status;
+        goto EXIT;
     }
 
-    return EFI_SUCCESS;
+EXIT:
+    if (EFI_ERROR(Status) && (CompalEepromSmmProtocol != NULL)) {
+        FreePool (CompalEepromSmmProtocol);
+    }
+    return Status;
 }
+//[PRJ]++ <<<< Modify for support VirtualEEPROMVerifyTool and CMFCVerify  

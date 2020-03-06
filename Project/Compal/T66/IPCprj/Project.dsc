@@ -807,7 +807,9 @@
   gSmbiosTokenSpaceGuid.PcdActiveSmbiosType039|TRUE
   gSmbiosTokenSpaceGuid.PcdActiveSmbiosType041|TRUE
   gSmbiosTokenSpaceGuid.PcdActiveSmbiosType131|TRUE
-
+#[PRJ]+ >>>> Modify for support  VirtualEEPROMVerifyTool and CMFCVerify
+  gSmbiosTokenSpaceGuid.PcdActiveSmbiosType255|TRUE 
+#[PRJ]+ <<<< Modify for support  VirtualEEPROMVerifyTool and CMFCVerify
   gSmbiosTokenSpaceGuid.PcdSmbiosMaxMultiRecords |32
   gSmbiosTokenSpaceGuid.PcdSmbiosMultiRecordsType|{2, 3, 4, 7, 8, 9, 17, 21, 22, 26, 27, 28, 29, 39, 41}
 
@@ -844,8 +846,9 @@
   gSmbiosTokenSpaceGuid.PcdType001Strings|"Insyde;ApolloLake;Type1 - TBD by OEM;Type1 - 123456789;Type1 - SKU0;Type1 - Family;"
 
   gSmbiosTokenSpaceGuid.PcdType002Record000 |{0x02, 0x00, 0x00, 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x09, 0x06, 0x00, 0x00, 0x0A, 0x00, 0x00, 0x00}
-  gSmbiosTokenSpaceGuid.PcdType002Strings000|"Type2 - Board Manufacturer;Type2 - Board Product Name;Type2 - Board Version;Type2 - Board Serial Number;Type2 - Board Asset Tag;Type2 - Board Chassis Location;"
-                                               
+#[PRJ]+ >>>> Modify for support  VirtualEEPROMVerifyTool and CMFCVerify  
+  gSmbiosTokenSpaceGuid.PcdType002Strings000|" ;FR1AA;V0.01;Type2 - Board Serial Number;Type2 - Board Asset Tag;Type2 - Board Chassis Location;"      #[PRJ]Modify for VirtualEEPROMVerifyTool and MCMFCVerify_V1.0.0.9
+#[PRJ]+ <<<< Modify for support  VirtualEEPROMVerifyTool and CMFCVerify                                               
   gSmbiosTokenSpaceGuid.PcdType003Record000 |{0x03, 0x00, 0x00, 0x00, 0x01, 0x0A, 0x02, 0x03, 0x04, 0x03, 0x03, 0x03, 0x03, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x05}
   gSmbiosTokenSpaceGuid.PcdType003Strings000|"Chassis Manufacturer;Chassis Version;Chassis Serial Number;Chassis Asset Tag;SKU Number;"
 
@@ -933,7 +936,10 @@
   gSmbiosTokenSpaceGuid.PcdType041Strings000|"IGD;"
 
   gSmbiosTokenSpaceGuid.PcdType131Record |{0x83, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x76, 0x50, 0x72, 0x6F, 0x00, 0x00, 0x00, 0x00}
-
+#[PRJ]+ >>>> Modify for support  VirtualEEPROMVerifyTool and CMFCVerify  
+  gSmbiosTokenSpaceGuid.PcdType255Record |{0xFF,0x00,0x00,0x00,0x01,0x02}
+  gSmbiosTokenSpaceGuid.PcdType255Strings|"_SIDLyDbRrqMsMAgDg;FR1AA;"
+#[PRJ]+ <<<< Modify for support  VirtualEEPROMVerifyTool and CMFCVerify  
 #[-start-160121-IB06740461-add]#
   gI2cDeviceTokenSpaceGuid.PcdI2cTouchScreen|{                                                 \  # The definition of I2C mouse PCD
     GUID({  0x234124E9,0x40B7,0x43EF,{0x9B,0x5E,0x97,0x47,0x08,0x08,0xD4,0x40}}),           \  # The unique GUID specific for this device, it will be part of device path node
@@ -983,6 +989,13 @@
   gInsydeTokenSpaceGuid.PcdH2OSdhcSdCardSupported|$(H2O_SDHC_SDCARD_SUPPORT) 
 #[-end-160217-IB07400702-modify]#
 
+#[PRJ]+ >>>> Modify for support  VirtualEEPROMVerifyTool and CMFCVerify  
+gCompalCommonCodeGuid.PcdVEEPROMTYPE|0x2  # VEEPROM Type
+                                                                           # 0x00 : Not Support (Access EC EEPROM)
+                                                                           # 0x01 : ROM VEEPROM (EC EEPROM with BIOS ROM Mapping)
+                                                                           # 0x02 : BIOS Variable EEPROM (BIOS variable bank0~7)
+                                                                           # 0x03 : Non-EC   VEEPROM (BIOS variable bank0~6)
+#[PRJ]+ <<<< Modify for support  VirtualEEPROMVerifyTool and CMFCVerify  
 ################################################################################
 #
 # Library Class section - list of all Library Classes needed by this Platform.

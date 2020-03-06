@@ -29,6 +29,7 @@
 */
 
 #include "CompalCMFCCommonSwSmi.h"
+#include <Library/DebugLib.h>
 
 EFI_SMM_SYSTEM_TABLE2                   *mSmst;
 EFI_SMM_VARIABLE_PROTOCOL               *SmmVariable;
@@ -65,7 +66,9 @@ CompalCMFCCommonSwSmiEntryPoint (
       mSmmBase->InSmm (mSmmBase, &InSmm);
     }
 
-    if (InSmm) {
+    if (!InSmm) {
+      return EFI_NOT_READY;
+    }
         //
         // Great!  We're now in SMM!
         //
@@ -80,7 +83,6 @@ CompalCMFCCommonSwSmiEntryPoint (
 
         if (EFI_ERROR(Status)) {
             return Status;
-        }
     }
 
     Status = gBS->LocateProtocol (
@@ -98,7 +100,7 @@ CompalCMFCCommonSwSmiEntryPoint (
     //
     // CMFC Smm Hook
     //
-    Status = gBS->LocateProtocol(
+    Status = mSmst->SmmLocateProtocol(
                  &gCompalCMFCSmmHookProtocolGuid,
                  NULL,
                  &CompalCMFCSmmHookProtocol

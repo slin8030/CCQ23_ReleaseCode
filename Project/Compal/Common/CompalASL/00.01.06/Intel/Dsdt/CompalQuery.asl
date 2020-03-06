@@ -33,6 +33,14 @@
 
 
 */
+//External(\_PR.DTS1, IntObj)
+//External(\_PR.DTS2, IntObj)
+External(\_PR.DTSF, IntObj)
+External(\_SB.PCI0.GFX0.GLID, MethodObj)
+External(COMMON_ASL_LPC_PATH.LID0, DeviceObj)
+External(COMMON_ASL_LPC_PATH.BAT1, DeviceObj)
+External(COMMON_ASL_LPC_PATH.ACAD, DeviceObj)
+External(\_SB.PCI0.GFX0.CLID)
 
 #include "Oemasl.asl"
 include  ("Query01c.asl")                       // Define Qevent for OEM project.

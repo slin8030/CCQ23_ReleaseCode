@@ -69,3 +69,31 @@
 [Components.$(PEI_ARCH)]
 
 [Components.$(DXE_ARCH)]
+#[PRJ]+ >>>> Modify for support  VirtualEEPROMVerifyTool and CMFCVerify 
+  !disable $(CHIPSET_PKG)/AcpiTablesPCAT/AcpiTables.inf
+  $(CHIPSET_PKG)/AcpiTablesPCAT/AcpiTables.inf{
+     <SOURCE_OVERRIDE_PATH>
+      $(PROJECT_PKG)/AcpiTablesDxe
+     <SOURCE_OVERRIDE_PATH>
+      $(T66_COMMON_PATH)/AcpiTablesPCAT/
+     <BuildOptions>
+          *_*_*_CC_FLAGS = -D COMPAL_ASL_SUPPORT
+          *_*_*_ASLPP_FLAGS  = -D COMPAL_ASL_SUPPORT
+  !if $(EC_PLATFORM_SETTING) == I2C
+              *_*_*_CC_FLAGS      = /D EC_PLATFORM_SETTING=1
+              *_*_*_ASLPP_FLAGS   = /D EC_PLATFORM_SETTING=1
+  !endif
+  !if $(EC_PLATFORM_SETTING) == LPC
+              *_*_*_CC_FLAGS      = /D EC_PLATFORM_SETTING=0
+              *_*_*_ASLPP_FLAGS   = /D EC_PLATFORM_SETTING=0
+  !endif
+  !if $(PROJECT_I2C_TOUCHPAD_ENABLE) == YES
+          *_*_*_ASLPP_FLAGS  = -D PROJECT_I2C_TOUCHPAD_ENABLE
+  !endif
+  }
+   !disable $(CHIPSET_PKG)/AcpiPlatform/AcpiPlatform.inf
+   $(CHIPSET_PKG)/AcpiPlatform/AcpiPlatform.inf {
+     <SOURCE_OVERRIDE_PATH>
+      $(T66_COMMON_PATH)/Override/$(CHIPSET_PKG)/AcpiPlatform/
+   }
+#[PRJ]+ <<<< Modify for support  VirtualEEPROMVerifyTool and CMFCVerify 

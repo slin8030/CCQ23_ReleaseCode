@@ -18,60 +18,8 @@
 
  DISCLAIMER.  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
  OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-
  R E V I S I O N    H I S T O R Y
- 
+
  Ver       Date      Who          Change
- --------  --------  ------------ ----------------------------------------------------
- 1.00                Champion Liu Init version.
+ --------  --------  --------     -----------------------------------------------------------------------------
 */
-
-#
-# [COMPAL CMFC SMM] OEM SW SMI interface using EDK II
-#
-
-[Defines]
-  INF_VERSION                    = 0x00010005
-  BASE_NAME                      = CompalCMFCOEMSwSmi
-  FILE_GUID                      = F655D0B3-615D-4022-9645-0D1F2E9DF78A
-  MODULE_TYPE                    = DXE_SMM_DRIVER
-  PI_SPECIFICATION_VERSION       = 0x0001000A
-  VERSION_STRING                 = 1.0
-  ENTRY_POINT                    = CompalCMFCOEMSwSmiEntryPoint
-  
-[Sources]
-  CompalCMFCOEMSwSmi.c
-  CompalCMFCOEMFunctions.c
-
-[Packages]
-  $(CHIPSET_PKG)/$(CHIPSET_PKG).dec
-  MdePkg/MdePkg.dec
-  CryptoPkg/CryptoPkg.dec
-  IntelFrameworkPkg/IntelFrameworkPkg.dec
-  InsydeModulePkg/InsydeModulePkg.dec
-  MdeModulePkg/MdeModulePkg.dec
-  $(COMPAL_COMMON_PATH)/CompalCommon.dec
-  $(PROJECT_PKG)/Project.dec
-
-[LibraryClasses]
-#  IntrinsicLib
-  PciCf8Lib
-  UefiDriverEntryPoint
-  DebugLib
-  SmmCompalSvcLib
-
-[Protocols]
-  gEfiSmmBase2ProtocolGuid
-  gEfiSmmVariableProtocolGuid
-  gEfiSmmSwDispatch2ProtocolGuid
-  gCompalGlobalNvsProtocolGuid
-  gEfiSetupUtilityProtocolGuid
-
-[Guids]
-
-[Pcd]
-
-[Depex]
-  gCompalCMFCSmmHookProtocolGuid AND
-  gEfiSmmSwDispatch2ProtocolGuid AND
-  gEfiSmmVariableProtocolGuid

@@ -79,7 +79,7 @@
 #
 !import BroxtonChipsetPkg/Package.fdf
 #[-end-170111-IB07400832-add]#
-
+!import Project/Compal/Common/Package.fdf 
 [Defines]
 #####################################################################
 #                  8MB SPI ROM Layout (SPI 4096KB)                  #

@@ -72,6 +72,7 @@
   CompalEcLib
   UefiDriverEntryPoint
   PciExpressLib
+  DebugLib
 
 [Protocols]
   gEfiSmmBase2ProtocolGuid
@@ -88,4 +89,5 @@
   gEfiMdePkgTokenSpaceGuid.PcdPciExpressBaseAddress
 
 [Depex]
-  gCompalCMFCSmmHookProtocolGuid
+  gCompalCMFCSmmHookProtocolGuid AND
+  gEfiSmmSwDispatch2ProtocolGuid

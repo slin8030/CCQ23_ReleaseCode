@@ -39,7 +39,7 @@
 */
 
 #include "CompalCMFCCommonFunctions.h"
-
+#include <Library/DebugLib.h>
 extern EFI_SMM_SYSTEM_TABLE2             *mSmst;
 extern COMPAL_GLOBAL_NVS_AREA            *CompalGlobalNvsArea;
 extern COMPAL_CMFC_SMM_HOOK_PROTOCOL     *CompalCMFCSmmHookProtocol;

@@ -42,6 +42,7 @@
 //
 
 #include "CompalCMFCSmmHook.h"
+#include <Library/DebugLib.h>
 
 //
 // Insyde Code
@@ -52,7 +53,8 @@ SYSTEM_CONFIGURATION                    *SetupVariable;
 EFI_GUID                                GuidId  = SYSTEM_CONFIGURATION_GUID;
 COMPAL_EEPROM_SMM_PROTOCOL              *CompalEepromSmmProtocol;
 
-const COMPAL_CMFC_SMM_HOOK_PROTOCOL CompalOverrideInstance = {
+STATIC
+COMPAL_CMFC_SMM_HOOK_PROTOCOL CompalOverrideInstance = {
     CMFCSwSMIHookMain
 };
 
@@ -81,7 +83,9 @@ CompalCMFCSmmHookEntryPoint (
     BOOLEAN                       InSmm= FALSE;
     EFI_SMM_BASE2_PROTOCOL        *mSmmBase= NULL;
     EFI_SETUP_UTILITY_PROTOCOL    *EfiSetupUtility;
+    EFI_HANDLE                            Handle;
 
+    DEBUG((DEBUG_ERROR, "Into CompalCMFCSmmHookEntryPoint \n"));
     Status = gBS->LocateProtocol (
                  &gEfiSmmBase2ProtocolGuid, 
                  NULL,
@@ -92,7 +96,9 @@ CompalCMFCSmmHookEntryPoint (
       mSmmBase->InSmm (mSmmBase, &InSmm);
     }
 
-    if (InSmm) {
+    if (!InSmm) {
+      return EFI_NOT_READY;
+    }
         //
         // Great!  We're now in SMM!
         //
@@ -108,9 +114,8 @@ CompalCMFCSmmHookEntryPoint (
         if (EFI_ERROR(Status)) {
             return Status;
         }
-    }
 
-    Status = gBS->LocateProtocol (
+    Status = mSmst->SmmLocateProtocol (
                  &gCompalEEPROMSmmProtocolGuid,
                  NULL,
                  &CompalEepromSmmProtocol
@@ -132,11 +137,12 @@ CompalCMFCSmmHookEntryPoint (
 
     SetupVariable = (SYSTEM_CONFIGURATION *)EfiSetupUtility->SetupNvData;
 
-    Status = gBS->InstallMultipleProtocolInterfaces (
-                 &ImageHandle,
+    Handle = NULL;
+    Status = mSmst->SmmInstallProtocolInterface (
+                  &Handle,
                  &gCompalCMFCSmmHookProtocolGuid,
-                 &CompalOverrideInstance,
-                 NULL
+                  EFI_NATIVE_INTERFACE,
+                  &CompalOverrideInstance
              );
     return Status;
 }

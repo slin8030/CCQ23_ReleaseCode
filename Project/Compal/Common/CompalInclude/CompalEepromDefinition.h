@@ -265,7 +265,14 @@
 #define T66_EEPROM_BOARD_SN_LENGTH                    0x20      // 32 Bytes
 #define T66_EEPROM_PRODUCT_NUMBER_OFFSET              0x80      // Product number offset 0x80 - 0x9F
 #define T66_EEPROM_PRODUCT_NUMBER_LENGTH              0x20      // 32 Bytes
-
+//[PRJ]++ >>>> Modify for support VirtualEEPROMVerifyTool and CMFCVerify  
+#define T66_EEPROM_OFFSET_ALS_CALIBRATION             0x1A0     // ALS Calibration
+#define T66_EEPROM_LENGTH_ALS_CALIBRATION             0x08      // 8 Bytes
+#define T66_EEPROM_OFFSET_SKU_NUM                     0x110     // SKU Number offset 0x110 - 0x11F
+#define T66_EEPROM_OFFSET_ASSERT_TAG_NUM              0x200     // Asset Tag Number offset 0x200 - 0x23F
+#define T66_EEPROM_LENGTH_SKU_NUM                     0x10      // 16 Bytes
+#define T66_EEPROM_LENGTH_ASSERT_TAG_NUM              0x40      // 64 Bytes
+//[PRJ]++ <<<< Modify for support VirtualEEPROMVerifyTool and CMFCVerify   
 //
 // T88 EEPROM Offset/Length Definition
 //

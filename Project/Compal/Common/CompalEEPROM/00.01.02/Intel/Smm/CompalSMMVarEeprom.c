@@ -140,7 +140,9 @@ Returns:
   EepromOffset = OemEepromOffset%((UINT16)BufferSize) ;
   OEMConfiguration = AllocateZeroPool (sizeof (OEMDRIVER_SAMPLE_CONFIGURATION0));
   Status = CompalVeePROMRWFun(Bank,ReadVEEPROM,OemEepromOffset,OemEepromSize,OEMConfiguration,OemEepromDataBuffer);
-
+//[PRJ]++ >>>> Modify for support VirtualEEPROMVerifyTool and CMFCVerify  
+  FreePool(OEMConfiguration);
+//[PRJ]++ <<<< Modify for support VirtualEEPROMVerifyTool and CMFCVerify  
     return EFI_SUCCESS;
 }
 
@@ -180,7 +182,9 @@ Returns:
   EepromOffset = OemEepromOffset%((UINT16)BufferSize) ;
   OEMConfiguration = AllocateZeroPool (sizeof (OEMDRIVER_SAMPLE_CONFIGURATION0));  
   Status = CompalVeePROMRWFun(Bank,WriteVEEPROM,OemEepromOffset,OemEepromSize,OEMConfiguration,OemEepromDataBuffer);
-
+//[PRJ]++ >>>> Modify for support VirtualEEPROMVerifyTool and CMFCVerify   
+  FreePool (OEMConfiguration);
+//[PRJ]++ <<<< Modify for support VirtualEEPROMVerifyTool and CMFCVerify  
   return EFI_SUCCESS;
 }
 

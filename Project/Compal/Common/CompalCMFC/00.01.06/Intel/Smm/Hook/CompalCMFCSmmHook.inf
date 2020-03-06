@@ -70,6 +70,7 @@
   IntrinsicLib
   CompalEcLib
   UefiDriverEntryPoint
+  DebugLib
 
 [Guids]
   gEfiGlobalVariableGuid

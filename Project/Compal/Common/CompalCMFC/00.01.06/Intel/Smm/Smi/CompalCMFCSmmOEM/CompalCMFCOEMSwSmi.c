@@ -31,6 +31,7 @@
 //
 
 #include "CompalCMFCOEMSwSmi.h"
+#include <Library/DebugLib.h>
 
 EFI_SMM_SYSTEM_TABLE2                   *mSmst;
 EFI_SMM_VARIABLE_PROTOCOL               *SmmVariable;
@@ -48,12 +49,13 @@ CompalCMFCOEMSwSmiEntryPoint (
 )
 {
     EFI_STATUS                    Status;
-    EFI_SMM_SW_DISPATCH_PROTOCOL  *SwDispatch;
-    EFI_SMM_SW_DISPATCH_CONTEXT   SwContext;
+    EFI_SMM_SW_DISPATCH2_PROTOCOL *SwDispatch;
+    EFI_SMM_SW_REGISTER_CONTEXT   SwContext;
     EFI_HANDLE                    SwHandle;
     EFI_SMM_BASE2_PROTOCOL        *mSmmBase;
     BOOLEAN                       InSmm = FALSE;
     EFI_SETUP_UTILITY_PROTOCOL    *EfiSetupUtility;
+    DEBUG((DEBUG_ERROR, "Into CompalCMFCOEMSwSmiEntryPoint \n"));
 
     Status = gBS->LocateProtocol (
                  &gEfiSmmBase2ProtocolGuid,
@@ -65,7 +67,9 @@ CompalCMFCOEMSwSmiEntryPoint (
       mSmmBase->InSmm (mSmmBase, &InSmm);
     }
 
-    if (InSmm) {
+    if (!InSmm) {
+      return EFI_NOT_READY;
+    }
         //
         // Great!  We're now in SMM!
         //
@@ -80,7 +84,6 @@ CompalCMFCOEMSwSmiEntryPoint (
 
         if (EFI_ERROR(Status)) {
             return Status;
-        }
     }
 
     Status = gBS->LocateProtocol (
@@ -110,8 +113,8 @@ CompalCMFCOEMSwSmiEntryPoint (
     //
     // Get the Sw dispatch protocol
     //
-    Status = gBS->LocateProtocol (
-                 &gEfiSmmSwDispatchProtocolGuid,
+    Status = mSmst->SmmLocateProtocol (
+                  &gEfiSmmSwDispatch2ProtocolGuid,
                  NULL,
                  &SwDispatch
              );
@@ -134,12 +137,16 @@ CompalCMFCOEMSwSmiEntryPoint (
     return EFI_SUCCESS;
 }
 
-VOID
+STATIC
+EFI_STATUS
 CompalCMFCOEMSwSMIFunctionEntry (
     IN  EFI_HANDLE                    DispatchHandle,
-    IN  EFI_SMM_SW_DISPATCH_CONTEXT   *DispatchContext
+  IN CONST VOID  *DispatchContext OPTIONAL,
+  IN OUT VOID    *CommBuffer      OPTIONAL,
+  IN OUT UINTN   *CommBufferSize  OPTIONAL
 )
 {
+    EFI_STATUS        Status;
     OEMFunctionBuffer FB;
     UINT8   FunNo;
     UINT16  SubFunNo;
@@ -152,5 +159,9 @@ CompalCMFCOEMSwSMIFunctionEntry (
     FB.cbFunNo  = FunNo;
     FB.cbSubFunNo = SubFunNo;
 
+    Status = CompalSvc_CMFC_OemFunc (CompalGlobalNvsArea, SetupVariable, &FB);
+    if (Status != EFI_SUCCESS) {
     CompalCMFCOEMFunctionEntry(FB);
+    }
+    return EFI_SUCCESS;
 }

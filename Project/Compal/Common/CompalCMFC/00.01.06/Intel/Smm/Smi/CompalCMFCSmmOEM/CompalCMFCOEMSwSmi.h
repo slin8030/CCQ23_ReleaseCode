@@ -39,7 +39,8 @@
 #include <Protocol/SmmBase2.h>
 #include <Protocol/SetupUtility.h>
 #include <Protocol/SmmVariable.h>
-#include <Protocol/SmmSwDispatch.h>
+#include <Protocol/SmmSwDispatch2.h>
+#include <Library/SmmCompalSvcLib.h>
 
 #define CMFC_OEM_SW_SMI              0xCF
 
@@ -49,14 +50,14 @@
 
 extern EFI_BOOT_SERVICES  *gBS;
 
-#pragma pack (1)
+// #pragma pack (1)
 
-typedef struct {
-    UINT8   cbFunNo;
-    UINT16  cbSubFunNo;
-} OEMFunctionBuffer;
+// typedef struct {
+//     UINT8   cbFunNo;
+//     UINT16  cbSubFunNo;
+// } OEMFunctionBuffer;
 
-#pragma pack ()
+// #pragma pack ()
 
 typedef struct {
     UINT8   cbFunNo;
@@ -72,9 +73,12 @@ CompalCMFCOEMFunctionEntry (
 #define SW_SMI_IO_ADDRESS            0xB2
 #define SW_SMI_IO_DATA               SW_SMI_IO_ADDRESS+1
 
-VOID
+STATIC
+EFI_STATUS
 CompalCMFCOEMSwSMIFunctionEntry (
     IN  EFI_HANDLE                    DispatchHandle,
-    IN  EFI_SMM_SW_DISPATCH_CONTEXT   *DispatchContext
+  IN CONST VOID  *DispatchContext OPTIONAL,
+  IN OUT VOID    *CommBuffer      OPTIONAL,
+  IN OUT UINTN   *CommBufferSize  OPTIONAL
 );
 #endif
