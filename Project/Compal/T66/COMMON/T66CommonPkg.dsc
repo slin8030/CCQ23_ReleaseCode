@@ -97,3 +97,7 @@
       $(T66_COMMON_PATH)/Override/$(CHIPSET_PKG)/AcpiPlatform/
    }
 #[PRJ]+ <<<< Modify for support  VirtualEEPROMVerifyTool and CMFCVerify 
+
+#[PRJ]+ >>>> Add T66 common code:T66ConfigDxe to update Smbios from CompalEEprom.
+  $(T66_COMMON_PATH)/T66Common/T66Config/Dxe/T66ConfigDxe.inf
+#[PRJ]+ <<<< Add T66 common code:T66ConfigDxe to update Smbios from CompalEEprom.  

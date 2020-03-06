@@ -64,7 +64,8 @@
 !import BroxtonChipsetPkg/Package.dsc
 #[-end-170111-IB07400832-add]#
 !import ../../COMMON/Package.dsc
-!import ../COMMON/T66Common.dsc
+!import ../COMMON/T66CommonPkg.dsc
+
 ################################################################################
 #
 # Defines Section - statements that will be processed to create a Makefile.

@@ -1,0 +1,5 @@
+[FV.IBBFV]
+
+[FV.DXEFV]
+  INF $(T66_COMMON_PATH)/T66Common/T66Config/Dxe/T66ConfigDxe.inf
+
