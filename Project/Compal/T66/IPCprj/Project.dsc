@@ -10,7 +10,7 @@
 #* written permission of Insyde Software Corporation.
 #*
 #******************************************************************************
-
+ 
 !import MdePkg/Package.dsc
 !import MdeModulePkg/Package.dsc
 !import UefiCpuPkg/Package.dsc
@@ -1133,8 +1133,20 @@ ApolloLakeBoardPkg/Tools/Source/Shell/TriggerRecovery/TriggerRecovery.inf
     $(PROJECT_PKG)/Override/$(CHIPSET_PKG)/UefiSetupUtilityDxe/
   }  
   $(PROJECT_PKG)/OemConfig/Smm/IhisiOemSmm/IhisiOemSmm.inf
-
 #[PRJ]++ <<<< Show EC version on SCU Main page  
+
+#[PRJ]++ >>>> Remove unused device
+  !disable $(CHIPSET_PKG)/AcpiTablesPCAT/PlatformSsdt/PlatformSsdt.inf
+  $(CHIPSET_PKG)/AcpiTablesPCAT/PlatformSsdt/PlatformSsdt.inf{
+     <SOURCE_OVERRIDE_PATH>
+      $(PROJECT_PKG)/AcpiTablesDxe/PlatformSsdt/
+
+     <BuildOptions>
+          *_*_*_CC_FLAGS = -D COMPAL_ASL_SUPPORT
+          *_*_*_ASLPP_FLAGS  = -D COMPAL_ASL_SUPPORT
+  }
+#[PRJ]++ <<<< Remove unused device
+
 #[-start-160217-IB07400702-add]#
 [BuildOptions]
   DEFINE EDK_EDKII_DSC_FEATURE_BUILD_OPTIONS      = $(EDK_EDKII_DSC_FEATURE_BUILD_OPTIONS) $(CC_FLAGS)     
