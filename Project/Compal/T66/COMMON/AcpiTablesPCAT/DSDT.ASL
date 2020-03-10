@@ -76,6 +76,9 @@ DefinitionBlock (
 //[PRJ]++ >>>> Modify for support  VirtualEEPROMVerifyTool and CMFCVerify     
   include ("CompalASL.ASL")         //Comapal asl support
 //[PRJ]++ <<<< Modify for support  VirtualEEPROMVerifyTool and CMFCVerify  
+
+  include ("Device\I2C\I2C_Devices.asl")
+
   //
   // ToDo: Sync with skylake, need further tracking
   //
