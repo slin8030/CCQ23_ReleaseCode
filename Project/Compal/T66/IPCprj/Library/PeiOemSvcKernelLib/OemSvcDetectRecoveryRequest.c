@@ -22,7 +22,14 @@
 //[-start-160907-IB07400780-add]//
 #include <Library/PlatformCmosLib.h>
 //[-end-160907-IB07400780-add]//
-
+//[PRJ]+ >>>> Support Crisis recovery
+#include <OemBoardGpios.h>
+#include <Library/GpioLib.h>
+STATIC BXT_GPIO_PAD_INIT  mProject_GpioCrisisDetectPin[] =
+{
+    BXT_GPIO_PAD_CONF(L"GPIO_16",                  M0   ,    GPI   , GPIO_D,  NA    ,   NA       , Wake_Disabled, P_NONE ,   NA    ,    NA,     NA   ,     NA, GPIO_PADBAR+0x0080,  NORTH),//CRISIS_IN(GPIO16)
+};
+//[PRJ]+ <<<< Support Crisis recovery
 /**
   This OemService provides OEM to detect the recovery mode. 
   OEM designs the rule to detect that boot mode is recovery mode or not, 
@@ -41,17 +48,41 @@ OemSvcDetectRecoveryRequest (
   IN OUT BOOLEAN                               *IsRecovery
   )
 {
+//[PRJ]+ >>>> Support Crisis recovery
+  EFI_STATUS            Status;
+  UINT32                CommAndOffset;
+  BXT_CONF_PAD0         pad_conf0;
+
+  Status = EFI_UNSUPPORTED;
+  
 //[-start-160907-IB07400780-add]//
-  if (!CheckCmosBatteryStatus()) { // CMOS data missing, disable recovery mode
-    WriteExtCmos8(R_XCMOS_INDEX, R_XCMOS_DATA, CmosRecoveryOnFlagAddress, V_CMOS_FAST_RECOVERY_DISABLED);
-  }
+//  if (!CheckCmosBatteryStatus()) { // CMOS data missing, disable recovery mode
+//    WriteExtCmos8(R_XCMOS_INDEX, R_XCMOS_DATA, CmosRecoveryOnFlagAddress, V_CMOS_FAST_RECOVERY_DISABLED);
+//  }
 //[-end-160907-IB07400780-add]//
 //[-start-151216-IB07220025-add]//
 //[-start-160905-IB07400778-modify]//
   if ((ReadExtCmos8(R_RTC_EXT_INDEX, R_RTC_EXT_TARGET, CmosRecoveryOnFlagAddress)) == V_CMOS_FAST_RECOVERY_ENABLED) {
 //[-end-160905-IB07400778-modify]//
     *IsRecovery = TRUE;
+    Status = EFI_MEDIA_CHANGED;
   }
+
 //[-end-151216-IB07220025-add]//
-  return EFI_UNSUPPORTED;
+  //  return EFI_UNSUPPORTED;
+  //
+  // Config Project Crisis detect pin to GPI
+  //
+  GpioPadConfigTable(1, mProject_GpioCrisisDetectPin);
+
+  // Read crisis pin status
+  CommAndOffset = (((UINT32)mProject_GpioCrisisDetectPin[0].Community)<<16)+mProject_GpioCrisisDetectPin[0].MMIO_ADDRESS;
+  pad_conf0.padCnf0 = GpioPadRead(CommAndOffset + BXT_GPIO_PAD_CONF0_OFFSET);
+  if (pad_conf0.r.GPIORxState == HI) {
+    *IsRecovery = TRUE;
+    Status = EFI_MEDIA_CHANGED;
+  }
+
+  return Status;
+//[PRJ]+ <<<< Support Crisis  recovery  
 }

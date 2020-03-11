@@ -760,7 +760,9 @@
   #       File names are limited to eight characters with a three-character extension.
   #
 #  gInsydeTokenSpaceGuid.PcdPeiRecoveryFile|L"BSW.ROM"|VOID*|0x100
-  gInsydeTokenSpaceGuid.PcdPeiRecoveryFile|L"$(BUILD_BIOS_NAME).bin"|VOID*|0x100
+#[PRJ]+ >>>> Support crisis recovery
+  gInsydeTokenSpaceGuid.PcdPeiRecoveryFile|L"FR1AA_8M.x64.bin"|VOID*|0x100
+#[PRJ]+ <<<< Support crisis recovery  
 #[-end-160613-IB07400744-modify]#
 #[-start-170208-IB07400839-add]#
   #

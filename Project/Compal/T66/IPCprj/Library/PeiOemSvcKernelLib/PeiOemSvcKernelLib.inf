@@ -45,13 +45,16 @@
   MdeModulePkg/MdeModulePkg.dec
   $(PLATFORM_RC_PACKAGE)/$(PLATFORM_RC_PACKAGE).dec
 #[-end-170103-IB07250262-modify]#
+  $(PROJECT_PKG)/Project.dec
 
 [LibraryClasses]
   CmosLib
 #[-start-160907-IB07400780-add]#
   PlatformCmosLib
 #[-end-160907-IB07400780-add]#
-
+#[PRJ]+ >>>> Support crisis recovery
+    GpioLib
+#[PRJ]+ <<<< Support crisis recovery    
 [Guids]
   
 [Ppis]
