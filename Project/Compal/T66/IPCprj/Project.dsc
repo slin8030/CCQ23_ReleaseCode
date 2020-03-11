@@ -1159,6 +1159,7 @@ ApolloLakeBoardPkg/Tools/Source/Shell/TriggerRecovery/TriggerRecovery.inf
   }
 #[PRJ]++ <<<< Remove unused device
 
+  !disable $(CHIPSET_PKG)/UsbTypeC/UsbTypeC.inf
 #[-start-160217-IB07400702-add]#
 [BuildOptions]
   DEFINE EDK_EDKII_DSC_FEATURE_BUILD_OPTIONS      = $(EDK_EDKII_DSC_FEATURE_BUILD_OPTIONS) $(CC_FLAGS)     

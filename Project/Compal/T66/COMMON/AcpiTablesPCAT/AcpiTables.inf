@@ -60,7 +60,7 @@
   DBG2/DBG2.aslc
   DBGP/DBGP.aslc
   DptfAcpiTable/Dptf.asl
-  UsbTypeC/UsbTypeC.asl
+#  UsbTypeC/UsbTypeC.asl
   Wsmt/Wsmt.act
 #[-start-161229-IB07400829-add]#
   Wdrt/Wdrt.aslc
