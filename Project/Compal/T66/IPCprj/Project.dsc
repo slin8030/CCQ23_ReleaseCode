@@ -1125,7 +1125,17 @@ ApolloLakeBoardPkg/Tools/Source/Shell/TriggerRecovery/TriggerRecovery.inf
     <SOURCE_OVERRIDE_PATH>
     $(PROJECT_PKG)/Override/$(CHIPSET_PKG)/OEMBadgingSupportDxe/
   }
-  
+#[PRJ]++ >>>> MIPI KD panel support
+  !disable $(CHIPSET_PKG)/PlatformGopPolicy/PlatformGopPolicy.inf
+  $(CHIPSET_PKG)/PlatformGopPolicy/PlatformGopPolicy.inf{
+    <SOURCE_OVERRIDE_PATH>
+      $(PROJECT_PKG)/Override/$(CHIPSET_PKG)/PlatformGopPolicy/
+#     <BuildOptions>
+#     !if $(PROJECT_GOP_SUPPORT) == YES
+#           *_*_*_CC_FLAGS = /D PROJECT_VBT
+#     !endif 
+  }  
+#[PRJ]++ <<<< MIPI KD panel support
 #[PRJ]++ >>>> Show EC version on SCU Main page
   !disable $(CHIPSET_PKG)/UefiSetupUtilityDxe/SetupUtilityDxe.inf
   $(CHIPSET_PKG)/UefiSetupUtilityDxe/SetupUtilityDxe.inf {

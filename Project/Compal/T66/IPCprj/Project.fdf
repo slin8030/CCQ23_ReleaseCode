@@ -481,10 +481,28 @@ FvNameGuid         = A881D567-6CB0-4eee-8435-2E72D33E45B5
   SECTION RAW = $(PROJECT_PKG)/Binary/LegacyVideoRom/$(VIDEO_ROM_VERSION)/bxt.dat
 }
 !endif
+#[PRJ]++ >>>> MIPI KD panel support
+!if $(PROJECT_GOP_SUPPORT) == YES
 
 
+#
+# MIPI KD panel VBT.
+#
+FILE FREEFORM = 7DA9D1C5-9E4E-4530-B655-8B365EE39C16 {
+  SECTION RAW =  $(PROJECT_PKG)/Binary/GopDriver/$(GOP_VER_X64)/Vbt_mipi_KD.bin
+  SECTION UI = "IntelGopVbttest1"
+}
+
+#
+# EDP & LVDS panel VBT.
+#
+FILE FREEFORM = 80733E66-B15F-4B1D-B227-C9D36CF140CB {
+  SECTION RAW =  $(PROJECT_PKG)/Binary/GopDriver/$(GOP_VER_X64)/Vbt.bin
+  SECTION UI = "IntelGopVbttest2"
+}
 !endif
-
+!endif
+#[PRJ]++ <<<< MIPI KD panel support
 !if $(SMSC_USBNET_SUPPORT) == YES
   INF $(PROJECT_PKG)/Binary/SmscUsbNetDriver/SmscUsbNetDriver.inf
 !endif
