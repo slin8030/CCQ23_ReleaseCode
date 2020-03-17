@@ -1101,6 +1101,13 @@ $(PROJECT_OVERRIDE)/InsydeModulePkg/H2ODebug/DebugEnginePei/DebugEnginePei.inf
 # The futher build process will change this groupt to [Components.IA32] if  
 # target is 32 bit
 #
+#[PRJ]+ >>>> Remove ScPlatformSccDllOverride() to fix eMMC boot fail.
+  !disable $(CHIPSET_PKG)/PlatformInit/Pei/PlatformInit.inf
+  $(CHIPSET_PKG)/PlatformInit/Pei/PlatformInit.inf {
+    <SOURCE_OVERRIDE_PATH>
+    $(PROJECT_OVERRIDE)/$(CHIPSET_PKG)/PlatformInit/Pei/
+  }
+#[PRJ]+ <<<< Remove ScPlatformSccDllOverride() to fix eMMC boot fail.  
 [Components.$(DXE_ARCH)]
 
 !disable InsydeModulePkg/H2ODebug/$(H2O_DDT_DEBUG_IO)DebugIoDxe/$(H2O_DDT_DEBUG_IO)DebugIoDxe.inf
