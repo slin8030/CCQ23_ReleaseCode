@@ -1522,7 +1522,7 @@ EndOfPeiPpiNotifyCallback (
     ConfigurePmicIMON();
 //[-end-161018-IB06740518-add]//
 //[PRJ]+ >>>> Remove ScPlatformSccDllOverride() to fix eMMC boot fail.
-   ScPlatformSccDllOverride ();
+//   ScPlatformSccDllOverride ();
 //[PRJ]+ <<<< Remove ScPlatformSccDllOverride() to fix eMMC boot fail.
     VariableSize = PcdGet32 (PcdSetupConfigSize);
     //Status = GetSystemConfigData(&mSystemConfiguration, &VariableSize);
