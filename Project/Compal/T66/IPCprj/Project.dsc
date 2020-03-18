@@ -1168,6 +1168,10 @@ ApolloLakeBoardPkg/Tools/Source/Shell/TriggerRecovery/TriggerRecovery.inf
 
   !disable $(CHIPSET_PKG)/UsbTypeC/UsbTypeC.inf
 #[-start-160217-IB07400702-add]#
+
+#[PRJ]++ >>>> Add RtkUndi PXE support.
+  $(PROJECT_PKG)/Binary/UndiDriver/RtkUndiDriver/RtkUndiDriver.inf
+#[PRJ]++ <<<< Add RtkUndi PXE support.
 [BuildOptions]
   DEFINE EDK_EDKII_DSC_FEATURE_BUILD_OPTIONS      = $(EDK_EDKII_DSC_FEATURE_BUILD_OPTIONS) $(CC_FLAGS)     
   DEFINE EDK_EDKII_DSC_FEATURE_BUILD_OPTIONS_GCC  = $(EDK_EDKII_DSC_FEATURE_BUILD_OPTIONS_GCC) $(CC_FLAGS)     
