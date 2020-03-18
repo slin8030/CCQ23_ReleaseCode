@@ -24,6 +24,7 @@
 [LibraryClasses.common.SEC]
 
 [LibraryClasses.common.PEIM]
+
   !disable PeiOemSvcChipsetLib|$(CHIPSET_PKG)/Library/PeiOemSvcChipsetLib/PeiOemSvcChipsetLib.inf
   PeiOemSvcChipsetLib|$(CHIPSET_PKG)/Library/PeiOemSvcChipsetLib/PeiOemSvcChipsetLib.inf {
   <SOURCE_OVERRIDE_PATH>
@@ -46,10 +47,46 @@
 
 [LibraryClasses.common.DXE_RUNTIME_DRIVER]
 
+  !disable DxeOemSvcChipsetLib|$(CHIPSET_PKG)/Library/DxeOemSvcChipsetLib/DxeOemSvcChipsetLib.inf
+  DxeOemSvcChipsetLib|$(CHIPSET_PKG)/Library/DxeOemSvcChipsetLib/DxeOemSvcChipsetLib.inf {
+    <SOURCE_OVERRIDE_PATH>
+      $(T66_COMMON_PATH)/Override/$(CHIPSET_PKG)/Library/DxeOemSvcChipsetLib/
+  }
+
+  !disable DxeOemSvcChipsetLibDefault|$(CHIPSET_PKG)/Library/DxeOemSvcChipsetLib/DxeOemSvcChipsetLibDefault.inf
+  DxeOemSvcChipsetLibDefault|$(CHIPSET_PKG)/Library/DxeOemSvcChipsetLib/DxeOemSvcChipsetLibDefault.inf {
+    <SOURCE_OVERRIDE_PATH>
+      $(T66_COMMON_PATH)/Override/$(CHIPSET_PKG)/Library/DxeOemSvcChipsetLib/
+  }
+#[PRJ]+ <<<< Modify PlatformGopPolicy GetPlatformLidStatus function (No Lid on HW design, alway return on).  
 [LibraryClasses.common.DXE_DRIVER]
+#[PRJ]+ >>>> Modify PlatformGopPolicy GetPlatformLidStatus function (No Lid on HW design, alway return on).
+  !disable DxeOemSvcChipsetLib|$(CHIPSET_PKG)/Library/DxeOemSvcChipsetLib/DxeOemSvcChipsetLib.inf
+  DxeOemSvcChipsetLib|$(CHIPSET_PKG)/Library/DxeOemSvcChipsetLib/DxeOemSvcChipsetLib.inf {
+    <SOURCE_OVERRIDE_PATH>
+      $(T66_COMMON_PATH)/Override/$(CHIPSET_PKG)/Library/DxeOemSvcChipsetLib/
+  }
 
+  !disable DxeOemSvcChipsetLibDefault|$(CHIPSET_PKG)/Library/DxeOemSvcChipsetLib/DxeOemSvcChipsetLibDefault.inf
+  DxeOemSvcChipsetLibDefault|$(CHIPSET_PKG)/Library/DxeOemSvcChipsetLib/DxeOemSvcChipsetLibDefault.inf {
+    <SOURCE_OVERRIDE_PATH>
+      $(T66_COMMON_PATH)/Override/$(CHIPSET_PKG)/Library/DxeOemSvcChipsetLib/
+  }
+#[PRJ]+ <<<< Modify PlatformGopPolicy GetPlatformLidStatus function (No Lid on HW design, alway return on).  
 [LibraryClasses.common.UEFI_DRIVER]
+#[PRJ]+ >>>> Modify PlatformGopPolicy GetPlatformLidStatus function (No Lid on HW design, alway return on).
+  !disable DxeOemSvcChipsetLib|$(CHIPSET_PKG)/Library/DxeOemSvcChipsetLib/DxeOemSvcChipsetLib.inf
+  DxeOemSvcChipsetLib|$(CHIPSET_PKG)/Library/DxeOemSvcChipsetLib/DxeOemSvcChipsetLib.inf {
+    <SOURCE_OVERRIDE_PATH>
+      $(T66_COMMON_PATH)/Override/$(CHIPSET_PKG)/Library/DxeOemSvcChipsetLib/
+  }
 
+  !disable DxeOemSvcChipsetLibDefault|$(CHIPSET_PKG)/Library/DxeOemSvcChipsetLib/DxeOemSvcChipsetLibDefault.inf
+  DxeOemSvcChipsetLibDefault|$(CHIPSET_PKG)/Library/DxeOemSvcChipsetLib/DxeOemSvcChipsetLibDefault.inf {
+    <SOURCE_OVERRIDE_PATH>
+      $(T66_COMMON_PATH)/Override/$(CHIPSET_PKG)/Library/DxeOemSvcChipsetLib/
+  }
+#[PRJ]+ <<<< Modify PlatformGopPolicy GetPlatformLidStatus function (No Lid on HW design, alway return on).  
 [LibraryClasses.common.UEFI_APPLICATION]
 
 ################################################################################
