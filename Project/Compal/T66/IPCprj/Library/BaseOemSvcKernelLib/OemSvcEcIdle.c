@@ -13,8 +13,6 @@
 */
 
 #include <Library/BaseOemSvcKernelLib.h>
-#include <Library/CommonEcLib.h>
-#include <CompalEcLib.h>
 
 /**
   Platform specific function to enable/disable flash
@@ -34,7 +32,6 @@ OemSvcEcIdle (
     Todo:
       Add project specific code in here.
   --*/
-  CompalEcSmmIdle (EnableEcIdle);
 
-  return EFI_MEDIA_CHANGED;
+  return EFI_UNSUPPORTED;
 }

@@ -1040,17 +1040,14 @@ gCompalCommonCodeGuid.PcdVEEPROMTYPE|0x2  # VEEPROM Type
 [LibraryClasses.common.DXE_SMM_DRIVER]
   DxeOemSvcKernelLib|$(PROJECT_PKG)/Library/DxeOemSvcKernelLib/DxeOemSvcKernelLib.inf
   SmmOemSvcKernelLib|$(PROJECT_PKG)/Library/SmmOemSvcKernelLib/SmmOemSvcKernelLib.inf
-  SmmOemSvcKernelLibDefault|$(PROJECT_PKG)/Library/SmmOemSvcKernelLib/SmmOemSvcKernelLibDefault.inf
 
 [LibraryClasses.common.COMBINED_SMM_DXE]  
   DxeOemSvcKernelLib|$(PROJECT_PKG)/Library/DxeOemSvcKernelLib/DxeOemSvcKernelLib.inf
   SmmOemSvcKernelLib|$(PROJECT_PKG)/Library/SmmOemSvcKernelLib/SmmOemSvcKernelLib.inf
-  SmmOemSvcKernelLibDefault|$(PROJECT_PKG)/Library/SmmOemSvcKernelLib/SmmOemSvcKernelLibDefault.inf
 
 [LibraryClasses.common.SMM_CORE]  
   DxeOemSvcKernelLib|$(PROJECT_PKG)/Library/DxeOemSvcKernelLib/DxeOemSvcKernelLib.inf
   SmmOemSvcKernelLib|$(PROJECT_PKG)/Library/SmmOemSvcKernelLib/SmmOemSvcKernelLib.inf
-  SmmOemSvcKernelLibDefault|$(PROJECT_PKG)/Library/SmmOemSvcKernelLib/SmmOemSvcKernelLibDefault.inf
 
 [LibraryClasses.common.DXE_RUNTIME_DRIVER]
   DxeOemSvcKernelLib|$(PROJECT_PKG)/Library/DxeOemSvcKernelLib/DxeOemSvcKernelLib.inf
