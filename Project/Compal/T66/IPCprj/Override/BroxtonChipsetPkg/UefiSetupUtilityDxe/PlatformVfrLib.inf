@@ -57,7 +57,11 @@
   Power/Cpu.vfi
   Power/CpuPower.vfi
 
+  Advance/SioResource.hfr
+  Advance/SioResource.uni
+
 [Packages]
+  $(PROJECT_PKG)/Project.dec
   MdePkg/MdePkg.dec
   InsydeModulePkg/InsydeModulePkg.dec
   $(CHIPSET_PKG)/$(CHIPSET_PKG).dec

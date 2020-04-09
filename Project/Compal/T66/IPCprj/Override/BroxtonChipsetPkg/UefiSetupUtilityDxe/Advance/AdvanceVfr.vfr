@@ -12,7 +12,7 @@
 ;*
 ;******************************************************************************
 */
-
+#include "SetupConfig.h"        // [PRJ] T66
 #include "Configuration.h"
 #include "ChipsetSetupConfig.h"
 
@@ -133,6 +133,13 @@ form formid = ROOT_FORM_ID,
   #endif
 
 #endif
+
+  suppressif
+    ideqval SystemConfig.NCT5104 == 0;
+    goto VFR_FORMID_SIO_RESOURCE,
+      prompt = STRING_TOKEN(STR_SIO_NUVOTON5104D_TITLE),
+      help = STRING_TOKEN(STR_BLANK_STRING);
+  endif;
 //[-start-160923-IB07400789-add]//
     goto SEG_CHIPSET_FEATURE_FORM_ID,
       prompt = STRING_TOKEN(STR_SEG_CHIPSET_FEATURE_TITLE),
@@ -158,6 +165,7 @@ form formid = ROOT_FORM_ID,
 //[-end-160523-IB07220085-add]//
 
 #include "AcpiFeature.hfr"
+#include "SioResource.hfr"
 
 //[-start-160923-IB07400789-add]//
 #include "SegChipsetFeature.vfi"

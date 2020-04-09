@@ -37,8 +37,12 @@
   OemSvcDxeUpdateSmbiosRecord.c
   OemSvcDxeGetSmbiosReplaceString.c
 #[-end-161112-IB07400812-add]#
+  OemSvcDeviceResourceSioDxe.c
+  OemSvcAfterInitSioDxe.c
+  OemSvcRegSioDxe.c
 
 [Packages]
+  $(PROJECT_PKG)/Project.dec
   $(CHIPSET_PKG)/$(CHIPSET_PKG).dec
   MdePkg/MdePkg.dec
   $(PLATFORM_RC_PACKAGE)/$(PLATFORM_RC_PACKAGE).dec
@@ -61,6 +65,8 @@
   IoLib
   S3BootScriptLib
   HobLib
+  GpioLib
+  ScPlatformLib
 #[-start-161112-IB07400812-add]#
   MultiPlatformBaseLib
   PrintLib

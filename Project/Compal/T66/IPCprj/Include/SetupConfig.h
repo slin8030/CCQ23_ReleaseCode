@@ -80,7 +80,21 @@ typedef struct {
 //----------------------------------------------------------------------------------------------------------
 //OEM_Start
 //Offset(600);
-  UINT8         ODMRSV[98];                       // Reserve for ODM
+  UINT8         ODMRSV[85];                       // Reserve for ODM
+  UINT8         NCT5104;                          // NCT5104 detect
+  UINT8         ComPortA_Pin9;                        // COM Pin9 :Ring/5V/12V
+  UINT8         ComPortA_PULL;                        // COM Pull up/down
+  UINT8         ComPortA_Termination;                 // COM Termination
+  UINT8         ComPortB_Pin9;                        // COM Pin9 :Ring/5V/12V
+  UINT8         ComPortB_PULL;                        // COM Pull up/down
+  UINT8         ComPortB_Termination;                 // COM Termination
+  UINT8         ComPortC_Pin9;                        // COM Pin9 :Ring/5V/12V
+  UINT8         ComPortC_PULL;                        // COM Pull up/down
+  UINT8         ComPortC_Termination;                 // COM Termination
+  UINT8         ComPortD_Pin9;                        // COM Pin9 :Ring/5V/12V
+  UINT8         ComPortD_PULL;                        // COM Pull up/down
+  UINT8         ComPortD_Termination;                 // COM Termination
+
   UINT8         CompalFastBoot;                   // [COM][FastBoot]
   UINT8         CompalSecureBoot;                 // [COM][Compal SecureBoot]
 //OEM_End
@@ -94,5 +108,8 @@ typedef struct {
 #define CHIPSET_CONFIGURATION   SYSTEM_CONFIGURATION
 
 #define C_ASSERT(expn) typedef char __C_ASSERT__[(expn)?1:-1]
+
+#define VFR_FORMID_SIO_RESOURCE         0x40
+
 #endif
 

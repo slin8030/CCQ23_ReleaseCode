@@ -43,3 +43,7 @@
   $(CHIPSET_PKG)/$(CHIPSET_PKG).dec
   InsydeModulePkg/InsydeModulePkg.dec
   $(PROJECT_PKG)/Project.dec
+
+[LibraryClasses]
+  PeiOemSvcChipsetLib
+  BaseMemoryLib

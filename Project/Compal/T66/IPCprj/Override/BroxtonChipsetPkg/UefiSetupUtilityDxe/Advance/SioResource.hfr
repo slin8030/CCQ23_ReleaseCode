@@ -1,0 +1,313 @@
+/** @file
+
+  Super I/O Resource HFR implementation.
+
+;******************************************************************************
+;* Copyright (c) 2014, Insyde Software Corporation. All Rights Reserved.
+;*
+;* You may not reproduce, distribute, publish, display, perform, modify, adapt,
+;* transmit, broadcast, present, recite, release, license or otherwise exploit
+;* any part of this publication in any form, by any means, without the prior
+;* written permission of Insyde Software Corporation.
+;*
+;******************************************************************************
+*/
+
+  //
+  //  Form VFR_FORMID_SIO_RESOURCE : Super I/O Resource Config
+  //
+  form
+    formid = VFR_FORMID_SIO_RESOURCE, title = STRING_TOKEN(STR_EFI_SETUP_UTILITY_TITLE);
+
+    subtitle text = STRING_TOKEN(STR_SIO_NUVOTON5104D_TITLE);
+
+    subtitle text = STRING_TOKEN(STR_BLANK_STRING);
+
+
+      suppressif   TRUE;
+        oneof
+          varid       = SystemConfig.NCT5104,
+          prompt      = STRING_TOKEN(STR_SIO_SUPPORT_STRING),
+          help        = STRING_TOKEN(STR_SIO_EMPTY),
+          option text = STRING_TOKEN(STR_SIO_SELECT_DISABLE), value = 0x0, flags = 0;
+          option text = STRING_TOKEN(STR_SIO_SELECT_ENABLE), value = 0x1, flags = 0| DEFAULT;
+        endoneof;
+      endif;
+
+      oneof
+        varid       = SystemConfig.ComPortA,
+        prompt      = STRING_TOKEN(STR_SIO_SERIAL_PORTA),
+        help        = STRING_TOKEN(STR_SIO_SERIAL_HELP),
+        option text = STRING_TOKEN(STR_SIO_SELECT_DISABLE), value = 0x0, flags = 0;
+        option text = STRING_TOKEN(STR_SIO_SELECT_ENABLE), value = 0x1, flags = 0 | DEFAULT;
+        option text = STRING_TOKEN(STR_SIO_SELECT_AUTO), value = 0x2, flags = 0;
+      endoneof;
+
+      suppressif
+        NOT ideqval SystemConfig.ComPortA == 1;
+        oneof
+          varid       = SystemConfig.ComPortAMode,
+          prompt      = STRING_TOKEN(STR_SIO_MODE_CONTROL),
+          help        = STRING_TOKEN(STR_COM_MODE_HELP),
+          option text = STRING_TOKEN(STR_COM_RS232_STRING),  value = 0, flags = 0;
+          option text = STRING_TOKEN(STR_COM_RS422_STRING),  value = 1, flags = 0;
+          option text = STRING_TOKEN(STR_COM_RS485_STRING),  value = 2, flags = DEFAULT;
+        endoneof;
+
+        suppressif ideqval SystemConfig.ComPortAMode == 0;
+          oneof
+            varid       = SystemConfig.ComPortA_PULL,
+            prompt      = STRING_TOKEN(STR_COM_PULL_RESISTER_STRING),
+            help        = STRING_TOKEN(STR_COM_PULL_RESISTER_HELP_STRING),
+            option text = STRING_TOKEN(STR_DISABLED_TEXT), value = 0, flags = 0;
+            option text = STRING_TOKEN(STR_ENABLED_TEXT),  value = 1, flags = DEFAULT;
+          endoneof;
+
+          oneof
+            varid       = SystemConfig.ComPortA_Termination,
+            prompt      = STRING_TOKEN(STR_TERMINATION_RESISTOR_STRING),
+            help        = STRING_TOKEN(STR_TERMINATION_RESISTOR_HELP_STRING),
+            option text = STRING_TOKEN(STR_DISABLED_TEXT), value = 0, flags = 0;
+            option text = STRING_TOKEN(STR_ENABLED_TEXT),  value = 1, flags = DEFAULT;
+          endoneof;
+        endif;
+
+        oneof
+          varid       = SystemConfig.ComPortABaseIo,
+          prompt      = STRING_TOKEN(STR_SIO_BASEIO_STRING),
+          help        = STRING_TOKEN(STR_SIO_EMPTY),
+          option text = STRING_TOKEN(STR_SIO_2E8_TEXT), value = 0, flags = 0;
+          option text = STRING_TOKEN(STR_SIO_2F8_TEXT), value = 1, flags = 0;
+          option text = STRING_TOKEN(STR_SIO_3E8_TEXT), value = 2, flags = 0;
+          option text = STRING_TOKEN(STR_SIO_3F8_TEXT), value = 3, flags = 0| DEFAULT;
+        endoneof;
+
+        oneof
+          varid       = SystemConfig.ComPortAInterrupt,
+          prompt      = STRING_TOKEN(STR_SIO_INTERRUPT_STRING),
+          help        = STRING_TOKEN(STR_SIO_EMPTY),
+          option text = STRING_TOKEN(STR_PCI_IRQ3_TEXT), value = 3,  flags = 0;
+          option text = STRING_TOKEN(STR_PCI_IRQ4_TEXT), value = 4,  flags = 0;
+          option text = STRING_TOKEN(STR_PCI_IRQ6_TEXT), value = 6,  flags = 0;
+          option text = STRING_TOKEN(STR_PCI_IRQ7_TEXT), value = 7,  flags = 0 | DEFAULT;
+        endoneof;
+
+        oneof
+          varid       = SystemConfig.ComPortA_Pin9,
+          prompt      = STRING_TOKEN(STR_PIN9_FUNCTION_STRING),
+          help        = STRING_TOKEN(STR_COM_PIN9_FUNCTION_HELP),
+          option text = STRING_TOKEN(STR_COM_PIN9_FUNCTION_0_STRING), value = 0, flags = 0 | DEFAULT;
+          option text = STRING_TOKEN(STR_COM_PIN9_FUNCTION_0_STRING), value = 1, flags = 0;
+          option text = STRING_TOKEN(STR_COM_PIN9_FUNCTION_0_STRING), value = 2, flags = 0;
+        endoneof;
+      endif;
+
+      oneof
+        varid       = SystemConfig.ComPortB,
+        prompt      = STRING_TOKEN(STR_SIO_SERIAL_PORTB),
+        help        = STRING_TOKEN(STR_SIO_SERIAL_HELP),
+        option text = STRING_TOKEN(STR_SIO_SELECT_DISABLE), value = 0x0, flags = 0;
+        option text = STRING_TOKEN(STR_SIO_SELECT_ENABLE), value = 0x1, flags = 0 | DEFAULT;
+        option text = STRING_TOKEN(STR_SIO_SELECT_AUTO), value = 0x2, flags = 0;
+      endoneof;
+
+      suppressif
+        NOT ideqval SystemConfig.ComPortB == 1;
+        oneof
+          varid       = SystemConfig.ComPortBMode,
+          prompt      = STRING_TOKEN(STR_SIO_MODE_CONTROL),
+          help        = STRING_TOKEN(STR_COM_MODE_HELP),
+          option text = STRING_TOKEN(STR_COM_RS232_STRING),  value = 0, flags = DEFAULT;
+          option text = STRING_TOKEN(STR_COM_RS422_STRING),  value = 1, flags = 0;
+          option text = STRING_TOKEN(STR_COM_RS485_STRING),  value = 2, flags = 0;
+        endoneof;
+
+        suppressif ideqval SystemConfig.ComPortBMode == 0;
+          oneof
+            varid       = SystemConfig.ComPortB_PULL,
+            prompt      = STRING_TOKEN(STR_COM_PULL_RESISTER_STRING),
+            help        = STRING_TOKEN(STR_COM_PULL_RESISTER_HELP_STRING),
+            option text = STRING_TOKEN(STR_DISABLED_TEXT), value = 0, flags = 0;
+            option text = STRING_TOKEN(STR_ENABLED_TEXT),  value = 1, flags = DEFAULT;
+          endoneof;
+
+          oneof
+            varid       = SystemConfig.ComPortB_Termination,
+            prompt      = STRING_TOKEN(STR_TERMINATION_RESISTOR_STRING),
+            help        = STRING_TOKEN(STR_TERMINATION_RESISTOR_HELP_STRING),
+            option text = STRING_TOKEN(STR_DISABLED_TEXT), value = 0, flags = 0;
+            option text = STRING_TOKEN(STR_ENABLED_TEXT),  value = 1, flags = DEFAULT;
+          endoneof;
+        endif;
+
+        oneof
+          varid       = SystemConfig.ComPortBBaseIo,
+          prompt      = STRING_TOKEN(STR_SIO_BASEIO_STRING),
+          help        = STRING_TOKEN(STR_SIO_EMPTY),
+          option text = STRING_TOKEN(STR_SIO_2E8_TEXT), value = 0, flags = 0;
+          option text = STRING_TOKEN(STR_SIO_2F8_TEXT), value = 1, flags = 0;
+          option text = STRING_TOKEN(STR_SIO_3E8_TEXT), value = 2, flags = 0| DEFAULT;
+          option text = STRING_TOKEN(STR_SIO_3F8_TEXT), value = 3, flags = 0;
+        endoneof;
+
+        oneof
+          varid       = SystemConfig.ComPortBInterrupt,
+          prompt      = STRING_TOKEN(STR_SIO_INTERRUPT_STRING),
+          help        = STRING_TOKEN(STR_SIO_EMPTY),
+          option text = STRING_TOKEN(STR_PCI_IRQ3_TEXT), value = 3,  flags = 0| DEFAULT;
+          option text = STRING_TOKEN(STR_PCI_IRQ4_TEXT), value = 4,  flags = 0;
+        endoneof;
+
+        oneof
+          varid       = SystemConfig.ComPortB_Pin9,
+          prompt      = STRING_TOKEN(STR_PIN9_FUNCTION_STRING),
+          help        = STRING_TOKEN(STR_COM_PIN9_FUNCTION_HELP),
+          option text = STRING_TOKEN(STR_COM_PIN9_FUNCTION_0_STRING), value = 0, flags = 0 | DEFAULT;
+          option text = STRING_TOKEN(STR_COM_PIN9_FUNCTION_0_STRING), value = 1, flags = 0;
+          option text = STRING_TOKEN(STR_COM_PIN9_FUNCTION_0_STRING), value = 2, flags = 0;
+        endoneof;
+      endif;
+
+      oneof
+        varid       = SystemConfig.ComPortC,
+        prompt      = STRING_TOKEN(STR_SIO_SERIAL_PORTC),
+        help        = STRING_TOKEN(STR_SIO_SERIAL_HELP),
+        option text = STRING_TOKEN(STR_SIO_SELECT_DISABLE), value = 0x0, flags = 0;
+        option text = STRING_TOKEN(STR_SIO_SELECT_ENABLE), value = 0x1, flags = 0 | DEFAULT;
+        option text = STRING_TOKEN(STR_SIO_SELECT_AUTO), value = 0x2, flags = 0;
+      endoneof;
+
+      suppressif
+        NOT ideqval SystemConfig.ComPortC == 1;
+        oneof
+          varid       = SystemConfig.ComPortCMode,
+          prompt      = STRING_TOKEN(STR_SIO_MODE_CONTROL),
+          help        = STRING_TOKEN(STR_COM_MODE_HELP),
+          option text = STRING_TOKEN(STR_COM_RS232_STRING),  value = 0, flags = DEFAULT;
+          option text = STRING_TOKEN(STR_COM_RS422_STRING),  value = 1, flags = 0;
+          option text = STRING_TOKEN(STR_COM_RS485_STRING),  value = 2, flags = 0;
+        endoneof;
+
+        suppressif ideqval SystemConfig.ComPortCMode == 0;
+          oneof
+            varid       = SystemConfig.ComPortC_PULL,
+            prompt      = STRING_TOKEN(STR_COM_PULL_RESISTER_STRING),
+            help        = STRING_TOKEN(STR_COM_PULL_RESISTER_HELP_STRING),
+            option text = STRING_TOKEN(STR_DISABLED_TEXT), value = 0, flags = 0;
+            option text = STRING_TOKEN(STR_ENABLED_TEXT),  value = 1, flags = DEFAULT;
+          endoneof;
+
+          oneof
+            varid       = SystemConfig.ComPortC_Termination,
+            prompt      = STRING_TOKEN(STR_TERMINATION_RESISTOR_STRING),
+            help        = STRING_TOKEN(STR_TERMINATION_RESISTOR_HELP_STRING),
+            option text = STRING_TOKEN(STR_DISABLED_TEXT), value = 0, flags = 0;
+            option text = STRING_TOKEN(STR_ENABLED_TEXT),  value = 1, flags = DEFAULT;
+          endoneof;
+        endif;
+
+        oneof
+          varid       = SystemConfig.ComPortCBaseIo,
+          prompt      = STRING_TOKEN(STR_SIO_BASEIO_STRING),
+          help        = STRING_TOKEN(STR_SIO_EMPTY),
+          option text = STRING_TOKEN(STR_SIO_2E8_TEXT), value = 0, flags = 0;
+          option text = STRING_TOKEN(STR_SIO_2F8_TEXT), value = 1, flags = 0| DEFAULT;
+          option text = STRING_TOKEN(STR_SIO_3E8_TEXT), value = 2, flags = 0;
+          option text = STRING_TOKEN(STR_SIO_3F8_TEXT), value = 3, flags = 0;
+        endoneof;
+
+        oneof
+          varid       = SystemConfig.ComPortCInterrupt,
+          prompt      = STRING_TOKEN(STR_SIO_INTERRUPT_STRING),
+          help        = STRING_TOKEN(STR_SIO_EMPTY),
+          option text = STRING_TOKEN(STR_PCI_IRQ3_TEXT),  value = 3,   flags = 0;
+          option text = STRING_TOKEN(STR_PCI_IRQ4_TEXT),  value = 4,   flags = 0;
+          option text = STRING_TOKEN(STR_PCI_IRQ5_TEXT),  value = 5,   flags = 0| DEFAULT;
+          option text = STRING_TOKEN(STR_PCI_IRQ6_TEXT),  value = 6,   flags = 0;
+          option text = STRING_TOKEN(STR_PCI_IRQ7_TEXT),  value = 7,   flags = 0;
+          option text = STRING_TOKEN(STR_PCI_IRQ10_TEXT), value = 10,  flags = 0;
+          option text = STRING_TOKEN(STR_PCI_IRQ11_TEXT), value = 11,  flags = 0;
+        endoneof;
+
+        oneof
+          varid       = SystemConfig.ComPortC_Pin9,
+          prompt      = STRING_TOKEN(STR_PIN9_FUNCTION_STRING),
+          help        = STRING_TOKEN(STR_COM_PIN9_FUNCTION_HELP),
+          option text = STRING_TOKEN(STR_COM_PIN9_FUNCTION_0_STRING), value = 0, flags = 0 | DEFAULT;
+          option text = STRING_TOKEN(STR_COM_PIN9_FUNCTION_0_STRING), value = 1, flags = 0;
+          option text = STRING_TOKEN(STR_COM_PIN9_FUNCTION_0_STRING), value = 2, flags = 0;
+        endoneof;
+      endif;
+
+      oneof
+        varid       = SystemConfig.ComPortD,
+        prompt      = STRING_TOKEN(STR_SIO_SERIAL_PORTD),
+        help        = STRING_TOKEN(STR_SIO_SERIAL_HELP),
+        option text = STRING_TOKEN(STR_SIO_SELECT_DISABLE), value = 0x0, flags = 0| DEFAULT;
+        option text = STRING_TOKEN(STR_SIO_SELECT_ENABLE), value = 0x1, flags = 0;
+        option text = STRING_TOKEN(STR_SIO_SELECT_AUTO), value = 0x2, flags = 0;
+      endoneof;
+
+      suppressif
+        NOT ideqval SystemConfig.ComPortD == 1;
+        oneof
+          varid       = SystemConfig.ComPortDMode,
+          prompt      = STRING_TOKEN(STR_SIO_MODE_CONTROL),
+          help        = STRING_TOKEN(STR_COM_MODE_HELP),
+          option text = STRING_TOKEN(STR_COM_RS232_STRING),  value = 0, flags = DEFAULT;
+          option text = STRING_TOKEN(STR_COM_RS422_STRING),  value = 1, flags = 0;
+          option text = STRING_TOKEN(STR_COM_RS485_STRING),  value = 2, flags = 0;
+        endoneof;
+
+        suppressif ideqval SystemConfig.ComPortDMode == 0;
+          oneof
+            varid       = SystemConfig.ComPortD_PULL,
+            prompt      = STRING_TOKEN(STR_COM_PULL_RESISTER_STRING),
+            help        = STRING_TOKEN(STR_COM_PULL_RESISTER_HELP_STRING),
+            option text = STRING_TOKEN(STR_DISABLED_TEXT), value = 0, flags = DEFAULT;
+            option text = STRING_TOKEN(STR_ENABLED_TEXT),  value = 1, flags = 0;
+          endoneof;
+
+          oneof
+            varid       = SystemConfig.ComPortD_Termination,
+            prompt      = STRING_TOKEN(STR_TERMINATION_RESISTOR_STRING),
+            help        = STRING_TOKEN(STR_TERMINATION_RESISTOR_HELP_STRING),
+            option text = STRING_TOKEN(STR_DISABLED_TEXT), value = 0, flags = DEFAULT;
+            option text = STRING_TOKEN(STR_ENABLED_TEXT),  value = 1, flags = 0;
+          endoneof;
+        endif;
+
+        oneof
+          varid       = SystemConfig.ComPortDBaseIo,
+          prompt      = STRING_TOKEN(STR_SIO_BASEIO_STRING),
+          help        = STRING_TOKEN(STR_SIO_EMPTY),
+          option text = STRING_TOKEN(STR_SIO_2E8_TEXT), value = 0, flags = 0 | DEFAULT;
+          option text = STRING_TOKEN(STR_SIO_2F8_TEXT), value = 1, flags = 0;
+          option text = STRING_TOKEN(STR_SIO_3E8_TEXT), value = 2, flags = 0;
+          option text = STRING_TOKEN(STR_SIO_3F8_TEXT), value = 3, flags = 0;
+        endoneof;
+
+        oneof
+          varid       = SystemConfig.ComPortDInterrupt,
+          prompt      = STRING_TOKEN(STR_SIO_INTERRUPT_STRING),
+          help        = STRING_TOKEN(STR_SIO_EMPTY),
+          option text = STRING_TOKEN(STR_PCI_IRQ3_TEXT),  value = 3,   flags = 0;
+          option text = STRING_TOKEN(STR_PCI_IRQ4_TEXT),  value = 4,   flags = 0;
+          option text = STRING_TOKEN(STR_PCI_IRQ5_TEXT),  value = 5,   flags = 0;
+          option text = STRING_TOKEN(STR_PCI_IRQ6_TEXT),  value = 6,   flags = 0;
+          option text = STRING_TOKEN(STR_PCI_IRQ7_TEXT),  value = 7,   flags = 0| DEFAULT;
+          option text = STRING_TOKEN(STR_PCI_IRQ10_TEXT), value = 10,  flags = 0;
+          option text = STRING_TOKEN(STR_PCI_IRQ11_TEXT), value = 11,  flags = 0;
+        endoneof;
+
+        oneof
+          varid       = SystemConfig.ComPortD_Pin9,
+          prompt      = STRING_TOKEN(STR_PIN9_FUNCTION_STRING),
+          help        = STRING_TOKEN(STR_COM_PIN9_FUNCTION_HELP),
+          option text = STRING_TOKEN(STR_COM_PIN9_FUNCTION_0_STRING), value = 0, flags = 0 | DEFAULT;
+          option text = STRING_TOKEN(STR_COM_PIN9_FUNCTION_0_STRING), value = 1, flags = 0;
+          option text = STRING_TOKEN(STR_COM_PIN9_FUNCTION_0_STRING), value = 2, flags = 0;
+        endoneof;
+
+     endif;
+  endform;

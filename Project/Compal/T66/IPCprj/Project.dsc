@@ -65,6 +65,7 @@
 #[-end-170111-IB07400832-add]#
 !import ../../COMMON/Package.dsc
 !import ../COMMON/T66CommonPkg.dsc
+!import SioNct5104dPkg/Package.dsc
 
 ################################################################################
 #

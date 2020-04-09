@@ -73,6 +73,8 @@
   Power/Cpu.vfi
   Power/CpuPower.vfi
 
+  Advance/SioResource.hfr
+  Advance/SioResource.uni
 [Packages]
   $(CHIPSET_PKG)/$(CHIPSET_PKG).dec
   $(PROJECT_PKG)/Project.dec

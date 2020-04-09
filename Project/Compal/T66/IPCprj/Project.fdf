@@ -79,6 +79,7 @@
 #
 !import BroxtonChipsetPkg/Package.fdf
 #[-end-170111-IB07400832-add]#
+!import SioNct5104dPkg/Package.fdf
 !import Project/Compal/Common/Package.fdf
 !import Project/Compal/T66/COMMON/T66CommonPkg.fdf
 
