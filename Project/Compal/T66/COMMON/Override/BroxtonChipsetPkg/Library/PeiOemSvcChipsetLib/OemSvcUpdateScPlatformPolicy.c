@@ -41,7 +41,7 @@ GLOBAL_REMOVE_IF_UNREFERENCED PRIVATE_PCICFGCTRL OemDirectIrqTable[] = {
   { SB_ISH_BRIDGE_PORT,  R_ISH_SB_PCICFGCTRL_ISH   , 26, V_PCICFG_CTRL_INTA },
   { SB_USB_DEVICE_PORT,  R_USB_SB_PCICFGCTRL_XDCI  , 13, V_PCICFG_CTRL_INTB },
 };
-/*
+
 EFI_STATUS
 UpdatePcieConfig (
   IN OUT SC_POLICY_PPI                         *ScPolicyPpi
@@ -70,7 +70,7 @@ UpdatePcieConfig (
   PcieConfig->RootPort[5].ClkReqSupported = TRUE;   // port 3 NA
   PcieConfig->RootPort[5].ClkReqNumber    = 3;
   return EFI_MEDIA_CHANGED;
-}*/
+}
 
 EFI_STATUS
 UpdateSerialIrq (
@@ -141,7 +141,7 @@ OemSvcUpdateScPlatformPolicy (
   //
   // Update PcieConfig
   //
-//UpdatePcieConfig (ScPolicyPpi);
+  UpdatePcieConfig (ScPolicyPpi);
 
   //
   // Update Interrupt config
