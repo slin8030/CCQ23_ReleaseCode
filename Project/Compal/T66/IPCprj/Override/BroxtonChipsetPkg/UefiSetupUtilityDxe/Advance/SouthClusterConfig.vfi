@@ -410,9 +410,16 @@ form formid     = ISH_OPTIONS_FORM_ID,
   oneof varid  = SystemConfig.ScIshEnabled,
       prompt   = STRING_TOKEN(STR_ISH_PROMPT),
       help     = STRING_TOKEN(STR_ISH_HELP),
-      option text = STRING_TOKEN(STR_DISABLED), value = 0, flags = RESET_REQUIRED;
-      option text = STRING_TOKEN(STR_ENABLED), value = 1, flags = DEFAULT | MANUFACTURING | RESET_REQUIRED;
+//[PRJ]-- >>>> NO ISH devices in HW design.
+//      option text = STRING_TOKEN(STR_DISABLED), value = 0, flags = RESET_REQUIRED;
+//      option text = STRING_TOKEN(STR_ENABLED), value = 1, flags = DEFAULT | MANUFACTURING | RESET_REQUIRED;
+//[PRJ]-- <<<< NO ISH devices in HW design.
+//[PRJ]++ >>>> NO ISH devices in HW design.
+      option text = STRING_TOKEN(STR_DISABLED), value = 0, flags = DEFAULT | MANUFACTURING | RESET_REQUIRED;
+      option text = STRING_TOKEN(STR_ENABLED), value = 1, flags = RESET_REQUIRED;
+//[PRJ]++ << NO ISH devices in HW design.
     endoneof;
+
 
 endform; // End of ISH Configurations
 
