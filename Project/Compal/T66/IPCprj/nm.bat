@@ -116,10 +116,10 @@ set ARCH=%BIOSBuild%
 
 CALL :ReplaceTarg
 del /q %WORKSPACE%%PROJECT_PKG%\Bios\BIOS_Full\bxt_spi_8mb_OxbowHill\BX\*.* >NUL
-nmake uefi64debug
-echo BiosBin=%WORKSPACE%%PROJECT_PKG%\Bios\BIOS_Full\bxt_spi_8mb_OxbowHill\BX\%SOC_NAME%_%CRB_BOARD_NAME%_X64_EFIDEBUG.bin 
-IF NOT EXIST %WORKSPACE%%PROJECT_PKG%\Bios\BIOS_Full\bxt_spi_8mb_OxbowHill\BX\%SOC_NAME%_%CRB_BOARD_NAME%_X64_EFIDEBUG.bin GOTO ERROR 
-Copy /v /y %WORKSPACE%%PROJECT_PKG%\Bios\BIOS_Full\bxt_spi_8mb_OxbowHill\BX\%SOC_NAME%_%CRB_BOARD_NAME%_X64_EFIDEBUG.bin %WORKSPACE%%PROJECT_PKG%\Bios\%OemPath%_B0_8M.%REPLACETEXT%.bin
+nmake uefi64 
+echo BiosBin=%WORKSPACE%%PROJECT_PKG%\Bios\BIOS_Full\bxt_spi_8mb_OxbowHill\BX\%SOC_NAME%_%CRB_BOARD_NAME%_X64_RELEASE.bin 
+IF NOT EXIST %WORKSPACE%%PROJECT_PKG%\Bios\BIOS_Full\bxt_spi_8mb_OxbowHill\BX\%SOC_NAME%_%CRB_BOARD_NAME%_X64_RELEASE.bin GOTO ERROR 
+Copy /v /y %WORKSPACE%%PROJECT_PKG%\Bios\BIOS_Full\bxt_spi_8mb_OxbowHill\BX\%SOC_NAME%_%CRB_BOARD_NAME%_X64_RELEASE.bin %WORKSPACE%%PROJECT_PKG%\Bios\%OemPath%_B0_8M.%REPLACETEXT%.bin
 CALL :BuildWinFlash
 echo build winflash done
 CALL :CopyReleasePackage 64
