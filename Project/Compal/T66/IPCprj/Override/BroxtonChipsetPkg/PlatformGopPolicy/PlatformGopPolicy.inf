@@ -66,6 +66,9 @@
   IoLib
   HobLib
   PreSiliconLib
+#[PRJ]+ >>>> Support crisis recovery
+  GpioLib
+#[PRJ]+ <<<< Support crisis recovery  
 #[-start-160803-IB07220122-remove]#
 #   PlatformConfigDataLib
 #[-end-160803-IB07220122-remove]#

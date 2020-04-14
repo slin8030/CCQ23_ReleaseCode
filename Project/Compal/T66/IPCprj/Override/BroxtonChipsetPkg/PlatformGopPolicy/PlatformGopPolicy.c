@@ -51,6 +51,9 @@ Intel Corporation.
 #include <Library/DxeInsydeChipsetLib.h>
 //[-end-151220-IB1127138-add]//
 //[-start-160216-IB03090424-add]//
+//[PRJ]++ >>>> MIPI KD panel support
+#include <Library/GpioLib.h>
+//[PRJ]++ <<<< MIPI KD panel support
 #if (TABLET_PF_ENABLE == 0)
 #include <Library/EcMiscLib.h>
 #include <Guid/PlatformInfo.h>
@@ -645,9 +648,10 @@ GetVbtData (
   UINT32                        Id2=0;   
    EFI_GUID MIPIKDVbtGuid       = { 0x7da9d1c5, 0x9e4e, 0x4530, 0xb6, 0x55, 0x8b, 0x36, 0x5e, 0xe3, 0x9c, 0x16 }; // FILE FREEFORM = 7DA9D1C5-9E4E-4530-B655-8B365EE39C16
    EFI_GUID EDPLVDSVbtGuid       = { 0x80733e66, 0xb15f, 0x4b1d, 0xb2, 0x27, 0xc9, 0xd3, 0x6c, 0xf1, 0x40, 0xcb }; // FILE FREEFORM = 80733E66-B15F-4B1D-B227-C9D36CF140CB	
-  
-	Id1 = (( MmioRead32(N_GPIO_18) ) & BIT0) ;  // N_GPIO_18
-	Id2 = (( MmioRead32(N_GPIO_19) ) & BIT0) ;   // N_GPIO_19
+
+
+  GpioGetInputValue (N_GPIO_18, &Id1);// N_GPIO_18
+  GpioGetInputValue (N_GPIO_19, &Id2);// N_GPIO_19
 //[PRJ]++ <<<< MIPI KD panel support
   if (VbtAddress == NULL || VbtSize == NULL){
     return EFI_INVALID_PARAMETER;

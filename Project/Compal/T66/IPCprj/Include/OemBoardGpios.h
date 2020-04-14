@@ -42,7 +42,7 @@ BXT_GPIO_PAD_INIT  mBXT_GpioInitData_N_OEM[] =
   BXT_GPIO_PAD_CONF(L"GPIO_6",                   M1   ,    NA    ,  NA   ,  NA    ,   NA       , Wake_Disabled, P_20K_L,   NA    ,    NA,   HizRx0I,   SAME, GPIO_PADBAR+0x0030,  NORTH), // J4C1.29 PTI_0_DATA5
   BXT_GPIO_PAD_CONF(L"GPIO_7",                   M1   ,    NA    ,  NA   ,  NA    ,   NA       , Wake_Disabled, P_20K_L,   NA    ,    NA,   HizRx0I,   SAME, GPIO_PADBAR+0x0038,  NORTH), // J4C1.31 PTI_0_DATA6
   BXT_GPIO_PAD_CONF(L"GPIO_8",                   M1   ,    NA    ,  NA   ,  NA    ,   NA       , Wake_Disabled, P_20K_L,   NA    ,    NA,   HizRx0I,   SAME, GPIO_PADBAR+0x0040,  NORTH), // J4C1.33 PTI_0_DATA7
-  BXT_GPIO_PAD_CONF(L"GPIO_9",                   M0   ,    GPO   , GPIO_D,  NA    ,   NA       , Wake_Disabled, P_20K_H,   NA    ,    NA,     NA   ,     NA, GPIO_PADBAR+0x0048,  NORTH),//NA->EDP, GPO->Mipi
+  BXT_GPIO_PAD_CONF(L"GPIO_9",                   M0   ,    GPO   , GPIO_D,  HI    ,   NA       , Wake_Disabled, P_20K_H,   NA    ,    NA,     NA   ,     NA, GPIO_PADBAR+0x0048,  NORTH),//NA->EDP, GPO->Mipi
   BXT_GPIO_PAD_CONF(L"GPIO_10",                  M0   ,    GPI   ,  NA   ,  NA    ,   Level    , Wake_Disabled, P_20K_H, Inverted ,IOAPIC,    TxDRxE,     NA, GPIO_PADBAR+0x0050,  NORTH),//VOL_UP
   BXT_GPIO_PAD_CONF(L"GPIO_11",                  M0   ,    GPI   ,  NA   ,  NA    ,   Level    , Wake_Disabled, P_20K_H, Inverted ,IOAPIC,    TxDRxE,     NA, GPIO_PADBAR+0x0058,  NORTH),//VOL_DOWN
   BXT_GPIO_PAD_CONF(L"GPIO_12",                  M0   ,    GPI   ,  NA   ,  NA    ,   Level    , Wake_Disabled, P_20K_H, Inverted ,IOAPIC,    TxDRxE,     NA, GPIO_PADBAR+0x0060,  NORTH),//BU_BR+
@@ -129,9 +129,9 @@ BXT_GPIO_PAD_INIT  mBXT_GpioInitData_NW_OEM []=
   BXT_GPIO_PAD_CONF(L"GPIO_193 PANEL0_VDDEN",    M1  ,     NA    , NA   ,  NA     ,   NA      ,Wake_Disabled, P_20K_L,    NA   ,    NA  ,D0RxDRx0I ,   SAME,  GPIO_PADBAR+0x0030,  NORTHWEST),//PANEL_VDD_EN
   BXT_GPIO_PAD_CONF(L"GPIO_194 PANEL0_BKLTEN",   M1  ,     NA    , NA   ,  NA     ,   NA      ,Wake_Disabled, P_20K_L,    NA   ,    NA  ,D0RxDRx0I ,   SAME,  GPIO_PADBAR+0x0038,  NORTHWEST),//PNL0_BKLTEN
   BXT_GPIO_PAD_CONF(L"GPIO_195 PANEL0_BKLTCTL",  M1  ,     NA    , NA   ,  NA     ,   NA      ,Wake_Disabled, P_20K_L,    NA   ,    NA  ,D0RxDRx0I ,   SAME,  GPIO_PADBAR+0x0040,  NORTHWEST),//PNL0_BKLTCTL
-  BXT_GPIO_PAD_CONF(L"GPIO_196 PANEL1_VDDEN",    M1  ,     NA    , NA   ,  NA     ,   NA      ,Wake_Disabled, P_20K_L,    NA   ,    NA  ,D0RxDRx0I ,   SAME,  GPIO_PADBAR+0x0048,  NORTHWEST),//PANEL1_VDD_EN
-  BXT_GPIO_PAD_CONF(L"GPIO_197 PANEL1_BKLTEN",   M1  ,     NA    , NA   ,  NA     ,   NA      ,Wake_Disabled, P_20K_L,    NA   ,    NA  ,D0RxDRx0I ,   SAME,  GPIO_PADBAR+0x0050,  NORTHWEST),//PNL1_BKLTEN
-  BXT_GPIO_PAD_CONF(L"GPIO_198 PANEL1_BKLTCTL",  M1  ,     NA    , NA   ,  NA     ,   NA      ,Wake_Disabled, P_20K_L,    NA   ,    NA  ,D0RxDRx0I ,   SAME,  GPIO_PADBAR+0x0058,  NORTHWEST),//PNL1_BKLTCTL
+  BXT_GPIO_PAD_CONF(L"GPIO_196 PANEL1_VDDEN",    M0  ,     GPO   ,GPIO_D,  HI     ,   NA      ,Wake_Disabled, P_20K_H,    NA   ,    NA  ,HizRx0I   ,   SAME,  GPIO_PADBAR+0x0048,  NORTHWEST),//PANEL1_VDD_EN
+  BXT_GPIO_PAD_CONF(L"GPIO_197 PANEL1_BKLTEN",   M0  ,     GPO   ,GPIO_D,  HI     ,   NA      ,Wake_Disabled, P_20K_H,    NA   ,    NA  ,HizRx0I   ,   SAME,  GPIO_PADBAR+0x0050,  NORTHWEST),//PNL1_BKLTEN
+  BXT_GPIO_PAD_CONF(L"GPIO_198 PANEL1_BKLTCTL",  M0  ,     GPO   ,GPIO_D,  HI     ,   NA      ,Wake_Disabled, P_20K_H,    NA   ,    NA  ,HizRx0I   ,   SAME,  GPIO_PADBAR+0x0058,  NORTHWEST),//PNL1_BKLTCTL
   BXT_GPIO_PAD_CONF(L"GPIO_199 DBI_CSX",         M0  ,     GPO   ,GPIO_D,  LO     ,   NA      ,Wake_Disabled, P_20K_L,    NA   ,    NA  ,NA        ,     NA,  GPIO_PADBAR+0x0060,  NORTHWEST),//NC
   BXT_GPIO_PAD_CONF(L"GPIO_200 DBI_RESX",        M2  ,     NA    , NA   ,  NA     ,   NA      ,Wake_Disabled, P_NONE ,    NA   ,    NA  ,HizRx1I   ,DisPuPd,  GPIO_PADBAR+0x0068,  NORTHWEST),//SOC_DP0_HPD#
   BXT_GPIO_PAD_CONF(L"GPIO_201 GP_INTD_DSI_TE1", M0  ,     GPO   ,GPIO_D,  LO     ,   NA      ,Wake_Disabled, P_20K_L,    NA   ,    NA  ,D0RxDRx0I ,   SAME,  GPIO_PADBAR+0x0070,  NORTHWEST),//NC
