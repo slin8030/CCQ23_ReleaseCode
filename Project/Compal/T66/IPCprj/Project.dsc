@@ -1173,6 +1173,13 @@ ApolloLakeBoardPkg/Tools/Source/Shell/TriggerRecovery/TriggerRecovery.inf
 #[PRJ]++ >>>> Add RtkUndi PXE support.
   $(PROJECT_PKG)/Binary/UndiDriver/RtkUndiDriver/RtkUndiDriver.inf
 #[PRJ]++ <<<< Add RtkUndi PXE support.
+
+#
+# Project add for config DXE setting.
+#
+  $(PROJECT_PKG)/OemConfig/Dxe/OemConfigDxe.inf
+
+
 [BuildOptions]
   DEFINE EDK_EDKII_DSC_FEATURE_BUILD_OPTIONS      = $(EDK_EDKII_DSC_FEATURE_BUILD_OPTIONS) $(CC_FLAGS)     
   DEFINE EDK_EDKII_DSC_FEATURE_BUILD_OPTIONS_GCC  = $(EDK_EDKII_DSC_FEATURE_BUILD_OPTIONS_GCC) $(CC_FLAGS)     

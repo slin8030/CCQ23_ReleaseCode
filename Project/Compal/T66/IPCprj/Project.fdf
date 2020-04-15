@@ -568,4 +568,10 @@ FILE FREEFORM = 8F7B373D-E9C7-4ff9-A13E-1D3B922A8471 {
 #[PRJ]++ >>>> Fix IPV4/IPV6 not show in boot manager after enable [Network Stack]
   INF $(PROJECT_PKG)/Binary/UndiDriver/RtkUndiDriver/RtkUndiDriver.inf   
 #[PRJ]++ <<<< Fix IPV4/IPV6 not show in boot manager after enable [Network Stack]
+
+#
+#Project add for config DXE setting.
+#
+INF $(PROJECT_PKG)/OemConfig/Dxe/OemConfigDxe.inf
+
   

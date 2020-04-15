@@ -1,0 +1,66 @@
+## @file
+#  Component description file for Oem Project DXE module
+#
+#******************************************************************************
+#* Copyright (c) 2016, Insyde Software Corp. All Rights Reserved.
+#*
+#* You may not reproduce, distribute, publish, display, perform, modify, adapt,
+#* transmit, broadcast, present, recite, release, license or otherwise exploit
+#* any part of this publication in any form, by any means, without the prior
+#* written permission of Insyde Software Corporation.
+#*
+#******************************************************************************
+
+[Defines]
+  INF_VERSION                    = 0x00010005
+  BASE_NAME                      = OemConfigDxe
+  FILE_GUID                      = ECA2AE9E-7594-4901-871C-449DA1A11882
+  MODULE_TYPE                    = DXE_DRIVER
+  VERSION_STRING                 = 1.0
+  ENTRY_POINT                    = OemConfigEntryPoint
+
+#
+# The following information is for reference only and not required by the build tools.
+#
+#  VALID_ARCHITECTURES           = IA32 X64 IPF EBC
+#
+
+[Sources.common]
+  OemConfig.c
+  ModifyPlatformSetting.c
+
+[LibraryClasses]
+  UefiDriverEntryPoint
+  UefiBootServicesTableLib
+  UefiRuntimeServicesTableLib
+  UefiLib
+  BaseLib
+  DebugLib
+  SideBandLib
+  ScPlatformLib
+  CompalEcLib
+
+[Packages]
+  MdePkg/MdePkg.dec
+  InsydeModulePkg/InsydeModulePkg.dec
+  MdeModulePkg/MdeModulePkg.dec
+  $(PROJECT_PKG)/Project.dec
+  $(PLATFORM_RC_PACKAGE)/$(PLATFORM_RC_PACKAGE).dec
+  $(CHIPSET_PKG)/$(CHIPSET_PKG).dec
+  $(COMPAL_COMMON_PATH)/CompalCommon.dec
+
+[Protocols]
+  gEfiVariableArchProtocolGuid
+
+[Guids]
+  gSystemConfigurationGuid
+  
+
+[Pcd]
+
+[Depex]
+  TRUE
+
+[BuildOptions]
+
+
