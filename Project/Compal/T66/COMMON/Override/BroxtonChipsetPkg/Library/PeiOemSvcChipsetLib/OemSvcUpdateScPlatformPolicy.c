@@ -115,6 +115,32 @@ UpdateInterruptConfig (
   return EFI_MEDIA_CHANGED;
 }
 
+
+EFI_STATUS
+UpdateUsbConfig (
+  IN OUT SC_POLICY_PPI                         *ScPolicyPpi
+  )
+{
+  SC_USB_CONFIG              *UsbConfig;
+
+  UsbConfig = NULL;
+  GetConfigBlock ((VOID *) ScPolicyPpi, &gUsbConfigGuid, (VOID *) &UsbConfig);
+  if (UsbConfig == NULL) {
+    return EFI_UNSUPPORTED;
+  }
+
+//[PRJ]+>>>> Fix USB 3 port 2 no function.
+  UsbConfig->PortUsb30[0].Enable = TRUE;
+  UsbConfig->PortUsb30[1].Enable = TRUE;
+  UsbConfig->PortUsb30[2].Enable = TRUE;
+  UsbConfig->PortUsb30[3].Enable = TRUE;
+  UsbConfig->PortUsb30[4].Enable = TRUE;
+  UsbConfig->PortUsb30[5].Enable = TRUE;
+//[PRJ]+<<<< Fix USB 3 port 2 no function.  
+  return EFI_MEDIA_CHANGED;
+}
+
+
 /**
  This function offers an interface to modify SC_POLICY_PPI data before the system
  installs SC_POLICY_PPI.
@@ -147,6 +173,12 @@ OemSvcUpdateScPlatformPolicy (
   // Update Interrupt config
   //
   UpdateInterruptConfig(ScPolicyPpi);
+
+  //
+  // Update USB config
+  //
+  UpdateUsbConfig(ScPolicyPpi);
+ 
 
   return EFI_MEDIA_CHANGED;
 }
