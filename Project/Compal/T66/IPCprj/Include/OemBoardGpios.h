@@ -164,7 +164,7 @@ BXT_GPIO_PAD_INIT  mBXT_GpioInitData_NW_OEM []=
   BXT_GPIO_PAD_CONF(L"GPIO_81 AVS_M_DATA_1",     M0   ,    GPO   ,GPIO_D,  LO     ,   NA      ,Wake_Disabled, P_20K_L,    NA   ,    NA  ,TxDRxE    ,   EnPd,  GPIO_PADBAR+0x0148,  NORTHWEST),//NC
   BXT_GPIO_PAD_CONF(L"GPIO_82 AVS_M_CLK_AB2",    M0   ,    GPI   ,GPIO_D,  NA     ,   NA      ,Wake_Disabled, P_NONE ,    NA   ,    NA  ,TxDRxE    ,     NA,  GPIO_PADBAR+0x0150,  NORTHWEST),//DMIC_CLK_AB2_GPIO_82
   BXT_GPIO_PAD_CONF(L"GPIO_83 AVS_M_DATA_2",     M0   ,    GPO   ,GPIO_D,  LO     ,   NA      ,Wake_Disabled, P_20K_L,    NA   ,    NA  ,TxDRxE    ,   EnPd,  GPIO_PADBAR+0x0158,  NORTHWEST),//NC
-  BXT_GPIO_PAD_CONF(L"GPIO_84 AVS_I2S2_MCLK",    M0   ,    GPO   ,GPIO_D,  HI     ,   NA      ,Wake_Disabled, P_20K_H,    NA   ,    NA  ,NA        ,     NA,  GPIO_PADBAR+0x0160,  NORTHWEST),//HDA_RST#
+  BXT_GPIO_PAD_CONF(L"GPIO_84 AVS_I2S2_MCLK",    M2   ,    NA    , NA   ,  NA     ,   NA      ,Wake_Disabled, P_20K_L,    NA   ,    NA  ,NA        ,     NA,  GPIO_PADBAR+0x0160,  NORTHWEST),//HDA_RST#
   BXT_GPIO_PAD_CONF(L"GPIO_85 AVS_I2S2_BCLK",    M0   ,    GPO   ,GPIO_D,  LO     ,   NA      ,Wake_Disabled, P_20K_L,    NA   ,    NA  ,TxDRxE    ,     NA,  GPIO_PADBAR+0x0168,  NORTHWEST),//[COM] test point
   BXT_GPIO_PAD_CONF(L"GPIO_86 AVS_I2S2_WS_SYNC", M0   ,    GPO   ,GPIO_D,  LO     ,   NA      ,Wake_Disabled, P_20K_L,    NA   ,    NA  ,TxDRxE    ,     NA,  GPIO_PADBAR+0x0170,  NORTHWEST),//[COM] test point
   BXT_GPIO_PAD_CONF(L"GPIO_87 AVS_I2S2_SDI",     M0   ,    GPO   ,GPIO_D,  LO     ,   NA      ,Wake_Disabled, P_20K_L,    NA   ,    NA  ,TxDRxE    ,     NA,  GPIO_PADBAR+0x0178,  NORTHWEST),//[COM] test point

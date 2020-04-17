@@ -43,12 +43,12 @@
 //AMIC-AMP GPIO32,33 (0, 0)
 #define OEM_VERB_TABLE_ID_1          1
 
-#define OEM_VERB_TABLE_1_HEADER1     0x80862668, \
-                                     0x013214C0, \
+#define OEM_VERB_TABLE_1_HEADER1     0x10EC0235, \
+                                     0x00000000, \
                                      0xFF,       \
                                      0x01,       \
-                                     0x000F,     \
-                                     0x0000 
+                                     0x0011,     \
+                                     0x0002
 
 
 #define OEM_VERB_TABLE_1_DATA1     0x00172032,  0x00172101,  0x001722C0,  0x00172314, \
@@ -72,12 +72,13 @@
 //AMIC-Codec GPIO32,33 (1, 0)
 #define OEM_VERB_TABLE_ID_2          2
 
-#define OEM_VERB_TABLE_2_HEADER1     0x80862668, \
-                                     0x013214C0, \
+#define OEM_VERB_TABLE_2_HEADER1     0x10EC0235, \
+                                     0x00000000, \
                                      0xFF,       \
                                      0x01,       \
-                                     0x000F,     \
-                                     0x0000  
+                                     0x0011,     \
+                                     0x0002
+
 
 #define OEM_VERB_TABLE_2_DATA1       0x00172032,  0x00172101,  0x001722C0,  0x00172314, \
                                      0x0017FF00,  0x0017FF00,  0x0017FF00,  0x0017FF00, \
@@ -100,12 +101,13 @@
 //DMIC-AMP GPIO32,33 (0, 1)
 #define OEM_VERB_TABLE_ID_3          3
 
-#define OEM_VERB_TABLE_3_HEADER1     0x80862668, \
-                                     0x013214C0, \
+#define OEM_VERB_TABLE_3_HEADER1     0x10EC0235, \
+                                     0x00000000, \
                                      0xFF,       \
                                      0x01,       \
-                                     0x000F,     \
-                                     0x0000  
+                                     0x0011,     \
+                                     0x0002
+ 
 
 #define OEM_VERB_TABLE_3_DATA1       0x00172032,  0x00172101,  0x001722C0,  0x00172314, \
                                      0x0017FF00,  0x0017FF00,  0x0017FF00,  0x0017FF00, \
@@ -128,12 +130,13 @@
 //DMIC-Codec GPIO32,33 (1, 1)
 #define OEM_VERB_TABLE_ID_4          4
 
-#define OEM_VERB_TABLE_4_HEADER1     0x80862668, \
-                                     0x013214C0, \
+#define OEM_VERB_TABLE_4_HEADER1     0x10EC0235, \
+                                     0x00000000, \
                                      0xFF,       \
                                      0x01,       \
-                                     0x000F,     \
-                                     0x0000  
+                                     0x0011,     \
+                                     0x0002
+
 
 #define OEM_VERB_TABLE_4_DATA1       0x00172032,  0x00172101,  0x001722C0,  0x00172314, \
                                      0x0017FF00,  0x0017FF00,  0x0017FF00,  0x0017FF00, \
@@ -255,16 +258,14 @@ OemSvcGetVerbTable (
 //DMIC-Codec GPIO32,33 (1, 1)
 //  *VerbTableHeaderDataAddress = VERB_TABLE_HEADER_DATA_BUFFER_ADDRESS (OEM_VERB_TABLE_ID_4);
 
-  Data32 = GpioPadRead (N_GPIO_32);
-  Data32 &= BIT0;
+  GpioGetInputValue (N_GPIO_32, &Data32);// N_GPIO_32
 
 //WriteCmos8 (0x6C,0x50);
 
-  if (Data32) {    
+  if (Data32 == 1) {    
     //Codec
-    Data32 = GpioPadRead (N_GPIO_33);
-    Data32 &= BIT0;
-    if (Data32) {  
+    GpioGetInputValue (N_GPIO_33, &Data32);// N_GPIO_33
+    if (Data32 == 1) {  
       //DMIC
         *VerbTableHeaderDataAddress = VERB_TABLE_HEADER_DATA_BUFFER_ADDRESS (OEM_VERB_TABLE_ID_4);
 //      WriteCmos8 (0x6C,0x51); 
@@ -275,9 +276,8 @@ OemSvcGetVerbTable (
     }
   } else {
     //AMP
-    Data32 = GpioPadRead (N_GPIO_33);
-    Data32 &= BIT0;
-    if (Data32) {  
+    GpioGetInputValue (N_GPIO_33, &Data32);// N_GPIO_33
+    if (Data32 == 1) {  
       //DMIC
         *VerbTableHeaderDataAddress = VERB_TABLE_HEADER_DATA_BUFFER_ADDRESS (OEM_VERB_TABLE_ID_3);
 //      WriteCmos8 (0x6C,0x53);

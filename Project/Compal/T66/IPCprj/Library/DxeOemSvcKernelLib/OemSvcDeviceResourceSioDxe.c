@@ -119,22 +119,22 @@ STATIC BXT_GPIO_PAD_INIT  mCOM_PULL_GPIO[3][2] =
     BXT_GPIO_PAD_CONF(L"GPIO_19",                  M0   ,    GPO   , GPIO_D,  LO    ,   NA       , Wake_Disabled, P_20K_H ,   NA    ,    NA,     NA   ,     SAME, GPIO_PADBAR+0x0098,  NORTH),//COM3_422_485_SW#
   }
 };*/
-
+/*
 STATIC BXT_GPIO_PAD_INIT  mCOM_TERMINATION_GPIO[3][2] =
 {
   {// COM1 Termination Resistor :Disable(High)/ Enable(Low)
-    BXT_GPIO_PAD_CONF(L"GPIO_32",                  M0   ,    GPO   , GPIO_D,  HI    ,   NA       , Wake_Disabled, P_20K_H ,   NA    ,    NA,     NA   ,     SAME, GPIO_PADBAR+0x0100,  NORTH),//COM1_TERMA#
-    BXT_GPIO_PAD_CONF(L"GPIO_32",                  M0   ,    GPO   , GPIO_D,  LO    ,   NA       , Wake_Disabled, P_20K_H ,   NA    ,    NA,     NA   ,     SAME, GPIO_PADBAR+0x0100,  NORTH),//COM1_TERMA#
+      BXT_GPIO_PAD_CONF(L"GPIO_32",                  M0   ,    GPO   , GPIO_D,  HI    ,   NA       , Wake_Disabled, P_20K_H ,   NA    ,    NA,     NA   ,     SAME, GPIO_PADBAR+0x0100,  NORTH),//COM1_TERMA#
+      BXT_GPIO_PAD_CONF(L"GPIO_32",                  M0   ,    GPO   , GPIO_D,  LO    ,   NA       , Wake_Disabled, P_20K_H ,   NA    ,    NA,     NA   ,     SAME, GPIO_PADBAR+0x0100,  NORTH),//COM1_TERMA#
   },
   {// COM2 Termination Resistor :Disable(High)/ Enable(Low)
-    BXT_GPIO_PAD_CONF(L"GPIO_21",                  M0   ,    GPO   , GPIO_D,  HI    ,   NA       , Wake_Disabled, P_20K_H ,   NA    ,    NA,     NA   ,     SAME, GPIO_PADBAR+0x00A8,  NORTH),//COM2_TERMB#
-    BXT_GPIO_PAD_CONF(L"GPIO_21",                  M0   ,    GPO   , GPIO_D,  LO    ,   NA       , Wake_Disabled, P_20K_H ,   NA    ,    NA,     NA   ,     SAME, GPIO_PADBAR+0x00A8,  NORTH),//COM2_TERMB#
+      BXT_GPIO_PAD_CONF(L"GPIO_21",                  M0   ,    GPO   , GPIO_D,  HI    ,   NA       , Wake_Disabled, P_20K_H ,   NA    ,    NA,     NA   ,     SAME, GPIO_PADBAR+0x00A8,  NORTH),//COM2_TERMB#
+      BXT_GPIO_PAD_CONF(L"GPIO_21",                  M0   ,    GPO   , GPIO_D,  LO    ,   NA       , Wake_Disabled, P_20K_H ,   NA    ,    NA,     NA   ,     SAME, GPIO_PADBAR+0x00A8,  NORTH),//COM2_TERMB#
   },
   {// COM3 Termination Resistor :Disable(High)/ Enable(Low)
-    BXT_GPIO_PAD_CONF(L"GPIO_27",                  M0   ,    GPO   , GPIO_D,  HI    ,   NA       , Wake_Disabled, P_20K_H ,   NA    ,    NA,     NA   ,     SAME, GPIO_PADBAR+0x00D8,  NORTH),//COM3_TERMC#
-    BXT_GPIO_PAD_CONF(L"GPIO_27",                  M0   ,    GPO   , GPIO_D,  LO    ,   NA       , Wake_Disabled, P_20K_H ,   NA    ,    NA,     NA   ,     SAME, GPIO_PADBAR+0x00D8,  NORTH),//COM3_TERMC#
+      BXT_GPIO_PAD_CONF(L"GPIO_27",                  M0   ,    GPO   , GPIO_D,  HI    ,   NA       , Wake_Disabled, P_20K_H ,   NA    ,    NA,     NA   ,     SAME, GPIO_PADBAR+0x00D8,  NORTH),//COM3_TERMC#
+      BXT_GPIO_PAD_CONF(L"GPIO_27",                  M0   ,    GPO   , GPIO_D,  LO    ,   NA       , Wake_Disabled, P_20K_H ,   NA    ,    NA,     NA   ,     SAME, GPIO_PADBAR+0x00D8,  NORTH),//COM3_TERMC#
   }
-};
+};*/
 
 
 
@@ -282,15 +282,15 @@ ConfigCOM_GPIO(
 {
   GpioPadConfigTable(CONFIG_PIN_NUMBER, &mCOM_MODE_GPIO[COM1][mSetupConfig.ComPortAMode][0]);
 //  GpioPadConfigTable(1, &mCOM_PULL_GPIO[COM1][mSetupConfig.ComPortA_PULL]);
-  GpioPadConfigTable(1, &mCOM_TERMINATION_GPIO[COM1][mSetupConfig.ComPortA_Termination]);
+//  GpioPadConfigTable(1, &mCOM_TERMINATION_GPIO[COM1][mSetupConfig.ComPortA_Termination]);
 
   GpioPadConfigTable(CONFIG_PIN_NUMBER, &mCOM_MODE_GPIO[COM2][mSetupConfig.ComPortBMode][0]);
 //  GpioPadConfigTable(1, &mCOM_PULL_GPIO[COM2][mSetupConfig.ComPortB_PULL]);
-  GpioPadConfigTable(1, &mCOM_TERMINATION_GPIO[COM2][mSetupConfig.ComPortB_Termination]);
+//  GpioPadConfigTable(1, &mCOM_TERMINATION_GPIO[COM2][mSetupConfig.ComPortB_Termination]);
 
   GpioPadConfigTable(CONFIG_PIN_NUMBER, &mCOM_MODE_GPIO[COM3][mSetupConfig.ComPortCMode][0]);
 //  GpioPadConfigTable(1, &mCOM_PULL_GPIO[COM3][mSetupConfig.ComPortC_PULL]);
-  GpioPadConfigTable(1, &mCOM_TERMINATION_GPIO[COM3][mSetupConfig.ComPortC_Termination]);
+//  GpioPadConfigTable(1, &mCOM_TERMINATION_GPIO[COM3][mSetupConfig.ComPortC_Termination]);
 
   return EFI_SUCCESS;
 }
