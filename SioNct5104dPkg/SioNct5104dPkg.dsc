@@ -11,7 +11,8 @@
 #* written permission of Insyde Software Corporation.
 #*
 #******************************************************************************
-
+#
+##
 
 ################################################################################
 #
@@ -57,9 +58,7 @@
   HiiLib|InsydeModulePkg/Library/UefiHiiLib/UefiHiiLib.inf
   UefiHiiServicesLib|MdeModulePkg/Library/UefiHiiServicesLib/UefiHiiServicesLib.inf
   DxeServicesLib|MdePkg/Library/DxeServicesLib/DxeServicesLib.inf
-  #//[-start-131009-IB13150002-add]//
   DxeChipsetSvcLib|InsydeModulePkg/Library/DxeChipsetSvcLib/DxeChipsetSvcLib.inf
-  #//[-end-131009-IB13150002-add]//
 
 [LibraryClasses.common.PEIM]
 
@@ -76,6 +75,12 @@
   #
   gSioGuid.PcdSioNct5104dUpdateAsl|TRUE
 
+  #
+  # If Supported PCD is TRUE, the $(SIO_PKG) will be built into FV,
+  # otherwise the $(SIO_PKG) would not be built.
+  #
+  gSioGuid.PcdSioNct5104dSupported|TRUE
+
 [PcdsFixedAtBuild]
   #
   # Device Number: Com:0x01, WDT:0x12
@@ -87,7 +92,7 @@
   # DI:    SIO Device Instance
   # DE:    SIO Device Enable
   # DBASE: SIO Device Base Address
-  # SiIZE: SIO Device Size
+  # SIZE:  SIO Device Size
   # LDN:   SIO Device LDN
   # DIRQ:  SIO Device IRQ
   # DDMA:  SIO Device DMA
@@ -96,10 +101,11 @@
     #SIO TYPE | SI  | D   | DI  | DE  | DBASE         | SIZE| LDN | DIRQ| DDMA
     #-----------------------------------------------------------------------------
     0xC4, 0x52, 0x01, 0x01, 0x00, 0x01, UINT16(0x03F8), 0x00, 0x00, 0x04, 0x00,    \ # Com1
-    0xC4, 0x52, 0x01, 0x01, 0x01, 0x00, UINT16(0x03E8), 0x00, 0x00, 0x03, 0x00,    \ # Com2
-    0xC4, 0x52, 0x01, 0x01, 0x02, 0x00, UINT16(0x02F8), 0x00, 0x00, 0x05, 0x00,    \ # Com3
-    0xC4, 0x52, 0x01, 0x01, 0x03, 0x00, UINT16(0x02E8), 0x00, 0x00, 0x07, 0x00,    \ # Com4
+    0xC4, 0x52, 0x01, 0x01, 0x01, 0x00, UINT16(0x02F8), 0x00, 0x00, 0x03, 0x00,    \ # Com2
+    0xC4, 0x52, 0x01, 0x01, 0x02, 0x00, UINT16(0x03E8), 0x00, 0x00, 0x04, 0x00,    \ # Com3
+    0xC4, 0x52, 0x01, 0x01, 0x03, 0x00, UINT16(0x02E8), 0x00, 0x00, 0x03, 0x00,    \ # Com4                                        
     0xC4, 0x52, 0x00, 0x12, 0x00, 0x00, UINT16(0x0000), 0x00, 0x00, 0x00, 0x00,    \ # WDT - Size fill counter, DIRQ choose minute/second
+    0xC4, 0x52, 0x00, 0x13, 0x00, 0x00, UINT16(0x0700), 0x00, 0x00, 0x00, 0x00,    \ # GPIO
     0xC4, 0x52, 0x01, 0x7F, 0x00, 0x00, UINT16(0x002E), 0x00, 0x00, 0x00, 0x00,    \ # CFG
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, UINT16(0x0000), 0x00, 0x00, 0x00, 0x00     \ # End Entry
   }
@@ -119,8 +125,5 @@
     <LibraryClasses>
       DxeOemSvcKernelLibDefault|InsydeOemServicesPkg/Library/DxeOemSvcKernelLib/DxeOemSvcKernelLibDefault.inf
       DxeOemSvcKernelLib|InsydeOemServicesPkg/Library/DxeOemSvcKernelLib/DxeOemSvcKernelLib.inf
-   <BuildOptions>
-      *_*_X64_ASLPP_FLAGS  = /DNPCE388_COM_SUPPORT /DNPCE388_COM_SUPPORT
-      *_*_X64_ASLCC_FLAGS  = /DNPCE388_COM_SUPPORT /DNPCE388_COM_SUPPORT
   }
 

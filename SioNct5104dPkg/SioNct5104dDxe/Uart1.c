@@ -15,17 +15,6 @@ Device Protocol
 
 #include "SioInitDxe.h"
 
-extern VOID
-EnterConfigMode (
-  VOID
-  );
-
-extern VOID
-ExitConfigMode (
-  VOID
-  );
-
-extern EFI_SIO_RESOURCE_FUNCTION mSioResourceFunction[];
 static EFI_ISA_DEVICE_RESOURCE *DeviceResource;
 static UINT32 Uid;  // Device Instance
 static UINT8  Ldn;  // Logical device number

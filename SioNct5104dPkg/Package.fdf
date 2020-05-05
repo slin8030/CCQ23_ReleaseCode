@@ -11,10 +11,16 @@
 #* written permission of Insyde Software Corporation.
 #*
 #******************************************************************************
+#
+##
 
 [FV.RECOVERYFV]
-INF APRIORI=0xC000 SioNct5104dPkg/SioNct5104dPei/SioNct5104dPei.inf
+!if gSioGuid.PcdSioNct5104dSupported
+INF APRIORI=0xC001 SioNct5104dPkg/SioNct5104dPei/SioNct5104dPei.inf
+!endif
 
 [FV.DXEFV]
+!if gSioGuid.PcdSioNct5104dSupported
 INF RuleOverride=ACPITABLE SioNct5104dPkg/SioNct5104dDxe/SioNct5104dDxe.inf
+!endif
 

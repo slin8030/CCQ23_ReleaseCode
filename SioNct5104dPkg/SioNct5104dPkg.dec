@@ -1,4 +1,5 @@
 ## @file
+#
 #  Platform Package Declaration file
 #
 #******************************************************************************
@@ -10,32 +11,47 @@
 #* written permission of Insyde Software Corporation.
 #*
 #******************************************************************************
+#
+##
 
 [Defines]
   DEC_SPECIFICATION              = 0x00010005
   PACKAGE_NAME                   = SioNct5104dPkg
   PACKAGE_GUID                   = FB361713-F20A-4138-8366-984DF5E10DE9
-  PACKAGE_VERSION                = 0.2
+  PACKAGE_VERSION                = 00.00.01.0018
 
 [Includes]
   Include
 
-[LibraryClasses]  
+[LibraryClasses]
+  SioLib|Include/Library/SioLib.h
+  IoDecodeLib|Include/Library/SioIoDecodeLib.h
   
 [Guids]
   gSioNct5104dSetup00FormSetGuid = { 0xf6c40058, 0x7c9c, 0x4984, { 0xb6, 0xec, 0xba, 0x78, 0x5e, 0x64, 0xe8, 0x70 } }
 
+[Ppis]
+  gH2OSioPeiDecodeLibRecordTablePpiGuid  = { 0xd55a226b, 0x90b8, 0x4320, {0x8f, 0x65, 0xc1, 0xd5, 0xa2, 0x55, 0x77, 0x01} }
 
 [Protocols]
 
 [PcdsFeatureFlag]
-  gSioGuid.PcdSioNct5104dSetup|FALSE|BOOLEAN|0x00480401
-  gSioGuid.PcdSioNct5104dUpdateAsl|FALSE|BOOLEAN|0x00480402
+  gSioGuid.PcdSioNct5104dSetup|FALSE|BOOLEAN|0x47E00000
+  gSioGuid.PcdSioNct5104dUpdateAsl|FALSE|BOOLEAN|0x47E00001
+  gSioGuid.PcdSioNct5104dSupported|FALSE|BOOLEAN|0x47E00002
+  gSioGuid.PcdSioNct5104dEnableGpioPei|FALSE|BOOLEAN|0x47E00003
 
-[PcdsFixedAtBuild,PcdsPatchableInModule,PcdsDynamic]
-  gSioGuid.PcdSioNct5104dCfg|{0}|VOID*|0x00480403
-  gSioGuid.PcdSioNct5104dSetupStr|L""|VOID*|0x00480404
-  gSioGuid.PcdSioNct5104dDmi|{0}|VOID*|0x00480405  
+[PcdsFixedAtBuild]
+  gSioGuid.PcdSioNct5104dCfg|{0}|VOID*|0x47E00004
+  gSioGuid.PcdSioNct5104dSetupStr|L""|VOID*|0x47E00005
+  gSioGuid.PcdSioNct5104dPort80toUart|{0}|VOID*|0x47E00006
+  # @PcdTypeStruct EFI_SIO_TABLE {UINT8 Register; UINT8 Value;}
+  gSioGuid.PcdSioNct5104dPeiCustomizeSettingTable|{0}|VOID*|0x47E00007
+  # @PcdTypeStruct EFI_SIO_TABLE {UINT8 Register; UINT8 Value;}
+  gSioGuid.PcdSioNct5104dDxeCustomizeSettingTable|{0}|VOID*|0x47E00008
+
+[PcdsPatchableInModule,PcdsDynamic]
+  gSioGuid.PcdSioNct5104dExtensiveCfg|{0}|VOID*|0x47E00009
 
 [PcdsDynamicEx]
-  gLinkAdvancedTokenSpaceGuid.SioNct5104dSetup00FormSet|{0}|VOID*|0x00480406
+  gLinkAdvancedTokenSpaceGuid.SioNct5104dSetup00FormSet|{0}|VOID*|0x47E0000A

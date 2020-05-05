@@ -1,4 +1,5 @@
 ## @file
+#
 #  Component description file for OemBadgingSupportDxe driver.
 #
 #******************************************************************************
@@ -30,51 +31,40 @@
   Uart3.c
   Uart4.c
   Wdt.c
-  ProgramDmi.c
+  SioGpio.h
+  SioGpio.c
+  ProgramExtensiveDevice.c
   SioInitDxe.h
   SioHiiResource/SioHiiResource.c
   SioHiiResource/SioHiiResource.h
   SioHiiResource/SioHiiResourceStrings.uni
   SioHiiResource/SioHiiResourceNvData.h
   SioHiiResource/SioHiiResourceVfr.vfr
-#[-start-150414-IB12691000-add]#
-#  SioHiiResource/SioHiiHwm.uni
-#  Hwm.c
-#[-end-150414-IB12691000-add]#
   SioAsl/SioNct5104d.asl
 
 [Packages]
-  $(PROJECT_PKG)/Project.dec
   MdePkg/MdePkg.dec
   SioNct5104dPkg/SioNct5104dPkg.dec
-#[-start-150414-IB12691000-add]#
-  $(PROJECT_PKG)/Project.dec
-#[-end-150414-IB12691000-add]#
-  InsydeOemServicesPkg/InsydeOemServicesPkg.dec
   InsydeModulePkg/InsydeModulePkg.dec
   MdeModulePkg/MdeModulePkg.dec
-  IntelFrameworkPkg/IntelFrameworkPkg.dec
-  $(COMPAL_COMMON_PATH)/CompalCommon.dec #[COM]
-  $(CHIPSET_PKG)/$(CHIPSET_PKG).dec
-  $(PLATFORM_RC_PACKAGE)/$(PLATFORM_RC_PACKAGE).dec
 
 [Guids]
-  gSystemConfigurationGuid
   gSioNct5104dSetup00FormSetGuid
   gEfiIfrTianoGuid
 
 [LibraryClasses]
   SioLib
   AcpiPlatformLib
+  BaseLib
   BaseMemoryLib
   DxeServicesLib
   MemoryAllocationLib
   UefiDriverEntryPoint
   UefiBootServicesTableLib
-  DxeOemSvcKernelLib
   HiiLib
-  ScPlatformLib
-  GpioLib
+  HiiExLib
+  SioGpioLib
+
 [Protocols]
   gEfiIsaPnp303DeviceProtocolGuid
   gEfiIsaPnp401DeviceProtocolGuid
@@ -82,27 +72,23 @@
   gEfiIsaPnp510DeviceProtocolGuid
   gEfiIsaPnp604DeviceProtocolGuid
   gEfiSioWdtProtocolGuid
-  gEfiIsaVoltagleDeviceProtocolGuid
-  gEfiIsaFanSpeedDeviceProtocolGuid
-  gEfiIsaTemperatureDeviceProtocolGuid
   gEfiHiiConfigRoutingProtocolGuid
   gEfiHiiConfigAccessProtocolGuid
-  gEfiAcpiSupportProtocolGuid
+  gEfiSetupUtilityBrowserProtocolGuid
+  gEfiAcpiTableProtocolGuid
+  gEfiAcpiSdtProtocolGuid
 
 [Pcd]
   gSioGuid.PcdSioNct5104dSetup
   gSioGuid.PcdSioNct5104dCfg
   gSioGuid.PcdSioNct5104dSetupStr
   gSioGuid.PcdSioNct5104dUpdateAsl
-  gSioGuid.PcdSioNct5104dDmi
+  gSioGuid.PcdSioNct5104dExtensiveCfg
+  gSioGuid.PcdSioNct5104dEnableGpioPei
+  gSioGuid.PcdSioNct5104dDxeCustomizeSettingTable
 
 [Depex]
   gEfiCpuIo2ProtocolGuid AND
-#[-start-131028-IB10630092-modify]#
-  gEfiAcpiSupportProtocolGuid AND
-  gEfiVariableArchProtocolGuid
-#[-end-131028-IB10630092-modify]#
+  gEfiVariableArchProtocolGuid AND
+  gEfiSetupUtilityProtocolGuid
 
-#[-start-131115-IB12970034-add]#
-  AND gEfiSetupUtilityProtocolGuid
-#[-end-131115-IB12970034-add]#

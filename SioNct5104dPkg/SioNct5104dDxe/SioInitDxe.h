@@ -16,8 +16,8 @@ Declaration file for SioMainDxe.c
 #ifndef _SIO_NCT5104D_DXE_H_
 #define _SIO_NCT5104D_DXE_H_
 
-#include <Include/SioNct5104dReg.h>
-#include <Sio/SioResource.h>
+#include <SioNct5104dReg.h>
+#include <SioResource.h>
 #include <SioHiiResource.h>
 #include <SioHiiResourceNvData.h>
 #include <Protocol/IsaPnpDevice.h>
@@ -26,10 +26,18 @@ Declaration file for SioMainDxe.c
 #include <Library/AcpiPlatformLib.h>
 #include <Library/UefiDriverEntryPoint.h>
 #include <Library/UefiBootServicesTableLib.h>
-#include <Library/DxeOemSvcKernelLib.h>
 #include <Library/MemoryAllocationLib.h>
 #include <Library/DxeServicesLib.h>
 #include <Library/UefiLib/UefiLibInternal.h>
+#include <Library/SioGpioLib.h>
+#include <Guid/SioHiiResourceForm.h>
+#include <SioGetPcd.h>
+
+typedef struct {
+  SIO_DEVICE_LIST_TABLE       *DeviceResource;
+  SIO_DEVICE_FIFO_SETTING     *FifoSetting;
+  SIO_NCT5104D_FIFO_SETTING   FifoVariable;
+} SIO_FIFO_CONTEXT;
 
 //
 // Define macros to build data structure signatures from characters.
@@ -44,35 +52,16 @@ Declaration file for SioMainDxe.c
 //
 #define EFI_FIELD_OFFSET(TYPE,Field) ((UINTN)(&(((TYPE *) 0)->Field)))
 
+VOID
+EnterConfigMode (
+  VOID
+  );
 
-//[-start-150414-IB12691000-add]//
-typedef enum {
-  HARDWARE_MONITOR_VIN0,
-  HARDWARE_MONITOR_VIN1,
-  HARDWARE_MONITOR_VIN2,
-  HARDWARE_MONITOR_VIN3,
-  HARDWARE_MONITOR_VCC,
-  HARDWARE_MONITOR_VSB,
-  HARDWARE_MONITOR_VBAT,
-  HARDWARE_MONITOR_VCORE,
-  HARDWARE_MONITOR_AVCC
-} HARDWARE_MONITOR_VOLTAGE;
+VOID
+ExitConfigMode (
+  VOID
+  );
 
-typedef enum {
-  HARDWARE_MONITOR_SYS_FAN,
-  HARDWARE_MONITOR_CPU_FAN,
-  HARDWARE_MONITOR_AUX_FAN
-} HARDWARE_MONITOR_FANSPEED;
-
-typedef enum {
-  HARDWARE_MONITOR_SYS_TEMP1,
-  HARDWARE_MONITOR_CPU_TEMP,
-  HARDWARE_MONITOR_AUX_TEMP,
-  HARDWARE_MONITOR_SYS_TEMP2,
-  HARDWARE_MONITOR_SYS_TEMP3,
-  HARDWARE_MONITOR_SYS_TEMP4
-} HARDWARE_MONITOR_TEMPERATURE;
-//[-end-150414-IB12691000-add]//
 /**
   Transfer from SIO_DEVICE_LIST_TABLE to EFI_ISA_DEVICE_RESOURCE for using of device protocol
 
@@ -102,7 +91,7 @@ InstallEnabledDeviceProtocol (
   @retval EFI_NOT_FOUND         Not found.
 **/
 VOID
-ProgramDmi (
+ProgramExtensiveDevice (
   VOID
   );
 
@@ -163,5 +152,20 @@ EFI_STATUS
 SioScu (
   VOID
   );
+
+/**
+  To progame gpio function for Super IO decice
+**/
+EFI_STATUS
+SetupGpio (
+  VOID
+  );
+
+extern CHAR16                     *mSioVariableName;
+extern EFI_GUID                   mSioFormSetGuid;
+extern EFI_SIO_RESOURCE_FUNCTION  mSioResourceFunction[];
+extern BOOLEAN                    mFirstBoot;
+extern SIO_DEVICE_LIST_TABLE      *mTablePtr;
+extern UINT8                      *mExtensiveTablePtr;
 
 #endif

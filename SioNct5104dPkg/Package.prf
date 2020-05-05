@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Feature name="SioNct5104d" version="00.00.01.0018" description="Sio Feature for NUVOTON Nct5104d">
+  <Repository type="SVN" url="http://svn.insydesw.com/H2O-SEG-Feature/SEG_H2O-5.0_SIO/Tag/%Version%"/>
+  <Package dir="SioNct5104dPkg"/>
+</Feature>

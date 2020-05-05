@@ -1,4 +1,5 @@
 /** @file
+
   VFR file used by the SIO configuration component.
 
 ;******************************************************************************
@@ -12,6 +13,7 @@
 ;******************************************************************************
 **/
 
+#include <Guid/SioHiiResourceForm.h>
 #include <SioHiiResourceNvData.h>
 
 formset
@@ -19,21 +21,23 @@ formset
   title     = STRING_TOKEN(STR_SIO_NUVOTON5104D_TITLE),
   help      = STRING_TOKEN(STR_SIO_TITLE_HELP),
   classguid = SIO_NCT5104D_SETUP00_FORMSET_GUID,
+
+
   //
   // Define a Buffer Storage (EFI_IFR_VARSTORE)
   //
-  varstore SIO_CONFIGURATION,                      // This is the data structure type
-    varid = SIO_CONFIGURATION_VARSTORE_ID,         // Optional VarStore ID
-    name  = SioNct5104dSetup00,                    // Define referenced name in vfr
-    guid  = SIO_NCT5104D_SETUP00_FORMSET_GUID;     // GUID of this buffer storage
+  varstore SIO_NCT5104D_CONFIGURATION,                // This is the data structure type
+    varid = SIO_NCT5104D_CONFIGURATION_VARSTORE_ID,   // Optional VarStore ID
+    name  = SioNct5104dSetup00,                       // Define referenced name in vfr
+    guid  = SIO_NCT5104D_SETUP00_FORMSET_GUID;        // GUID of this buffer storage
 
-  form formid = SIO_CONFIGURATION_FORM_ID,
+  form formid = SIO_NCT5104D_CONFIGURATION_FORM_ID,
        title  = STRING_TOKEN(STR_SIO_NUVOTON5104D_TITLE);
 
-    suppressif 
-      NOT ideqval SioNct5104dSetup00.DeviceA.Device == COM; 
-      oneof name = DeviceA,                                    // Define reference name for Question
-        varid   = SioNct5104dSetup00.DeviceA.DeviceEnable,     // Use "DataStructure.Member" to reference Buffer Storage
+    suppressif
+      NOT ideqval SioNct5104dSetup00.DeviceA.Device == COM;
+      oneof name = DeviceA,                                     // Define reference name for Question
+        varid   = SioNct5104dSetup00.DeviceA.DeviceEnable,      // Use "DataStructure.Member" to reference Buffer Storage
         prompt  = STRING_TOKEN(STR_SIO_SERIAL_PORTA),
         help    = STRING_TOKEN(STR_SIO_SERIAL_HELP),
         //
@@ -44,21 +48,21 @@ formset
         option text = STRING_TOKEN(STR_SIO_SELECT_AUTO), value = 0x2, flags = 0 | DEFAULT;
       endoneof;
     endif;
-    
-    suppressif 
+
+    suppressif
       NOT ideqval SioNct5104dSetup00.DeviceA.DeviceEnable == 1
       OR
-      NOT ideqval SioNct5104dSetup00.DeviceA.Device == COM; 
-      oneof 
-        varid = SioNct5104dSetup00.DeviceA.DeviceBaseAdr,    
+      NOT ideqval SioNct5104dSetup00.DeviceA.Device == COM;
+      oneof
+        varid = SioNct5104dSetup00.DeviceA.DeviceBaseAdr,
         prompt  = STRING_TOKEN(STR_SIO_BASEIO_STRING),
-        help    = STRING_TOKEN(STR_SIO_EMPTY),           
+        help    = STRING_TOKEN(STR_SIO_EMPTY),
         option text = STRING_TOKEN(STR_SIO_2E8_TEXT), value = 0x02E8, flags = 0;
         option text = STRING_TOKEN(STR_SIO_2F8_TEXT), value = 0x02F8, flags = 0;
         option text = STRING_TOKEN(STR_SIO_3E8_TEXT), value = 0x03E8, flags = 0;
-        option text = STRING_TOKEN(STR_SIO_3F8_TEXT), value = 0x0388, flags = 0 | DEFAULT;  //temp use 388
+        option text = STRING_TOKEN(STR_SIO_3F8_TEXT), value = 0x03F8, flags = 0 | DEFAULT;
       endoneof;
- 
+
       oneof
         varid       = SioNct5104dSetup00.DeviceA.DeviceIrq,
         prompt      = STRING_TOKEN(STR_SIO_INTERRUPT_STRING),
@@ -67,14 +71,15 @@ formset
         option text = STRING_TOKEN(STR_PCI_IRQ4_TEXT), value = 4,  flags = 0 | DEFAULT;
       endoneof;
 
-      label SIO_COM1_LABEL;      
+      label COM1_MODE_LABEL;
+      label COM1_FIFO_LABEL;
+      label COM1_ACPI_IRQ_LABEL;
     endif;
-    
 
-    suppressif 
-      NOT ideqval SioNct5104dSetup00.DeviceB.Device == COM;        
-      oneof name = DeviceB,                                    // Define reference name for Question
-        varid   = SioNct5104dSetup00.DeviceB.DeviceEnable,     // Use "DataStructure.Member" to reference Buffer Storage
+    suppressif
+      NOT ideqval SioNct5104dSetup00.DeviceB.Device == COM;
+      oneof name = DeviceB,                                     // Define reference name for Question
+        varid   = SioNct5104dSetup00.DeviceB.DeviceEnable,      // Use "DataStructure.Member" to reference Buffer Storage
         prompt  = STRING_TOKEN(STR_SIO_SERIAL_PORTB),
         help    = STRING_TOKEN(STR_SIO_SERIAL_HELP),
         //
@@ -85,21 +90,21 @@ formset
         option text = STRING_TOKEN(STR_SIO_SELECT_AUTO), value = 0x2, flags = 0 | DEFAULT;
       endoneof;
     endif;
-    
-    suppressif 
+
+    suppressif
       NOT ideqval SioNct5104dSetup00.DeviceB.DeviceEnable == 1
       OR
-      NOT ideqval SioNct5104dSetup00.DeviceB.Device == COM; 
-      oneof 
-        varid = SioNct5104dSetup00.DeviceB.DeviceBaseAdr,    
+      NOT ideqval SioNct5104dSetup00.DeviceB.Device == COM;
+      oneof
+        varid = SioNct5104dSetup00.DeviceB.DeviceBaseAdr,
         prompt  = STRING_TOKEN(STR_SIO_BASEIO_STRING),
-        help    = STRING_TOKEN(STR_SIO_EMPTY),       
+        help    = STRING_TOKEN(STR_SIO_EMPTY),
         option text = STRING_TOKEN(STR_SIO_2E8_TEXT), value = 0x02E8, flags = 0;
         option text = STRING_TOKEN(STR_SIO_2F8_TEXT), value = 0x02F8, flags = 0 | DEFAULT;
         option text = STRING_TOKEN(STR_SIO_3E8_TEXT), value = 0x03E8, flags = 0;
         option text = STRING_TOKEN(STR_SIO_3F8_TEXT), value = 0x03F8, flags = 0;
       endoneof;
- 
+
       oneof
         varid       = SioNct5104dSetup00.DeviceB.DeviceIrq,
         prompt      = STRING_TOKEN(STR_SIO_INTERRUPT_STRING),
@@ -108,11 +113,13 @@ formset
         option text = STRING_TOKEN(STR_PCI_IRQ4_TEXT), value = 4,  flags = 0;
       endoneof;
 
-      label SIO_COM2_LABEL;      
+      label COM2_MODE_LABEL;
+      label COM2_FIFO_LABEL;
+      label COM2_ACPI_IRQ_LABEL;
     endif;
-    
-    suppressif 
-      NOT ideqval SioNct5104dSetup00.DeviceC.Device == COM;        
+
+    suppressif
+      NOT ideqval SioNct5104dSetup00.DeviceC.Device == COM;
       oneof name = DeviceC,                                     // Define reference name for Question
         varid   = SioNct5104dSetup00.DeviceC.DeviceEnable,      // Use "DataStructure.Member" to reference Buffer Storage
         prompt  = STRING_TOKEN(STR_SIO_SERIAL_PORTC),
@@ -125,37 +132,40 @@ formset
         option text = STRING_TOKEN(STR_SIO_SELECT_AUTO), value = 0x2, flags = 0 | DEFAULT;
       endoneof;
     endif;
-    
-    suppressif 
+
+    suppressif
       NOT ideqval SioNct5104dSetup00.DeviceC.DeviceEnable == 1
       OR
-      NOT ideqval SioNct5104dSetup00.DeviceC.Device == COM; 
-      oneof 
-        varid = SioNct5104dSetup00.DeviceC.DeviceBaseAdr,    
+      NOT ideqval SioNct5104dSetup00.DeviceC.Device == COM;
+      oneof
+        varid = SioNct5104dSetup00.DeviceC.DeviceBaseAdr,
         prompt  = STRING_TOKEN(STR_SIO_BASEIO_STRING),
-        help    = STRING_TOKEN(STR_SIO_EMPTY),       
+        help    = STRING_TOKEN(STR_SIO_EMPTY),
         option text = STRING_TOKEN(STR_SIO_2E8_TEXT), value = 0x02E8, flags = 0;
         option text = STRING_TOKEN(STR_SIO_2F8_TEXT), value = 0x02F8, flags = 0;
         option text = STRING_TOKEN(STR_SIO_3E8_TEXT), value = 0x03E8, flags = 0 | DEFAULT;
         option text = STRING_TOKEN(STR_SIO_3F8_TEXT), value = 0x03F8, flags = 0;
       endoneof;
- 
+
       oneof
         varid       = SioNct5104dSetup00.DeviceC.DeviceIrq,
         prompt      = STRING_TOKEN(STR_SIO_INTERRUPT_STRING),
         help        = STRING_TOKEN(STR_SIO_EMPTY),
-        option text = STRING_TOKEN(STR_PCI_IRQ3_TEXT), value = 3,  flags = 0 ;
-        option text = STRING_TOKEN(STR_PCI_IRQ4_TEXT), value = 4,  flags = 0 | DEFAULT;
+        option text = STRING_TOKEN(STR_PCI_IRQ3_TEXT), value = 3,  flags = 0;
+        option text = STRING_TOKEN(STR_PCI_IRQ4_TEXT), value = 4,  flags = 0;
+        option text = STRING_TOKEN(STR_PCI_IRQ7_TEXT), value = 7,  flags = 0 | DEFAULT;
       endoneof;
 
-      label SIO_COM3_LABEL;      
+      label COM3_MODE_LABEL;
+      label COM3_FIFO_LABEL;
+      label COM3_ACPI_IRQ_LABEL;
     endif;
 
-    suppressif 
-      NOT ideqval SioNct5104dSetup00.DeviceD.Device == COM;        
+    suppressif
+      NOT ideqval SioNct5104dSetup00.DeviceD.Device == COM;
       oneof name = DeviceD,                                     // Define reference name for Question
         varid   = SioNct5104dSetup00.DeviceD.DeviceEnable,      // Use "DataStructure.Member" to reference Buffer Storage
-        prompt  = STRING_TOKEN(STR_SIO_SERIAL_PORTD), 
+        prompt  = STRING_TOKEN(STR_SIO_SERIAL_PORTD),
         help    = STRING_TOKEN(STR_SIO_SERIAL_HELP),
         //
         // Define an option (EFI_IFR_ONE_OF_OPTION)
@@ -165,21 +175,21 @@ formset
         option text = STRING_TOKEN(STR_SIO_SELECT_AUTO), value = 0x2, flags = 0 | DEFAULT;
       endoneof;
     endif;
-    
-    suppressif 
+
+    suppressif
       NOT ideqval SioNct5104dSetup00.DeviceD.DeviceEnable == 1
       OR
-      NOT ideqval SioNct5104dSetup00.DeviceD.Device == COM; 
-      oneof 
-        varid = SioNct5104dSetup00.DeviceD.DeviceBaseAdr,    
+      NOT ideqval SioNct5104dSetup00.DeviceD.Device == COM;
+      oneof
+        varid = SioNct5104dSetup00.DeviceD.DeviceBaseAdr,
         prompt  = STRING_TOKEN(STR_SIO_BASEIO_STRING),
-        help    = STRING_TOKEN(STR_SIO_EMPTY),       
+        help    = STRING_TOKEN(STR_SIO_EMPTY),
         option text = STRING_TOKEN(STR_SIO_2E8_TEXT), value = 0x02E8, flags = 0 | DEFAULT;
         option text = STRING_TOKEN(STR_SIO_2F8_TEXT), value = 0x02F8, flags = 0;
         option text = STRING_TOKEN(STR_SIO_3E8_TEXT), value = 0x03E8, flags = 0;
         option text = STRING_TOKEN(STR_SIO_3F8_TEXT), value = 0x03F8, flags = 0;
       endoneof;
- 
+
       oneof
         varid       = SioNct5104dSetup00.DeviceD.DeviceIrq,
         prompt      = STRING_TOKEN(STR_SIO_INTERRUPT_STRING),
@@ -188,13 +198,15 @@ formset
         option text = STRING_TOKEN(STR_PCI_IRQ4_TEXT), value = 4,  flags = 0;
       endoneof;
 
-      label SIO_COM4_LABEL;      
+      label COM4_MODE_LABEL;
+      label COM4_FIFO_LABEL;
+      label COM4_ACPI_IRQ_LABEL;
     endif;
 
-    suppressif 
-      NOT ideqval SioNct5104dSetup00.DeviceE.Device == WDT; 
-      oneof name = DeviceE,                                    
-        varid   = SioNct5104dSetup00.DeviceE.DeviceEnable,   
+    suppressif
+      NOT ideqval SioNct5104dSetup00.DeviceM.Device == WDT;
+      oneof name = DeviceM,                                     // Define reference name for Question
+        varid   = SioNct5104dSetup00.DeviceM.DeviceEnable,      // Use "DataStructure.Member" to reference Buffer Storage
         prompt  = STRING_TOKEN(STR_SIO_WDT),
         help    = STRING_TOKEN(STR_SIO_EMPTY),
         //
@@ -202,35 +214,51 @@ formset
         //
         option text = STRING_TOKEN(STR_SIO_SELECT_DISABLE), value = 0x0, flags = 0 | DEFAULT;
         option text = STRING_TOKEN(STR_SIO_SELECT_ENABLE), value = 0x1, flags = 0;
-      endoneof;    
+      endoneof;
     endif;
 
-    suppressif 
-      NOT ideqval SioNct5104dSetup00.DeviceE.DeviceEnable == 1
+    suppressif
+      NOT ideqval SioNct5104dSetup00.DeviceM.DeviceEnable == 1
       OR
-      NOT ideqval SioNct5104dSetup00.DeviceE.Device == WDT; 
-      oneof 
-        varid = SioNct5104dSetup00.DeviceE.DeviceIrq,    
-        prompt  = STRING_TOKEN(STR_SIO_WDT),
-        help    = STRING_TOKEN(STR_SIO_SELECT_MODE_HELP),            
-        option text = STRING_TOKEN(STR_SIO_SELECT_SECOND), value = 0, flags = 0 | DEFAULT;
-        option text = STRING_TOKEN(STR_SIO_SELECT_MINUTE), value = 1, flags = 0;
-      endoneof;
-   
-      //
-      // Define a numeric (EFI_IFR_NUMERIC)
-      //
-      numeric varid  = SioNct5104dSetup00.DeviceE.DeviceSize,
-        questionid  = SIO_WDT_QUESTION_ID,
-        prompt  = STRING_TOKEN(STR_SIO_WDT_COUNTER),
-        help    = STRING_TOKEN(STR_SIO_WDT_COUNTER_HELP),
-        flags   = INTERACTIVE,     // Display in HEX format (if not specified, default is in decimal format)
-        minimum = 15,
-        maximum = 0xFE,
-        step    = 0,
-        default = 38,
-      endnumeric;
+      NOT ideqval SioNct5104dSetup00.DeviceM.Device == WDT;
+      label SIO_WDT_LABEL;
     endif;
+
+    suppressif
+      NOT ideqval SioNct5104dSetup00.DeviceO.DeviceEnable == 1;
+      goto SIO_GPIO0X_FORM_ID,
+      prompt  = STRING_TOKEN(STR_GPIO0X_FORM_TITLE),
+      help    = STRING_TOKEN(STR_SIO_EMPTY);
+
+      goto SIO_GPIO1X_FORM_ID,
+      prompt  = STRING_TOKEN(STR_GPIO1X_FORM_TITLE),
+      help    = STRING_TOKEN(STR_SIO_EMPTY);
+
+      goto SIO_GPIO6X_FORM_ID,
+      prompt  = STRING_TOKEN(STR_GPIO6X_FORM_TITLE),
+      help    = STRING_TOKEN(STR_SIO_EMPTY);
+
+    endif;
+
   endform;
+
+  form formid = SIO_GPIO0X_FORM_ID,
+    title = STRING_TOKEN(STR_GPIO0X_FORM_TITLE);
+    subtitle text = STRING_TOKEN (STR_GPIO0X_STRING);
+      label SIO_GPIO0X_LABEL;
+  endform;
+
+  form formid = SIO_GPIO1X_FORM_ID,
+    title = STRING_TOKEN(STR_GPIO1X_FORM_TITLE);
+    subtitle text = STRING_TOKEN (STR_GPIO1X_STRING);
+      label SIO_GPIO1X_LABEL;
+  endform;
+
+  form formid = SIO_GPIO6X_FORM_ID,
+    title = STRING_TOKEN(STR_GPIO6X_FORM_TITLE);
+    subtitle text = STRING_TOKEN (STR_GPIO6X_STRING);
+      label SIO_GPIO6X_LABEL;
+  endform;
+
 endformset;
 

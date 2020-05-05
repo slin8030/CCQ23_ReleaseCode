@@ -1,0 +1,35 @@
+## @file
+#
+#******************************************************************************
+#* Copyright (c) 2016, Insyde Software Corp. All Rights Reserved.
+#*
+#* You may not reproduce, distribute, publish, display, perform, modify, adapt,
+#* transmit, broadcast, present, recite, release, license or otherwise exploit
+#* any part of this publication in any form, by any means, without the prior
+#* written permission of Insyde Software Corporation.
+#*
+#******************************************************************************
+
+[Defines]
+  INF_VERSION                    = 0x00010005
+  BASE_NAME                      = AmdIoDecodeLib
+  FILE_GUID                      = daf8d665-7b25-4411-a2ba-df5300cb496e
+  MODULE_TYPE                    = BASE
+  VERSION_STRING                 = 1.0
+  LIBRARY_CLASS                  = IoDecodeLib
+
+[Sources]
+  AmdIoDecodeLib.c
+  FchDecodeDef.h
+
+[Packages]
+  MdePkg/MdePkg.dec
+  MdeModulePkg/MdeModulePkg.dec
+  InsydeModulePkg/InsydeModulePkg.dec
+
+[LibraryClasses]
+  IoLib
+
+[Guids]
+
+[Pcd]

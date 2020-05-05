@@ -3,7 +3,7 @@
 #  SIO Package Declaration file
 #
 #******************************************************************************
-#* Copyright (c) 2014, Insyde Software Corporation. All Rights Reserved.
+#* Copyright (c) 2014-2015, Insyde Software Corporation. All Rights Reserved.
 #*
 #* You may not reproduce, distribute, publish, display, perform, modify, adapt,
 #* transmit, broadcast, present, recite, release, license or otherwise exploit
@@ -11,6 +11,8 @@
 #* written permission of Insyde Software Corporation.
 #*
 #******************************************************************************
+#
+##
 
 [Defines]
   INF_VERSION                    = 0x00010005
@@ -18,21 +20,22 @@
   FILE_GUID                      = D8CAF0F9-88D6-483c-ABC9-0F68B8D77305
   MODULE_TYPE                    = PEIM
   VERSION_STRING                 = 1.0
-  
+
   ENTRY_POINT                    = SioInitPeim
-  
+
 [sources]
   SioMainPei.c
+  SioInitPei.c
   SioInitPei.h
-  WdtPei.c  
+  WdtPei.c
+  ProgramExtensiveDevicePei.c
 
-[Protocols]     
+[Protocols]
 
 [Packages]
-  MdePkg/MdePkg.dec 
+  MdePkg/MdePkg.dec
   MdeModulePkg/MdeModulePkg.dec
   SioNct5104dPkg/SioNct5104dPkg.dec
-  InsydeOemServicesPkg/InsydeOemServicesPkg.dec 
   InsydeModulePkg/InsydeModulePkg.dec
 
 [Guids]
@@ -42,18 +45,23 @@
   IoLib
   SioLib
   DebugLib
+  SioGpioLib
   PostCodeLib
   BaseMemoryLib
   PeimEntryPoint
-  PeiOemSvcKernelLibDefault  
-  
+  IoDecodeLib
+  CmosLib
 [Ppis]
   gPeiSioInitializedPpiGuid
   gEfiPeiReadOnlyVariable2PpiGuid
 
-[FixedPcd]
+[Pcd]
   gSioGuid.PcdSioNct5104dCfg
-  gSioGuid.PcdSioNct5104dSetupStr  
+  gSioGuid.PcdSioNct5104dSetupStr
+  gSioGuid.PcdSioNct5104dExtensiveCfg
+  gSioGuid.PcdSioNct5104dPort80toUart
+  gSioGuid.PcdSioNct5104dEnableGpioPei
+  gSioGuid.PcdSioNct5104dPeiCustomizeSettingTable
 
 [Depex]
   gPcdPpiGuid

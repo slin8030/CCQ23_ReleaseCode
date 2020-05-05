@@ -527,7 +527,8 @@ SecPlatformMain (
 //[-end-161108-IB07400810-remove]//
 //[-end-160216-IB03090424-modify]//
 //[-start-160915-IB07400785-add]//
-#if (TABLET_PF_ENABLE == 0)
+//#if (TABLET_PF_ENABLE == 0)
+#if 0
   //
   // Enable Legacy IO decode
   //

@@ -3,7 +3,7 @@
 Declaration file for SioHiiResource.c
 
 ;******************************************************************************
-;* Copyright (c) 2014, Insyde Software Corporation. All Rights Reserved.
+;* Copyright (c) 2014-2015, Insyde Software Corporation. All Rights Reserved.
 ;*
 ;* You may not reproduce, distribute, publish, display, perform, modify, adapt,
 ;* transmit, broadcast, present, recite, release, license or otherwise exploit
@@ -20,10 +20,13 @@ Declaration file for SioHiiResource.c
 #include <SioHiiResourceNvData.h>
 #include <Guid/SioHiiResourceForm.h>
 #include <Guid/MdeModuleHii.h>
+#include <Protocol/IsaNonPnpDevice.h>
 #include <Protocol/HiiConfigRouting.h>
 #include <Protocol/HiiConfigAccess.h>
 #include <Library/HiiLib.h>
-      
+#include <Library/HiiExLib.h>
+#include <Library/SioGpioLib.h>
+
 //
 // This is the generated IFR binary data for each formset defined in VFR.
 // This data array is ready to be used as input of HiiAddPackages() to
@@ -46,7 +49,7 @@ typedef struct {
   EFI_HII_HANDLE                   HiiHandle;
   EFI_HII_CONFIG_ACCESS_PROTOCOL   ConfigAccess;
   EFI_HII_CONFIG_ROUTING_PROTOCOL  *HiiConfigRouting;
-  SIO_CONFIGURATION                Configuration;
+  SIO_NCT5104D_CONFIGURATION       Configuration;
 } SIO_PRIVATE_DATA;
 
 #define SIO_PRIVATE_FROM_THIS(a)  CR (a, SIO_PRIVATE_DATA, ConfigAccess, SIO_PRIVATE_SIGNATURE)
@@ -164,24 +167,72 @@ CreateSetupPage (
   );
 
 /**
-  Add dynamic COM items for extensive function.
-
-  @retval EFI_SUCCESS                The function completed successfully.
-                                
-**/                                   
-EFI_STATUS
-InitCom (
-  );
-
-/**
   Create OP code for COM type.
 
   @param[in]   Label             Update information starting immediately after this label in the IFR
-                                
-**/       
+
+**/
+VOID
+CreateComModeOptionOpCode (
+  UINT16                     Label,
+  SIO_DEVICE_MODE_SELECTION  *DeviceModeSelection
+  );
+
+/**
+  Create OP code for COM FIFO.
+
+  @param[in]   Label             Update information starting immediately after this label in the IFR
+
+**/
+VOID
+CreateComFifoOptionOpCode (
+  UINT16                   Label,
+  SIO_DEVICE_FIFO_SETTING  *FifoSetting
+  );
+
+/**
+  Create OP code for ACPI IRQ.
+
+  @param[in]   Label             Update information starting immediately after this label in the IFR
+
+**/
+VOID
+CreateComAcpiIrqOptionOpCode (
+  UINT16                              Label,
+  UINT8                               DeviceInstance,
+  SIO_NCT5104D_ACPI_IRQ_INFORMATION   *AcpiIrqInfo
+  );
+
+/**
+  Create OP code for LPT Mode.
+
+  @param[in]   Label             Update information starting immediately after this label in the IFR
+
+**/
+VOID
+CreateLptModeOptionOpCode (
+  UINT16                     Label,
+  SIO_DEVICE_MODE_SELECTION  *DeviceModeSelection
+  );
+
+/**
+  Create OP code for Watch Dog Timer.
+
+  @param[in]   Label             Update information starting immediately after this label in the IFR
+
+**/
+VOID
+CreateWdtOptionOpCode (
+  UINT16                 Label,
+  SIO_WATCH_DOG_SETTING  *WdtSetting
+  );
+
 EFI_STATUS
-CreateComTypeOptionOpCode (
-  UINT16 Label
+CreateGpioTypeOptionOpCode (
+  IN UINT16                       Label,
+  IN UINT8                        DeviceHandle,
+  IN SIO_EXTENSIVE_TABLE_TYPE17   *GpioSelection,
+  IN VOID                         *StartOpCodeHandle
   );
 
 #endif
