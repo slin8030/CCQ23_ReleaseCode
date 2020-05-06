@@ -1,0 +1,107 @@
+/** @file
+;******************************************************************************
+;* Copyright (c) 2012 - 2016, Insyde Software Corp. All Rights Reserved.
+;*
+;* You may not reproduce, distribute, publish, display, perform, modify, adapt,
+;* transmit, broadcast, present, recite, release, license or otherwise exploit
+;* any part of this publication in any form, by any means, without the prior
+;* written permission of Insyde Software Corporation.
+;*
+;******************************************************************************
+*/
+
+//
+//  SEG Chipset Feature 
+//
+form formid     = SEG_CHIPSET_FEATURE_FORM_ID, 
+  title         = STRING_TOKEN(STR_SEG_CHIPSET_FEATURE_TITLE);
+  subtitle text = STRING_TOKEN(STR_SEG_CHIPSET_FEATURE_TITLE);
+  subtitle text = STRING_TOKEN(STR_BLANK_STRING);  
+  
+  grayoutif
+    ideqval SystemConfig.UserAccessLevel == 2
+    AND
+    ideqval SystemConfig.SetUserPass == 1
+    OR
+    ideqval SystemConfig.BootType == 2;
+    oneof
+      varid       = SystemConfig.Win7KbMsSupport,
+      questionid  = KEY_WIN7_KB_MS_SUPPORT,
+      prompt      = STRING_TOKEN(STR_WIN7_KB_MS_SUPPORT_TITLE),
+      help        = STRING_TOKEN(STR_WIN7_KB_MS_SUPPORT_HELP),
+      option text = STRING_TOKEN(STR_DISABLED_TEXT),    value = 0, flags = DEFAULT | INTERACTIVE | RESET_REQUIRED;
+      option text = STRING_TOKEN(STR_ENABLED_TEXT),     value = 1, flags = INTERACTIVE | RESET_REQUIRED;
+    endoneof;
+  endif;
+//[-start-170626-IB07400880-add]//
+  grayoutif
+    ideqval SystemConfig.UserAccessLevel == 2
+    AND
+    ideqval SystemConfig.SetUserPass == 1;
+
+    oneof
+      varid       = SystemConfig.S3WakeOnUsb, // Wake on USB form S3
+      prompt      = STRING_TOKEN(STR_S3_WAKE_ON_USB_PROMPT),
+      help        = STRING_TOKEN(STR_S3_WAKE_ON_USB_HELP),
+      option text = STRING_TOKEN(STR_DISABLED_TEXT),    value = 0, flags = 0;
+      option text = STRING_TOKEN(STR_ENABLED_TEXT),     value = 1, flags = DEFAULT;
+    endoneof;
+/*
+    oneof
+      varid       = SystemConfig.S5WakeOnUsb, // Wake on USB form S5
+      prompt      = STRING_TOKEN(STR_S5_WAKE_ON_USB_PROMPT),
+      help        = STRING_TOKEN(STR_S5_WAKE_ON_USB_HELP),
+      option text = STRING_TOKEN(STR_DISABLED_TEXT),    value = 0, flags = DEFAULT;
+      option text = STRING_TOKEN(STR_ENABLED_TEXT),     value = 1, flags = 0;
+    endoneof;
+  
+    suppressif 
+      ideqval SystemConfig.S5WakeOnUsb == 0x0;
+      
+      numeric
+        varid       = SystemConfig.S5WakeOnUsbWaitTime, 
+        prompt      = STRING_TOKEN(STR_S5_WAKE_ON_USB_WAIT_TIME_PROMPT),
+        help        = STRING_TOKEN(STR_S5_WAKE_ON_USB_WAIT_TIME_HELP),
+        minimum     = 5,
+        maximum     = 60,
+        step        = 1,
+        default     = 5,
+      endnumeric;
+      
+    endif;
+*/  
+  endif;
+//[-end-170626-IB07400880-add]//
+
+//[-start-170119-IB07401072-add]//
+#ifdef PCI_64BITS_MMIO_DECODE_SUPPORT
+  grayoutif
+    ideqval SystemConfig.UserAccessLevel == 2
+    AND
+    ideqval SystemConfig.SetUserPass == 1;
+    oneof
+      varid       = SystemConfig.PciMem64DecodeSupport,
+      prompt      = STRING_TOKEN (STR_PCI_MEM64_DECODE_STRING),
+      help        = STRING_TOKEN (STR_PCI_MEM64_DECODE_HELP),
+      option text = STRING_TOKEN (STR_ENABLED_TEXT), value = 1, flags = 0 | RESET_REQUIRED;
+      option text = STRING_TOKEN (STR_DISABLED_TEXT), value = 0, flags = DEFAULT | RESET_REQUIRED;
+    endoneof;
+    
+    suppressif 
+      ideqval SystemConfig.PciMem64DecodeSupport == 0x0;
+      
+      oneof
+        varid       = SystemConfig.PciMem64SkipOnboard,
+        prompt      = STRING_TOKEN (STR_PCI_MEM64_SKIP_ONBOARD_STRING),
+        help        = STRING_TOKEN (STR_PCI_MEM64_SKIP_ONBOARD_HELP),
+        option text = STRING_TOKEN (STR_DISABLED_TEXT), value = 0, flags = 0 | RESET_REQUIRED;
+        option text = STRING_TOKEN (STR_ENABLED_TEXT),  value = 1, flags = DEFAULT | RESET_REQUIRED;
+      endoneof;
+      
+    endif;
+  endif;
+#endif  
+//[-end-170119-IB07401072-add]//
+  
+endform;
+

@@ -15,4 +15,20 @@
 
 #include <Uefi.h>
 
+
+#define ECNAME_F4A4         0xF4A4
+
+typedef struct ECNAME_F4A4_BITS_STRU_{
+  UINT8  LAN_Wake         :1;   // 0=Disable, 1=Enable
+  UINT8  Reserve1         :3;
+  UINT8  WLAN_Wake        :1;   // 0=Disable, 1=Enable
+  UINT8  USB_Wake         :1;   // 0=Disable, 1=Enable
+  UINT8  Reserve2         :2;
+} ECNAME_F4A4_BITS_STRU;
+
+typedef union {
+  ECNAME_F4A4_BITS_STRU  Bits;
+  UINT8                  Data;
+} ECNAME_F4A4_STRU;
+
 #endif

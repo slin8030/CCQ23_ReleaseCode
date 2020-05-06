@@ -191,9 +191,38 @@ VariableArchProtocolNotify (
 
   Status = GetSystemConfig ();
 
+  Status = ConfigEC_NameSpace();
   return;
 }
 
+/**
+  Update EC name space setting
+
+  @retval EFI_SUCCESS             The function is executed successfully.
+  @retval EFI_NOT_READY           Setup variable is null.
+
+**/
+STATIC
+EFI_STATUS
+ConfigEC_NameSpace (
+  )
+{
+  ECNAME_F4A4_STRU       EC_Name_F4A4;
+  EC_Name_F4A4.Data=CompalECMemoryRead (ECNAME_F4A4);
+  EC_Name_F4A4.Bits.USB_Wake = 0;
+  EC_Name_F4A4.Bits.LAN_Wake = 0;
+  EC_Name_F4A4.Bits.WLAN_Wake = 0;
+  if (mSystemConfiguration->WakeOnPME) {
+    EC_Name_F4A4.Bits.LAN_Wake = 1;
+    EC_Name_F4A4.Bits.WLAN_Wake = 1;
+  }
+  
+  if (mSystemConfiguration->S3WakeOnUsb) {
+    EC_Name_F4A4.Bits.USB_Wake = 1;
+  }
+  CompalECMemoryWrite(ECNAME_F4A4, EC_Name_F4A4.Data);
+  return EFI_SUCCESS;
+}
 
 /**
   Modify platform setting
@@ -234,6 +263,7 @@ ModifyPlatformSetting (
   // Modify USB2 Tuning register.
   //
   Status = ModifyUSBConfig();
+  Status = ConfigEC_NameSpace();
 
   FreePool(mSystemConfiguration);
   return EFI_SUCCESS;

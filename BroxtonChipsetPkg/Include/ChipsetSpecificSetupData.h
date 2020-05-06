@@ -1144,6 +1144,7 @@
   UINT8         S5WakeOnRtcAfterSec;
 //[-end-170314-IB07400847-add]//
 //[-start-170626-IB07400880-add]//
+  UINT8         S3WakeOnUsb;
   UINT8         S5WakeOnUsb;
   UINT8         S5WakeOnUsbWaitTime;
 //[-end-170626-IB07400880-add]//
@@ -1151,7 +1152,7 @@
   UINT8         PciMem64DecodeSupport;
   UINT8         PciMem64SkipOnboard;
 //[-end-170119-IB07401072-add]//
-  UINT8         ChipsetRSV2[132];    // Reserve for Chipset2
+  UINT8         ChipsetRSV2[131];    // Reserve for Chipset2
 //[-end-160429-IB07400722-modify]//
 //[-end-160217-IB07400702-add]//
 #endif
