@@ -56,7 +56,7 @@ Field(ECMM,AnyAcc,Lock,Preserve)
 {
 
 #include "CompalECMMAP_PROJECT.ASL"
-        Offset(0x61),
+        Offset(0x861),  //PRJ# + >>>> Patch CPU DTS Temperature to EC ,Temp add offet 0x800, or i can't match EC name space in memory.
         SMST, 8,        // SMBus status register                ; 61h
         SMAD, 8,        // SMBus address register               ; 62h
         SMCM, 8,        // SMBus command register               ; 63h
@@ -65,25 +65,25 @@ Field(ECMM,AnyAcc,Lock,Preserve)
         SMAA, 24,       // SMBus Alarm Address                  ; 85h - 87h
         SMBN, 8,        // SMBUS Bus Number Selection           ; 88h
 
-        Offset(0x90),  // ECRAM offset F490
+        Offset(0x890),  // ECRAM offset F490
         BMFN, 72,       // Battery Manufacture name             ; 90h - 98h
         BATD, 56,       // Battery Device name                  ; 99h - 9fh
 
-        Offset(0xA0),
+        Offset(0x8A0),
             , 8,        // Reserve                              ; A0h
             
 
-        Offset(0xA1),  // ECRAM offset F4A1
+        Offset(0x8A1),  // ECRAM offset F4A1
             , 1,        // Reserve                              ; A1h.0
         VIDO, 1,        // Video Out Button (1=Pressed)         ; A1h.1
         TOUP, 1,        // Touch Pad Button (0=On, 1=Off)       ; A1h.2
 
         // OS Shutdown Temp2
-        Offset(0xA2),  // ECRAM offset F4A2
+        Offset(0x8A2),  // ECRAM offset F4A2
         ODTS, 8,        // OS Shutdown Temp2 (DTS)              ; A2h
 
         // SYS_STATUS
-        Offset(0xA3),  // ECRAM offset F4A3
+        Offset(0x8A3),  // ECRAM offset F4A3
         OSTY, 4,        // OSTYPE :   0000- XP                  ; A3h.0-3
                         //            0001- Vista
                         //            0010- Linux / Android
@@ -96,7 +96,7 @@ Field(ECMM,AnyAcc,Lock,Preserve)
         ADPT, 1,        // AC Adapter (0=OffLine, 1=OnLine)     ; A3h.7
 
         // WAKEUP_ENABLE
-        Offset(0xA4),  // ECRAM offset F4A4
+        Offset(0x8A4),  // ECRAM offset F4A4
         PWAK, 1,        // PME Wake Enable(0=Disable, 1=Enable) ; A4h.0
         MWAK, 1,        // Modem Wake Enable(0/1=Disable/Enable); A4h.1
         LWAK, 1,        // LAN Wake Enable (0=Disable, 1=Enable); A4h.2
@@ -107,7 +107,7 @@ Field(ECMM,AnyAcc,Lock,Preserve)
         TWAK, 1,        // TouchPad WAKE(0=Disable,1=Enable)    ; A4h.7
 
         // AC_OFF Source
-        Offset(0xA5),  // ECRAM offset F4A5
+        Offset(0x8A5),  // ECRAM offset F4A5
         CCAC, 1,        // Charge Current (1=AC OFF)            ; A5h.0
         AOAC, 1,        // Adapter OVP (1=AC OFF)               ; A5h.1
         BLAC, 1,        // Batt learning (1=AC OFF)             ; A5h.2
@@ -117,7 +117,7 @@ Field(ECMM,AnyAcc,Lock,Preserve)
         AAAC, 1,        // Air Adapter (1=AC OFF)               ; A5h.6
         ACAC, 1,        // AC Off (1=AC OFF)                    ; A5h.7
 
-        Offset(0xA6),  // ECRAM offset F4A6
+        Offset(0x8A6),  // ECRAM offset F4A6
         S3ST, 1,        // System entry S3 State                : A6.0
         S3RM, 1,        // System resume from S3 State          : A6.1
         S4ST, 1,        // System entry S4 State                : A6.2
@@ -128,7 +128,7 @@ Field(ECMM,AnyAcc,Lock,Preserve)
         CSRM, 1,        // System resume from CS State          ; A6.7
 
         // Thermal function
-        Offset(0xA7),  // ECRAM offset F4A7
+        Offset(0x8A7),  // ECRAM offset F4A7
         OSTT, 8,        // OS Throttling Temp                   ; A7h
         OSST, 8,        // OS Shutdown Temp                     ; A8h
         THLT, 8,        // Throttling Temp                      ; A9h
@@ -176,7 +176,7 @@ Field(ECMM,AnyAcc,Lock,Preserve)
         NTMP, 8,        // North Bridge Diode Temp              ; B6h
 
         // System Event & Status
-        Offset(0xB7),  // ECRAM offset F4B7
+        Offset(0x8B7),  // ECRAM offset F4B7
         APLE, 1,        // Airplane mode enable                 ; B7h.0
             , 1,        // Reserved                             ; B7h.1
             , 1,        // Reserved                             ; B7h.2
@@ -208,7 +208,7 @@ Field(ECMM,AnyAcc,Lock,Preserve)
             , 2,        // Reserved                             ; B8h.6-7
 
         // Device function
-        Offset(0xB9),  // ECRAM offset F4B9
+        Offset(0x8B9),  // ECRAM offset F4B9
         BRTS, 8,        // Brightness Value                     ; B9h
 
         S35M, 1,        // S3.5 HotKey test mode                ; BAh.0
@@ -248,7 +248,7 @@ Field(ECMM,AnyAcc,Lock,Preserve)
                         // 02 - 03, Reserved
 
         // SmartSelector_State0
-        Offset(0xBE),  // ECRAM offset F4B9
+        Offset(0x8BE),  // ECRAM offset F4B9
         BOL0, 1,        // Batt0 (0=OffLine, 1=OnLine)          ; BEh.0
         BOL1, 1,        // Batt1 (0=OffLine, 1=OnLine)          ; BEh.1
             , 2,        // Reserved                             ; BEh.2-3
@@ -264,7 +264,7 @@ Field(ECMM,AnyAcc,Lock,Preserve)
         BOS1, 1,        // Batt1 (1=OnSMBUS)                    ; BFh.5
             , 2,        // Reserved                             ; BFh.6-7
 
-        Offset(0xC0),  // ECRAM offset F4C0
+        Offset(0x8C0),  // ECRAM offset F4C0
         BTY0, 1,        // 1st Batt Type (0=NiMh, 1=LiIon)      ; C0h.0
         BAM0, 1,        // Battery mode (0=mW, 1=mA)            ; C0h.1
         BAL0, 1,        // Low Battery                          ; C0h.2
@@ -316,14 +316,14 @@ Field(ECMM,AnyAcc,Lock,Preserve)
         BCV3, 16,       // Cell Voltage 3 (mV)                  ; E7h, E8h
         BCV4, 16,       // Cell Voltage 4 (mV)                  ; E9h, EAh
 
-        Offset(0xED),
+        Offset(0x8ED),
         BFCB, 16,       // 1st Batt Last FCC caught by OS       ; EDh, EEh
 
-        Offset(0xF1),
+        Offset(0x8F1),
             , 6,        // Reserved for EC
         ORRF, 1,        // OS RC redirection flag(Fix FCC issue); F1h.6
 
-        Offset(0xF4),  // ECRAM offset F4F4
+        Offset(0x8F4),  // ECRAM offset F4F4
         BMD0, 16,       // Manufacture Date                     ; F4h, F5h
                         // 1st Batt Day	                        ; BIT[4:0] (Day)
                         // 1st Batt Month                       ; BIT[9:5] (Month)

@@ -13,6 +13,7 @@
 */
 
 #include <Library/BaseOemSvcKernelLib.h>
+#include <CompalECLib.h>
 
 /**
   Platform specific function to enable/disable EC ACPI Mode
@@ -32,6 +33,15 @@ OemSvcEcAcpiMode (
     Todo:
       Add project specific code in here.
   --*/
+
+  UINT8         EcCommand;
+
+  if (EnableEcAcpiMode) {
+    EcCommand = EC_CMD_SYSTEM_NOTIFICATION_ACPI_ENABLE;
+  } else {
+    EcCommand = EC_CMD_SYSTEM_NOTIFICATION_ACPI_DISABLE;
+  }
+  CompalECWriteCmdByte(EC_MEMORY_MAPPING_PORT,EC_CMD_SYSTEM_NOTIFICATION,EcCommand);
 
   return EFI_UNSUPPORTED;
 }
