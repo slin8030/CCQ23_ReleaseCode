@@ -1121,6 +1121,103 @@ Scope(\_SB)
 #endif      
 //[-end-161125-IB07400818-modify]//
     }
+//[PRJ]+ >>>> implement Touch Button function   
+    Device(HIDD)
+    {
+  	  Name(_HID, "INT33D5")
+  	  Name(HBSY, Zero)
+  	  Name(HIDX, Zero)
+  	  Name(HMDE, Zero)
+  	  Name(HRDY, Zero)
+  	  Name(BTLD, Zero)
+  	  Name(BTS1, Zero)
+  	  Name(HEB1, 0x000233F3)
+  	  Name(HEB2, Zero)
+  	  Method(_STA, 0, Serialized)
+  	  {
+        Return(0x0F)
+  	  }
+  	  Method(HDDM, 0, Serialized)
+  	  {
+  	  	Name(DPKG, Package(4) {0x11111111, 0x22222222, 0x33333333, 0x44444444})
+  	  	Return(DPKG)
+  	  }
+
+      Method(HDEM, 0, Serialized)
+  	  {
+  		  Store(Zero, HBSY)
+  		  If(LEqual(HMDE, Zero))
+  		  {
+  			  Return(HIDX)
+  		  }
+  		  Return(HMDE)
+  	  }
+
+      Method(HDMM, 0, Serialized)
+  	  {
+  		  Return(HMDE)
+  	  }
+  	  Method(HDSM, 1, Serialized)
+  	  {
+  		  Store(Arg0, HRDY)
+  	  }
+  	  Method(HPEM, 1, Serialized)
+  	  {
+  		  Store(One, HBSY)
+  		  If(LEqual(HMDE, Zero))
+  		  {
+  			  Store(Arg0, HIDX)
+  		  }
+  		  Else
+  		  {
+  			  Store(Arg0, HIDX)
+  		  }
+  		  Notify(HIDD, 0xC0)
+  		  Store(Zero, Local0)
+  		  While(LAnd(LLess(Local0, 0xFA), HBSY))
+  		  {
+  			  Sleep(0x04)
+  			  Increment(Local0)
+  		  }
+  		  If(LEqual(HBSY, One))
+  		  {
+  		  	Store(Zero, HBSY)
+  		  	Store(Zero, HIDX)
+  			  Return(One)
+  		  }
+  		  Else
+  		  {
+  		  	Return(Zero)
+  		  }
+  	  }
+  	  Method(BTNL, 0, Serialized)
+  	  {
+    	
+    	}
+  	  Method(BTNE, 1, Serialized)
+  	  {
+  	
+  	  }
+  	  Method(BTNS, 0, Serialized)
+  	  {
+        Store(0xC, BTS1)
+        Return(BTS1)
+  	  }
+  	  Method(BTNC, 0, Serialized)
+  	  {
+  		  Return(0x1F)
+  	  }
+  	  Method(HEBC, 0, Serialized)
+  	  {
+  		  Return(HEB1)
+  	  }
+  	  Method(HEEC, 0, Serialized)
+  	  {
+  		  Return(HEB2)
+  	  }
+    }
+//[PRJ]+ >>>> implement Touch Button function
+    
   }   //  Device (GPO0)
 
   Device (GPO1) // Northwest Community for Display GPIO, PMC, Audio, and SPI

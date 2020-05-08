@@ -43,12 +43,12 @@ BXT_GPIO_PAD_INIT  mBXT_GpioInitData_N_OEM[] =
   BXT_GPIO_PAD_CONF(L"GPIO_7",                   M1   ,    NA    ,  NA   ,  NA    ,   NA       , Wake_Disabled, P_20K_L,   NA    ,    NA,   HizRx0I,   SAME, GPIO_PADBAR+0x0038,  NORTH), // J4C1.31 PTI_0_DATA6
   BXT_GPIO_PAD_CONF(L"GPIO_8",                   M1   ,    NA    ,  NA   ,  NA    ,   NA       , Wake_Disabled, P_20K_L,   NA    ,    NA,   HizRx0I,   SAME, GPIO_PADBAR+0x0040,  NORTH), // J4C1.33 PTI_0_DATA7
   BXT_GPIO_PAD_CONF(L"GPIO_9",                   M0   ,    GPO   , GPIO_D,  HI    ,   NA       , Wake_Disabled, P_20K_H,   NA    ,    NA,     NA   ,     NA, GPIO_PADBAR+0x0048,  NORTH),//NA->EDP, GPO->Mipi
-  BXT_GPIO_PAD_CONF(L"GPIO_10",                  M0   ,    GPI   ,  NA   ,  NA    ,   Level    , Wake_Disabled, P_20K_H, Inverted ,IOAPIC,    TxDRxE,     NA, GPIO_PADBAR+0x0050,  NORTH),//VOL_UP
-  BXT_GPIO_PAD_CONF(L"GPIO_11",                  M0   ,    GPI   ,  NA   ,  NA    ,   Level    , Wake_Disabled, P_20K_H, Inverted ,IOAPIC,    TxDRxE,     NA, GPIO_PADBAR+0x0058,  NORTH),//VOL_DOWN
-  BXT_GPIO_PAD_CONF(L"GPIO_12",                  M0   ,    GPI   ,  NA   ,  NA    ,   Level    , Wake_Disabled, P_20K_H, Inverted ,IOAPIC,    TxDRxE,     NA, GPIO_PADBAR+0x0060,  NORTH),//BU_BR+
-  BXT_GPIO_PAD_CONF(L"GPIO_13",                  M0   ,    GPI   ,  NA   ,  NA    ,   Level    , Wake_Disabled, P_20K_H, Inverted ,IOAPIC,    TxDRxE,     NA, GPIO_PADBAR+0x0068,  NORTH),//BU_BR-
-  BXT_GPIO_PAD_CONF(L"GPIO_14",                  M0   ,    GPI   ,  NA   ,  NA    ,   Level    , Wake_Disabled, P_20K_H, Inverted ,IOAPIC,    TxDRxE,     NA, GPIO_PADBAR+0x0070,  NORTH),//INT
-  BXT_GPIO_PAD_CONF(L"GPIO_15",                  M0   ,    GPI   ,  NA   ,  NA    ,   Level    , Wake_Disabled, P_20K_H, Inverted ,IOAPIC,    TxDRxE,     NA, GPIO_PADBAR+0x0078,  NORTH),//INT
+  BXT_GPIO_PAD_CONF(L"GPIO_10",                  M0   ,    GPI   ,  NA   ,  NA    ,   Level    , Wake_Disabled, P_20K_H, Inverted ,  SCI,     TxDRxE,    NA, GPIO_PADBAR+0x0050,  NORTH),//VOL_UP
+  BXT_GPIO_PAD_CONF(L"GPIO_11",                  M0   ,    GPI   ,  NA   ,  NA    ,   Level    , Wake_Disabled, P_20K_H, Inverted ,  SCI,     TxDRxE,    NA, GPIO_PADBAR+0x0058,  NORTH),//VOL_DOWN
+  BXT_GPIO_PAD_CONF(L"GPIO_12",                  M0   ,    GPI   ,  NA   ,  NA    ,   Level    , Wake_Disabled, P_20K_H, Inverted ,  SCI,     TxDRxE,    NA, GPIO_PADBAR+0x0060,  NORTH),//BU_BR+
+  BXT_GPIO_PAD_CONF(L"GPIO_13",                  M0   ,    GPI   ,  NA   ,  NA    ,   Level    , Wake_Disabled, P_20K_H, Inverted ,  SCI,     TxDRxE,    NA, GPIO_PADBAR+0x0068,  NORTH),//BU_BR-
+  BXT_GPIO_PAD_CONF(L"GPIO_14",                  M0   ,    GPI   ,  NA   ,  NA    ,   Level    , Wake_Disabled, P_20K_H, Inverted ,IOAPIC,    TxDRxE,    NA, GPIO_PADBAR+0x0070,  NORTH),//INT
+  BXT_GPIO_PAD_CONF(L"GPIO_15",                  M0   ,    GPI   ,  NA   ,  NA    ,   Level    , Wake_Disabled, P_20K_H, Inverted ,IOAPIC,    TxDRxE,    NA, GPIO_PADBAR+0x0078,  NORTH),//INT
   BXT_GPIO_PAD_CONF(L"GPIO_16",                  M0   ,    GPI   , GPIO_D,  NA    ,   NA       , Wake_Disabled, P_NONE ,   NA    ,    NA,     NA   ,     NA, GPIO_PADBAR+0x0080,  NORTH),//CRISIS_IN(GPIO16)
   BXT_GPIO_PAD_CONF(L"GPIO_17",                  M0   ,    GPI   , GPIO_D,  NA    ,   NA       , Wake_Disabled, P_NONE ,   NA    ,    NA,     NA   ,     NA, GPIO_PADBAR+0x0088,  NORTH),//EDP:1, LVDS: 0
   BXT_GPIO_PAD_CONF(L"GPIO_18",                  M0   ,    GPI   , GPIO_D,  NA    ,   NA       , Wake_Disabled, P_NONE ,   NA    ,    NA,     NA   ,     NA, GPIO_PADBAR+0x0090,  NORTH),//MIPI_ID1
