@@ -140,6 +140,14 @@ form formid = ROOT_FORM_ID,
       prompt = STRING_TOKEN(STR_SIO_NUVOTON5104D_TITLE),
       help = STRING_TOKEN(STR_BLANK_STRING);
   endif;
+
+    oneof varid   = SystemConfig.ATX_Flag,
+      prompt      = STRING_TOKEN(STR_ATX_PROMPT),
+      help        = STRING_TOKEN(STR_ATX_HELP),
+      option text = STRING_TOKEN(STR_ATX_TEXT), value = 0, flags = RESET_REQUIRED;
+      option text = STRING_TOKEN(STR_AT_TEXT),  value = 1, flags = DEFAULT | MANUFACTURING | RESET_REQUIRED;
+    endoneof;  
+  
 //[-start-160923-IB07400789-add]//
     goto SEG_CHIPSET_FEATURE_FORM_ID,
       prompt = STRING_TOKEN(STR_SEG_CHIPSET_FEATURE_TITLE),

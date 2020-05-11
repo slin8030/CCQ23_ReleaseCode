@@ -1,0 +1,65 @@
+## @file
+#  Component description file for DXE OEM Services Chipset Lib instance.
+#
+#******************************************************************************
+#* Copyright (c) 2013 - 2015, Insyde Software Corporation. All Rights Reserved.
+#*
+#* You may not reproduce, distribute, publish, display, perform, modify, adapt,
+#* transmit, broadcast, present, recite, release, license or otherwise exploit
+#* any part of this publication in any form, by any means, without the prior
+#* written permission of Insyde Software Corporation.
+#*
+#******************************************************************************
+
+[Defines]
+  INF_VERSION                    = 0x00010005
+  BASE_NAME                      = DxeOemSvcChipsetLib
+  FILE_GUID                      = 8A278444-5149-4bdd-8EE0-AB09FEE2B7A1                             
+  MODULE_TYPE                    = UEFI_DRIVER
+  VERSION_STRING                 = 1.0
+  LIBRARY_CLASS                  = DxeOemSvcChipsetLib|DXE_CORE DXE_DRIVER DXE_RUNTIME_DRIVER DXE_SAL_DRIVER DXE_SMM_DRIVER UEFI_APPLICATION UEFI_DRIVER SMM_CORE
+
+
+[Sources]
+  OemSvcUpdateOemBadgingLogoData.c
+#  OemSvcUpdateDxePlatformCpuPolicy.c
+  OemSvcUpdateDxePlatformGopPolicy.c
+#  OemSvcUpdateDxePpmPlatformPolicy.c
+  OemSvcUpdateDxeSecPlatformPolicy.c
+  OemSvcSetUsbLegacyPlatformOptions.c
+  OemSvcEnableAcpiCallback.c
+#  OemSvcUpdatDxePchPlatformPolicy.c
+  OemSvcUpdateBiosProtectTable.c
+  OemSvcModifyAcpiDescriptionHeader.c
+  OemSvcFotaVariablePreservedTable.c
+  OemSvcFotaBiosProtectTable.c
+  OemSvcHookPlatformDxe.c
+  OemSvcUpdateGlobalNvs.c
+  OemSvcSetBootDisplayDevice.c
+  OemSvcSetIgdOpRegion.c
+  OemSvcHookPlatformReset.c
+  OemSvcHookBeforeLogoDisplay.c
+  OemSvcHookAfterLogoDisplay.c
+  OemSvcHookAfterHotkeyDetect.c
+  OemSvcHookUefiBootFail.c
+  OemSvcHookNoBootableDevice.c
+  OemSvcHookPlatformPmicInitialization.c
+  OemSvcHookRouteConfig.c
+#[-start-151220-IB1127138-add]#
+  OemSvcUpdateDxePlatformSaPolicy.c
+#[-end-151220-IB1127138-add]#
+[Packages]
+  MdePkg/MdePkg.dec
+  $(PROJECT_PKG)/Project.dec
+
+  $(PLATFORM_RC_PACKAGE)/$(PLATFORM_RC_PACKAGE).dec
+  #[-start-151220-IB1127138-add]#
+  ClientSiliconPkg/ClientSiliconPkg.dec
+#[-end-151220-IB1127138-add]#
+  $(CHIPSET_PKG)/$(CHIPSET_PKG).dec
+  InsydeModulePkg/InsydeModulePkg.dec
+  IntelFrameworkPkg/IntelFrameworkPkg.dec
+  $(COMPAL_COMMON_PATH)/CompalCommon.dec
+  $(PROJECT_PKG)/Project.dec
+
+

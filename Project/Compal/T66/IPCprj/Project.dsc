@@ -1052,7 +1052,23 @@ gCompalCommonCodeGuid.PcdVEEPROMTYPE|0x2  # VEEPROM Type
 
 [LibraryClasses.common.DXE_RUNTIME_DRIVER]
   DxeOemSvcKernelLib|$(PROJECT_PKG)/Library/DxeOemSvcKernelLib/DxeOemSvcKernelLib.inf
-  
+
+  !disable DxeOemSvcChipsetLib|$(CHIPSET_PKG)/Library/DxeOemSvcChipsetLib/DxeOemSvcChipsetLib.inf
+  DxeOemSvcChipsetLib|$(CHIPSET_PKG)/Library/DxeOemSvcChipsetLib/DxeOemSvcChipsetLib.inf {
+    <SOURCE_OVERRIDE_PATH>
+      $(T66_COMMON_PATH)/Override/$(CHIPSET_PKG)/Library/DxeOemSvcChipsetLib/
+    <SOURCE_OVERRIDE_PATH>
+      $(PROJECT_PKG)/Override/$(CHIPSET_PKG)/Library/DxeOemSvcChipsetLib/
+  }
+
+  !disable DxeOemSvcChipsetLibDefault|$(CHIPSET_PKG)/Library/DxeOemSvcChipsetLib/DxeOemSvcChipsetLibDefault.inf
+  DxeOemSvcChipsetLibDefault|$(CHIPSET_PKG)/Library/DxeOemSvcChipsetLib/DxeOemSvcChipsetLibDefault.inf {
+    <SOURCE_OVERRIDE_PATH>
+      $(T66_COMMON_PATH)/Override/$(CHIPSET_PKG)/Library/DxeOemSvcChipsetLib/
+    <SOURCE_OVERRIDE_PATH>
+      $(PROJECT_PKG)/Override/$(CHIPSET_PKG)/Library/DxeOemSvcChipsetLib/
+  }
+
 [LibraryClasses.common.DXE_DRIVER]  
 
   !disable BadgingSupportLib|InsydeModulePkg/Library/CommonPlatformLib/BadgingSupportLib/BadgingSupportLib.inf
@@ -1062,9 +1078,41 @@ gCompalCommonCodeGuid.PcdVEEPROMTYPE|0x2  # VEEPROM Type
   }
 
   DxeOemSvcKernelLib|$(PROJECT_PKG)/Library/DxeOemSvcKernelLib/DxeOemSvcKernelLib.inf
-  
+
+  !disable DxeOemSvcChipsetLib|$(CHIPSET_PKG)/Library/DxeOemSvcChipsetLib/DxeOemSvcChipsetLib.inf
+  DxeOemSvcChipsetLib|$(CHIPSET_PKG)/Library/DxeOemSvcChipsetLib/DxeOemSvcChipsetLib.inf {
+    <SOURCE_OVERRIDE_PATH>
+      $(T66_COMMON_PATH)/Override/$(CHIPSET_PKG)/Library/DxeOemSvcChipsetLib/
+    <SOURCE_OVERRIDE_PATH>
+      $(PROJECT_PKG)/Override/$(CHIPSET_PKG)/Library/DxeOemSvcChipsetLib/
+  }
+
+  !disable DxeOemSvcChipsetLibDefault|$(CHIPSET_PKG)/Library/DxeOemSvcChipsetLib/DxeOemSvcChipsetLibDefault.inf
+  DxeOemSvcChipsetLibDefault|$(CHIPSET_PKG)/Library/DxeOemSvcChipsetLib/DxeOemSvcChipsetLibDefault.inf {
+    <SOURCE_OVERRIDE_PATH>
+      $(T66_COMMON_PATH)/Override/$(CHIPSET_PKG)/Library/DxeOemSvcChipsetLib/
+    <SOURCE_OVERRIDE_PATH>
+      $(PROJECT_PKG)/Override/$(CHIPSET_PKG)/Library/DxeOemSvcChipsetLib/
+  }
+
 [LibraryClasses.common.UEFI_DRIVER]
   DxeOemSvcKernelLib|$(PROJECT_PKG)/Library/DxeOemSvcKernelLib/DxeOemSvcKernelLib.inf
+
+  !disable DxeOemSvcChipsetLib|$(CHIPSET_PKG)/Library/DxeOemSvcChipsetLib/DxeOemSvcChipsetLib.inf
+  DxeOemSvcChipsetLib|$(CHIPSET_PKG)/Library/DxeOemSvcChipsetLib/DxeOemSvcChipsetLib.inf {
+    <SOURCE_OVERRIDE_PATH>
+      $(T66_COMMON_PATH)/Override/$(CHIPSET_PKG)/Library/DxeOemSvcChipsetLib/
+    <SOURCE_OVERRIDE_PATH>
+      $(PROJECT_PKG)/Override/$(CHIPSET_PKG)/Library/DxeOemSvcChipsetLib/
+  }
+
+  !disable DxeOemSvcChipsetLibDefault|$(CHIPSET_PKG)/Library/DxeOemSvcChipsetLib/DxeOemSvcChipsetLibDefault.inf
+  DxeOemSvcChipsetLibDefault|$(CHIPSET_PKG)/Library/DxeOemSvcChipsetLib/DxeOemSvcChipsetLibDefault.inf {
+    <SOURCE_OVERRIDE_PATH>
+      $(T66_COMMON_PATH)/Override/$(CHIPSET_PKG)/Library/DxeOemSvcChipsetLib/
+    <SOURCE_OVERRIDE_PATH>
+      $(PROJECT_PKG)/Override/$(CHIPSET_PKG)/Library/DxeOemSvcChipsetLib/
+  }
 
 [LibraryClasses.common.UEFI_APPLICATION]
   DxeOemSvcKernelLib|$(PROJECT_PKG)/Library/DxeOemSvcKernelLib/DxeOemSvcKernelLib.inf
