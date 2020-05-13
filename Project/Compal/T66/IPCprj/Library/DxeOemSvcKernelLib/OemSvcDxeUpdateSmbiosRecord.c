@@ -12,6 +12,8 @@
 ;******************************************************************************
 */
 
+#include <IndustryStandard/Smbios.h>
+#include <CompalEcLib.h>
 #include <Library/DxeOemSvcKernelLib.h>
 //[-start-161112-IB07400812-add]//
 #include <Library/DebugLib.h>
@@ -91,46 +93,36 @@ OemSvcDxeUpdateSmbiosRecord (
 
 
   EFI_STATUS Status;
-//[-start-161112-IB07400812-add]//
-#ifdef APOLLOLAKE_CRB
-  STATIC UINT8 SlotNumber = 0;
-#endif
-//[-end-161112-IB07400812-add]//
-
-  Status = EFI_UNSUPPORTED;
+  CHAR8      *StrPtr;
+  UINT8      DataBuffer8[32];
   
-//[-start-161112-IB07400812-modify]//
-#ifdef APOLLOLAKE_CRB
-  //sample implementation
   if (RecordBuffer == NULL) {
     return EFI_UNSUPPORTED;
   }
 
   Status = EFI_UNSUPPORTED;
   switch (RecordBuffer->Type) {
-  case EFI_SMBIOS_TYPE_SYSTEM_SLOTS:
-//    SetSlotStatus((SMBIOS_TABLE_TYPE9 *)RecordBuffer);
-//    Status = EFI_MEDIA_CHANGED;
-    //
-    // Apollo Lake RVP : 2 Slot
-    // APL-I Oxbow Hill: 1 Slot
-    //
-    if (IsIOTGBoardIds()) {
-      if (SlotNumber >= 1 ) {
-        return EFI_SUCCESS;
-      }
-    } else {
-      if (SlotNumber >= 2 ) {
-        return EFI_SUCCESS;
-      }
-    }
-    SlotNumber ++;
+  case EFI_SMBIOS_TYPE_BIOS_INFORMATION:
+   Status = CompalECReadKBCVersion(DataBuffer8);
+   if(EFI_ERROR (Status)) {
+     //
+     // Read EC Fw version fail , set version to 5.5.0 for debug;
+     //
+     DataBuffer8 [0] = 5;
+     DataBuffer8 [1] = 5;
+     DataBuffer8 [2] = 0;
+   }
+
+   ((SMBIOS_TABLE_TYPE0*)RecordBuffer)->EmbeddedControllerFirmwareMajorRelease= DataBuffer8 [0];
+   ((SMBIOS_TABLE_TYPE0*)RecordBuffer)->EmbeddedControllerFirmwareMinorRelease= DataBuffer8 [1];
+  
+    StrPtr = (CHAR8*) RecordBuffer + sizeof (SMBIOS_TABLE_TYPE0);
+    Status = EFI_MEDIA_CHANGED;
     break;
+    
   default:
     break;
-  }
-#endif
-//[-end-161112-IB07400812-modify]//
+  } 
 
   return Status;
 }

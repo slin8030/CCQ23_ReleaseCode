@@ -55,6 +55,7 @@
   InsydeOemServicesPkg/InsydeOemServicesPkg.dec
   MdeModulePkg/MdeModulePkg.dec
 
+$(COMPAL_COMMON_PATH)/CompalCommon.dec
 [LibraryClasses]
   PcdLib
   MemoryAllocationLib
@@ -72,6 +73,7 @@
   PrintLib
 #[-end-161112-IB07400812-add]#
 
+  CompalEcLib
 [Protocols]
   gEfiSetupUtilityProtocolGuid
   gEfiBmpDecoderProtocolGuid
