@@ -10,17 +10,17 @@ PAGE UEFI GOP Driver Configuration
 $Hotplug_Support_Enb 00
 
 PAGE Child Device List
-$ChildDevice1Primary 08
-$ChildDevice1Secondary 04
+$ChildDevice1Primary 04
+$ChildDevice1Secondary 00
 $ChildDevice2Primary 08
-$ChildDevice2Secondary 40
-$ChildDevice3Primary 04
-$ChildDevice3Secondary 40
-$ChildDevice4Primary 04
+$ChildDevice2Secondary 00
+$ChildDevice3Primary 00
+$ChildDevice3Secondary 00
+$ChildDevice4Primary 00
 $ChildDevice4Secondary 00
-$ChildDevice5Primary 40
+$ChildDevice5Primary 00
 $ChildDevice5Secondary 00
-$ChildDevice6Primary 08
+$ChildDevice6Primary 00
 $ChildDevice6Secondary 00
 $ChildDevice7Primary 00
 $ChildDevice7Secondary 00
@@ -70,7 +70,7 @@ $PM_DPST_Enable 01
 $BIA_Aggress_Level 06
 $PM_BLC_Enable 01
 $PM_ADB_Enable 01
-$PM_DRRS_Enable 00
+$PM_DRRS_Enable 01
 $PM_RS_Enable 01
 $PM_Turbo_Enable 01
 $Panel_Self_Refresh 01
@@ -261,7 +261,7 @@ $Enable_SSC03 00
 PAGE eDP Panel Power Sequencing
 $eDP_T3_Optimization_03 01
 $eDP_Vcc_To_Hpd_Delay_03 D0 07
-$eDP_DataOn_To_BkltEnable_Delay_03 0A 00
+$eDP_DataOn_To_BkltEnable_Delay_03 D0 07
 $eDP_PwmOn_To_Bklt_Enable_Delay_03 00 00
 $eDP_Bklt_Disable_To_PwmOff_Delay_03 00 00
 $eDP_BkltDisable_To_DataOff_Delay_03 D0 07
@@ -1320,7 +1320,7 @@ $Int_EFP1_Port 01
 $HPD2_Inversion_Enable 01
 $Int_EFP1_DDC_Pin 01
 $Int_EFP1_AUX_Channel 00
-$Int_EFP1_HDMI_LS_Type 08
+$Int_EFP1_HDMI_LS_Type 07
 $LSPcon1_Options 00
 $EFP1_Lane_Reversal 00
 $EFP1_USB_C_DongleFeature_Enabled 00
@@ -1335,12 +1335,12 @@ $Int_EFP1_Dock_Pre_emphasis 00
 $Int_EFP1_Dock_Voltage_swing 02
 
 PAGE Device 2 (EFP2)
-$Int_EFP2_Type D2 60
-$Int_EFP2_Port 02
-$HPD3_Inversion_Enable 01
-$Int_EFP2_DDC_Pin 02
+$Int_EFP2_Type 00 00
+$Int_EFP2_Port 00
+$HPD3_Inversion_Enable 00
+$Int_EFP2_DDC_Pin 00
 $Int_EFP2_AUX_Channel 00
-$Int_EFP2_HDMI_LS_Type 08
+$Int_EFP2_HDMI_LS_Type 00
 $LSPcon2_Options 00
 $EFP2_Lane_Reversal 00
 $EFP2_USB_C_DongleFeature_Enabled 00
@@ -1377,7 +1377,7 @@ $Int_EFP3_Dock_Voltage_swing 00
 PAGE Display Device Toggle Lists (Mobile only)
 
 PAGE Display Toggle List 1
-TABLE $Toggle_List1 08 11 08 01 08 02 04 02 08 00 04 00 40 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+TABLE $Toggle_List1 01 00 09 00 08 00 02 00 05 00 04 00 0C 00 40 00 44 00 48 00 41 00 00 00 00 00 00 00 00 00 00 00
 
 PAGE Display Toggle List 2
 TABLE $Toggle_List2 01 00 21 00 41 00 48 00 08 00 04 00 0C 00 40 00
