@@ -1,0 +1,38 @@
+Filename : K20HRELS.txt
+
+**************************************************************************
+FR1AA ENE KB9022 EC-FW release (Rev. 0.03A)                   04-27-2020
+File name : K20H0003A.ROM
+Base on  : K20H0002A.ROM
+Checksum  : 0x3301
+Notification:
+	1.> Need flash EC's boot block? --> No
+Fixed:
+ 
+Known issue:
+
+Modified:
+1.> Modified EC off time, delay 10ms
+
+Add function:
+Project ID List:
+  	20: FR1AA
+**************************************************************************
+FR1AA ENE KB9022 EC-FW release (Rev. 0.02A)                   04-27-2020
+File name : K20H0002A.ROM
+Base on  : K20H0000A.T01
+Checksum  : 0x25AA
+Notification:
+	1.> Need flash EC's boot block? --> No
+Fixed:
+ 
+Known issue:
+
+Modified:
+1.> Modified GPIO Setting
+2.> Modify LED setting
+
+Add function:
+Project ID List:
+  	20: FR1AA
+**************************************************************************
