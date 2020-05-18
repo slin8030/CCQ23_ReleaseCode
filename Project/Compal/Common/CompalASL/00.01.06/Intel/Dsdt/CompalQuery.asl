@@ -43,6 +43,10 @@ External(COMMON_ASL_LPC_PATH.ACAD, DeviceObj)
 External(\_SB.PCI0.GFX0.CLID)
 
 #include "Oemasl.asl"
+//PRJ# + >>>> Patch CPU DTS Temperature to EC
+  #include "CompalGloblNvs.asl"
+//PRJ# + <<<< Patch CPU DTS Temperature to EC
+
 include  ("Query01c.asl")                       // Define Qevent for OEM project.
 
 #ifdef COMPAL_ISCT_SUPPORT
@@ -64,7 +68,8 @@ External(\_SB.IAOE.SAOS, MethodObj)
     #endif
             
         Store(20, \_PR.DTSF)                    // INIT_DTS_FUNCTION_AFTER_S3
-        \_SB.CSMI(PRJ_DTS_SMI_NUM, 0x00)        // Notify DTS SW SMI, Sub-function is null.
+    //    \_SB.CSMI(PRJ_DTS_SMI_NUM, 0x00)        // Notify DTS SW SMI, Sub-function is null.
+        \_SB.CSMI(STPM_Thermal_Utility_SW_SMI, Read_DTS_Temperature)        // Notify SW SMI to get CPU DTS and store to TMUD.
         
         Sleep(10)
         
@@ -73,6 +78,9 @@ External(\_SB.IAOE.SAOS, MethodObj)
         } else {
                 Store(\_PR.DTS1, Local0)
         }
+//PRJ# + >>>> Patch CPU DTS Temperature to EC
+        Store(TMUD,Local0)
+//PRJ# + >>>> Patch CPU DTS Temperature to EC	
         Or(Local0, 0x80, Local0)                // Set bit 7 to tell EC update temperature.
         Store(Local0, COMMON_ASL_EC_PATH.CTMP)
         
