@@ -616,6 +616,11 @@ CMFCSetBootDeviceSequence(
             CompalGlobalNvsArea->BufferData[IndexBuffer]= LAN;
             SetupVariable->BootTypeOrder[IndexBuffer] = BBS_BEV_DEVICE;
             IndexBuffer++;
+//[PRJ]++ Modify common code to refer PXE boot for First boot device 
+            SetupVariable->PxeBootToLan      = PXE_ENABLE;
+            SetupVariable->NetworkProtocol   = PXE_PROTOCOL_IPV4;
+            SetupVariable->NewPositionPolicy = ADDPOSITION_FIRST;
+//[PRJ]--                    
             break;
         case USBHDD:
             CompalGlobalNvsArea->BufferData[IndexBuffer]= USBHDD;

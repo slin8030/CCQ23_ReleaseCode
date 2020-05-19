@@ -183,6 +183,14 @@ extern EFI_BOOT_SERVICES  *gBS;
 #define  C38_ENABLE_OS_OPTIMIZED_DEFAULT       0x0061
 #define  C38_GET_OS_OPTIMIZED_DEFAULT          0x0062
 
+//[PRJ]++ Modify common code to refer PXE boot for First boot device
+#define PXE_DISABLE             0
+#define PXE_ENABLE              1
+#define PXE_PROTOCOL_IPV4       0
+#define ADDPOSITION_FIRST       0
+//[PRJ]--    
+
+
 EFI_STATUS
 EFIAPI
 CMFCSwSMIHookMain (
