@@ -759,7 +759,10 @@ CMFCLoadDefualtGUID(
   };
 
   Memcpy ( &CompalGlobalNvsArea->BufferData[0], &mEfiSetupGuid, 40);
-  CompalGlobalNvsArea->StatusData = SwSmiSuccess;
+//[PRJ]++ Let "wmCtlLoadBIOSDef" to use legacy load default mehtod
+//  CompalGlobalNvsArea->StatusData = SwSmiSuccess;
+  CompalGlobalNvsArea->StatusData = SwSmiNotSupport;
+//[PRJ]-- Let "wmCtlLoadBIOSDef" to use legacy load default mehtod
 
   return EFI_SUCCESS;
 }
@@ -774,7 +777,10 @@ CMFCLoadDefualtName(
   };
 
   Memcpy ( &CompalGlobalNvsArea->BufferData[0], &mEfiSetupName, 7);
-  CompalGlobalNvsArea->StatusData = SwSmiSuccess;
+//[PRJ]++ Let "wmCtlLoadBIOSDef" to use legacy load default mehtod
+//  CompalGlobalNvsArea->StatusData = SwSmiSuccess;
+  CompalGlobalNvsArea->StatusData = SwSmiNotSupport;
+//[PRJ]-- Let "wmCtlLoadBIOSDef" to use legacy load default mehtod
 
   return EFI_SUCCESS;
 }

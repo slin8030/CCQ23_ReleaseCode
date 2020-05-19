@@ -1019,6 +1019,13 @@ gCompalCommonCodeGuid.PcdVEEPROMTYPE|0x2  # VEEPROM Type
     <SOURCE_OVERRIDE_PATH>
       $(PROJECT_PKG)/Override/$(CHIPSET_PKG)/Library/PlatformBdsLib/
   }
+#[PRJ]++ Fix Set PXE boot first function by wmCtl tool
+  !disable GenericBdsLib|InsydeModulePkg/Library/GenericBdsLib/GenericBdsLib.inf
+  GenericBdsLib|InsydeModulePkg/Library/GenericBdsLib/GenericBdsLib.inf {
+    <SOURCE_OVERRIDE_PATH>
+      $(PROJECT_PKG)/Override/InsydeModulePkg/Library/GenericBdsLib
+  }
+#[PRJ]-- Fix Set PXE boot first function by CMFC fail.
 [LibraryClasses.common]
   
 [LibraryClasses.common.SEC]
