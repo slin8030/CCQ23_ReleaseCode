@@ -4601,7 +4601,6 @@ ForceChangeBootOrder (
   //
   // TODO: Detect flag.
   //
-  WriteCmos8 (0x72, 0x80);
 
  VariableSize = 0;
   do {
@@ -4612,17 +4611,13 @@ ForceChangeBootOrder (
                     &VariableSize,
                     SetBDPVData
                     );
-  WriteCmos8 (0x73, 0x01);
     if (Status == EFI_BUFFER_TOO_SMALL) {
-  WriteCmos8 (0x73, 0x02);
       SetBDPVData = AllocateZeroPool(VariableSize);
     }
   } while (Status == EFI_BUFFER_TOO_SMALL);
-  WriteCmos8 (0x74, 0x33);
 
   if (!EFI_ERROR(Status))
   {
-  WriteCmos8 (0x75, 0x33);
     Status = gRT->SetVariable (
                     L"SETBDPV",
                     &mEfiSetBDPVGuid,
@@ -4631,11 +4626,9 @@ ForceChangeBootOrder (
                     NULL
                     );
   } else {
-  WriteCmos8 (0x76, 0x33);
     return;
   }
 
-  WriteCmos8 (0x72, 0x90);
   //
   // Get Setup Config.
   //
@@ -4659,7 +4652,6 @@ ForceChangeBootOrder (
   if (BootOrder == NULL) {
     return;
   }
-  WriteCmos8 (0x77, 0x10);
 
   TempBootOrderIndex = 0;
   for (Index = 0; Index < (BootOrderSize / sizeof (UINT16)); Index++) {
@@ -4671,7 +4663,6 @@ ForceChangeBootOrder (
     switch (*SetBDPVData)
     {
       case 1: //USB
-  WriteCmos8 (0x77, 0x11);
         if (IsUefiUsbBootOption (BootOptionNum)) {
           TempBootOrder[TempBootOrderIndex] = BootOptionNum;
           TempBootOrderIndex++;
@@ -4680,7 +4671,6 @@ ForceChangeBootOrder (
         break;
 
       case 2: //CD
-  WriteCmos8 (0x77, 0x22);
         if (IsUefiCdBootOption (BootOptionNum)) {
           TempBootOrder[TempBootOrderIndex] = BootOptionNum;
           TempBootOrderIndex++;
@@ -4689,7 +4679,6 @@ ForceChangeBootOrder (
         break;
 
       case 3: //Network
-  WriteCmos8 (0x77, 0x33);
         //
         // Verify if this boot option (Boot00XX) is Uefi Network Boot Option.
         //
@@ -4701,7 +4690,6 @@ ForceChangeBootOrder (
         break;
 
       default:
-  WriteCmos8 (0x77, 0x55);
         gBS->FreePool (SetupConfig);
         gBS->FreePool (BootOrder);
         return;
@@ -4709,7 +4697,6 @@ ForceChangeBootOrder (
     }
 
   }
-  WriteCmos8 (0x78, 0x88);
 
   //
   // Fill rest Boot Option number into TempBootOrder.
@@ -4733,7 +4720,6 @@ ForceChangeBootOrder (
       TempBootOrderIndex++;
     }
   }
-  WriteCmos8 (0x78, 0x99);
 
   //
   // Replace BootOrder variable.
@@ -4768,7 +4754,6 @@ ForceChangeBootOrder (
          SetupVarSize,
          SetupConfig
          );
-  WriteCmos8 (0x79, 0x10);
 
   //
   // TODO: Delete flag.

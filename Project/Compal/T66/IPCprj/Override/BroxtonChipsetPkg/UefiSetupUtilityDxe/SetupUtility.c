@@ -1559,7 +1559,6 @@ SetBDPVFlag (
   EFI_GUID mEfiSetBDPVGuid = { \
   0x20130519, 0xABCD, 0x1234, {0x00, 0x00, 0x20, 0x13, 0x05, 0x19, 0x03, 0x17} \
   };
-  WriteCmos8 (0x70, 0x77);
 
   VariableSize = 0;
   do {
@@ -1574,22 +1573,18 @@ SetBDPVFlag (
       SetBDPVData = AllocateZeroPool(VariableSize);
     }
   } while (Status == EFI_BUFFER_TOO_SMALL);
-  WriteCmos8 (0x7B, 0x10);
 
   if (!EFI_ERROR(Status))
   {
     switch (*SetBDPVData)
     {
       case 1: //USB
-  WriteCmos8 (0x7B, 0x11);
         break;
 
       case 2: //CD
-  WriteCmos8 (0x7B, 0x22);
         break;
 
       case 3: //Network
-  WriteCmos8 (0x7B, 0x33);
 //        if (SetupNvData->PxeBootToLan == PXE_DISABLE)
 //        {
           SetupNvData->PxeBootToLan = PXE_ENABLE;
@@ -1603,7 +1598,6 @@ SetBDPVFlag (
         break;
 
       case 0xFE:
-  WriteCmos8 (0x7B, 0x55);
         Status = gRT->SetVariable (
                     L"BootOrder",
                     &gEfiGlobalVariableGuid,
@@ -1632,7 +1626,6 @@ SetBDPVFlag (
         break;
 
       default:
-  WriteCmos8 (0x7C, 0x88);
         break;
     }
 

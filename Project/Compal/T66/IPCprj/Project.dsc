@@ -1000,6 +1000,125 @@ gCompalCommonCodeGuid.PcdVEEPROMTYPE|0x2  # VEEPROM Type
                                                                            # 0x02 : BIOS Variable EEPROM (BIOS variable bank0~7)
                                                                            # 0x03 : Non-EC   VEEPROM (BIOS variable bank0~6)
 #[PRJ]+ <<<< Modify for support  VirtualEEPROMVerifyTool and CMFCVerify  
+[PcdsFixedAtBuild]
+
+#Register Ihisi sub function table list.
+#Table struct define {CmdNumber, AsciiFuncGuid, Priority}
+# UINT8(CmdNumber), Char8[20](AsciiFuncGuid), UINT8(Priority)
+##================  ========================  ===============
+  gInsydeTokenSpaceGuid.PcdIhisiRegisterTable|{ \
+  # Register IHISI AH=00h (VATSRead)
+    UINT8(0x00),      "S00Kn_VatsRead00000",    UINT8(0x80), \
+
+  # Register IHISI AH=01h (VATSWrite)
+    UINT8(0x01),      "S01Kn_VatsWrite0000",    UINT8(0x80), \
+
+  # Register IHISI AH=05h (VATSNext)
+    UINT8(0x05),      "S05Kn_VatsGetNext00",    UINT8(0x80), \
+
+  # Register IHISI AH=10h (FBTSGetSupportVersion)
+    UINT8(0x10),      "S10Cs_GetPermission",    UINT8(0xE0), \
+    UINT8(0x10),      "S10OemGetPermission",    UINT8(0xC0), \
+    UINT8(0x10),      "S10OemGetAcStatus00",    UINT8(0xBB), \
+    UINT8(0x10),      "S10OemBatterylife00",    UINT8(0xB6), \
+    UINT8(0x10),      "S10Kn_GetVersion000",    UINT8(0x80), \
+    UINT8(0x10),      "S10Kn_InitOemHelp00",    UINT8(0x7F), \
+    UINT8(0x10),      "S10Kn_GetVendorID00",    UINT8(0x7E), \
+    UINT8(0x10),      "S10Kn_GetBatteryLow",    UINT8(0x7D), \
+
+  # Register IHISI AH=11h (FBTSGetPlatformInfo)
+    UINT8(0x11),      "S11Kn_GetModelName0",    UINT8(0x80), \
+    UINT8(0x11),      "S11Kn_GModelVersion",    UINT8(0x7F), \
+    UINT8(0x11),      "S11OemFbtsApCheck00",    UINT8(0x40), \
+    UINT8(0x11),      "S11Kn_UpExtPlatform",    UINT8(0x20), \
+
+  # Register IHISI AH=12h (FBTSGetPlatformRomMap)
+    UINT8(0x12),      "S12Kn_ProtectRomMap",    UINT8(0x80), \
+    UINT8(0x12),      "S12Kn_PrivateRomMap",    UINT8(0x7F), \
+    UINT8(0x12),      "S12Cs_PlatformRomMp",    UINT8(0x40), \
+    UINT8(0x12),      "S12OemPlatformRomMp",    UINT8(0x20), \
+
+  # Register IHISI AH=13h (FBTSGetFlashPartInfo)
+    UINT8(0x13),      "S13Kn_FlashPartInfo",    UINT8(0x80), \
+
+  # Register IHISI AH=14h (FBTSRead)
+    UINT8(0x14),      "S14Cs_DoBeforeRead0",    UINT8(0xE0), \
+    UINT8(0x14),      "S14Kn_FbtsReadProce",    UINT8(0x80), \
+    UINT8(0x14),      "S14Cs_DoAfterRead00",    UINT8(0x20), \
+
+  # Register IHISI AH=15h (FBTSWrite)
+    UINT8(0x15),      "S15PRJDoBeforeWrite",    UINT8(0xF0), \
+    UINT8(0x15),      "S15Cs_DoBeforeWrite",    UINT8(0xE0), \
+    UINT8(0x15),      "S15Kn_FbtsWriteProc",    UINT8(0x80), \
+    UINT8(0x15),      "S15Cs_DoAfterWrite0",    UINT8(0x40), \
+    UINT8(0x15),      "S15PRJDoAfterWrite0",    UINT8(0x20), \
+
+    # Register IHISI AH=16h (FBTSComplete)
+    UINT8(0x16),      "S16Cs_CApTerminalte",    UINT8(0xE0), \
+    UINT8(0x16),      "S16Cs_CNormalFlash0",    UINT8(0xDF), \
+    UINT8(0x16),      "S16Cs_CPartialFlash",    UINT8(0xDE), \
+    UINT8(0x16),      "S16Kn_PurifyVariabl",    UINT8(0x80), \
+    UINT8(0x16),      "S16PRJFbtsComplete0",    UINT8(0x21), \
+    UINT8(0x16),      "S16Cs_FbtsComplete0",    UINT8(0x20), \
+    UINT8(0x16),      "S16Cs_FbtsReboot000",    UINT8(0x1F), \
+    UINT8(0x16),      "S16Cs_FbtsShutDown0",    UINT8(0x1E), \
+    UINT8(0x16),      "S16Cs_FbtsDoNothing",    UINT8(0x1D), \
+
+  # Register IHISI AH=1Bh (FBTSSkipMcCheckAndBinaryTrans)
+    UINT8(0x1B),      "S1BKn_SkipMcCheck00",    UINT8(0x80), \
+
+  # Register IHISI AH=1Bh (FBTSGetWholeBiosRomMap)
+    UINT8(0x1E),      "S1EKn_WholeBiosRomp",    UINT8(0x80), \
+    UINT8(0x1E),      "S1EOemWholeBiosRomp",    UINT8(0x40), \
+
+  # Register IHISI AH=1Bh (FBTSApHookPoint)
+    UINT8(0x1F),      "S1FKn_ApHookforBios",    UINT8(0x80), \
+
+  # Register IHISI AH=20h (FETSWrite)
+#    UINT8(0x20),      "S20PRJEcFlashBefore",    UINT8(0xF0), \
+    UINT8(0x20),      "S20OemDoBeforeWrite",    UINT8(0xE0), \
+    UINT8(0x20),      "S20OemEcIdleTrue000",    UINT8(0xC0), \
+    UINT8(0x20),      "S20OemFetsWrite0000",    UINT8(0x80), \
+    UINT8(0x20),      "S20OemEcIdleFalse00",    UINT8(0x40), \
+    UINT8(0x20),      "S20PRJEcFlashAfter0",    UINT8(0x21), \
+    UINT8(0x20),      "S20OemDoAfterWrite0",    UINT8(0x20), \
+    UINT8(0x20),      "S20Cs_ShutdownMode0",    UINT8(0x1B), \
+
+    # Register IHISI AH=21h (FETSGetEcPartInfo)
+    UINT8(0x21),      "S21OemGetEcPartInfo",    UINT8(0x80), \
+
+  # Register IHISI AH=41h (OEMSFOEMExCommunication)
+    UINT8(0x41),      "S41Kn_CommuSaveRegs",    UINT8(0xFF), \
+    UINT8(0x41),      "S41Cs_ExtDataCommun",    UINT8(0xE0), \
+    UINT8(0x41),      "S41OemT01Vbios00000",    UINT8(0xC0), \
+    UINT8(0x41),      "S41OemT54LogoUpdate",    UINT8(0xBB), \
+    UINT8(0x41),      "S41OemT55CheckSignB",    UINT8(0xB6), \
+    UINT8(0x41),      "S41OemReservedFun00",    UINT8(0xB1), \
+    UINT8(0x41),      "S41Kn_T51EcIdelTrue",    UINT8(0x85), \
+    UINT8(0x41),      "S41Kn_ExtDataCommun",    UINT8(0x80), \
+    UINT8(0x41),      "S41Kn_T51EcIdelFals",    UINT8(0x7B), \
+    UINT8(0x41),      "S41OemT50Oa30RWFun0",    UINT8(0x40), \
+
+  # Register IHISI AH=42h (OEMSFOEMExDataWrite)
+    UINT8(0x42),      "S42Cs_ExtDataWrite0",    UINT8(0xE0), \
+    UINT8(0x42),      "S42Kn_T50EcIdelTrue",    UINT8(0x85), \
+    UINT8(0x42),      "S42Kn_ExtDataWrite0",    UINT8(0x80), \
+    UINT8(0x42),      "S42Kn_T50EcIdelFals",    UINT8(0x7B), \
+    UINT8(0x42),      "S42Cs_DShutdownMode",    UINT8(0x20), \
+
+  # Register IHISI AH=47h (OEMSFOEMExDataRead)
+    UINT8(0x47),      "S47Cs_ExtDataRead00",    UINT8(0xE0), \
+    UINT8(0x47),      "S47Kn_ExtDataRead00",    UINT8(0x80), \
+
+  # Register IHISI AH=48h (FBTSOEMCapsuleSecureFalsh)
+    UINT8(0x48),      "S48Kn_CpSecureFlash",    UINT8(0x80), \
+
+  # Register IHISI AH=49h (FBTSCommonCommunication)
+    UINT8(0x49),      "S49Kn_ComDataCommun",    UINT8(0x80), \
+
+  # Register IHISI AH=4Bh (FBTSCommonRead)
+    UINT8(0x4B),      "S4BKn_ComDataRead00",    UINT8(0x80)  }
+
 ################################################################################
 #
 # Library Class section - list of all Library Classes needed by this Platform.
