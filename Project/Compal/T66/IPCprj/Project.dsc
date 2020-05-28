@@ -596,8 +596,9 @@
   # @PcdTypeStruct OEM_LOGO_RESOLUTION_DEFINITION {UINT32 LogoResolutionX; UINT32 LogoResolutionY; UINT32 ScuResolutionX; UINT32 ScuResolutionY;}
   # @PcdValueType OEM_LOGO_RESOLUTION_DEFINITION
   #  LogoResolution : 1920 x 1080  , ScuResolution : 1024 x 768
-  gInsydeTokenSpaceGuid.PcdDefaultLogoResolution|{0x80, 0x07, 0x00, 0x00, 0x38, 0x04, 0x00, 0x00, 0x00, 0x04, 0x00, 0x00, 0x00, 0x03, 0x00, 0x00}
-
+#PRJ+>>>> Modify Logo and SCU resolution to 800x1280
+   gInsydeTokenSpaceGuid.PcdDefaultLogoResolution|{0x20, 0x03, 0x00, 0x00, 0x00, 0x05, 0x00, 0x00, 0x20, 0x03, 0x00, 0x00, 0x00, 0x05, 0x00, 0x00}
+#PRJ+<<<< Modify Logo and SCU resolution to 800x1280
   # 
   # Please make the following Pcd values same. 
   #    1. gInsydeTokenSpaceGuid.PcdTemporaryRamSizeWhenRecovery

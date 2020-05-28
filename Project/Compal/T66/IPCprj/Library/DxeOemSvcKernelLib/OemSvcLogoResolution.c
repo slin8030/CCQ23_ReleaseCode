@@ -50,8 +50,10 @@ OEM_LOGO_RESOLUTION_DEFINITION mOemLogoResolutionTable = {
   // $(EFI_SOURCE)\$(PROJECT_FAMILY)\$(PROJECT_FAMILY)\OemServices\Dxe\UpdateFormLen\UpdateFormLen.c
   // also updating to correct value. 
   //
-  1024,                       // SCUResolutionX;
-  768                        // SCUResolutionY;
+//PRJ+>>>> Modify Logo and SCU resolution to 800x1280  
+  800,                       // SCUResolutionX;
+  1280                        // SCUResolutionY;
+//PRJ+<<<< Modify Logo and SCU resolution to 800x1280    
 };
 
 BOOLEAN   mUpdateLogoResolution = FALSE;
@@ -399,7 +401,10 @@ OemSvcLogoResolution (
       (*OemLogoResolutionTable) = &mOemLogoResolutionTable;
     }
 //[-end-160927-IB07400789-add]//
-
+//PRJ+>>>> Modify Logo and SCU resolution to 800x1280 
+    OemLogoX = 800;
+    OemLogoY = 1280;
+//PRJ+<<<< Modify Logo and SCU resolution to 800x1280  
     (*OemLogoResolutionTable)->LogoResolutionX = OemLogoX;
     (*OemLogoResolutionTable)->LogoResolutionY = OemLogoY;
     (*OemLogoResolutionTable)->ScuResolutionX = OemLogoX;
