@@ -1,28 +1,33 @@
 <seqblk>
 	<panelid>0x02</panelid>
-<reset>
-		<delay>10000</delay>
+	<panelpoweron>
 		<gpio>
-			<gpioresourceid>0x01</gpioresourceid>
-			<gpiono>0xC4</gpiono>
-			<gpioval>0x01</gpioval>
-		</gpio>
-	</reset>
-<senddcs>
-		<gpio>
-			<gpioresourceid>0x01</gpioresourceid>
-			<gpiono>0xC4</gpiono>
-			<gpioval>0x00</gpioval>
-		</gpio>
-		<delay>10</delay>
-		<gpio>
-			<gpioresourceid>0x01</gpioresourceid>
+			<gpioresourceid>0x00</gpioresourceid>
 			<gpiono>0xC4</gpiono>
 			<gpioval>0x01</gpioval>
 		</gpio>
 		<delay>5000</delay>
-	</senddcs>
-<dispon>
+	</panelpoweron>
+	<reset>
+		<gpio>
+			<gpioresourceid>0x00</gpioresourceid>
+			<gpiono>0x9</gpiono>
+			<gpioval>0x01</gpioval>
+		</gpio>
+		<delay>20000</delay>
+		<gpio>
+			<gpioresourceid>0x00</gpioresourceid>
+			<gpiono>0x9</gpiono>
+			<gpioval>0x00</gpioval>
+		</gpio>
+		<delay>1000</delay>
+		<gpio>
+			<gpioresourceid>0x00</gpioresourceid>
+			<gpiono>0x9</gpiono>
+			<gpioval>0x01</gpioval>
+		</gpio>
+	</reset>
+	<dispon>
 		<pkt>
 			<pktflag>0x00</pktflag>
 			<pkttype>0x05</pkttype>
@@ -38,19 +43,58 @@
 		</pkt>
 		<delay>5000</delay>
 	</dispon>
-<bklton>
+	<bklton>
 		<gpio>
-			<gpioresourceid>0x01</gpioresourceid>
+			<gpioresourceid>0x00</gpioresourceid>
 			<gpiono>0xC5</gpiono>
 			<gpioval>0x01</gpioval>
 		</gpio>
-		<delay>1000</delay>
 	</bklton>
-<bkltoff>
+	<senddcs>
 		<gpio>
-			<gpioresourceid>0x01</gpioresourceid>
+			<gpioresourceid>0x02</gpioresourceid>
+			<gpiono>0xC6</gpiono>
+			<gpioval>0x01</gpioval>
+		</gpio>
+	</senddcs>
+
+	<dispoff>
+		<delay>33400</delay>
+		<pkt>
+			<pktflag>0x00</pktflag>
+			<pkttype>0x29</pkttype>
+			<pktwc>0x0002</pktwc>
+			<pktdata>0x28 0x00 </pktdata>
+		</pkt>
+		<delay>120000</delay>
+		<pkt>
+			<pktflag>0x00</pktflag>
+			<pkttype>0x29</pkttype>
+			<pktwc>0x0002</pktwc>
+			<pktdata>0x10 0x00 </pktdata>
+		</pkt>
+		<delay>180000</delay>
+	</dispoff>
+	<bkltoff>
+		<gpio>
+			<gpioresourceid>0x02</gpioresourceid>
 			<gpiono>0xC5</gpiono>
 			<gpioval>0x00</gpioval>
 		</gpio>
+		<delay>1000</delay>
 	</bkltoff>
+	<unreset>
+		<gpio>
+			<gpioresourceid>0x02</gpioresourceid>
+			<gpiono>0x09</gpiono>
+			<gpioval>0x00</gpioval>
+		</gpio>
+	</unreset>
+	<panelpoweroff>
+		<gpio>
+			<gpioresourceid>0x02</gpioresourceid>
+			<gpiono>0xC4</gpiono>
+			<gpioval>0x00</gpioval>
+		</gpio>
+	</panelpoweroff>
 </seqblk>

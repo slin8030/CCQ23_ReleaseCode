@@ -232,6 +232,14 @@ Method(_PTS,1)
   //
   // Please refer PostCode.h
   //
+//PRJ+ >>>> Modify MIPI panel power sequency
+  Store(0,\_SB.GPO1.MBKL)   //Set GPIO_197 PANEL1_BKLTEN to low
+  Sleep(10)
+  Store(0,\_SB.GPO0.MRST)   //Set GPIO_9 MIPI RST to low
+  Sleep(130)
+  Store(0,\_SB.GPO1.MVDD)   //Set GPIO_196 PANEL1_VDDEN Panel
+  Sleep(5)
+//PRJ+ <<<< Modify MIPI panel power sequency  
   If (LEqual (Arg0, 1))
   {
     P8XH(0,0x51) // ASL_ENTER_S1
@@ -1112,6 +1120,10 @@ Scope(\_SB)
 
     OperationRegion(GPOP, SystemMemory, GP0A, GP0L)
     Field(\_SB.GPO0.GPOP, ByteAcc, NoLock, Preserve) {
+//PRJ+ >>>> Modify MIPI panel power sequency    
+      Offset(0x548), //GPIO_9 MIPI RST
+      MRST,1,   
+//PRJ+ <<<< Modify MIPI panel power sequency        
       Offset(0x578), //PIN 15:15 * 8 + 0x500  // WiFi Reset
       CWLE, 1,
 //[-start-161125-IB07400818-modify]//
@@ -1251,7 +1263,15 @@ Scope(\_SB)
       }
       Return(0xf)
     }
-
+//PRJ+ >>>> Modify MIPI panel power sequency
+    OperationRegion(GPOQ, SystemMemory, GP1A, GP1L)
+    Field(\_SB.GPO1.GPOQ, ByteAcc, NoLock, Preserve) {
+      Offset(0x548), //PIN 196 MIPI VDD_EN
+      MVDD,1,     
+      Offset(0x550), //PIN 197 MIPI BKLTEN
+      MBKL,1,     
+    }
+//PRJ+ <<<< Modify MIPI panel power sequency    
   }   //  Device (GPO1)
 
 

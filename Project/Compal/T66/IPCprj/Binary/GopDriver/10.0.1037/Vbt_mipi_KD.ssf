@@ -10,17 +10,17 @@ PAGE UEFI GOP Driver Configuration
 $Hotplug_Support_Enb 00
 
 PAGE Child Device List
-$ChildDevice1Primary 08
-$ChildDevice1Secondary 04
+$ChildDevice1Primary 04
+$ChildDevice1Secondary 00
 $ChildDevice2Primary 08
-$ChildDevice2Secondary 40
-$ChildDevice3Primary 04
-$ChildDevice3Secondary 40
-$ChildDevice4Primary 04
+$ChildDevice2Secondary 00
+$ChildDevice3Primary 00
+$ChildDevice3Secondary 00
+$ChildDevice4Primary 00
 $ChildDevice4Secondary 00
-$ChildDevice5Primary 40
+$ChildDevice5Primary 00
 $ChildDevice5Secondary 00
-$ChildDevice6Primary 08
+$ChildDevice6Primary 00
 $ChildDevice6Secondary 00
 $ChildDevice7Primary 00
 $ChildDevice7Secondary 00
@@ -84,15 +84,11 @@ TABLE $ALS_Response_Data 46 00 00 00 49 00 0A 00 55 00 50 00 64 00 2C 01 96 00 E
 PAGE Integrated Display Configuration
 
 PAGE LFP Configuration
-$LFP_Device_Class 06 18
-$LFP_Port 0A
-$Int_LFP_AUX_Channel 40
-$HPD1_Inversion_Enable 01
+$LFP_Device_Class 00 14
+$LFP_Port 15
 $bmp_Panel_type 02
-$bmp_Panel_EDID 01
+$bmp_Panel_EDID 00
 $180_Deg_Rotation_Enable 00
-$LFP_Lane_Reversal 00
-$Enable_Correction 00
 
 PAGE Panel #01 
 STRING $Panel_Name_01 LFP_PanelName
@@ -102,44 +98,6 @@ $Panel_Height_01 E0 01
 $DPS_Panel_Type_01 02
 $Seamless_DRRS_Min_RR_01 00
 $Blt_Control_01 02
-$eDP_Panel_Color_Depth_01 00
-$eDP_VswingPreEmph_1 01
-$Enable_SSC01 00
-
-PAGE eDP Panel Power Sequencing
-$eDP_T3_Optimization_01 01
-$eDP_Vcc_To_Hpd_Delay_01 D0 07
-$eDP_DataOn_To_BkltEnable_Delay_01 0A 00
-$eDP_PwmOn_To_Bklt_Enable_Delay_01 00 00
-$eDP_Bklt_Disable_To_PwmOff_Delay_01 00 00
-$eDP_BkltDisable_To_DataOff_Delay_01 D0 07
-$eDP_DataOff_To_PowerOff_Delay_01 F4 01
-$eDP_PowerCycle_Delay_01 88 13
-
-PAGE eDP Fast Link Training Configuration Parameters
-$eDP_Fast_Link_Training_Supported_01 00
-$eDP_Link_DataRate_01 00
-$eDP_Link_LaneCount_01 00
-$eDP_Link_PreEmp_01 00
-$eDP_Link_Vswing_01 00
-
-PAGE PSR feature
-$PSR_FullLink_Enable_01 00
-$PSR_Require_AUX2Wakeup_01 00
-$PSR_Lines2Wait_B4LinkS3_01 00
-$PSR_IdleFrames2Wait_01 00
-$PSR_TP1_WaitTime_01 02 00
-$PSR_TP_2_3_WaitTime_01 02 00
-
-PAGE Apical Feature
-$eDP_Apical_Display_Ip_Enable_01 00
-$eDP_Panel_Oui_01 00 00 00 00
-$eDP_Dpcd_Base_Address_01 00 00 00 00
-$eDP_Dpcd_Irdidix_Control0_01 00 00 00 00
-$eDP_Dpcd_Option_Select_01 00 00 00 00
-$eDP_Dpcd_Backlight_01 00 00 00 00
-$eDP_Ambient_Light_01 00 00 00 00
-$eDP_Backlight_Scale_01 00 00 00 00
 
 PAGE DTD Timings
 TABLE $DVO_Tbl_01 D6 09 80 90 20 E0 1D 10 08 60 22 00 00 00 00 00 00 1E
@@ -170,6 +128,36 @@ $Blue_y_01 88
 $White_x_01 88
 $White_y_01 88
 
+PAGE MIPI Display Settings
+$Video_Command_Mode_01 00
+$Packet_Sequence_Video_Mode_01 02
+$RequiredBurstModeRate_01 00 00 00 00
+$Colour_Format_Video_Mode_01 04
+$Dual_Link_01 00
+$Pixel_Overlap_Count_01 00
+$CABC_Support_01 00
+$CabcCmdsPort_01 00
+$PanelPwmCmdsPort_01 00
+$RgbFlip_01 00
+$Number_Of_Lanes_01 03
+$Bta_Disable_01 00
+$EscapeClk_01 00
+$EoTpSupport_01 00
+$ClockStop_01 00
+$TClkPrepare_01 32
+$TClkTrail_01 46
+$TClkPrepareTClkZero_01 36 01
+$THsPrepare_01 32
+$THsTrail_01 3C
+$THsPrepareTHsZero_01 C8 00
+$PowerUpDelay_01 F4 01
+$DataTurnOnToPanelBacklightEnableDelay_01 F4 01
+$Mipi_PwmOn_To_Bklt_Enable_Delay_01 00 00
+$Mipi_Bklt_Disable_To_PwmOff_Delay_01 00 00
+$BacklightOffToDataTurnOffDelay_01 F4 01
+$PowerDownDelay_01 F4 01
+$PowerCycleDelay_01 88 13
+
 PAGE Panel #02 
 STRING $Panel_Name_02 LFP_PanelName
 $Enable_Scaling_02 00
@@ -178,44 +166,6 @@ $Panel_Height_02 58 02
 $DPS_Panel_Type_02 02
 $Seamless_DRRS_Min_RR_02 00
 $Blt_Control_02 02
-$eDP_Panel_Color_Depth_02 00
-$eDP_VswingPreEmph_2 01
-$Enable_SSC02 00
-
-PAGE eDP Panel Power Sequencing
-$eDP_T3_Optimization_02 01
-$eDP_Vcc_To_Hpd_Delay_02 D0 07
-$eDP_DataOn_To_BkltEnable_Delay_02 0A 00
-$eDP_PwmOn_To_Bklt_Enable_Delay_02 00 00
-$eDP_Bklt_Disable_To_PwmOff_Delay_02 00 00
-$eDP_BkltDisable_To_DataOff_Delay_02 D0 07
-$eDP_DataOff_To_PowerOff_Delay_02 F4 01
-$eDP_PowerCycle_Delay_02 88 13
-
-PAGE eDP Fast Link Training Configuration Parameters
-$eDP_Fast_Link_Training_Supported_02 00
-$eDP_Link_DataRate_02 00
-$eDP_Link_LaneCount_02 00
-$eDP_Link_PreEmp_02 00
-$eDP_Link_Vswing_02 00
-
-PAGE PSR feature
-$PSR_FullLink_Enable_02 00
-$PSR_Require_AUX2Wakeup_02 00
-$PSR_Lines2Wait_B4LinkS3_02 00
-$PSR_IdleFrames2Wait_02 00
-$PSR_TP1_WaitTime_02 02 00
-$PSR_TP_2_3_WaitTime_02 02 00
-
-PAGE Apical Feature
-$eDP_Apical_Display_Ip_Enable_02 00
-$eDP_Panel_Oui_02 00 00 00 00
-$eDP_Dpcd_Base_Address_02 00 00 00 00
-$eDP_Dpcd_Irdidix_Control0_02 00 00 00 00
-$eDP_Dpcd_Option_Select_02 00 00 00 00
-$eDP_Dpcd_Backlight_02 00 00 00 00
-$eDP_Ambient_Light_02 00 00 00 00
-$eDP_Backlight_Scale_02 00 00 00 00
 
 PAGE DTD Timings
 TABLE $DVO_Tbl_02 A0 0F 20 00 31 58 1C 20 28 80 14 00 00 00 00 00 00 1E
@@ -246,67 +196,59 @@ $Blue_y_02 88
 $White_x_02 88
 $White_y_02 88
 
+PAGE MIPI Display Settings
+$Video_Command_Mode_02 00
+$Packet_Sequence_Video_Mode_02 02
+$RequiredBurstModeRate_02 00 00 00 00
+$Colour_Format_Video_Mode_02 04
+$Dual_Link_02 00
+$Pixel_Overlap_Count_02 00
+$CABC_Support_02 00
+$CabcCmdsPort_02 00
+$PanelPwmCmdsPort_02 00
+$RgbFlip_02 00
+$Number_Of_Lanes_02 03
+$Bta_Disable_02 00
+$EscapeClk_02 00
+$EoTpSupport_02 00
+$ClockStop_02 00
+$TClkPrepare_02 32
+$TClkTrail_02 46
+$TClkPrepareTClkZero_02 36 01
+$THsPrepare_02 32
+$THsTrail_02 3C
+$THsPrepareTHsZero_02 C8 00
+$PowerUpDelay_02 F4 01
+$DataTurnOnToPanelBacklightEnableDelay_02 F4 01
+$Mipi_PwmOn_To_Bklt_Enable_Delay_02 00 00
+$Mipi_Bklt_Disable_To_PwmOff_Delay_02 00 00
+$BacklightOffToDataTurnOffDelay_02 F4 01
+$PowerDownDelay_02 F4 01
+$PowerCycleDelay_02 88 13
+
 PAGE Panel #03 
 STRING $Panel_Name_03 LFP_PanelName
 $Enable_Scaling_03 00
-$Panel_Width_03 00 04
-$Panel_Height_03 00 03
+$Panel_Width_03 20 03
+$Panel_Height_03 00 05
 $DPS_Panel_Type_03 02
 $Seamless_DRRS_Min_RR_03 00
 $Blt_Control_03 02
-$eDP_Panel_Color_Depth_03 00
-$eDP_VswingPreEmph_3 01
-$Enable_SSC03 00
-
-PAGE eDP Panel Power Sequencing
-$eDP_T3_Optimization_03 01
-$eDP_Vcc_To_Hpd_Delay_03 D0 07
-$eDP_DataOn_To_BkltEnable_Delay_03 0A 00
-$eDP_PwmOn_To_Bklt_Enable_Delay_03 00 00
-$eDP_Bklt_Disable_To_PwmOff_Delay_03 00 00
-$eDP_BkltDisable_To_DataOff_Delay_03 D0 07
-$eDP_DataOff_To_PowerOff_Delay_03 F4 01
-$eDP_PowerCycle_Delay_03 88 13
-
-PAGE eDP Fast Link Training Configuration Parameters
-$eDP_Fast_Link_Training_Supported_03 00
-$eDP_Link_DataRate_03 00
-$eDP_Link_LaneCount_03 00
-$eDP_Link_PreEmp_03 00
-$eDP_Link_Vswing_03 00
-
-PAGE PSR feature
-$PSR_FullLink_Enable_03 00
-$PSR_Require_AUX2Wakeup_03 00
-$PSR_Lines2Wait_B4LinkS3_03 00
-$PSR_IdleFrames2Wait_03 00
-$PSR_TP1_WaitTime_03 02 00
-$PSR_TP_2_3_WaitTime_03 02 00
-
-PAGE Apical Feature
-$eDP_Apical_Display_Ip_Enable_03 00
-$eDP_Panel_Oui_03 00 00 00 00
-$eDP_Dpcd_Base_Address_03 00 00 00 00
-$eDP_Dpcd_Irdidix_Control0_03 00 00 00 00
-$eDP_Dpcd_Option_Select_03 00 00 00 00
-$eDP_Dpcd_Backlight_03 00 00 00 00
-$eDP_Ambient_Light_03 00 00 00 00
-$eDP_Backlight_Scale_03 00 00 00 00
 
 PAGE DTD Timings
-TABLE $DVO_Tbl_03 64 19 00 40 41 00 26 30 18 88 36 00 00 00 00 00 00 18
+TABLE $DVO_Tbl_03 90 1A 20 3E 30 00 22 50 12 0C 64 04 87 D8 00 00 00 18
 
 PAGE LFP PnP ID
-TABLE $LVDS_PnP_ID_03 36 7F 03 00 03 00 00 00 00 0C
+TABLE $LVDS_PnP_ID_03 36 7F 00 00 01 00 00 00 00 0C
 
 PAGE Backlight Control Parameters
 $BLC_Inv_Type_03 02
 $Lfp_Pwm_Source_Selection_03 02
-$Lfp_Pwm_Controller_Selection_03 00
+$Lfp_Pwm_Controller_Selection_03 01
 $BLC_Inv_Polarity_03 00
 $BLC_Min_Brightness_03 00
-$POST_BL_Brightness_03 B4
-$PWM_Frequency_03 C8 00
+$POST_BL_Brightness_03 FF
+$PWM_Frequency_03 30 75
 
 PAGE Chromaticity Control
 $Chromacity_Enable_03 00
@@ -322,6 +264,36 @@ $Blue_y_03 88
 $White_x_03 88
 $White_y_03 88
 
+PAGE MIPI Display Settings
+$Video_Command_Mode_03 00
+$Packet_Sequence_Video_Mode_03 02
+$RequiredBurstModeRate_03 00 00 00 00
+$Colour_Format_Video_Mode_03 04
+$Dual_Link_03 00
+$Pixel_Overlap_Count_03 00
+$CABC_Support_03 00
+$CabcCmdsPort_03 00
+$PanelPwmCmdsPort_03 00
+$RgbFlip_03 00
+$Number_Of_Lanes_03 03
+$Bta_Disable_03 01
+$EscapeClk_03 00
+$EoTpSupport_03 00
+$ClockStop_03 00
+$TClkPrepare_03 32
+$TClkTrail_03 46
+$TClkPrepareTClkZero_03 36 01
+$THsPrepare_03 32
+$THsTrail_03 3C
+$THsPrepareTHsZero_03 C8 00
+$PowerUpDelay_03 00 00
+$DataTurnOnToPanelBacklightEnableDelay_03 F4 01
+$Mipi_PwmOn_To_Bklt_Enable_Delay_03 00 00
+$Mipi_Bklt_Disable_To_PwmOff_Delay_03 00 00
+$BacklightOffToDataTurnOffDelay_03 F4 01
+$PowerDownDelay_03 F4 01
+$PowerCycleDelay_03 88 13
+
 PAGE Panel #04 
 STRING $Panel_Name_04 LFP_PanelName
 $Enable_Scaling_04 00
@@ -330,44 +302,6 @@ $Panel_Height_04 00 04
 $DPS_Panel_Type_04 02
 $Seamless_DRRS_Min_RR_04 00
 $Blt_Control_04 02
-$eDP_Panel_Color_Depth_04 00
-$eDP_VswingPreEmph_4 01
-$Enable_SSC04 00
-
-PAGE eDP Panel Power Sequencing
-$eDP_T3_Optimization_04 01
-$eDP_Vcc_To_Hpd_Delay_04 D0 07
-$eDP_DataOn_To_BkltEnable_Delay_04 0A 00
-$eDP_PwmOn_To_Bklt_Enable_Delay_04 00 00
-$eDP_Bklt_Disable_To_PwmOff_Delay_04 00 00
-$eDP_BkltDisable_To_DataOff_Delay_04 D0 07
-$eDP_DataOff_To_PowerOff_Delay_04 F4 01
-$eDP_PowerCycle_Delay_04 88 13
-
-PAGE eDP Fast Link Training Configuration Parameters
-$eDP_Fast_Link_Training_Supported_04 00
-$eDP_Link_DataRate_04 00
-$eDP_Link_LaneCount_04 00
-$eDP_Link_PreEmp_04 00
-$eDP_Link_Vswing_04 00
-
-PAGE PSR feature
-$PSR_FullLink_Enable_04 00
-$PSR_Require_AUX2Wakeup_04 00
-$PSR_Lines2Wait_B4LinkS3_04 00
-$PSR_IdleFrames2Wait_04 00
-$PSR_TP1_WaitTime_04 02 00
-$PSR_TP_2_3_WaitTime_04 02 00
-
-PAGE Apical Feature
-$eDP_Apical_Display_Ip_Enable_04 00
-$eDP_Panel_Oui_04 00 00 00 00
-$eDP_Dpcd_Base_Address_04 00 00 00 00
-$eDP_Dpcd_Irdidix_Control0_04 00 00 00 00
-$eDP_Dpcd_Option_Select_04 00 00 00 00
-$eDP_Dpcd_Backlight_04 00 00 00 00
-$eDP_Ambient_Light_04 00 00 00 00
-$eDP_Backlight_Scale_04 00 00 00 00
 
 PAGE DTD Timings
 TABLE $DVO_Tbl_04 30 2A 00 98 51 00 30 40 30 70 13 00 00 00 00 00 00 1E
@@ -398,6 +332,36 @@ $Blue_y_04 88
 $White_x_04 88
 $White_y_04 88
 
+PAGE MIPI Display Settings
+$Video_Command_Mode_04 00
+$Packet_Sequence_Video_Mode_04 02
+$RequiredBurstModeRate_04 00 00 00 00
+$Colour_Format_Video_Mode_04 04
+$Dual_Link_04 00
+$Pixel_Overlap_Count_04 00
+$CABC_Support_04 00
+$CabcCmdsPort_04 00
+$PanelPwmCmdsPort_04 00
+$RgbFlip_04 00
+$Number_Of_Lanes_04 03
+$Bta_Disable_04 00
+$EscapeClk_04 00
+$EoTpSupport_04 00
+$ClockStop_04 00
+$TClkPrepare_04 32
+$TClkTrail_04 46
+$TClkPrepareTClkZero_04 36 01
+$THsPrepare_04 32
+$THsTrail_04 3C
+$THsPrepareTHsZero_04 C8 00
+$PowerUpDelay_04 F4 01
+$DataTurnOnToPanelBacklightEnableDelay_04 F4 01
+$Mipi_PwmOn_To_Bklt_Enable_Delay_04 00 00
+$Mipi_Bklt_Disable_To_PwmOff_Delay_04 00 00
+$BacklightOffToDataTurnOffDelay_04 F4 01
+$PowerDownDelay_04 F4 01
+$PowerCycleDelay_04 88 13
+
 PAGE Panel #05 
 STRING $Panel_Name_05 LFP_PanelName
 $Enable_Scaling_05 00
@@ -406,44 +370,6 @@ $Panel_Height_05 1A 04
 $DPS_Panel_Type_05 02
 $Seamless_DRRS_Min_RR_05 00
 $Blt_Control_05 02
-$eDP_Panel_Color_Depth_05 00
-$eDP_VswingPreEmph_5 01
-$Enable_SSC05 00
-
-PAGE eDP Panel Power Sequencing
-$eDP_T3_Optimization_05 01
-$eDP_Vcc_To_Hpd_Delay_05 D0 07
-$eDP_DataOn_To_BkltEnable_Delay_05 0A 00
-$eDP_PwmOn_To_Bklt_Enable_Delay_05 00 00
-$eDP_Bklt_Disable_To_PwmOff_Delay_05 00 00
-$eDP_BkltDisable_To_DataOff_Delay_05 D0 07
-$eDP_DataOff_To_PowerOff_Delay_05 F4 01
-$eDP_PowerCycle_Delay_05 88 13
-
-PAGE eDP Fast Link Training Configuration Parameters
-$eDP_Fast_Link_Training_Supported_05 00
-$eDP_Link_DataRate_05 00
-$eDP_Link_LaneCount_05 00
-$eDP_Link_PreEmp_05 00
-$eDP_Link_Vswing_05 00
-
-PAGE PSR feature
-$PSR_FullLink_Enable_05 00
-$PSR_Require_AUX2Wakeup_05 00
-$PSR_Lines2Wait_B4LinkS3_05 00
-$PSR_IdleFrames2Wait_05 00
-$PSR_TP1_WaitTime_05 02 00
-$PSR_TP_2_3_WaitTime_05 02 00
-
-PAGE Apical Feature
-$eDP_Apical_Display_Ip_Enable_05 00
-$eDP_Panel_Oui_05 00 00 00 00
-$eDP_Dpcd_Base_Address_05 00 00 00 00
-$eDP_Dpcd_Irdidix_Control0_05 00 00 00 00
-$eDP_Dpcd_Option_Select_05 00 00 00 00
-$eDP_Dpcd_Backlight_05 00 00 00 00
-$eDP_Ambient_Light_05 00 00 00 00
-$eDP_Backlight_Scale_05 00 00 00 00
 
 PAGE DTD Timings
 TABLE $DVO_Tbl_05 30 2A 78 20 51 1A 10 40 10 70 13 00 00 00 00 00 00 1E
@@ -474,6 +400,36 @@ $Blue_y_05 88
 $White_x_05 88
 $White_y_05 88
 
+PAGE MIPI Display Settings
+$Video_Command_Mode_05 00
+$Packet_Sequence_Video_Mode_05 02
+$RequiredBurstModeRate_05 00 00 00 00
+$Colour_Format_Video_Mode_05 04
+$Dual_Link_05 00
+$Pixel_Overlap_Count_05 00
+$CABC_Support_05 00
+$CabcCmdsPort_05 00
+$PanelPwmCmdsPort_05 00
+$RgbFlip_05 00
+$Number_Of_Lanes_05 03
+$Bta_Disable_05 00
+$EscapeClk_05 00
+$EoTpSupport_05 00
+$ClockStop_05 00
+$TClkPrepare_05 32
+$TClkTrail_05 46
+$TClkPrepareTClkZero_05 36 01
+$THsPrepare_05 32
+$THsTrail_05 3C
+$THsPrepareTHsZero_05 C8 00
+$PowerUpDelay_05 F4 01
+$DataTurnOnToPanelBacklightEnableDelay_05 F4 01
+$Mipi_PwmOn_To_Bklt_Enable_Delay_05 00 00
+$Mipi_Bklt_Disable_To_PwmOff_Delay_05 00 00
+$BacklightOffToDataTurnOffDelay_05 F4 01
+$PowerDownDelay_05 F4 01
+$PowerCycleDelay_05 88 13
+
 PAGE Panel #06 
 STRING $Panel_Name_06 LFP_PanelName
 $Enable_Scaling_06 00
@@ -482,44 +438,6 @@ $Panel_Height_06 1A 04
 $DPS_Panel_Type_06 02
 $Seamless_DRRS_Min_RR_06 00
 $Blt_Control_06 02
-$eDP_Panel_Color_Depth_06 00
-$eDP_VswingPreEmph_6 01
-$Enable_SSC06 00
-
-PAGE eDP Panel Power Sequencing
-$eDP_T3_Optimization_06 01
-$eDP_Vcc_To_Hpd_Delay_06 D0 07
-$eDP_DataOn_To_BkltEnable_Delay_06 0A 00
-$eDP_PwmOn_To_Bklt_Enable_Delay_06 00 00
-$eDP_Bklt_Disable_To_PwmOff_Delay_06 00 00
-$eDP_BkltDisable_To_DataOff_Delay_06 D0 07
-$eDP_DataOff_To_PowerOff_Delay_06 F4 01
-$eDP_PowerCycle_Delay_06 88 13
-
-PAGE eDP Fast Link Training Configuration Parameters
-$eDP_Fast_Link_Training_Supported_06 00
-$eDP_Link_DataRate_06 00
-$eDP_Link_LaneCount_06 00
-$eDP_Link_PreEmp_06 00
-$eDP_Link_Vswing_06 00
-
-PAGE PSR feature
-$PSR_FullLink_Enable_06 00
-$PSR_Require_AUX2Wakeup_06 00
-$PSR_Lines2Wait_B4LinkS3_06 00
-$PSR_IdleFrames2Wait_06 00
-$PSR_TP1_WaitTime_06 02 00
-$PSR_TP_2_3_WaitTime_06 02 00
-
-PAGE Apical Feature
-$eDP_Apical_Display_Ip_Enable_06 00
-$eDP_Panel_Oui_06 00 00 00 00
-$eDP_Dpcd_Base_Address_06 00 00 00 00
-$eDP_Dpcd_Irdidix_Control0_06 00 00 00 00
-$eDP_Dpcd_Option_Select_06 00 00 00 00
-$eDP_Dpcd_Backlight_06 00 00 00 00
-$eDP_Ambient_Light_06 00 00 00 00
-$eDP_Backlight_Scale_06 00 00 00 00
 
 PAGE DTD Timings
 TABLE $DVO_Tbl_06 A8 2F 78 E0 51 1A 26 40 58 98 13 00 00 00 00 00 00 1E
@@ -550,765 +468,35 @@ $Blue_y_06 88
 $White_x_06 88
 $White_y_06 88
 
-PAGE Panel #07 
-STRING $Panel_Name_07 LFP_PanelName
-$Enable_Scaling_07 00
-$Panel_Width_07 40 06
-$Panel_Height_07 B0 04
-$DPS_Panel_Type_07 02
-$Seamless_DRRS_Min_RR_07 00
-$Blt_Control_07 02
-$eDP_Panel_Color_Depth_07 00
-$eDP_VswingPreEmph_7 01
-$Enable_SSC07 00
-
-PAGE Panel Power Sequencing
-$eDP_T3_Optimization_07 01
-$eDP_Vcc_To_Hpd_Delay_07 D0 07
-$eDP_DataOn_To_BkltEnable_Delay_07 0A 00
-$eDP_PwmOn_To_Bklt_Enable_Delay_07 00 00
-$eDP_Bklt_Disable_To_PwmOff_Delay_07 00 00
-$eDP_BkltDisable_To_DataOff_Delay_07 D0 07
-$eDP_DataOff_To_PowerOff_Delay_07 F4 01
-$eDP_PowerCycle_Delay_07 88 13
-
-PAGE DTD Timings
-TABLE $DVO_Tbl_07 48 3F 40 30 62 B0 32 40 40 C0 13 00 00 00 00 00 00 1E
-
-PAGE LFP PnP ID
-TABLE $LVDS_PnP_ID_07 36 7F 06 00 07 00 00 00 00 0C
-
-PAGE Backlight Control Parameters
-$BLC_Inv_Type_07 02
-$Lfp_Pwm_Source_Selection_07 02
-$Lfp_Pwm_Controller_Selection_07 00
-$BLC_Inv_Polarity_07 00
-$BLC_Min_Brightness_07 00
-$POST_BL_Brightness_07 B4
-$PWM_Frequency_07 C8 00
-
-PAGE Chromaticity Control
-$Chromacity_Enable_07 00
-$Override_EDID_Data_07 00
-$Red_Green_07 88
-$Blue_White_07 88
-$Red_x_07 88
-$Red_y_07 88
-$Green_x_07 88
-$Green_y_07 88
-$Blue_x_07 88
-$Blue_y_07 88
-$White_x_07 88
-$White_y_07 88
-
-PAGE eDP Fast Link Training Configuration Parameters
-$eDP_Fast_Link_Training_Supported_07 00
-$eDP_Link_DataRate_07 00
-$eDP_Link_LaneCount_07 00
-$eDP_Link_PreEmp_07 00
-$eDP_Link_Vswing_07 00
-
-PAGE PSR feature
-$PSR_FullLink_Enable_07 00
-$PSR_Require_AUX2Wakeup_07 00
-$PSR_Lines2Wait_B4LinkS3_07 00
-$PSR_IdleFrames2Wait_07 00
-$PSR_TP1_WaitTime_07 02 00
-$PSR_TP_2_3_WaitTime_07 02 00
-
-PAGE Apical Feature
-$eDP_Apical_Display_Ip_Enable_07 00
-$eDP_Panel_Oui_07 00 00 00 00
-$eDP_Dpcd_Base_Address_07 00 00 00 00
-$eDP_Dpcd_Irdidix_Control0_07 00 00 00 00
-$eDP_Dpcd_Option_Select_07 00 00 00 00
-$eDP_Dpcd_Backlight_07 00 00 00 00
-$eDP_Ambient_Light_07 00 00 00 00
-$eDP_Backlight_Scale_07 00 00 00 00
-
-PAGE Panel #08 
-STRING $Panel_Name_08 LFP_PanelName
-$Enable_Scaling_08 00
-$Panel_Width_08 56 05
-$Panel_Height_08 00 03
-$DPS_Panel_Type_08 02
-$Seamless_DRRS_Min_RR_08 00
-$Blt_Control_08 02
-$eDP_Panel_Color_Depth_08 00
-$eDP_VswingPreEmph_8 01
-$Enable_SSC08 00
-
-PAGE Panel Power Sequencing
-$eDP_T3_Optimization_08 01
-$eDP_Vcc_To_Hpd_Delay_08 D0 07
-$eDP_DataOn_To_BkltEnable_Delay_08 0A 00
-$eDP_PwmOn_To_Bklt_Enable_Delay_08 00 00
-$eDP_Bklt_Disable_To_PwmOff_Delay_08 00 00
-$eDP_BkltDisable_To_DataOff_Delay_08 D0 07
-$eDP_DataOff_To_PowerOff_Delay_08 F4 01
-$eDP_PowerCycle_Delay_08 88 13
-
-PAGE DTD Timings
-TABLE $DVO_Tbl_08 66 21 56 AA 51 00 1E 30 46 90 14 00 00 00 00 00 00 18
-
-PAGE LFP PnP ID
-TABLE $LVDS_PnP_ID_08 36 7F 03 90 08 00 00 00 00 01
-
-PAGE Backlight Control Parameters
-$BLC_Inv_Type_08 02
-$Lfp_Pwm_Source_Selection_08 02
-$Lfp_Pwm_Controller_Selection_08 00
-$BLC_Inv_Polarity_08 00
-$BLC_Min_Brightness_08 00
-$POST_BL_Brightness_08 B4
-$PWM_Frequency_08 C8 00
-
-PAGE Chromaticity Control
-$Chromacity_Enable_08 00
-$Override_EDID_Data_08 00
-$Red_Green_08 88
-$Blue_White_08 88
-$Red_x_08 88
-$Red_y_08 88
-$Green_x_08 88
-$Green_y_08 88
-$Blue_x_08 88
-$Blue_y_08 88
-$White_x_08 88
-$White_y_08 88
-
-PAGE eDP Fast Link Training Configuration Parameters
-$eDP_Fast_Link_Training_Supported_08 00
-$eDP_Link_DataRate_08 00
-$eDP_Link_LaneCount_08 00
-$eDP_Link_PreEmp_08 00
-$eDP_Link_Vswing_08 00
-
-PAGE PSR feature
-$PSR_FullLink_Enable_08 00
-$PSR_Require_AUX2Wakeup_08 00
-$PSR_Lines2Wait_B4LinkS3_08 00
-$PSR_IdleFrames2Wait_08 00
-$PSR_TP1_WaitTime_08 02 00
-$PSR_TP_2_3_WaitTime_08 02 00
-
-PAGE Apical Feature
-$eDP_Apical_Display_Ip_Enable_08 00
-$eDP_Panel_Oui_08 00 00 00 00
-$eDP_Dpcd_Base_Address_08 00 00 00 00
-$eDP_Dpcd_Irdidix_Control0_08 00 00 00 00
-$eDP_Dpcd_Option_Select_08 00 00 00 00
-$eDP_Dpcd_Backlight_08 00 00 00 00
-$eDP_Ambient_Light_08 00 00 00 00
-$eDP_Backlight_Scale_08 00 00 00 00
-
-PAGE Panel #09 
-STRING $Panel_Name_09 LFP_PanelName
-$Enable_Scaling_09 00
-$Panel_Width_09 90 06
-$Panel_Height_09 1A 04
-$DPS_Panel_Type_09 02
-$Seamless_DRRS_Min_RR_09 00
-$Blt_Control_09 02
-$eDP_Panel_Color_Depth_09 00
-$eDP_VswingPreEmph_9 01
-$Enable_SSC09 00
-
-PAGE Panel Power Sequencing
-$eDP_T3_Optimization_09 01
-$eDP_Vcc_To_Hpd_Delay_09 D0 07
-$eDP_DataOn_To_BkltEnable_Delay_09 0A 00
-$eDP_PwmOn_To_Bklt_Enable_Delay_09 00 00
-$eDP_Bklt_Disable_To_PwmOff_Delay_09 00 00
-$eDP_BkltDisable_To_DataOff_Delay_09 D0 07
-$eDP_DataOff_To_PowerOff_Delay_09 F4 01
-$eDP_PowerCycle_Delay_09 88 13
-
-PAGE DTD Timings
-TABLE $DVO_Tbl_09 7C 2E 90 A0 60 1A 1E 40 30 20 36 00 00 00 00 00 00 1E
-
-PAGE LFP PnP ID
-TABLE $LVDS_PnP_ID_09 36 7F 04 90 09 00 00 00 00 0C
-
-PAGE Backlight Control Parameters
-$BLC_Inv_Type_09 02
-$Lfp_Pwm_Source_Selection_09 02
-$Lfp_Pwm_Controller_Selection_09 00
-$BLC_Inv_Polarity_09 00
-$BLC_Min_Brightness_09 00
-$POST_BL_Brightness_09 B4
-$PWM_Frequency_09 C8 00
-
-PAGE Chromaticity Control
-$Chromacity_Enable_09 00
-$Override_EDID_Data_09 00
-$Red_Green_09 88
-$Blue_White_09 88
-$Red_x_09 88
-$Red_y_09 88
-$Green_x_09 88
-$Green_y_09 88
-$Blue_x_09 88
-$Blue_y_09 88
-$White_x_09 88
-$White_y_09 88
-
-PAGE eDP Fast Link Training Configuration Parameters
-$eDP_Fast_Link_Training_Supported_09 00
-$eDP_Link_DataRate_09 00
-$eDP_Link_LaneCount_09 00
-$eDP_Link_PreEmp_09 00
-$eDP_Link_Vswing_09 00
-
-PAGE PSR feature
-$PSR_FullLink_Enable_09 00
-$PSR_Require_AUX2Wakeup_09 00
-$PSR_Lines2Wait_B4LinkS3_09 00
-$PSR_IdleFrames2Wait_09 00
-$PSR_TP1_WaitTime_09 02 00
-$PSR_TP_2_3_WaitTime_09 02 00
-
-PAGE Apical Feature
-$eDP_Apical_Display_Ip_Enable_09 00
-$eDP_Panel_Oui_09 00 00 00 00
-$eDP_Dpcd_Base_Address_09 00 00 00 00
-$eDP_Dpcd_Irdidix_Control0_09 00 00 00 00
-$eDP_Dpcd_Option_Select_09 00 00 00 00
-$eDP_Dpcd_Backlight_09 00 00 00 00
-$eDP_Ambient_Light_09 00 00 00 00
-$eDP_Backlight_Scale_09 00 00 00 00
-
-PAGE Panel #10 
-STRING $Panel_Name_10 LFP_PanelName
-$Enable_Scaling_10 00
-$Panel_Width_10 80 07
-$Panel_Height_10 B0 04
-$DPS_Panel_Type_10 02
-$Seamless_DRRS_Min_RR_10 00
-$Blt_Control_10 02
-$eDP_Panel_Color_Depth_10 00
-$eDP_VswingPreEmph_10 01
-$Enable_SSC10 00
-
-PAGE Panel Power Sequencing
-$eDP_T3_Optimization_10 01
-$eDP_Vcc_To_Hpd_Delay_10 D0 07
-$eDP_DataOn_To_BkltEnable_Delay_10 0A 00
-$eDP_PwmOn_To_Bklt_Enable_Delay_10 00 00
-$eDP_Bklt_Disable_To_PwmOff_Delay_10 00 00
-$eDP_BkltDisable_To_DataOff_Delay_10 D0 07
-$eDP_DataOff_To_PowerOff_Delay_10 F4 01
-$eDP_PowerCycle_Delay_10 88 13
-
-PAGE DTD Timings
-TABLE $DVO_Tbl_10 28 3C 80 A0 70 B0 23 40 30 20 2A 00 00 00 00 00 00 1E
-
-PAGE LFP PnP ID
-TABLE $LVDS_PnP_ID_10 36 7F 05 90 0A 00 00 00 00 0C
-
-PAGE Backlight Control Parameters
-$BLC_Inv_Type_10 02
-$Lfp_Pwm_Source_Selection_10 02
-$Lfp_Pwm_Controller_Selection_10 00
-$BLC_Inv_Polarity_10 00
-$BLC_Min_Brightness_10 00
-$POST_BL_Brightness_10 B4
-$PWM_Frequency_10 C8 00
-
-PAGE Chromaticity Control
-$Chromacity_Enable_10 00
-$Override_EDID_Data_10 00
-$Red_Green_10 88
-$Blue_White_10 88
-$Red_x_10 88
-$Red_y_10 88
-$Green_x_10 88
-$Green_y_10 88
-$Blue_x_10 88
-$Blue_y_10 88
-$White_x_10 88
-$White_y_10 88
-
-PAGE eDP Fast Link Training Configuration Parameters
-$eDP_Fast_Link_Training_Supported_10 00
-$eDP_Link_DataRate_10 00
-$eDP_Link_LaneCount_10 00
-$eDP_Link_PreEmp_10 00
-$eDP_Link_Vswing_10 00
-
-PAGE PSR feature
-$PSR_FullLink_Enable_10 00
-$PSR_Require_AUX2Wakeup_10 00
-$PSR_Lines2Wait_B4LinkS3_10 00
-$PSR_IdleFrames2Wait_10 00
-$PSR_TP1_WaitTime_10 02 00
-$PSR_TP_2_3_WaitTime_10 02 00
-
-PAGE Apical Feature
-$eDP_Apical_Display_Ip_Enable_10 00
-$eDP_Panel_Oui_10 00 00 00 00
-$eDP_Dpcd_Base_Address_10 00 00 00 00
-$eDP_Dpcd_Irdidix_Control0_10 00 00 00 00
-$eDP_Dpcd_Option_Select_10 00 00 00 00
-$eDP_Dpcd_Backlight_10 00 00 00 00
-$eDP_Ambient_Light_10 00 00 00 00
-$eDP_Backlight_Scale_10 00 00 00 00
-
-PAGE Panel #11 
-STRING $Panel_Name_11 LFP_PanelName
-$Enable_Scaling_11 00
-$Panel_Width_11 A0 05
-$Panel_Height_11 84 03
-$DPS_Panel_Type_11 02
-$Seamless_DRRS_Min_RR_11 00
-$Blt_Control_11 02
-$eDP_Panel_Color_Depth_11 00
-$eDP_VswingPreEmph_11 01
-$Enable_SSC11 00
-
-PAGE Panel Power Sequencing
-$eDP_T3_Optimization_11 01
-$eDP_Vcc_To_Hpd_Delay_11 D0 07
-$eDP_DataOn_To_BkltEnable_Delay_11 0A 00
-$eDP_PwmOn_To_Bklt_Enable_Delay_11 00 00
-$eDP_Bklt_Disable_To_PwmOff_Delay_11 00 00
-$eDP_BkltDisable_To_DataOff_Delay_11 D0 07
-$eDP_DataOff_To_PowerOff_Delay_11 F4 01
-$eDP_PowerCycle_Delay_11 88 13
-
-PAGE DTD Timings
-TABLE $DVO_Tbl_11 9A 29 A0 D0 51 84 22 30 50 99 17 00 00 00 00 00 00 1E
-
-PAGE LFP PnP ID
-TABLE $LVDS_PnP_ID_11 36 7F 03 00 0B 00 00 00 00 0C
-
-PAGE Backlight Control Parameters
-$BLC_Inv_Type_11 02
-$Lfp_Pwm_Source_Selection_11 02
-$Lfp_Pwm_Controller_Selection_11 00
-$BLC_Inv_Polarity_11 00
-$BLC_Min_Brightness_11 00
-$POST_BL_Brightness_11 B4
-$PWM_Frequency_11 C8 00
-
-PAGE Chromaticity Control
-$Chromacity_Enable_11 00
-$Override_EDID_Data_11 00
-$Red_Green_11 88
-$Blue_White_11 88
-$Red_x_11 88
-$Red_y_11 88
-$Green_x_11 88
-$Green_y_11 88
-$Blue_x_11 88
-$Blue_y_11 88
-$White_x_11 88
-$White_y_11 88
-
-PAGE eDP Fast Link Training Configuration Parameters
-$eDP_Fast_Link_Training_Supported_11 00
-$eDP_Link_DataRate_11 00
-$eDP_Link_LaneCount_11 00
-$eDP_Link_PreEmp_11 00
-$eDP_Link_Vswing_11 00
-
-PAGE PSR feature
-$PSR_FullLink_Enable_11 00
-$PSR_Require_AUX2Wakeup_11 00
-$PSR_Lines2Wait_B4LinkS3_11 00
-$PSR_IdleFrames2Wait_11 00
-$PSR_TP1_WaitTime_11 02 00
-$PSR_TP_2_3_WaitTime_11 02 00
-
-PAGE Apical Feature
-$eDP_Apical_Display_Ip_Enable_11 00
-$eDP_Panel_Oui_11 00 00 00 00
-$eDP_Dpcd_Base_Address_11 00 00 00 00
-$eDP_Dpcd_Irdidix_Control0_11 00 00 00 00
-$eDP_Dpcd_Option_Select_11 00 00 00 00
-$eDP_Dpcd_Backlight_11 00 00 00 00
-$eDP_Ambient_Light_11 00 00 00 00
-$eDP_Backlight_Scale_11 00 00 00 00
-
-PAGE Panel #12 
-STRING $Panel_Name_12 LFP_PanelName
-$Enable_Scaling_12 00
-$Panel_Width_12 40 06
-$Panel_Height_12 84 03
-$DPS_Panel_Type_12 02
-$Seamless_DRRS_Min_RR_12 00
-$Blt_Control_12 02
-$eDP_Panel_Color_Depth_12 00
-$eDP_VswingPreEmph_12 01
-$Enable_SSC12 00
-
-PAGE Panel Power Sequencing
-$eDP_T3_Optimization_12 01
-$eDP_Vcc_To_Hpd_Delay_12 D0 07
-$eDP_DataOn_To_BkltEnable_Delay_12 0A 00
-$eDP_PwmOn_To_Bklt_Enable_Delay_12 00 00
-$eDP_Bklt_Disable_To_PwmOff_Delay_12 00 00
-$eDP_BkltDisable_To_DataOff_Delay_12 D0 07
-$eDP_DataOff_To_PowerOff_Delay_12 F4 01
-$eDP_PowerCycle_Delay_12 88 13
-
-PAGE DTD Timings
-TABLE $DVO_Tbl_12 30 2A 40 C8 60 84 64 30 18 51 04 00 00 00 00 00 00 1E
-
-PAGE LFP PnP ID
-TABLE $LVDS_PnP_ID_12 36 7F 03 00 0C 00 00 00 00 0C
-
-PAGE Backlight Control Parameters
-$BLC_Inv_Type_12 02
-$Lfp_Pwm_Source_Selection_12 02
-$Lfp_Pwm_Controller_Selection_12 00
-$BLC_Inv_Polarity_12 00
-$BLC_Min_Brightness_12 00
-$POST_BL_Brightness_12 B4
-$PWM_Frequency_12 C8 00
-
-PAGE Chromaticity Control
-$Chromacity_Enable_12 00
-$Override_EDID_Data_12 00
-$Red_Green_12 88
-$Blue_White_12 88
-$Red_x_12 88
-$Red_y_12 88
-$Green_x_12 88
-$Green_y_12 88
-$Blue_x_12 88
-$Blue_y_12 88
-$White_x_12 88
-$White_y_12 88
-
-PAGE eDP Fast Link Training Configuration Parameters
-$eDP_Fast_Link_Training_Supported_12 00
-$eDP_Link_DataRate_12 00
-$eDP_Link_LaneCount_12 00
-$eDP_Link_PreEmp_12 00
-$eDP_Link_Vswing_12 00
-
-PAGE PSR feature
-$PSR_FullLink_Enable_12 00
-$PSR_Require_AUX2Wakeup_12 00
-$PSR_Lines2Wait_B4LinkS3_12 00
-$PSR_IdleFrames2Wait_12 00
-$PSR_TP1_WaitTime_12 02 00
-$PSR_TP_2_3_WaitTime_12 02 00
-
-PAGE Apical Feature
-$eDP_Apical_Display_Ip_Enable_12 00
-$eDP_Panel_Oui_12 00 00 00 00
-$eDP_Dpcd_Base_Address_12 00 00 00 00
-$eDP_Dpcd_Irdidix_Control0_12 00 00 00 00
-$eDP_Dpcd_Option_Select_12 00 00 00 00
-$eDP_Dpcd_Backlight_12 00 00 00 00
-$eDP_Ambient_Light_12 00 00 00 00
-$eDP_Backlight_Scale_12 00 00 00 00
-
-PAGE Panel #13 
-STRING $Panel_Name_13 LFP_PanelName
-$Enable_Scaling_13 00
-$Panel_Width_13 00 04
-$Panel_Height_13 00 03
-$DPS_Panel_Type_13 02
-$Seamless_DRRS_Min_RR_13 00
-$Blt_Control_13 02
-$eDP_Panel_Color_Depth_13 00
-$eDP_VswingPreEmph_13 01
-$Enable_SSC13 00
-
-PAGE Panel Power Sequencing
-$eDP_T3_Optimization_13 01
-$eDP_Vcc_To_Hpd_Delay_13 D0 07
-$eDP_DataOn_To_BkltEnable_Delay_13 0A 00
-$eDP_PwmOn_To_Bklt_Enable_Delay_13 00 00
-$eDP_Bklt_Disable_To_PwmOff_Delay_13 00 00
-$eDP_BkltDisable_To_DataOff_Delay_13 D0 07
-$eDP_DataOff_To_PowerOff_Delay_13 F4 01
-$eDP_PowerCycle_Delay_13 88 13
-
-PAGE DTD Timings
-TABLE $DVO_Tbl_13 64 19 00 40 41 00 26 30 18 88 36 00 00 00 00 00 00 1E
-
-PAGE LFP PnP ID
-TABLE $LVDS_PnP_ID_13 36 7F 03 00 0D 00 00 00 00 0C
-
-PAGE Backlight Control Parameters
-$BLC_Inv_Type_13 02
-$Lfp_Pwm_Source_Selection_13 02
-$Lfp_Pwm_Controller_Selection_13 00
-$BLC_Inv_Polarity_13 00
-$BLC_Min_Brightness_13 00
-$POST_BL_Brightness_13 B4
-$PWM_Frequency_13 C8 00
-
-PAGE Chromaticity Control
-$Chromacity_Enable_13 00
-$Override_EDID_Data_13 00
-$Red_Green_13 88
-$Blue_White_13 88
-$Red_x_13 88
-$Red_y_13 88
-$Green_x_13 88
-$Green_y_13 88
-$Blue_x_13 88
-$Blue_y_13 88
-$White_x_13 88
-$White_y_13 88
-
-PAGE eDP Fast Link Training Configuration Parameters
-$eDP_Fast_Link_Training_Supported_13 00
-$eDP_Link_DataRate_13 00
-$eDP_Link_LaneCount_13 00
-$eDP_Link_PreEmp_13 00
-$eDP_Link_Vswing_13 00
-
-PAGE PSR feature
-$PSR_FullLink_Enable_13 00
-$PSR_Require_AUX2Wakeup_13 00
-$PSR_Lines2Wait_B4LinkS3_13 00
-$PSR_IdleFrames2Wait_13 00
-$PSR_TP1_WaitTime_13 02 00
-$PSR_TP_2_3_WaitTime_13 02 00
-
-PAGE Apical Feature
-$eDP_Apical_Display_Ip_Enable_13 00
-$eDP_Panel_Oui_13 00 00 00 00
-$eDP_Dpcd_Base_Address_13 00 00 00 00
-$eDP_Dpcd_Irdidix_Control0_13 00 00 00 00
-$eDP_Dpcd_Option_Select_13 00 00 00 00
-$eDP_Dpcd_Backlight_13 00 00 00 00
-$eDP_Ambient_Light_13 00 00 00 00
-$eDP_Backlight_Scale_13 00 00 00 00
-
-PAGE Panel #14 
-STRING $Panel_Name_14 LFP_PanelName
-$Enable_Scaling_14 00
-$Panel_Width_14 00 05
-$Panel_Height_14 20 03
-$DPS_Panel_Type_14 02
-$Seamless_DRRS_Min_RR_14 00
-$Blt_Control_14 02
-$eDP_Panel_Color_Depth_14 00
-$eDP_VswingPreEmph_14 01
-$Enable_SSC14 00
-
-PAGE Panel Power Sequencing
-$eDP_T3_Optimization_14 01
-$eDP_Vcc_To_Hpd_Delay_14 D0 07
-$eDP_DataOn_To_BkltEnable_Delay_14 0A 00
-$eDP_PwmOn_To_Bklt_Enable_Delay_14 00 00
-$eDP_Bklt_Disable_To_PwmOff_Delay_14 00 00
-$eDP_BkltDisable_To_DataOff_Delay_14 D0 07
-$eDP_DataOff_To_PowerOff_Delay_14 F4 01
-$eDP_PowerCycle_Delay_14 88 13
-
-PAGE DTD Timings
-TABLE $DVO_Tbl_14 EA 1A 00 A0 50 20 17 30 0C 30 43 00 00 00 00 00 00 1E
-
-PAGE LFP PnP ID
-TABLE $LVDS_PnP_ID_14 36 7F 03 90 0E 00 00 00 00 0C
-
-PAGE Backlight Control Parameters
-$BLC_Inv_Type_14 02
-$Lfp_Pwm_Source_Selection_14 02
-$Lfp_Pwm_Controller_Selection_14 00
-$BLC_Inv_Polarity_14 00
-$BLC_Min_Brightness_14 00
-$POST_BL_Brightness_14 B4
-$PWM_Frequency_14 C8 00
-
-PAGE Chromaticity Control
-$Chromacity_Enable_14 00
-$Override_EDID_Data_14 00
-$Red_Green_14 88
-$Blue_White_14 88
-$Red_x_14 88
-$Red_y_14 88
-$Green_x_14 88
-$Green_y_14 88
-$Blue_x_14 88
-$Blue_y_14 88
-$White_x_14 88
-$White_y_14 88
-
-PAGE eDP Fast Link Training Configuration Parameters
-$eDP_Fast_Link_Training_Supported_14 00
-$eDP_Link_DataRate_14 00
-$eDP_Link_LaneCount_14 00
-$eDP_Link_PreEmp_14 00
-$eDP_Link_Vswing_14 00
-
-PAGE PSR feature
-$PSR_FullLink_Enable_14 00
-$PSR_Require_AUX2Wakeup_14 00
-$PSR_Lines2Wait_B4LinkS3_14 00
-$PSR_IdleFrames2Wait_14 00
-$PSR_TP1_WaitTime_14 02 00
-$PSR_TP_2_3_WaitTime_14 02 00
-
-PAGE Apical Feature
-$eDP_Apical_Display_Ip_Enable_14 00
-$eDP_Panel_Oui_14 00 00 00 00
-$eDP_Dpcd_Base_Address_14 00 00 00 00
-$eDP_Dpcd_Irdidix_Control0_14 00 00 00 00
-$eDP_Dpcd_Option_Select_14 00 00 00 00
-$eDP_Dpcd_Backlight_14 00 00 00 00
-$eDP_Ambient_Light_14 00 00 00 00
-$eDP_Backlight_Scale_14 00 00 00 00
-
-PAGE Panel #15 
-STRING $Panel_Name_15 LFP_PanelName
-$Enable_Scaling_15 00
-$Panel_Width_15 80 07
-$Panel_Height_15 38 04
-$DPS_Panel_Type_15 02
-$Seamless_DRRS_Min_RR_15 00
-$Blt_Control_15 02
-$eDP_Panel_Color_Depth_15 00
-$eDP_VswingPreEmph_15 01
-$Enable_SSC15 00
-
-PAGE Panel Power Sequencing
-$eDP_T3_Optimization_15 01
-$eDP_Vcc_To_Hpd_Delay_15 D0 07
-$eDP_DataOn_To_BkltEnable_Delay_15 0A 00
-$eDP_PwmOn_To_Bklt_Enable_Delay_15 00 00
-$eDP_Bklt_Disable_To_PwmOff_Delay_15 00 00
-$eDP_BkltDisable_To_DataOff_Delay_15 D0 07
-$eDP_DataOff_To_PowerOff_Delay_15 F4 01
-$eDP_PowerCycle_Delay_15 88 13
-
-PAGE DTD Timings
-TABLE $DVO_Tbl_15 02 3A 80 18 71 38 2D 40 58 2D 36 00 00 00 00 00 00 1E
-
-PAGE LFP PnP ID
-TABLE $LVDS_PnP_ID_15 36 7F 03 00 0F 00 00 00 00 0C
-
-PAGE Backlight Control Parameters
-$BLC_Inv_Type_15 02
-$Lfp_Pwm_Source_Selection_15 02
-$Lfp_Pwm_Controller_Selection_15 00
-$BLC_Inv_Polarity_15 00
-$BLC_Min_Brightness_15 00
-$POST_BL_Brightness_15 B4
-$PWM_Frequency_15 C8 00
-
-PAGE Chromaticity Control
-$Chromacity_Enable_15 00
-$Override_EDID_Data_15 00
-$Red_Green_15 88
-$Blue_White_15 88
-$Red_x_15 88
-$Red_y_15 88
-$Green_x_15 88
-$Green_y_15 88
-$Blue_x_15 88
-$Blue_y_15 88
-$White_x_15 88
-$White_y_15 88
-
-PAGE eDP Fast Link Training Configuration Parameters
-$eDP_Fast_Link_Training_Supported_15 00
-$eDP_Link_DataRate_15 00
-$eDP_Link_LaneCount_15 00
-$eDP_Link_PreEmp_15 00
-$eDP_Link_Vswing_15 00
-
-PAGE PSR feature
-$PSR_FullLink_Enable_15 00
-$PSR_Require_AUX2Wakeup_15 00
-$PSR_Lines2Wait_B4LinkS3_15 00
-$PSR_IdleFrames2Wait_15 00
-$PSR_TP1_WaitTime_15 02 00
-$PSR_TP_2_3_WaitTime_15 02 00
-
-PAGE Apical Feature
-$eDP_Apical_Display_Ip_Enable_15 00
-$eDP_Panel_Oui_15 00 00 00 00
-$eDP_Dpcd_Base_Address_15 00 00 00 00
-$eDP_Dpcd_Irdidix_Control0_15 00 00 00 00
-$eDP_Dpcd_Option_Select_15 00 00 00 00
-$eDP_Dpcd_Backlight_15 00 00 00 00
-$eDP_Ambient_Light_15 00 00 00 00
-$eDP_Backlight_Scale_15 00 00 00 00
-
-PAGE Panel #16 
-STRING $Panel_Name_16 LFP_PanelName
-$Enable_Scaling_16 00
-$Panel_Width_16 00 08
-$Panel_Height_16 00 06
-$DPS_Panel_Type_16 02
-$Seamless_DRRS_Min_RR_16 00
-$Blt_Control_16 02
-$eDP_Panel_Color_Depth_16 00
-$eDP_VswingPreEmph_16 01
-$Enable_SSC16 00
-
-PAGE Panel Power Sequencing
-$eDP_T3_Optimization_16 01
-$eDP_Vcc_To_Hpd_Delay_16 D0 07
-$eDP_DataOn_To_BkltEnable_Delay_16 0A 00
-$eDP_PwmOn_To_Bklt_Enable_Delay_16 00 00
-$eDP_Bklt_Disable_To_PwmOff_Delay_16 00 00
-$eDP_BkltDisable_To_DataOff_Delay_16 D0 07
-$eDP_DataOff_To_PowerOff_Delay_16 F4 01
-$eDP_PowerCycle_Delay_16 88 13
-
-PAGE DTD Timings
-TABLE $DVO_Tbl_16 29 40 00 60 80 00 13 60 10 10 11 00 00 00 00 00 00 1E
-
-PAGE LFP PnP ID
-TABLE $LVDS_PnP_ID_16 36 7F 03 00 10 00 00 00 00 0C
-
-PAGE Backlight Control Parameters
-$BLC_Inv_Type_16 02
-$Lfp_Pwm_Source_Selection_16 02
-$Lfp_Pwm_Controller_Selection_16 00
-$BLC_Inv_Polarity_16 00
-$BLC_Min_Brightness_16 00
-$POST_BL_Brightness_16 B4
-$PWM_Frequency_16 C8 00
-
-PAGE Chromaticity Control
-$Chromacity_Enable_16 00
-$Override_EDID_Data_16 00
-$Red_Green_16 88
-$Blue_White_16 88
-$Red_x_16 88
-$Red_y_16 88
-$Green_x_16 88
-$Green_y_16 88
-$Blue_x_16 88
-$Blue_y_16 88
-$White_x_16 88
-$White_y_16 88
-
-PAGE eDP Fast Link Training Configuration Parameters
-$eDP_Fast_Link_Training_Supported_16 00
-$eDP_Link_DataRate_16 00
-$eDP_Link_LaneCount_16 00
-$eDP_Link_PreEmp_16 00
-$eDP_Link_Vswing_16 00
-
-PAGE PSR feature
-$PSR_FullLink_Enable_16 00
-$PSR_Require_AUX2Wakeup_16 00
-$PSR_Lines2Wait_B4LinkS3_16 00
-$PSR_IdleFrames2Wait_16 00
-$PSR_TP1_WaitTime_16 02 00
-$PSR_TP_2_3_WaitTime_16 02 00
-
-PAGE Apical Feature
-$eDP_Apical_Display_Ip_Enable_16 00
-$eDP_Panel_Oui_16 00 00 00 00
-$eDP_Dpcd_Base_Address_16 00 00 00 00
-$eDP_Dpcd_Irdidix_Control0_16 00 00 00 00
-$eDP_Dpcd_Option_Select_16 00 00 00 00
-$eDP_Dpcd_Backlight_16 00 00 00 00
-$eDP_Ambient_Light_16 00 00 00 00
-$eDP_Backlight_Scale_16 00 00 00 00
+PAGE MIPI Display Settings
+$Video_Command_Mode_06 00
+$Packet_Sequence_Video_Mode_06 02
+$RequiredBurstModeRate_06 00 00 00 00
+$Colour_Format_Video_Mode_06 04
+$Dual_Link_06 00
+$Pixel_Overlap_Count_06 00
+$CABC_Support_06 00
+$CabcCmdsPort_06 00
+$PanelPwmCmdsPort_06 00
+$RgbFlip_06 00
+$Number_Of_Lanes_06 03
+$Bta_Disable_06 00
+$EscapeClk_06 00
+$EoTpSupport_06 00
+$ClockStop_06 00
+$TClkPrepare_06 32
+$TClkTrail_06 46
+$TClkPrepareTClkZero_06 36 01
+$THsPrepare_06 32
+$THsTrail_06 3C
+$THsPrepareTHsZero_06 C8 00
+$PowerUpDelay_06 F4 01
+$DataTurnOnToPanelBacklightEnableDelay_06 F4 01
+$Mipi_PwmOn_To_Bklt_Enable_Delay_06 00 00
+$Mipi_Bklt_Disable_To_PwmOff_Delay_06 00 00
+$BacklightOffToDataTurnOffDelay_06 F4 01
+$PowerDownDelay_06 F4 01
+$PowerCycleDelay_06 88 13
 
 PAGE Integrated DisplayPort/HDMI Configuration with External Connectors
 $DP_SSC_Enb 00
@@ -1320,7 +508,7 @@ $Int_EFP1_Port 01
 $HPD2_Inversion_Enable 01
 $Int_EFP1_DDC_Pin 01
 $Int_EFP1_AUX_Channel 00
-$Int_EFP1_HDMI_LS_Type 08
+$Int_EFP1_HDMI_LS_Type 07
 $LSPcon1_Options 00
 $EFP1_Lane_Reversal 00
 $EFP1_USB_C_DongleFeature_Enabled 00
@@ -1335,12 +523,12 @@ $Int_EFP1_Dock_Pre_emphasis 00
 $Int_EFP1_Dock_Voltage_swing 02
 
 PAGE Device 2 (EFP2)
-$Int_EFP2_Type D2 60
-$Int_EFP2_Port 02
-$HPD3_Inversion_Enable 01
-$Int_EFP2_DDC_Pin 02
+$Int_EFP2_Type D6 60
+$Int_EFP2_Port 00
+$HPD3_Inversion_Enable 00
+$Int_EFP2_DDC_Pin 00
 $Int_EFP2_AUX_Channel 00
-$Int_EFP2_HDMI_LS_Type 08
+$Int_EFP2_HDMI_LS_Type 00
 $LSPcon2_Options 00
 $EFP2_Lane_Reversal 00
 $EFP2_USB_C_DongleFeature_Enabled 00
@@ -1377,16 +565,16 @@ $Int_EFP3_Dock_Voltage_swing 00
 PAGE Display Device Toggle Lists (Mobile only)
 
 PAGE Display Toggle List 1
-TABLE $Toggle_List1 08 11 08 01 08 02 04 02 08 00 04 00 40 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+TABLE $Toggle_List1 08 00 04 00 40 00 20 00 0C 00 48 00 28 00 44 00 24 00 60 00 00 00 00 00 00 00 00 00 00 00 00 00
 
 PAGE Display Toggle List 2
-TABLE $Toggle_List2 01 00 21 00 41 00 48 00 08 00 04 00 0C 00 40 00
+TABLE $Toggle_List2 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
 
 PAGE Display Toggle List 3
-TABLE $Toggle_List3 01 00 48 00 44 00 60 00 24 00 28 00 20 00 40 00
+TABLE $Toggle_List3 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
 
 PAGE Display Toggle List 4
-TABLE $Toggle_List4 01 00 04 00 08 00 40 00 20 00 09 00 28 00 05 00
+TABLE $Toggle_List4 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
 
 PAGE Modes Removal Table
 TABLE $Mode_Rem_Table 00 00 00 00 00 00 00 00 FF FF 00 00 00 00 00 00 00 00 FF FF 00 00 00 00 00 00 00 00 FF FF 00 00 00 00 00 00 00 00 FF FF 00 00 00 00 00 00 00 00 FF FF 00 00 00 00 00 00 00 00 FF FF 00 00 00 00 00 00 00 00 FF FF 00 00 00 00 00 00 00 00 FF FF 00 00 00 00 00 00 00 00 FF FF 00 00 00 00 00 00 00 00 FF FF 00 00 00 00 00 00 00 00 FF FF 00 00 00 00 00 00 00 00 FF FF 00 00 00 00 00 00 00 00 FF FF 00 00 00 00 00 00 00 00 FF FF 00 00 00 00 00 00 00 00 FF FF 00 00 00 00 00 00 00 00 FF FF 00 00 00 00 00 00 00 00 FF FF 00 00 00 00 00 00 00 00 FF FF 00 00 00 00 00 00 00 00 FF FF 00 00 00 00 00 00 00 00 FF FF

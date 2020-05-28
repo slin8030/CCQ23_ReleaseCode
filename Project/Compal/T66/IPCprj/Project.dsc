@@ -1352,8 +1352,13 @@ ApolloLakeBoardPkg/Tools/Source/Shell/TriggerRecovery/TriggerRecovery.inf
 # Project add for config DXE setting.
 #
   $(PROJECT_PKG)/OemConfig/Dxe/OemConfigDxe.inf
-
-
+#PRJ+ >>>> Modify MIPI panel power sequency    
+  !disable $(PLATFORM_RC_PACKAGE)/NorthCluster/AcpiTables/SaAcpiTables.inf
+  $(PLATFORM_RC_PACKAGE)/NorthCluster/AcpiTables/SaAcpiTables.inf{
+    <SOURCE_OVERRIDE_PATH>
+     $(PROJECT_PKG)/Override/$(PLATFORM_RC_PACKAGE)/NorthCluster/AcpiTables/
+  }
+#PRJ+ >>>> Modify MIPI panel power sequency      
 [BuildOptions]
   DEFINE EDK_EDKII_DSC_FEATURE_BUILD_OPTIONS      = $(EDK_EDKII_DSC_FEATURE_BUILD_OPTIONS) $(CC_FLAGS)     
   DEFINE EDK_EDKII_DSC_FEATURE_BUILD_OPTIONS_GCC  = $(EDK_EDKII_DSC_FEATURE_BUILD_OPTIONS_GCC) $(CC_FLAGS)     
