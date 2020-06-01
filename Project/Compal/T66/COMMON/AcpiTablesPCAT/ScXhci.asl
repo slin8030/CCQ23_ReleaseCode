@@ -362,7 +362,10 @@ Device(XHC) {
               //95:64 - bit[66:64]=b'011 visiable/docking/no lid bit[69:67]=b'001 bottom panel bit[71:70]=b'01 Center  bit[73:72]=b'01 Center
               //           bit[77:74]=6 Horizontal Trapezoid bit[78]=0 bit[86:79]=0 bit[94:87]='0 no group info' bit[95]=0 not a bay
               //[71:64][79:72][87:80][95:88]
-              0x40, 0x08, 0x08, 0x00,
+//PRJ- >>>> Modify USB _UPC/_PLD  (USB3 Port Type A connectable/visiable)		              0x40, 0x08, 0x08, 0x00,
+//PRJ+ >>>> Modify USB _UPC/_PLD  (SD Card connectable/visiable)	
+              0x41, 0x08, 0x08, 0x00,
+//PRJ+ <<<< Modify USB _UPC/_PLD  (USB3 Port Type A connectable/visiable)		
               //127:96 -bit[96]=1 Ejectable bit[97]=1 OSPM Ejection required Bit[105:98]=0 no Cabinet Number
               //            bit[113:106]=0 no Card cage Number bit[114]=0 no reference shape Bit[118:115]=0 no rotation Bit[123:119]=0 no order
               0x00, 0x00, 0x00, 0x00,
@@ -373,7 +376,7 @@ Device(XHC) {
 
           Return (PLDP)
       }
-
+/*PRJ-  Remove not exist device.
       // Add Camera built in Device
       Device (FCAM)
       {
@@ -407,6 +410,7 @@ Device(XHC) {
           Return (PLDP)
         }
       }
+ */    
     }//end of HS08
 
     //
