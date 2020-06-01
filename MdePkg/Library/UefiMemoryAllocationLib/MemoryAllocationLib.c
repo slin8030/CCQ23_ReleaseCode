@@ -816,6 +816,6 @@ FreePool (
   EFI_STATUS    Status;
 
   Status = gBS->FreePool (Buffer);
-  ASSERT_EFI_ERROR (Status);
+//  ASSERT_EFI_ERROR (Status);
 }
 
