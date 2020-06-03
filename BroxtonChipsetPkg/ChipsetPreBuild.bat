@@ -569,7 +569,7 @@ set BIOSVERSTR=%%a
 )
 set "BIOSVERSTR=%BIOSVERSTR:~1%"
 echo #string STR_MISC_BIOS_VERSION         #language en-US  "%BIOSVERSTR%"                >> %WORKSPACE%\Build\%PROJECT_PKG%\ProjectInfo.txt
-echo DEFINE GEN_SMBIOS_TYPE00     = "INSYDE Corp.;%BIOSVERSTR%;%BuildDate%"               >> %WORKSPACE%\Build\%PROJECT_PKG%\Project.env
+echo DEFINE GEN_SMBIOS_TYPE00     = "FR1AA V;%BIOSVERSTR%;%BuildDate%"               >> %WORKSPACE%\Build\%PROJECT_PKG%\Project.env
 
 @FOR /f "tokens=2 delims=[=],#" %%a in ('find "STR_MISC_SYSTEM_PRODUCT_NAME" Project.env') DO (
 set PRODSTR=%%a

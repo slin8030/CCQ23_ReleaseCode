@@ -848,11 +848,11 @@
 #[-end-160504-IB07400722-modify]#
 
   gSmbiosTokenSpaceGuid.PcdType001Record |{0x01, 0x00, 0x00, 0x00, 0x01, 0x02, 0x03, 0x04, 0x78, 0x56, 0x34, 0x12, 0x34, 0x12, 0x78, 0x56, 0x90, 0xAB, 0xCD, 0xDE, 0xEF, 0xAA, 0xBB, 0xCC, 0x06, 0x05, 0x06}
-  gSmbiosTokenSpaceGuid.PcdType001Strings|"Insyde;ApolloLake;Type1 - TBD by OEM;Type1 - 123456789;Type1 - SKU0;Type1 - Family;"
+  gSmbiosTokenSpaceGuid.PcdType001Strings|"  ;  ;Type1 - TBD by OEM;Type1 - 123456789;Type1 - SKU0;Type1 - Family;"
 
   gSmbiosTokenSpaceGuid.PcdType002Record000 |{0x02, 0x00, 0x00, 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x09, 0x06, 0x00, 0x00, 0x0A, 0x00, 0x00, 0x00}
 #[PRJ]+ >>>> Modify for support  VirtualEEPROMVerifyTool and CMFCVerify  
-  gSmbiosTokenSpaceGuid.PcdType002Strings000|" ;FR1AA;V0.01;Type2 - Board Serial Number;Type2 - Board Asset Tag;Type2 - Board Chassis Location;"      #[PRJ]Modify for VirtualEEPROMVerifyTool and MCMFCVerify_V1.0.0.9
+  gSmbiosTokenSpaceGuid.PcdType002Strings000|"UNICOM GLOBAL, INC.;FR1AA;V0.01;Type2 - Board Serial Number;Type2 - Board Asset Tag;Type2 - Board Chassis Location;"      #[PRJ]Modify for VirtualEEPROMVerifyTool and MCMFCVerify_V1.0.0.9
 #[PRJ]+ <<<< Modify for support  VirtualEEPROMVerifyTool and CMFCVerify                                               
   gSmbiosTokenSpaceGuid.PcdType003Record000 |{0x03, 0x00, 0x00, 0x00, 0x01, 0x0A, 0x02, 0x03, 0x04, 0x03, 0x03, 0x03, 0x03, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x05}
   gSmbiosTokenSpaceGuid.PcdType003Strings000|"Chassis Manufacturer;Chassis Version;Chassis Serial Number;Chassis Asset Tag;SKU Number;"
