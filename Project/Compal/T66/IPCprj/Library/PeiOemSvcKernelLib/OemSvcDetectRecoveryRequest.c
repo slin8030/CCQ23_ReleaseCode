@@ -56,16 +56,16 @@ OemSvcDetectRecoveryRequest (
   Status = EFI_UNSUPPORTED;
   
 //[-start-160907-IB07400780-add]//
-//  if (!CheckCmosBatteryStatus()) { // CMOS data missing, disable recovery mode
-//    WriteExtCmos8(R_XCMOS_INDEX, R_XCMOS_DATA, CmosRecoveryOnFlagAddress, V_CMOS_FAST_RECOVERY_DISABLED);
-//  }
+  if (!CheckCmosBatteryStatus()) { // CMOS data missing, disable recovery mode
+    WriteExtCmos8(R_XCMOS_INDEX, R_XCMOS_DATA, CmosRecoveryOnFlagAddress, V_CMOS_FAST_RECOVERY_DISABLED);
+  }
 //[-end-160907-IB07400780-add]//
 //[-start-151216-IB07220025-add]//
 //[-start-160905-IB07400778-modify]//
   if ((ReadExtCmos8(R_RTC_EXT_INDEX, R_RTC_EXT_TARGET, CmosRecoveryOnFlagAddress)) == V_CMOS_FAST_RECOVERY_ENABLED) {
 //[-end-160905-IB07400778-modify]//
-    *IsRecovery = FALSE;
-    Status = EFI_UNSUPPORTED;
+    *IsRecovery = TRUE;
+    Status = EFI_MEDIA_CHANGED;       
   }
 
 //[-end-151216-IB07220025-add]//
@@ -79,8 +79,8 @@ OemSvcDetectRecoveryRequest (
   CommAndOffset = (((UINT32)mProject_GpioCrisisDetectPin[0].Community)<<16)+mProject_GpioCrisisDetectPin[0].MMIO_ADDRESS;
   pad_conf0.padCnf0 = GpioPadRead(CommAndOffset + BXT_GPIO_PAD_CONF0_OFFSET);
   if (pad_conf0.r.GPIORxState == LO) {
-    *IsRecovery = FALSE;
-    Status = EFI_UNSUPPORTED;
+    *IsRecovery = TRUE;
+    Status = EFI_MEDIA_CHANGED;   
   }
 
   return Status;
