@@ -1,6 +1,24 @@
 Filename : K20HRELS.txt
 
 **************************************************************************
+FR1AA ENE KB9022 EC-FW release (Rev. 0.05A)                   06-20-2020
+File name : K20H0005A.ROM
+Base on  : K20H0004A.ROM
+Checksum  : 0x028E
+Notification:
+	1.> Need flash EC's boot block? --> No
+Fixed:
+ 
+Known issue:
+
+Modified:
+1. Disable USB power in S4/S5
+
+Add function:
+
+Project ID List:
+	20:FR1AA
+**************************************************************************
 FR1AA ENE KB9022 EC-FW release (Rev. 0.04A)                   05-25-2020
 File name : K20H0004A.ROM
 Base on  : K20H0003A.ROM
