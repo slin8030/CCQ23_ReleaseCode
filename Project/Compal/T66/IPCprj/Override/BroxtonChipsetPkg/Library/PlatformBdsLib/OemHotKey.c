@@ -81,7 +81,9 @@ OemHotKeyCallback (
     CallBootManager ();
 //[-start-190822-IB16530054-add]//
 //  if (FeaturePcdGet(PcdFrontPageSupported)) {
-      PlatformBdsEnterFrontPage (0xffff, TRUE);
+//PRJ+>>>>no need insyde GUI console mode
+//      PlatformBdsEnterFrontPage (0xffff, TRUE);
+//PRJ+<<<<no need insyde GUI console mode
 //  } else {
 //    BdsLibStartSetupUtility (FALSE);
 //  }
