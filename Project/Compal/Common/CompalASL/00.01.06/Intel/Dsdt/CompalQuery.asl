@@ -233,6 +233,20 @@ External(\_SB.IAOE.SAOS, MethodObj)
   }
 #endif
 //================================================================
+// Query 33 - 5 second power button press.
+//================================================================
+  Method(_Q33)    
+  {
+     Notify(\_SB.GPO0.HIDD,0xCE) // Notify HID driver that Power button is pressed.
+  }
+//================================================================
+// Query 34 - 5 second power button release.
+//================================================================
+  Method(_Q34) 
+  {
+      Notify(\_SB.GPO0.HIDD,0xCF) // Notify HID driver that Power button is released.
+  }
+//================================================================
 // Query 37/38 - AC in/out event
 //================================================================
 #ifndef PROJECT_Q37_OVERRIDE
