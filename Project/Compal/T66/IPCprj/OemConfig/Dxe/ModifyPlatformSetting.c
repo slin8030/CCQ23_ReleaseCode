@@ -212,6 +212,14 @@ ConfigEC_NameSpace (
   EC_Name_F4A4.Bits.USB_Wake = 0;
   EC_Name_F4A4.Bits.LAN_Wake = 0;
   EC_Name_F4A4.Bits.WLAN_Wake = 0;
+//[S4S5RTCWake]LouisYT[-start-200701-001-add]//
+  EC_Name_F4A4.Bits.RTC_Wake = 0;
+  
+  if (mSystemConfiguration->WakeOnS5) {
+    EC_Name_F4A4.Bits.RTC_Wake = 1;
+  }
+//[S4S5RTCWake]LouisYT[-end-200701-001-add]//
+  
   if (mSystemConfiguration->WakeOnPME) {
     EC_Name_F4A4.Bits.LAN_Wake = 1;
     EC_Name_F4A4.Bits.WLAN_Wake = 1;

@@ -20,7 +20,10 @@
 
 typedef struct ECNAME_F4A4_BITS_STRU_{
   UINT8  LAN_Wake         :1;   // 0=Disable, 1=Enable
-  UINT8  Reserve1         :3;
+//[S4S5RTCWake]Louis[-start-200701-001-modify]//
+  UINT8  Reserve1         :2;
+  UINT8  RTC_Wake         :1;   // 0=Disable, 1=Enable
+//[S4S5RTCWake]Louis[-end-200701-001-modify]//
   UINT8  WLAN_Wake        :1;   // 0=Disable, 1=Enable
   UINT8  USB_Wake         :1;   // 0=Disable, 1=Enable
   UINT8  Reserve2         :2;
