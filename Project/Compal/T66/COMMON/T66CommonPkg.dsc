@@ -37,15 +37,18 @@
     $(T66_COMMON_PATH)/Override/$(CHIPSET_PKG)/Library/PeiOemSvcChipsetLib/
   }
 
-[LibraryClasses.common.PEI_CORE]
-
 [LibraryClasses.common.DXE_CORE]
+  DxeProjectSvcLib|$(T66_COMMON_PATH)/Library/DxeProjectSvcLib/DxeProjectSvcLib.inf
 
 [LibraryClasses.common.DXE_SMM_DRIVER]
+  DxeProjectSvcLib|$(T66_COMMON_PATH)/Library/DxeProjectSvcLib/DxeProjectSvcLib.inf
 
 [LibraryClasses.common.COMBINED_SMM_DXE]
+  DxeProjectSvcLib|$(T66_COMMON_PATH)/Library/DxeProjectSvcLib/DxeProjectSvcLib.inf
 
 [LibraryClasses.common.DXE_RUNTIME_DRIVER]
+  DxeProjectSvcLib|$(T66_COMMON_PATH)/Library/DxeProjectSvcLib/DxeProjectSvcLib.inf
+
 
   !disable DxeOemSvcChipsetLib|$(CHIPSET_PKG)/Library/DxeOemSvcChipsetLib/DxeOemSvcChipsetLib.inf
   DxeOemSvcChipsetLib|$(CHIPSET_PKG)/Library/DxeOemSvcChipsetLib/DxeOemSvcChipsetLib.inf {
@@ -60,6 +63,9 @@
   }
 #[PRJ]+ <<<< Modify PlatformGopPolicy GetPlatformLidStatus function (No Lid on HW design, alway return on).  
 [LibraryClasses.common.DXE_DRIVER]
+  DxeProjectSvcLib|$(T66_COMMON_PATH)/Library/DxeProjectSvcLib/DxeProjectSvcLib.inf
+
+
 #[PRJ]+ >>>> Modify PlatformGopPolicy GetPlatformLidStatus function (No Lid on HW design, alway return on).
   !disable DxeOemSvcChipsetLib|$(CHIPSET_PKG)/Library/DxeOemSvcChipsetLib/DxeOemSvcChipsetLib.inf
   DxeOemSvcChipsetLib|$(CHIPSET_PKG)/Library/DxeOemSvcChipsetLib/DxeOemSvcChipsetLib.inf {
@@ -74,6 +80,9 @@
   }
 #[PRJ]+ <<<< Modify PlatformGopPolicy GetPlatformLidStatus function (No Lid on HW design, alway return on).  
 [LibraryClasses.common.UEFI_DRIVER]
+  DxeProjectSvcLib|$(T66_COMMON_PATH)/Library/DxeProjectSvcLib/DxeProjectSvcLib.inf
+
+
 #[PRJ]+ >>>> Modify PlatformGopPolicy GetPlatformLidStatus function (No Lid on HW design, alway return on).
   !disable DxeOemSvcChipsetLib|$(CHIPSET_PKG)/Library/DxeOemSvcChipsetLib/DxeOemSvcChipsetLib.inf
   DxeOemSvcChipsetLib|$(CHIPSET_PKG)/Library/DxeOemSvcChipsetLib/DxeOemSvcChipsetLib.inf {
@@ -88,6 +97,7 @@
   }
 #[PRJ]+ <<<< Modify PlatformGopPolicy GetPlatformLidStatus function (No Lid on HW design, alway return on).  
 [LibraryClasses.common.UEFI_APPLICATION]
+  DxeProjectSvcLib|$(T66_COMMON_PATH)/Library/DxeProjectSvcLib/DxeProjectSvcLib.inf
 
 ################################################################################
 #
@@ -137,4 +147,11 @@
 
 #[PRJ]+ >>>> Add T66 common code:T66ConfigDxe to update Smbios from CompalEEprom.
   $(T66_COMMON_PATH)/T66Common/T66Config/Dxe/T66ConfigDxe.inf
-#[PRJ]+ <<<< Add T66 common code:T66ConfigDxe to update Smbios from CompalEEprom.  
+#[PRJ]+ <<<< Add T66 common code:T66ConfigDxe to update Smbios from CompalEEprom. 
+
+ 
+#[PRJ]+ >>>> Add T66 common utility
+  $(T66_COMMON_PATH)/Tool/SideBand/SideBand.inf
+  $(T66_COMMON_PATH)/Tool/BiosSet/BiosSet.inf
+  
+#[PRJ]+ <<<< Add T66 common utility

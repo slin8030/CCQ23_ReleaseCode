@@ -1,0 +1,45 @@
+## @file
+#  Component description file for DxeProjectSvclLib instance.
+#
+#******************************************************************************
+#* Copyright (c) 2016, Compal Electronics, Inc.
+#*
+#* You may not reproduce, distribute, publish, display, perform, modify, adapt,
+#* transmit, broadcast, present, recite, release, license or otherwise exploit
+#* any part of this publication in any form, by any means, without the prior
+#* written permission of Insyde Software Corporation.
+#*
+#******************************************************************************
+[Defines]
+  INF_VERSION                    = 0x00010005
+  BASE_NAME                      = DxeProjectSvcLib
+  FILE_GUID                      = 17907AC5-B769-4785-BF3A-3F6FA5EA473B
+  MODULE_TYPE                    = UEFI_DRIVER
+  VERSION_STRING                 = 1.0
+  LIBRARY_CLASS                  = DxeProjectSvcLib|DXE_CORE DXE_DRIVER DXE_RUNTIME_DRIVER DXE_SAL_DRIVER DXE_SMM_DRIVER UEFI_APPLICATION UEFI_DRIVER SMM_CORE
+
+[Sources]
+  GetBiosSettingData.c
+
+[Packages]
+  MdePkg/MdePkg.dec
+  MdeModulePkg/MdeModulePkg.dec
+  InsydeModulePkg/InsydeModulePkg.dec
+  $(CHIPSET_PKG)/$(CHIPSET_PKG).dec
+  $(PLATFORM_RC_PACKAGE)/$(PLATFORM_RC_PACKAGE).dec
+  $(PROJECT_PKG)/Project.dec
+
+[LibraryClasses]
+  MemoryAllocationLib
+  UefiRuntimeServicesTableLib
+
+[Guids]
+
+[Ppis]
+
+[Pcd]
+
+[FixedPcd]
+
+[FeaturePcd]
+
