@@ -1,0 +1,101 @@
+[abstract]
+class CompalAcpiBase
+{
+};
+
+[Dynamic, Provider("WMIProv"),
+ WMI,
+ Description("Counter for number of times the case has been hit"),
+ GUID("{94AC939D-C89E-4CBB-A1B3-FE0B1569AC97}"),
+ locale("MS\\0x409")]
+class EasiBIOS : CompalAcpiBase
+{
+    [key, read]
+     string InstanceName;
+    [read] Boolean Active;
+
+    [Implemented,
+     Description("Reload BIOS Default Value"),
+     WmiMethodId(1)]
+    void ReloadBIOSDefaultValue ([out] uint32 Result);
+
+    [Implemented,
+     Description("Set Pxe Boot First"),
+     WmiMethodId(2)]
+    void SetPxeBootFirst([out] uint32 Result);
+};
+
+[Dynamic, Provider("WMIProv"),
+ WMI,
+ Description("Counter for number of times the case has been hit"),
+ GUID("{E4648D4A-5C35-49EA-9C15-06F334926E16}"),
+ locale("MS\\0x409")]
+class EasiGpio : CompalAcpiBase
+{
+    [key, read]
+     string InstanceName;
+    [read] Boolean Active;
+
+    [Implemented,
+     Description("DIO GetSupport"),
+     WmiMethodId(1)]
+    void GetSupport([out] uint32 Result);
+
+    [Implemented,
+     Description("DIO GetAmount"),
+     WmiMethodId(2)]
+    void GetAmount([out] uint32 Result);
+
+    [Implemented,
+     Description("DIO GetSettings"),
+     WmiMethodId(3)]
+    void GetSettings([out] uint32 Result);
+
+    [Implemented,
+     Description("DIO SetDirection"),
+     WmiMethodId(4)]
+    void SetDirection([in] uint32 uStatus,[out] uint32 Result);
+
+    [Implemented,
+     Description("DIO SetDirectionmany"),
+     WmiMethodId(5)]
+    void SetDirectionmany([in] uint32 uStatus,[out] uint32 Result);
+
+    [Implemented,
+     Description("DIO GetValue"),
+     WmiMethodId(6)]
+    void GetValue([in] uint32 uStatus,[out] uint32 Result);
+
+    [Implemented,
+     Description("DIO GetValuemany"),
+     WmiMethodId(7)]
+    void GetValuemany([in] uint32 uStatus,[out] uint32 Result);
+
+    [Implemented,
+     Description("DIO SetValue"),
+     WmiMethodId(8)]
+    void SetValue([in] uint32 uStatus,[out] uint32 Result);
+
+    [Implemented,
+     Description("DIO SetValuemany"),
+     WmiMethodId(9)]
+    void SetValuemany([in] uint32 uStatus,[out] uint32 Result);
+};
+
+ [Dynamic, Provider("WMIProv"),
+ WMI,
+ Description("Counter for number of times the case has been hit"),
+ GUID("{39806AF8-77DC-48B7-B2D6-E530700A2480}"),
+ locale("MS\\0x409")]
+class EasiCPU : CompalAcpiBase
+{
+    [key, read]
+     string InstanceName;
+    [read] Boolean Active;
+
+    [Implemented,
+     Description("Get DTS"),
+     WmiMethodId(1)]
+    void GetCPUDTS([out] uint32 Result);
+
+};

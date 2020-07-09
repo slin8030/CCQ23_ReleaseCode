@@ -1,5 +1,9 @@
 [FV.IBBFV]
 
 [FV.DXEFV]
+!if $(T66_WMI_SUPPORT) == YES
+  INF RuleOverride = ACPITABLE $(T66_COMMON_PATH)/Asl/T66WMI/T66WMISsdt.inf
+  INF $(T66_COMMON_PATH)/T66Common/Dxe/WMI/T66WMIInit.inf
+!endif
   INF $(T66_COMMON_PATH)/T66Common/T66Config/Dxe/T66ConfigDxe.inf
 

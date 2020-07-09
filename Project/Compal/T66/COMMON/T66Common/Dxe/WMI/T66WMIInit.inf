@@ -1,0 +1,37 @@
+[Defines]
+  INF_VERSION                    = 0x00010005
+  BASE_NAME                      = T66WMIDXE
+  FILE_GUID                      = 0A7C8C57-A715-43FC-AA9A-BDCED85B164F
+  MODULE_TYPE                    = DXE_DRIVER
+  VERSION_STRING                 = 1.0
+  ENTRY_POINT                    = T66WmiEntryPoint
+
+[Sources]
+  T66WMIInit.c
+
+[Packages]
+  MdePkg/MdePkg.dec
+  MdeModulePkg/MdeModulePkg.dec
+  $(T66_COMMON_PATH)/T66CommonPkg.dec
+
+[LibraryClasses]
+  UefiDriverEntryPoint
+  DebugLib
+  PcdLib
+  UefiBootServicesTableLib
+  DxeServicesTableLib
+
+[Guids]
+  gT66WMISsdtAcpiTableStorageGuid
+
+[Protocols]
+  gEfiAcpiTableProtocolGuid
+  gEfiFirmwareVolume2ProtocolGuid
+
+
+[Depex]
+  gEfiAcpiTableProtocolGuid              AND
+  gEfiFirmwareVolume2ProtocolGuid
+
+[Pcd]
+

@@ -16,6 +16,42 @@
 # Library Class section - list of all Library Classes needed by this Platform.
 #
 ################################################################################
+[BuildOptions]
+  !if $(WMI_WMAB_SUPPORT) == YES
+    DEFINE WMI_WMAB_SUPPORT_OPTION    = /D WMI_WMAB_SUPPORT=1
+  !else
+    DEFINE WMI_WMAB_SUPPORT_OPTION    =
+  !endif
+
+  !if $(WMI_WMAC_SUPPORT) == YES
+    DEFINE WMI_WMAC_SUPPORT_OPTION    = /D WMI_WMAC_SUPPORT=1
+    DEFINE WMI_WMAC_SUPPORT_DIOP_PATH = /D DIOP_ASL=$(WMAC_DIO_PATH)
+  !else
+    DEFINE WMI_WMAC_SUPPORT_OPTION    =
+    DEFINE WMI_WMAC_SUPPORT_DIOP_PATH =
+  !endif
+
+  !if $(WMI_WMAD_SUPPORT) == YES
+    DEFINE WMI_WMAD_SUPPORT_OPTION    = /D WMI_WMAD_SUPPORT=1
+  !else
+    DEFINE WMI_WMAD_SUPPORT_OPTION    =
+  !endif
+
+  !if $(DEBUG_GPIO_SUPPORT) == YES
+    DEFINE T66_DEBUG_GPIO_OPTION    = /D T66_DEBUG_GPIO=1
+  !else
+    DEFINE T66_DEBUG_GPIO_OPTION    = /D T66_DEBUG_GPIO=0
+  !endif
+
+  DEFINE EDK_EDKII_DSC_T66_BUILD_OPTIONS= $(WMI_WMAB_SUPPORT_OPTION) \
+                                          $(WMI_WMAC_SUPPORT_OPTION) \
+                                          $(WMI_WMAD_SUPPORT_OPTION) \
+                                          $(WMI_WMAC_SUPPORT_DIOP_PATH)
+
+  *_*_X64_ASLPP_FLAGS = $(EDK_EDKII_DSC_T66_BUILD_OPTIONS)
+  *_*_X64_ASLCC_FLAGS = $(EDK_EDKII_DSC_T66_BUILD_OPTIONS)
+  *_*_*_CC_FLAGS = $(T66_DEBUG_GPIO_OPTION)
+
 [LibraryClasses]
   EcSpiLib|$(T66_COMMON_PATH)/Library/EcLib/$(EC_CHIPSET_VENDOR)/EcSpiLib/EcSpiLib.inf
 
@@ -144,6 +180,8 @@
       $(T66_COMMON_PATH)/Override/$(CHIPSET_PKG)/AcpiPlatform/
    }
 #[PRJ]+ <<<< Modify for support  VirtualEEPROMVerifyTool and CMFCVerify 
+  $(T66_COMMON_PATH)/Asl/T66WMI/T66WMISsdt.inf
+  $(T66_COMMON_PATH)/T66Common/Dxe/WMI/T66WMIInit.inf
 
 #[PRJ]+ >>>> Add T66 common code:T66ConfigDxe to update Smbios from CompalEEprom.
   $(T66_COMMON_PATH)/T66Common/T66Config/Dxe/T66ConfigDxe.inf
