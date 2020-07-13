@@ -23,7 +23,7 @@ DefinitionBlock (
   )
 {
   #define ASL_LPC_PATH \_SB.PCI0.LPCB
-  #define ASL_CONFIG_PORT 0x2E
+  #define ASL_CONFIG_PORT 0x4E
 
   External (ASL_LPC_PATH, DeviceObj)
   External(KBWK)
@@ -34,14 +34,16 @@ DefinitionBlock (
     Device (SIOx) {
       Name (_HID, EISAID("PNP0A05"))
       Name (_UID, "SModule")
-      Name (SIDP, ASL_CONFIG_PORT)
+//FR1AA use RW dump, "SIDP" will change to 0x4E always
+//    Name (SIDP, 0x2E)
+      Name (SIDA, ASL_CONFIG_PORT)
       Method (_STA, 0, Serialized) {
         Return (0x000F)  // Enabled, do Display.
       }
       OperationRegion (
         OFST,       // name of Operation Region for SuperIO device
         SystemIO,   // type of address space
-        SIDP,       // base address for Configuration Mode
+        SIDA,       // base address for Configuration Mode
         2)          // size of region in bytes
 
       //  This Field definition defines the Index and Data port registers

@@ -51,10 +51,10 @@
 !import SegFeaturePkg/Package.dsc
 #[-end-180822-IB07400999-add]#
 #[-start-160812-IB07400770-add]#
-!import SioWpcd374lPkg/Package.dsc
+#import SioWpcd374lPkg/Package.dsc
 #[-end-160812-IB07400770-add]#
 #[-start-170427-IB07400864-add]#
-!import SioNpce285Pkg/Package.dsc
+#import SioNpce285Pkg/Package.dsc
 #[-end-170427-IB07400864-add]#
 
 #[-start-170111-IB07400832-add]#
