@@ -185,11 +185,14 @@
 
 #[PRJ]+ >>>> Add T66 common code:T66ConfigDxe to update Smbios from CompalEEprom.
   $(T66_COMMON_PATH)/T66Common/T66Config/Dxe/T66ConfigDxe.inf
+  $(T66_COMMON_PATH)/T66Common/T66Config/Smm/T66ConfigSmm.inf
 #[PRJ]+ <<<< Add T66 common code:T66ConfigDxe to update Smbios from CompalEEprom. 
 
  
 #[PRJ]+ >>>> Add T66 common utility
   $(T66_COMMON_PATH)/Tool/SideBand/SideBand.inf
   $(T66_COMMON_PATH)/Tool/BiosSet/BiosSet.inf
+# Do ME Unlock for ME update
+   $(T66_COMMON_PATH)/Tool/MeUnlock/MeUnlock.inf
   
 #[PRJ]+ <<<< Add T66 common utility

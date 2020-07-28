@@ -1,0 +1,58 @@
+## @file
+#  Component description file for T66 Config Smm module
+#
+#******************************************************************************
+#* Copyright (c) 2018, Insyde Software Corp. All Rights Reserved.
+#*
+#* You may not reproduce, distribute, publish, display, perform, modify, adapt,
+#* transmit, broadcast, present, recite, release, license or otherwise exploit
+#* any part of this publication in any form, by any means, without the prior
+#* written permission of Insyde Software Corporation.
+#*
+#******************************************************************************
+
+[Defines]
+  INF_VERSION                    = 0x00010005
+  BASE_NAME                      = T66ConfigSmm
+  FILE_GUID                      = E3CEE4F4-C200-4F80-AD56-917B2EFAFDCF
+  MODULE_TYPE                    = DXE_SMM_DRIVER
+  PI_SPECIFICATION_VERSION       = 0x0001000A
+  VERSION_STRING                 = 1.0
+  ENTRY_POINT                    = T66ConfigSmmEntry
+
+#
+# The following information is for reference only and not required by the build tools.
+#
+#  VALID_ARCHITECTURES           = IA32 X64
+#
+
+[Sources]
+  T66ConfigSmm.c
+
+[Packages]
+  MdePkg/MdePkg.dec
+  MdeModulePkg/MdeModulePkg.dec
+  $(COMPAL_COMMON_PATH)/CompalCommon.dec
+
+[LibraryClasses]
+  UefiDriverEntryPoint
+  SmmServicesTableLib
+  UefiBootServicesTableLib
+  DebugLib
+  BaseMemoryLib
+  CompalEcLib
+  
+[Protocols]
+  gEfiSmmSwDispatch2ProtocolGuid
+
+[Guids]
+
+[Pcd]
+
+[FeaturePcd]
+
+[Depex]
+  gEfiSmmBase2ProtocolGuid AND
+  gEfiSmmAccess2ProtocolGuid AND
+  gEfiSmmSwDispatch2ProtocolGuid AND
+  gEfiSmmVariableProtocolGuid
