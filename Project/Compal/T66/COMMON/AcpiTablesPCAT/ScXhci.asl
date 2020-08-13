@@ -43,8 +43,21 @@ Device(XHC) {
   {
     Return(0x3)
   }
-  Name (_PRW, Package() {0x0D, 4})  // Declare XHCI GPE status and enable bits are bit 13.
-
+//[Fixed unit can wake from S4/S3 by USB devices]Louis[-start-200813-Louis001-modify]//
+//  Name (_PRW, Package() {0x0D, 4})  // Declare XHCI GPE status and enable bits are bit 13.
+  Method(_PRW, 0)
+  {
+                            // ECRAM offset F4A4
+        If(LEqual(COMMON_ASL_EC_PATH.UWAK,1))  // USB WAKE(0=Disable, 1=Enable)        ; A4h.5
+        {
+          Return(Package() {0x0D, 3})
+        }
+        Else
+        {
+          Return(Package() {0x0D, 0}) 
+        }
+  }
+//[Fixed unit can wake from S4/S3 by USB devices]Louis[-end-200813-Louis001-modify]//
 
   Method (_RMV, 0, NotSerialized)  // _RMV: Removal Status
   {
