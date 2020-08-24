@@ -67,7 +67,15 @@ typedef struct {
 //----------------------------------------------------------------------------------------------------------
 //OEM_Start
 //Offset(530);
-  UINT8         OEMRSV[70];                        // Reserve for OEM team
+//[PRJ]+ >>>> Hidden T66 unsupported items in SCU and add T66 showAllPage function
+//  UINT8         OEMRSV[70];                   // Reserve for OEM team
+  #define _IMPORT_T66_COMMON_SETUP_
+  #include <T66SetupConfig.h>                     // T66 common setup (offset 530~560, total 30 bytes)
+  #undef _IMPORT_T66_COMMON_SETUP_
+//Offset(560);
+  UINT8         OEMRSV[40];                     // Reserve for OEM team
+//[PRJ]+ <<<< Hidden T66 unsupported items in SCU and add T66 showAllPage function
+
 //OEM_End
 //----------------------------------------------------------------------------------------------------------
 // End of area for OEM team use.

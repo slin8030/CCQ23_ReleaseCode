@@ -33,6 +33,10 @@
 //[-end-170721-IB07400892-add]//
 
 #include <SetupConfig.h>
+//[PRJ]+ >>>> Hidden T66 unsupported items in SCU and add T66 showAllPage function
+#include "Library/DxeProjectSvcLib.h"
+//[PRJ]+ <<<< Hidden T66 unsupported items in SCU and add T66 showAllPage function
+
 UINT8 mSetupOptionStatusForFullReset = NoChanged;
 
 EFI_HII_HANDLE                   mDriverHiiHandle;
@@ -874,7 +878,10 @@ CallSetupUtilityBrowser (
   UINT16                                    SubClass;
   EFI_GUID                                  FormSetGuid = EFI_HII_PLATFORM_SETUP_FORMSET_GUID;
   UINT8                                     *TempPtr;
-
+//[PRJ]+ >>>> Hidden T66 unsupported items in SCU and add T66 showAllPage function
+  BIOS_SETTING_ALL_PAGE                     *SCU_AllPage;
+  BOOLEAN                                   ShowMoreInfo;
+//[PRJ]+ <<<< Hidden T66 unsupported items in SCU and add T66 showAllPage function
   Status = EFI_SUCCESS;
   SetupUtilityBrowserEmpty = TRUE;
   Buffer = NULL;
@@ -883,7 +890,15 @@ CallSetupUtilityBrowser (
   HiiDatabase = gSUBrowser->HiiDatabase;
   Browser2    = gSUBrowser->Browser2;
   SetupMouse  = NULL;
-
+//[PRJ]+ >>>> Hidden T66 unsupported items in SCU and add T66 showAllPage function
+  ShowMoreInfo = FALSE;
+  Status = GetBiosSettingData((BIOS_SETTING_STRUCT**)&SCU_AllPage, BIOS_SETTING_ALPG);
+  if (!EFI_ERROR(Status)) {
+    ShowMoreInfo = SCU_AllPage->ShollAllPage;
+    ((SYSTEM_CONFIGURATION *)gSUBrowser->SCBuffer)->T66ShowSCU = ShowMoreInfo;
+    FreePool(SCU_AllPage);
+  }
+//[PRJ]+ <<<< Hidden T66 unsupported items in SCU and add T66 showAllPage function 
   for (Index = 0, BufferSize = 0; Index < MAX_HII_HANDLES && gSUBrowser->SUCInfo->MapTable[Index].HiiHandle != NULL; Index++) {
     //
     // Am not initializing Buffer since the first thing checked is the size
@@ -960,6 +975,11 @@ CallSetupUtilityBrowser (
 
 
     if (gSUBrowser->Interface.MenuItemCount < MAX_ITEMS) {
+//[PRJ]+ >>>> Hidden T66 unsupported items in SCU and add T66 showAllPage function 
+      if ((Index == AdvanceHiiHandle || Index == PowerHiiHandle) && (ShowMoreInfo == FALSE)) {
+        goto NextMenu;
+      }
+//[PRJ]+ <<<< Hidden T66 unsupported items in SCU and add T66 showAllPage function	  
       TempToken = FormSetPtr->FormSetTitle;
       gSUBrowser->Interface.MenuList[gSUBrowser->Interface.MenuItemCount].MenuTitle = TempToken;
       //
@@ -975,6 +995,9 @@ CallSetupUtilityBrowser (
       //
       gSUBrowser->Interface.MenuItemCount++;
     }
+//[PRJ]+ >>>> Hidden T66 unsupported items in SCU and add T66 showAllPage function
+NextMenu:
+//[PRJ]+ <<<< Hidden T66 unsupported items in SCU and add T66 showAllPage function	
     BufferSize = 0;
     gBS->FreePool(Buffer);
   }

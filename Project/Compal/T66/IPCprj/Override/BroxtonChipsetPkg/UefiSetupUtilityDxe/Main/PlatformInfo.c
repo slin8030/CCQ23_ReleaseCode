@@ -41,6 +41,12 @@
 //[PRJ] ++ >>>> Add EC version on SCU Main page
 #include <CompalEcLib.h> 
 //[PRJ] ++ <<<< Add EC version on SCU Main page
+
+//[PRJ]+ >>>> Hidden T66 unsupported items in SCU and add T66 showAllPage function 
+#include "Library/DxeProjectSvcLib.h"
+//[PRJ]+ <<<< Hidden T66 unsupported items in SCU and add T66 showAllPage function
+
+
 #define ICH_REG_REV                 0x08
 //#define MSR_IA32_PLATFORM_ID        0x17
 
@@ -71,8 +77,12 @@ SB_REV  mSocSteppingTable[] = {
 
 STATIC EFI_HII_STRING_PROTOCOL   *mIfrLibHiiString;
 //[-start-160901-IB07400777-add]//
-CHIPSET_CONFIGURATION            *mSystemConfig;
+//[PRJ]- >>>> Hidden T66 unsupported items in SCU and add T66 showAllPage function    CHIPSET_CONFIGURATION            *mSystemConfig;
 //[-end-160901-IB07400777-add]//
+//[PRJ]+ >>>> Hidden T66 unsupported items in SCU and add T66 showAllPage function 
+  SYSTEM_CONFIGURATION            *mSystemConfig;
+//[PRJ]+ <<<< Hidden T66 unsupported items in SCU and add T66 showAllPage function
+
 
 EFI_STATUS
 JudgeHandleIsPCIDevice(
@@ -453,6 +463,14 @@ UpdatePlatformInformation (
   UINTN                    BiosRomSize;
 //[-end-181001-IB07401020-add]//
 //[-start-160418-IB07400718-modify]//
+
+
+//[PRJ]+ >>>> Hidden T66 unsupported items in SCU and add T66 showAllPage function
+  BIOS_SETTING_ALL_PAGE   *SCU_AllPage;
+  BOOLEAN                  ShowMoreInfo;
+//[PRJ]+ <<<< Hidden T66 unsupported items in SCU and add T66 showAllPage function
+
+
 #if defined (ENBDT_PF_ENABLE) && (ENBDT_PF_ENABLE == 1)
 #ifdef APOLLOLAKE_CRB
   UINT8          KscFwRevH;
@@ -463,6 +481,15 @@ UpdatePlatformInformation (
 #endif
 #endif
 //[-end-160418-IB07400718-modify]//
+//[PRJ]+ >>>> Hidden T66 unsupported items in SCU and add T66 showAllPage function
+  ShowMoreInfo = FALSE;
+  Status = GetBiosSettingData ((BIOS_SETTING_STRUCT**)&SCU_AllPage, BIOS_SETTING_ALPG);
+  if (!EFI_ERROR(Status)) {
+    ShowMoreInfo = SCU_AllPage->ShollAllPage;
+    FreePool(SCU_AllPage);
+  }
+
+//[PRJ]+ <<<< Hidden T66 unsupported items in SCU and add T66 showAllPage function
 
   CpuFlavor=0;
   LegacyBios = NULL;
@@ -480,6 +507,9 @@ UpdatePlatformInformation (
     }
   }
 
+//[PRJ]+ >>>> Hidden T66 unsupported items in SCU and add T66 showAllPage function
+  if (ShowMoreInfo) {
+//[PRJ]+ <<<< Hidden T66 unsupported items in SCU and add T66 showAllPage function
   //
   //Update Soc Version
   //
@@ -543,6 +573,10 @@ UpdatePlatformInformation (
     NewStringId
     );
 //[-end-160726-IB07400762-add]//
+
+//[PRJ]+ >>>> Hidden T66 unsupported items in SCU and add T66 showAllPage function
+  }
+//[PRJ]+ <<<< Hidden T66 unsupported items in SCU and add T66 showAllPage function 
   //
   // Retrieve all instances of PCH Platform Policy protocol
   //
@@ -605,6 +639,9 @@ UpdatePlatformInformation (
   //Update MRC Version
   //
 //[-start-160704-IB07220103-add]//
+//[PRJ]+ >>>> Hidden T66 unsupported items in SCU and add T66 showAllPage function
+  if (ShowMoreInfo) {
+//[PRJ]+ <<<< Hidden T66 unsupported items in SCU and add T66 showAllPage function
   GuidHob.Raw = GetHobList ();
   if (GuidHob.Raw != NULL) {
     if ((GuidHob.Raw = GetNextGuidHob (&gEfiMemoryConfigDataGuid, GuidHob.Raw)) != NULL) {
@@ -638,11 +675,17 @@ UpdatePlatformInformation (
       NewStringId
       );
   }
+//[PRJ]+ >>>> Hidden T66 unsupported items in SCU and add T66 showAllPage function 
+  }
+//[PRJ]+ <<<< Hidden T66 unsupported items in SCU and add T66 showAllPage function 
 //[-end-160711-IB07400754-modify]//
 
   //
   // Punit Version (Microcode)
   //
+//[PRJ]+ >>>> Hidden T66 unsupported items in SCU and add T66 showAllPage function
+  if (ShowMoreInfo) {
+//[PRJ]+ <<<< Hidden T66 unsupported items in SCU and add T66 showAllPage function
 //[-start-160704-IB07220103-modify]//
   AsmWriteMsr64 (MSR_IA32_BIOS_SIGN_ID, 0);
   AsmCpuid (CPUID_VERSION_INFO, NULL, NULL, NULL, NULL);
@@ -666,7 +709,9 @@ UpdatePlatformInformation (
     0,
     NewStringId
     );
-
+//[PRJ]+ >>>> Hidden T66 unsupported items in SCU and add T66 showAllPage function
+  }
+//[PRJ]+ <<<< Hidden T66 unsupported items in SCU and add T66 showAllPage function
   //
   //  PMC Version
   //
@@ -785,6 +830,9 @@ UpdatePlatformInformation (
   //
   // ISH FW Revision
   //
+//[PRJ]+ >>>> Hidden T66 unsupported items in SCU and add T66 showAllPage function
+  if (ShowMoreInfo) {
+//[PRJ]+ <<<< Hidden T66 unsupported items in SCU and add T66 showAllPage function
   DEBUG ((EFI_D_INFO, "Executing GetImageFwVersion().\n"));
   SetMem(&MsgGetFwVersionRespData, sizeof(FW_VERSION_CMD_RESP_DATA), 0x0);
   SetMem(Buffer, sizeof(Buffer), 0x0);
@@ -815,6 +863,9 @@ UpdatePlatformInformation (
       }
     }
   }
+//[PRJ]+ >>>> Hidden T66 unsupported items in SCU and add T66 showAllPage function
+  }
+//[PRJ]+ <<<< Hidden T66 unsupported items in SCU and add T66 showAllPage function 
 //[-end-160704-IB07220103-add]//
   
 
@@ -848,6 +899,9 @@ UpdatePlatformInformation (
   //
   // VBIOS version
   //
+//[PRJ]+ >>>> Hidden T66 unsupported items in SCU and add T66 showAllPage function
+  if (ShowMoreInfo) {
+//[PRJ]+ <<<< Hidden T66 unsupported items in SCU and add T66 showAllPage function
   IgdVBIOSRevH = 0;
   IgdVBIOSRevL = 0;
   Status = gBS->LocateProtocol(&gEfiLegacyBiosProtocolGuid, NULL, (VOID **)&LegacyBios);
@@ -882,7 +936,9 @@ UpdatePlatformInformation (
       NewStringId
       );
   }
-  
+//[PRJ]+ >>>> Hidden T66 unsupported items in SCU and add T66 showAllPage function
+  }
+//[PRJ]+ <<<< Hidden T66 unsupported items in SCU and add T66 showAllPage function  
   //
   // Microcode Revision
   //
@@ -976,6 +1032,9 @@ UpdatePlatformInformation (
   //
   //BoardId
   //
+//[PRJ]+ >>>> Hidden T66 unsupported items in SCU and add T66 showAllPage function
+  if (ShowMoreInfo) {
+//[PRJ]+ <<<< Hidden T66 unsupported items in SCU and add T66 showAllPage function
   if (PlatformInfo != NULL) {
 //[-start-160704-IB07220103-modify]//
     switch(PlatformInfo->BoardId){
@@ -1117,6 +1176,9 @@ UpdatePlatformInformation (
       NewStringId
       );
   }
+//[PRJ]+ >>>> Hidden T66 unsupported items in SCU and add T66 showAllPage function
+  }
+//[PRJ]+ <<<< Hidden T66 unsupported items in SCU and add T66 showAllPage function
 //[PRJ] ++ >>>> Add EC version on SCU Main page  
  {
     UINT8                    DataBuffer8[32];
@@ -1164,6 +1226,9 @@ UpdatePlatformInformation (
   //
   // Display BIOS Boot Source (eMMC/USF/SPI)
   //
+//[PRJ]+ >>>> Hidden T66 unsupported items in SCU and add T66 showAllPage function
+  if (ShowMoreInfo) {
+//[PRJ]+ <<<< Hidden T66 unsupported items in SCU and add T66 showAllPage function  
   switch (mSystemConfig->CseBootDevice) {
   case 0:
     UnicodeSPrint (Buffer, sizeof (Buffer), L"EMMC (%02x)", mSystemConfig->CseBootDevice);
@@ -1202,6 +1267,9 @@ UpdatePlatformInformation (
     NewStringId
     );
 //[-end-170613-IB07400874-add]//
+//[PRJ]+ >>>> Hidden T66 unsupported items in SCU and add T66 showAllPage function 
+    }
+//[PRJ]+ <<<< Hidden T66 unsupported items in SCU and add T66 showAllPage function 
 
   return EFI_SUCCESS;
 }
@@ -1237,7 +1305,10 @@ DisplayPlatformInfo (
   ASSERT_EFI_ERROR (Status);
   
 //[-start-160901-IB07400777-add]//
-  mSystemConfig = (CHIPSET_CONFIGURATION *)SUBrowser->SCBuffer;
+//PRJ- >>>> Hidden T66 unsupported items in SCU and add T66 showAllPage function  mSystemConfig = (CHIPSET_CONFIGURATION *)SUBrowser->SCBuffer;
+//PRJ+ >>>> Hidden T66 unsupported items in SCU and add T66 showAllPage function
+  mSystemConfig = (SYSTEM_CONFIGURATION *)SUBrowser->SCBuffer;
+//PRJ+ <<<< Hidden T66 unsupported items in SCU and add T66 showAllPage function
 //[-end-160901-IB07400777-add]//
 
   //

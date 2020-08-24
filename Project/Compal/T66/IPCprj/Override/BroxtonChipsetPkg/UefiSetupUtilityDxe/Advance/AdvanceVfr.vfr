@@ -34,7 +34,10 @@ formset
   image     = IMAGE_TOKEN (IMAGE_ADVANCE);
 #endif
 
-  varstore CHIPSET_CONFIGURATION,            // This is the data structure type
+//PRJ- >>>> Hidden T66 unsupported items in SCU and add T66 showAllPage function  varstore CHIPSET_CONFIGURATION,            // This is the data structure type
+//PRJ+ >>>> Hidden T66 unsupported items in SCU and add T66 showAllPage function
+  varstore SYSTEM_CONFIGURATION,            // This is the data structure type
+//PRJ+ <<<< Hidden T66 unsupported items in SCU and add T66 showAllPage function
     varid = CONFIGURATION_VARSTORE_ID,      // Optional VarStore ID
     name  = SystemConfig,                    // Define referenced name in vfr
     guid  = SYSTEM_CONFIGURATION_GUID;      // GUID of this buffer storage

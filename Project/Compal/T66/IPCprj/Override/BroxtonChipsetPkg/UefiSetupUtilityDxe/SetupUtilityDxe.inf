@@ -137,7 +137,10 @@
 #[PRJ] ++ >>>> Add EC version on SCU Main page
   CompalEcLib
 #[PRJ] ++ <<<< Add EC version on SCU Main page
-
+#[PRJ] + >>>> Hidden T66 unsupported items in SCU and add T66 showAllPage function
+  DxeProjectSvcLib
+#[PRJ] + <<<< Hidden T66 unsupported items in SCU and add T66 showAllPage function
+ 
 
 [Guids]
   gEfiIfrTianoGuid                              ## CONSUMES ## Guid

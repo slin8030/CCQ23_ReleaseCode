@@ -361,6 +361,9 @@
 #[-end-161205-IB07400822-modify]#
 #[-end-160628-IB07400749-add]#
 #[-start-161017-IB07400798-add]#
+#[PRJ]+ >>>> Hidden T66 unsupported items in SCU and add T66 showAllPage function
+  gInsydeTokenSpaceGuid.PcdH2OCsmSupported|FALSE                                                          #language en-US        "Show all page"
+#[PRJ]+ <<<< Hidden T66 unsupported items in SCU and add T66 showAllPage function
 #===============================================================================#
 #                                                                               #
 # SPI ROM Pcds enable/disable, override InsydeFlashDevicePkg.dec Pcds           #
@@ -1146,6 +1149,17 @@ gCompalCommonCodeGuid.PcdVEEPROMTYPE|0x2  # VEEPROM Type
       $(PROJECT_PKG)/Override/InsydeModulePkg/Library/GenericBdsLib
   }
 #[PRJ]-- Fix Set PXE boot first function by CMFC fail.
+
+#[PRJ]+ >>>> Hidden T66 unsupported items in SCU and add T66 showAllPage function
+!disable SetupUtilityLib|InsydeModulePkg/Library/SetupUtilityLib/SetupUtilityLib.inf
+SetupUtilityLib|InsydeModulePkg/Library/SetupUtilityLib/SetupUtilityLib.inf {
+ 
+
+  <SOURCE_OVERRIDE_PATH>
+    $(PROJECT_PKG)/Override/InsydeModulePkg/Library/SetupUtilityLib/
+}
+#[PRJ]+ <<<< Hidden T66 unsupported items in SCU and add T66 showAllPage function
+
 [LibraryClasses.common]
   
 [LibraryClasses.common.SEC]
