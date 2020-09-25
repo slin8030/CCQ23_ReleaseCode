@@ -439,37 +439,39 @@ FvNameGuid         = A881D567-6CB0-4eee-8435-2E72D33E45B5
 
 #[-start-160725-IB07400761-modify]#
 #[-start-160516-IB07220082-modify]#
-!if $(X64_CONFIG) == YES
+#PRJ+ >>>> Update GOP to 10.0.1039 Remove unuse code#!if $(X64_CONFIG) == YES
   FILE DRIVER = FF0C8745-3270-4439-B74F-3E45F8C77064 {
     SECTION DXE_DEPEX_EXP = {gPlatformGOPPolicyGuid AND gLegacyFreeGuid}
-    SECTION PE32 = $(PROJECT_PKG)/Binary/GopDriver/$(GOP_VER_X64)/$(UEFI_ARCH)/IntelGopDriver.efi
+    SECTION PE32 = $(PROJECT_PKG)/Binary/GopDriver/$(GOP_VER_X64)/IntelGopDriver.efi
     SECTION UI = "IntelGopDriver"
   }
 #[-end-160516-IB07220082-modify]#
 #[-start-181217-IB07401056-modify]#
-!if $(MIPI_PANEL_EXAMPLE_SUPPORT) == YES
-  FILE FREEFORM = gPeiDefaultVbtGuid {
-    SECTION RAW = $(PROJECT_PKG)/Binary/GopDriver/$(GOP_VER_X64)/$(UEFI_ARCH)/Vbt_bxt_p_AuoMipi.bin 
-    SECTION UI = "IntelGopVbt"
-  }
-!else
-  FILE FREEFORM = gPeiDefaultVbtGuid {
-    SECTION RAW = $(PROJECT_PKG)/Binary/GopDriver/$(GOP_VER_X64)/$(UEFI_ARCH)/Vbt.bin 
-    SECTION UI = "IntelGopVbt"
-  }
-!endif  
+#PRJ+ >>>> Update GOP to 10.0.1039 Remove unuse code
+#!if $(MIPI_PANEL_EXAMPLE_SUPPORT) == YES
+#  FILE FREEFORM = gPeiDefaultVbtGuid {
+#    SECTION RAW = $(PROJECT_PKG)/Binary/GopDriver/$(GOP_VER_X64)/$(UEFI_ARCH)/Vbt_bxt_p_AuoMipi.bin 
+#    SECTION UI = "IntelGopVbt"
+#  }
+#!else
+#  FILE FREEFORM = gPeiDefaultVbtGuid {
+#    SECTION RAW = $(PROJECT_PKG)/Binary/GopDriver/$(GOP_VER_X64)/$(UEFI_ARCH)/Vbt.bin 
+#    SECTION UI = "IntelGopVbt"
+#  }
+#!endif  
 #[-end-181217-IB07401056-modify]#
-!else
-  FILE DRIVER = FF0C8745-3270-4439-B74F-3E45F8C77064 {
-    SECTION DXE_DEPEX_EXP = {gPlatformGOPPolicyGuid AND gLegacyFreeGuid}
-    SECTION PE32 = $(PROJECT_PKG)/Binary/GopDriver/$(GOP_VER_IA32)/$(UEFI_ARCH)/IntelGopDriver.efi
-    SECTION UI = "IntelGopDriver"
-  }
-  FILE FREEFORM = gPeiDefaultVbtGuid {
-    SECTION RAW = $(PROJECT_PKG)/Binary/GopDriver/$(GOP_VER_IA32)/$(UEFI_ARCH)/Vbt.bin 
-    SECTION UI = "IntelGopVbt"
-  }
-!endif
+#!else
+#  FILE DRIVER = FF0C8745-3270-4439-B74F-3E45F8C77064 {
+#    SECTION DXE_DEPEX_EXP = {gPlatformGOPPolicyGuid AND gLegacyFreeGuid}
+#    SECTION PE32 = $(PROJECT_PKG)/Binary/GopDriver/$(GOP_VER_IA32)/$(UEFI_ARCH)/IntelGopDriver.efi
+#    SECTION UI = "IntelGopDriver"
+#  }
+#  FILE FREEFORM = gPeiDefaultVbtGuid {
+#    SECTION RAW = $(PROJECT_PKG)/Binary/GopDriver/$(GOP_VER_IA32)/$(UEFI_ARCH)/Vbt.bin 
+#    SECTION UI = "IntelGopVbt"
+#  }
+#!endif
+#PRJ+ <<<<Update GOP to 10.0.1039 Remove unuse code
 #[-end-160725-IB07400761-modify]#
 
   #

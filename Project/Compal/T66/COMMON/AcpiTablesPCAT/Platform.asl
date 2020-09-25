@@ -358,6 +358,13 @@ Method(_WAK,1,Serialized)
     // #define ASL_WAKEUP_S3   0xE3    //System wakeup from S3 (PostCode.h)
     //
     P8XH (0, 0xE3)
+//PRJ+ >>>> Update GOP to 10.0.1039    
+    Store(1,\_SB.GPO1.MVDD)   //Set GPIO_196 PANEL1_VDDEN Panel
+    Sleep(20)
+    Store(1,\_SB.GPO0.MRST)   //Set GPIO_9 MIPI RST to low
+    Sleep(980)
+    Store(1,\_SB.GPO1.MBKL)   //Set GPIO_198 PANEL1_BKLCTL to low
+//PRJ+ <<<< Update GOP to 10.0.1039    
   }
   If(LEqual(Arg0,4))
   {
@@ -1269,7 +1276,11 @@ Scope(\_SB)
       Offset(0x548), //PIN 196 MIPI VDD_EN
       MVDD,1,     
       Offset(0x550), //PIN 197 MIPI BKLTEN
-      MBKL,1,     
+      MBKL,1, 
+//PRJ+ >>>> Update GOP to 10.0.1039      
+      Offset(0x558), //PIN 198 MIPI BKLTCTL
+      MBKC,1,
+//PRJ+ <<<< Update GOP to 10.0.1039      
     }
 //PRJ+ <<<< Modify MIPI panel power sequency    
   }   //  Device (GPO1)

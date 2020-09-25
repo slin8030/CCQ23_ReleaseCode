@@ -59,11 +59,13 @@ Scope (\_SB.PCI0) {
 
     Name (CBUF, ResourceTemplate() {
 //PRJ+ >>>> Modify MIPI panel power sequency     
-      GpioIo(Exclusive, PullDefault, 0, 0, IoRestrictionOutputOnly, "\\_SB.GPO0", ) {27}  //  N/A
-      GpioIo(Exclusive, PullDefault, 0, 0, IoRestrictionOutputOnly, "\\_SB.GPO0", ) {27}  //  N/A
-      GpioIo(Exclusive, PullDefault, 0, 0, IoRestrictionOutputOnly, "\\_SB.GPO0", ) {9}   //  GPIO_9, Used as MIPI RST
-      GpioIo(Exclusive, PullDefault, 0, 0, IoRestrictionOutputOnly, "\\_SB.GPO1", ) {9}   //  GPIO_196 PANEL1_VDDEN
-      GpioIo(Exclusive, PullDefault, 0, 0, IoRestrictionOutputOnly, "\\_SB.GPO1", ) {10}  //  GPIO_197 PANEL1_BKLTEN
+//PRJ+ >>>> Update GOP to 10.0.1039
+//      GpioIo(Exclusive, PullDefault, 0, 0, IoRestrictionOutputOnly, "\\_SB.GPO0", ) {27}  //  N/A
+//      GpioIo(Exclusive, PullDefault, 0, 0, IoRestrictionOutputOnly, "\\_SB.GPO0", ) {27}  //  N/A
+//      GpioIo(Exclusive, PullDefault, 0, 0, IoRestrictionOutputOnly, "\\_SB.GPO0", ) {9}   //  GPIO_9, Used as MIPI RST
+//      GpioIo(Exclusive, PullDefault, 0, 0, IoRestrictionOutputOnly, "\\_SB.GPO1", ) {9}   //  GPIO_196 PANEL1_VDDEN
+//      GpioIo(Exclusive, PullDefault, 0, 0, IoRestrictionOutputOnly, "\\_SB.GPO1", ) {10}  //  GPIO_197 PANEL1_BKLTEN
+//PRJ+ <<<< Update GOP to 10.0.1039
 //PRJ+ <<<< Modify MIPI panel power sequency 
     })
 

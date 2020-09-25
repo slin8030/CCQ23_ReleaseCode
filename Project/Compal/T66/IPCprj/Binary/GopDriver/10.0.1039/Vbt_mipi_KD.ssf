@@ -1,0 +1,719 @@
+
+PAGE VBT Information
+
+PAGE General Platform Configuration
+$Embedded_Platform 00
+$bmp_Dynamic_CdClock_Supported 00
+$Kvmr_Session_Enable 00
+
+PAGE UEFI GOP Driver Configuration
+$Hotplug_Support_Enb 00
+
+PAGE Child Device List
+$ChildDevice1Primary 08
+$ChildDevice1Secondary 00
+$ChildDevice2Primary 04
+$ChildDevice2Secondary 00
+$ChildDevice3Primary 00
+$ChildDevice3Secondary 00
+$ChildDevice4Primary 00
+$ChildDevice4Secondary 00
+$ChildDevice5Primary 00
+$ChildDevice5Secondary 00
+$ChildDevice6Primary 00
+$ChildDevice6Secondary 00
+$ChildDevice7Primary 00
+$ChildDevice7Secondary 00
+$ChildDevice8Primary 00
+$ChildDevice8Secondary 00
+$ChildDevice9Primary 00
+$ChildDevice9Secondary 00
+$ChildDevice10Primary 00
+$ChildDevice10Secondary 00
+$ChildDevice11Primary 00
+$ChildDevice11Secondary 00
+$ChildDevice12Primary 00
+$ChildDevice12Secondary 00
+$ChildDevice13Primary 00
+$ChildDevice13Secondary 00
+$ChildDevice14Primary 00
+$ChildDevice14Secondary 00
+$ChildDevice15Primary 00
+$ChildDevice15Secondary 00
+$ChildDevice16Primary 00
+$ChildDevice16Secondary 00
+
+PAGE Fixed Mode Feature
+$Feature_Enable 00
+$X_res 00 00 00 00
+$Y_res 00 00 00 00
+
+PAGE OS Graphics driver Configuration
+
+PAGE General Features
+$VBT_Customization_Version 00
+$Disable_DisplayEnum 00
+
+PAGE Display Features
+$CUI_Maintain_Aspect 01
+$Legacy_Monitor_Max_X 00 00
+$Legacy_Monitor_Max_Y 00 00
+$Legacy_Monitor_Max_RR 55
+$Rot_Enable 01
+$HPD_Wake 00
+
+PAGE Power Conservation
+$PC_Fields_Enable 01
+$PM_RMPM_Enable 01
+$PM_S2DDT_Enable 01
+$PM_DPST_Enable 01
+$BIA_Aggress_Level 06
+$PM_BLC_Enable 01
+$PM_ADB_Enable 01
+$PM_DRRS_Enable 00
+$PM_RS_Enable 01
+$PM_Turbo_Enable 01
+$Panel_Self_Refresh 01
+$Dynamic_FPS_Enable 01
+$DMRRS 01
+$ADT 00
+
+PAGE ADB Response Data (Mobile only)
+TABLE $ALS_Response_Data 46 00 00 00 49 00 0A 00 55 00 50 00 64 00 2C 01 96 00 E8 03
+
+PAGE Integrated Display Configuration
+
+PAGE LFP Configuration
+$LFP_Device_Class 00 14
+$LFP_Port 15
+$bmp_Panel_type 02
+$bmp_Panel_EDID 00
+$Int_LFP_Compression_Enable 00
+$Int_LFP_Compression_Method_Select 00
+$Int_LFP_Compression_Struct_Index 00
+
+PAGE Panel #01 
+STRING $Panel_Name_01 LFP_PanelName
+$Enable_Scaling_01 00
+$Panel_Width_01 80 02
+$Panel_Height_01 E0 01
+$DPS_Panel_Type_01 02
+$Seamless_DRRS_Min_RR_01 00
+$Blt_Control_01 02
+
+PAGE DTD Timings
+TABLE $DVO_Tbl_01 D6 09 80 90 20 E0 1D 10 08 60 22 00 00 00 00 00 00 1E
+
+PAGE LFP PnP ID
+TABLE $LVDS_PnP_ID_01 36 7F 01 00 01 00 00 00 00 0C
+
+PAGE Backlight Control Parameters
+$BLC_Inv_Type_01 02
+$Lfp_Pwm_Source_Selection_01 02
+$Lfp_Pwm_Controller_Selection_01 01
+$BLC_Inv_Polarity_01 00
+$BLC_Min_Brightness_01 00
+$POST_BL_Brightness_01 B4
+$PWM_Frequency_01 C8 00
+
+PAGE Chromaticity Control
+$Chromacity_Enable_01 00
+$Override_EDID_Data_01 00
+$Red_Green_01 88
+$Blue_White_01 88
+$Red_x_01 88
+$Red_y_01 88
+$Green_x_01 88
+$Green_y_01 88
+$Blue_x_01 88
+$Blue_y_01 88
+$White_x_01 88
+$White_y_01 88
+
+PAGE MIPI Display Settings
+$Packet_Sequence_Video_Mode_01 02
+$RequiredBurstModeRate_01 00 00 00 00
+$Colour_Format_Video_Mode_01 04
+$Dual_Link_01 00
+$Pixel_Overlap_Count_01 00
+$CABC_Support_01 00
+$CabcCmdsPort_01 00
+$PanelPwmCmdsPort_01 00
+$RgbFlip_01 00
+$Number_Of_Lanes_01 03
+$Bta_Disable_01 00
+$EscapeClk_01 00
+$EoTpSupport_01 00
+$ClockStop_01 00
+$TClkPrepare_01 32
+$TClkTrail_01 46
+$TClkPrepareTClkZero_01 36 01
+$THsPrepare_01 32
+$THsTrail_01 3C
+$THsPrepareTHsZero_01 C8 00
+$PowerUpDelay_01 F4 01
+$DataTurnOnToPanelBacklightEnableDelay_01 F4 01
+$Mipi_PwmOn_To_Bklt_Enable_Delay_01 00 00
+$Mipi_Bklt_Disable_To_PwmOff_Delay_01 00 00
+$BacklightOffToDataTurnOffDelay_01 F4 01
+$PowerDownDelay_01 F4 01
+$PowerCycleDelay_01 88 13
+
+PAGE Panel #02 
+STRING $Panel_Name_02 LFP_PanelName
+$Enable_Scaling_02 00
+$Panel_Width_02 20 03
+$Panel_Height_02 58 02
+$DPS_Panel_Type_02 02
+$Seamless_DRRS_Min_RR_02 00
+$Blt_Control_02 02
+
+PAGE DTD Timings
+TABLE $DVO_Tbl_02 A0 0F 20 00 31 58 1C 20 28 80 14 00 00 00 00 00 00 1E
+
+PAGE LFP PnP ID
+TABLE $LVDS_PnP_ID_02 36 7F 02 00 02 00 00 00 00 0C
+
+PAGE Backlight Control Parameters
+$BLC_Inv_Type_02 02
+$Lfp_Pwm_Source_Selection_02 02
+$Lfp_Pwm_Controller_Selection_02 01
+$BLC_Inv_Polarity_02 00
+$BLC_Min_Brightness_02 00
+$POST_BL_Brightness_02 B4
+$PWM_Frequency_02 C8 00
+
+PAGE Chromaticity Control
+$Chromacity_Enable_02 00
+$Override_EDID_Data_02 00
+$Red_Green_02 88
+$Blue_White_02 88
+$Red_x_02 88
+$Red_y_02 88
+$Green_x_02 88
+$Green_y_02 88
+$Blue_x_02 88
+$Blue_y_02 88
+$White_x_02 88
+$White_y_02 88
+
+PAGE MIPI Display Settings
+$Packet_Sequence_Video_Mode_02 02
+$RequiredBurstModeRate_02 00 00 00 00
+$Colour_Format_Video_Mode_02 04
+$Dual_Link_02 00
+$Pixel_Overlap_Count_02 00
+$CABC_Support_02 00
+$CabcCmdsPort_02 00
+$PanelPwmCmdsPort_02 00
+$RgbFlip_02 00
+$Number_Of_Lanes_02 03
+$Bta_Disable_02 00
+$EscapeClk_02 00
+$EoTpSupport_02 00
+$ClockStop_02 00
+$TClkPrepare_02 32
+$TClkTrail_02 46
+$TClkPrepareTClkZero_02 36 01
+$THsPrepare_02 32
+$THsTrail_02 3C
+$THsPrepareTHsZero_02 C8 00
+$PowerUpDelay_02 F4 01
+$DataTurnOnToPanelBacklightEnableDelay_02 F4 01
+$Mipi_PwmOn_To_Bklt_Enable_Delay_02 00 00
+$Mipi_Bklt_Disable_To_PwmOff_Delay_02 00 00
+$BacklightOffToDataTurnOffDelay_02 F4 01
+$PowerDownDelay_02 F4 01
+$PowerCycleDelay_02 88 13
+
+PAGE Panel #03 
+STRING $Panel_Name_03 LFP_PanelName
+$Enable_Scaling_03 00
+$Panel_Width_03 20 03
+$Panel_Height_03 00 05
+$DPS_Panel_Type_03 02
+$Seamless_DRRS_Min_RR_03 00
+$Blt_Control_03 02
+
+PAGE DTD Timings
+TABLE $DVO_Tbl_03 90 1A 20 3E 30 00 22 50 12 0C 64 04 87 D8 00 00 00 18
+
+PAGE LFP PnP ID
+TABLE $LVDS_PnP_ID_03 36 7F 00 00 03 00 00 00 00 0C
+
+PAGE Backlight Control Parameters
+$BLC_Inv_Type_03 02
+$Lfp_Pwm_Source_Selection_03 02
+$Lfp_Pwm_Controller_Selection_03 01
+$BLC_Inv_Polarity_03 00
+$BLC_Min_Brightness_03 00
+$POST_BL_Brightness_03 FF
+$PWM_Frequency_03 30 75
+
+PAGE Chromaticity Control
+$Chromacity_Enable_03 00
+$Override_EDID_Data_03 00
+$Red_Green_03 88
+$Blue_White_03 88
+$Red_x_03 88
+$Red_y_03 88
+$Green_x_03 88
+$Green_y_03 88
+$Blue_x_03 88
+$Blue_y_03 88
+$White_x_03 88
+$White_y_03 88
+
+PAGE MIPI Display Settings
+$Packet_Sequence_Video_Mode_03 02
+$RequiredBurstModeRate_03 00 00 00 00
+$Colour_Format_Video_Mode_03 04
+$Dual_Link_03 00
+$Pixel_Overlap_Count_03 00
+$CABC_Support_03 00
+$CabcCmdsPort_03 00
+$PanelPwmCmdsPort_03 00
+$RgbFlip_03 00
+$Number_Of_Lanes_03 03
+$Bta_Disable_03 00
+$EscapeClk_03 00
+$EoTpSupport_03 00
+$ClockStop_03 00
+$TClkPrepare_03 32
+$TClkTrail_03 46
+$TClkPrepareTClkZero_03 36 01
+$THsPrepare_03 32
+$THsTrail_03 3C
+$THsPrepareTHsZero_03 C8 00
+$PowerUpDelay_03 00 00
+$DataTurnOnToPanelBacklightEnableDelay_03 F4 01
+$Mipi_PwmOn_To_Bklt_Enable_Delay_03 00 00
+$Mipi_Bklt_Disable_To_PwmOff_Delay_03 00 00
+$BacklightOffToDataTurnOffDelay_03 F4 01
+$PowerDownDelay_03 F4 01
+$PowerCycleDelay_03 88 13
+
+PAGE Panel #04 
+STRING $Panel_Name_04 LFP_PanelName
+$Enable_Scaling_04 00
+$Panel_Width_04 00 05
+$Panel_Height_04 00 04
+$DPS_Panel_Type_04 02
+$Seamless_DRRS_Min_RR_04 00
+$Blt_Control_04 02
+
+PAGE DTD Timings
+TABLE $DVO_Tbl_04 30 2A 00 98 51 00 30 40 30 70 13 00 00 00 00 00 00 1E
+
+PAGE LFP PnP ID
+TABLE $LVDS_PnP_ID_04 36 7F 05 00 04 00 00 00 00 0C
+
+PAGE Backlight Control Parameters
+$BLC_Inv_Type_04 02
+$Lfp_Pwm_Source_Selection_04 02
+$Lfp_Pwm_Controller_Selection_04 01
+$BLC_Inv_Polarity_04 00
+$BLC_Min_Brightness_04 00
+$POST_BL_Brightness_04 B4
+$PWM_Frequency_04 C8 00
+
+PAGE Chromaticity Control
+$Chromacity_Enable_04 00
+$Override_EDID_Data_04 00
+$Red_Green_04 88
+$Blue_White_04 88
+$Red_x_04 88
+$Red_y_04 88
+$Green_x_04 88
+$Green_y_04 88
+$Blue_x_04 88
+$Blue_y_04 88
+$White_x_04 88
+$White_y_04 88
+
+PAGE MIPI Display Settings
+$Packet_Sequence_Video_Mode_04 02
+$RequiredBurstModeRate_04 00 00 00 00
+$Colour_Format_Video_Mode_04 04
+$Dual_Link_04 00
+$Pixel_Overlap_Count_04 00
+$CABC_Support_04 00
+$CabcCmdsPort_04 00
+$PanelPwmCmdsPort_04 00
+$RgbFlip_04 00
+$Number_Of_Lanes_04 03
+$Bta_Disable_04 00
+$EscapeClk_04 00
+$EoTpSupport_04 00
+$ClockStop_04 00
+$TClkPrepare_04 32
+$TClkTrail_04 46
+$TClkPrepareTClkZero_04 36 01
+$THsPrepare_04 32
+$THsTrail_04 3C
+$THsPrepareTHsZero_04 C8 00
+$PowerUpDelay_04 F4 01
+$DataTurnOnToPanelBacklightEnableDelay_04 F4 01
+$Mipi_PwmOn_To_Bklt_Enable_Delay_04 00 00
+$Mipi_Bklt_Disable_To_PwmOff_Delay_04 00 00
+$BacklightOffToDataTurnOffDelay_04 F4 01
+$PowerDownDelay_04 F4 01
+$PowerCycleDelay_04 88 13
+
+PAGE Panel #05 
+STRING $Panel_Name_05 LFP_PanelName
+$Enable_Scaling_05 00
+$Panel_Width_05 78 05
+$Panel_Height_05 1A 04
+$DPS_Panel_Type_05 02
+$Seamless_DRRS_Min_RR_05 00
+$Blt_Control_05 02
+
+PAGE DTD Timings
+TABLE $DVO_Tbl_05 30 2A 78 20 51 1A 10 40 10 70 13 00 00 00 00 00 00 1E
+
+PAGE LFP PnP ID
+TABLE $LVDS_PnP_ID_05 36 7F 01 90 05 00 00 00 00 0C
+
+PAGE Backlight Control Parameters
+$BLC_Inv_Type_05 02
+$Lfp_Pwm_Source_Selection_05 02
+$Lfp_Pwm_Controller_Selection_05 01
+$BLC_Inv_Polarity_05 00
+$BLC_Min_Brightness_05 00
+$POST_BL_Brightness_05 B4
+$PWM_Frequency_05 C8 00
+
+PAGE Chromaticity Control
+$Chromacity_Enable_05 00
+$Override_EDID_Data_05 00
+$Red_Green_05 88
+$Blue_White_05 88
+$Red_x_05 88
+$Red_y_05 88
+$Green_x_05 88
+$Green_y_05 88
+$Blue_x_05 88
+$Blue_y_05 88
+$White_x_05 88
+$White_y_05 88
+
+PAGE MIPI Display Settings
+$Packet_Sequence_Video_Mode_05 02
+$RequiredBurstModeRate_05 00 00 00 00
+$Colour_Format_Video_Mode_05 04
+$Dual_Link_05 00
+$Pixel_Overlap_Count_05 00
+$CABC_Support_05 00
+$CabcCmdsPort_05 00
+$PanelPwmCmdsPort_05 00
+$RgbFlip_05 00
+$Number_Of_Lanes_05 03
+$Bta_Disable_05 00
+$EscapeClk_05 00
+$EoTpSupport_05 00
+$ClockStop_05 00
+$TClkPrepare_05 32
+$TClkTrail_05 46
+$TClkPrepareTClkZero_05 36 01
+$THsPrepare_05 32
+$THsTrail_05 3C
+$THsPrepareTHsZero_05 C8 00
+$PowerUpDelay_05 F4 01
+$DataTurnOnToPanelBacklightEnableDelay_05 F4 01
+$Mipi_PwmOn_To_Bklt_Enable_Delay_05 00 00
+$Mipi_Bklt_Disable_To_PwmOff_Delay_05 00 00
+$BacklightOffToDataTurnOffDelay_05 F4 01
+$PowerDownDelay_05 F4 01
+$PowerCycleDelay_05 88 13
+
+PAGE Panel #06 
+STRING $Panel_Name_06 LFP_PanelName
+$Enable_Scaling_06 00
+$Panel_Width_06 78 05
+$Panel_Height_06 1A 04
+$DPS_Panel_Type_06 02
+$Seamless_DRRS_Min_RR_06 00
+$Blt_Control_06 02
+
+PAGE DTD Timings
+TABLE $DVO_Tbl_06 A8 2F 78 E0 51 1A 26 40 58 98 13 00 00 00 00 00 00 1E
+
+PAGE LFP PnP ID
+TABLE $LVDS_PnP_ID_06 36 7F 01 90 06 00 00 00 00 0C
+
+PAGE Backlight Control Parameters
+$BLC_Inv_Type_06 02
+$Lfp_Pwm_Source_Selection_06 02
+$Lfp_Pwm_Controller_Selection_06 01
+$BLC_Inv_Polarity_06 00
+$BLC_Min_Brightness_06 00
+$POST_BL_Brightness_06 B4
+$PWM_Frequency_06 C8 00
+
+PAGE Chromaticity Control
+$Chromacity_Enable_06 00
+$Override_EDID_Data_06 00
+$Red_Green_06 88
+$Blue_White_06 88
+$Red_x_06 88
+$Red_y_06 88
+$Green_x_06 88
+$Green_y_06 88
+$Blue_x_06 88
+$Blue_y_06 88
+$White_x_06 88
+$White_y_06 88
+
+PAGE MIPI Display Settings
+$Packet_Sequence_Video_Mode_06 02
+$RequiredBurstModeRate_06 00 00 00 00
+$Colour_Format_Video_Mode_06 04
+$Dual_Link_06 00
+$Pixel_Overlap_Count_06 00
+$CABC_Support_06 00
+$CabcCmdsPort_06 00
+$PanelPwmCmdsPort_06 00
+$RgbFlip_06 00
+$Number_Of_Lanes_06 03
+$Bta_Disable_06 00
+$EscapeClk_06 00
+$EoTpSupport_06 00
+$ClockStop_06 00
+$TClkPrepare_06 32
+$TClkTrail_06 46
+$TClkPrepareTClkZero_06 36 01
+$THsPrepare_06 32
+$THsTrail_06 3C
+$THsPrepareTHsZero_06 C8 00
+$PowerUpDelay_06 F4 01
+$DataTurnOnToPanelBacklightEnableDelay_06 F4 01
+$Mipi_PwmOn_To_Bklt_Enable_Delay_06 00 00
+$Mipi_Bklt_Disable_To_PwmOff_Delay_06 00 00
+$BacklightOffToDataTurnOffDelay_06 F4 01
+$PowerDownDelay_06 F4 01
+$PowerCycleDelay_06 88 13
+
+PAGE Integrated DisplayPort/HDMI Configuration with External Connectors
+$DP_SSC_Enb 00
+$DP_SSC_Dongle_Enb 00
+
+PAGE Device 1 (EFP1)
+$Int_EFP1_Type D2 60
+$Int_EFP1_Port 01
+$HPD2_Inversion_Enable 01
+$Int_EFP1_DDC_Pin 01
+$Int_EFP1_AUX_Channel 00
+$Int_EFP1_HDMI_LS_Type 07
+$EFP1_EDIDless_en 00
+$LSPcon1_Options 00
+$EFP1_Lane_Reversal 00
+$EFP1_USB_C_DongleFeature_Enabled 00
+$Int_EFP1_Port_Dockable 00
+
+PAGE Select DisplayPort Redriver Configuration ( Dock/ OnBoard )
+$Int_EFP1_OnBoard_Redriver_Present 00
+$Int_EFP1_OnBoard_Pre_emphasis 00
+$Int_EFP1_OnBoard_Voltage_swing 02
+$Int_EFP1_Dock_Redriver_Present 00
+$Int_EFP1_Dock_Pre_emphasis 00
+$Int_EFP1_Dock_Voltage_swing 02
+
+PAGE EDID-less EFP Panel DTD Timings
+TABLE $EFP1_DTD D6 09 80 90 20 E0 1D 10 08 60 22 00 00 00 00 00 00 1E
+
+PAGE Device 2 (EFP2)
+$Int_EFP2_Type 00 00
+$Int_EFP2_Port 00
+$HPD3_Inversion_Enable 00
+$Int_EFP2_DDC_Pin 00
+$Int_EFP2_AUX_Channel 00
+$Int_EFP2_HDMI_LS_Type 00
+$EFP2_EDIDless_en 00
+$LSPcon2_Options 00
+$EFP2_Lane_Reversal 00
+$EFP2_USB_C_DongleFeature_Enabled 00
+$Int_EFP2_Port_Dockable 00
+
+PAGE Select DisplayPort Redriver Configuration ( Dock/ OnBoard )
+$Int_EFP2_OnBoard_Redriver_Present 00
+$Int_EFP2_OnBoard_Pre_emphasis 00
+$Int_EFP2_OnBoard_Voltage_swing 00
+$Int_EFP2_Dock_Redriver_Present 00
+$Int_EFP2_Dock_Pre_emphasis 00
+$Int_EFP2_Dock_Voltage_swing 00
+
+PAGE EDID-less EFP Panel DTD Timings
+TABLE $EFP2_DTD D6 09 80 90 20 E0 1D 10 08 60 22 00 00 00 00 00 00 1E
+
+PAGE Compression Parameters
+
+PAGE Compression Structure 1
+$C1_Minor_Dsc_Version 01
+$C1_Major_Dsc_Version 01
+$C1_Pps_Identifier 00
+$C1_Line_Buffer_Depth 08
+$C1_Bits_Per_Component 08
+$C1_Bits_Per_Pixel_Low 00
+$C1_Bits_Per_Pixel_High 20
+$C1_422_Enable 00
+$C1_Convert_Rgb 00
+$C1_Block_Prediction_Enable 00
+$C1_Vbr_Enable 00
+$C1_Picture_Height 00 00
+$C1_Picture_Width 00 00
+$C1_Slice_Height 00 00
+$C1_Slice_Width 00 00
+$C1_Chunk_Size 00 00
+$C1_Initial_Trans_Delay_Low 00
+$C1_Initial_Trans_Delay_High 80
+$C1_Initial_Decoder_Delay 00 00
+$C1_Rc_Xform_Scale_Value 00
+$C1_Scale_Incremental_Value 00 00
+$C1_Scale_Decremental_Value_Low 00
+$C1_Scale_Decremental_Value_High 00
+$C1_First_Line_Bpg_Offset 0C
+$C1_Nfl_Bpg_Offset 00 00
+$C1_Slice_Bpg_Offset 00 00
+$C1_Initial_Offset 00 18
+$C1_Final_Offset 00 00
+$C1_Min_Qp 03
+$C1_Max_Qp 0C
+$C1_Rc_Model_Size 00 00
+$C1_Rc_Edge_Factor 00
+$C1_Rc_Quant_Limit_0 0B
+$C1_Rc_Quant_Limit_1 0B
+$C1_Lower_Rc_Target_Offset 00
+$C1_Upper_Rc_Target_Offset 00
+
+PAGE RC Range Parameters
+TABLE $C1_Rc_Range_Parameters 80 08 80 00 A1 00 C1 F8 E3 F0 E3 E8 E3 E0 03 E1 23 E1 43 D9 65 D9 85 D1 A5 D1 A7 D1 ED D1
+
+PAGE Compression Structure 2
+$C2_Minor_Dsc_Version 01
+$C2_Major_Dsc_Version 01
+$C2_Pps_Identifier 00 00
+$C2_Line_Buffer_Depth 08
+$C2_Bits_Per_Component 08
+$C2_Bits_Per_Pixel_Low 00
+$C2_Bits_Per_Pixel_High 30
+$C2_422_Enable 00
+$C2_Convert_Rgb 00
+$C2_Block_Prediction_Enable 00
+$C2_Vbr_Enable 00
+$C2_Picture_Height 00 00
+$C2_Picture_Width 00 00
+$C2_Slice_Height 00 00
+$C2_Slice_Width 00 00
+$C2_Chunk_Size 00 00
+$C2_Initial_Trans_Delay_Low 01
+$C2_Initial_Trans_Delay_High 55
+$C2_Initial_Decoder_Delay 00 00
+$C2_Rc_Xform_Scale_Value 00
+$C2_Scale_Incremental_Value 00 00
+$C2_Scale_Decremental_Value_Low 00
+$C2_Scale_Decremental_Value_High 00
+$C2_First_Line_Bpg_Offset 0F
+$C2_Nfl_Bpg_Offset 00 00
+$C2_Slice_Bpg_Offset 00 00
+$C2_Initial_Offset 00 08
+$C2_Final_Offset 00 00
+$C2_Min_Qp 03
+$C2_Max_Qp 0C
+$C2_Rc_Model_Size 00 00
+$C2_Rc_Edge_Factor 00
+$C2_Rc_Quant_Limit_0 0B
+$C2_Rc_Quant_Limit_1 0B
+$C2_Lower_Rc_Target_Offset 00
+$C2_Upper_Rc_Target_Offset 00
+
+PAGE RC Range Parameters
+TABLE $C2_Rc_Range_Parameters 40 08 80 00 A1 00 C1 F8 E3 F0 E3 E8 E3 E0 03 E1 23 E1 43 D9 65 D9 85 D1 A5 D1 A7 D1 ED D1
+
+PAGE Display Device Toggle Lists (Mobile only)
+
+PAGE Display Toggle List 1
+TABLE $Toggle_List1 01 00 09 00 08 00 02 00 05 00 04 00 0C 00 40 00 44 00 48 00 41 00 00 00 00 00 00 00 00 00 00 00
+
+PAGE Display Toggle List 2
+TABLE $Toggle_List2 01 00 21 00 41 00 48 00 08 00 04 00 0C 00 40 00
+
+PAGE Display Toggle List 3
+TABLE $Toggle_List3 01 00 48 00 44 00 60 00 24 00 28 00 20 00 40 00
+
+PAGE Display Toggle List 4
+TABLE $Toggle_List4 01 00 04 00 08 00 40 00 20 00 09 00 28 00 05 00
+
+PAGE Modes Removal Table
+TABLE $Mode_Rem_Table 00 00 00 00 00 00 00 00 FF FF 00 00 00 00 00 00 00 00 FF FF 00 00 00 00 00 00 00 00 FF FF 00 00 00 00 00 00 00 00 FF FF 00 00 00 00 00 00 00 00 FF FF 00 00 00 00 00 00 00 00 FF FF 00 00 00 00 00 00 00 00 FF FF 00 00 00 00 00 00 00 00 FF FF 00 00 00 00 00 00 00 00 FF FF 00 00 00 00 00 00 00 00 FF FF 00 00 00 00 00 00 00 00 FF FF 00 00 00 00 00 00 00 00 FF FF 00 00 00 00 00 00 00 00 FF FF 00 00 00 00 00 00 00 00 FF FF 00 00 00 00 00 00 00 00 FF FF 00 00 00 00 00 00 00 00 FF FF 00 00 00 00 00 00 00 00 FF FF 00 00 00 00 00 00 00 00 FF FF 00 00 00 00 00 00 00 00 FF FF 00 00 00 00 00 00 00 00 FF FF
+
+PAGE Display Configuration Removal Table 
+TABLE $Dev_Removed_Table 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+
+PAGE OEM Customizable Modes
+
+PAGE OEM Mode #1
+$OEM_Mode_Flags1 00
+$OEM_Display_Flags1 00
+$OEM_Mode_X1 00 00
+$OEM_Mode_Y1 00 00
+$OEM_Mode_Color1 07
+$OEM_Mode_RRate1 3C
+
+PAGE DTD
+TABLE $OEM_Mode_DTD1 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+
+PAGE OEM Mode #2
+$OEM_Mode_Flags2 00
+$OEM_Display_Flags2 00
+$OEM_Mode_X2 00 00
+$OEM_Mode_Y2 00 00
+$OEM_Mode_Color2 07
+$OEM_Mode_RRate2 3C
+
+PAGE DTD
+TABLE $OEM_Mode_DTD2 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+
+PAGE OEM Mode #3
+$OEM_Mode_Flags3 00
+$OEM_Display_Flags3 00
+$OEM_Mode_X3 00 00
+$OEM_Mode_Y3 00 00
+$OEM_Mode_Color3 07
+$OEM_Mode_RRate3 3C
+
+PAGE DTD
+TABLE $OEM_Mode_DTD3 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+
+PAGE OEM Mode #4
+$OEM_Mode_Flags4 00
+$OEM_Display_Flags4 00
+$OEM_Mode_X4 00 00
+$OEM_Mode_Y4 00 00
+$OEM_Mode_Color4 07
+$OEM_Mode_RRate4 3C
+
+PAGE DTD
+TABLE $OEM_Mode_DTD4 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+
+PAGE OEM Mode #5
+$OEM_Mode_Flags5 00
+$OEM_Display_Flags5 00
+$OEM_Mode_X5 00 00
+$OEM_Mode_Y5 00 00
+$OEM_Mode_Color5 07
+$OEM_Mode_RRate5 3C
+
+PAGE DTD
+TABLE $OEM_Mode_DTD5 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+
+PAGE OEM Mode #6
+$OEM_Mode_Flags6 00
+$OEM_Display_Flags6 00
+$OEM_Mode_X6 00 00
+$OEM_Mode_Y6 00 00
+$OEM_Mode_Color6 07
+$OEM_Mode_RRate6 3C
+
+PAGE DTD
+TABLE $OEM_Mode_DTD6 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
