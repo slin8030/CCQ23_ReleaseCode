@@ -324,8 +324,8 @@ formset
         varid       = SystemConfig.Win8FastBoot,
         prompt      = STRING_TOKEN(STR_UEFI_OS_FAST_BOOT_STRING),
         help        = STRING_TOKEN(STR_UEFI_OS_FAST_BOOT_HELP),
-        option text = STRING_TOKEN(STR_ENABLED_TEXT),  value = 0, flags = DEFAULT;
-        option text = STRING_TOKEN(STR_DISABLED_TEXT), value = 1, flags = 0;
+        option text = STRING_TOKEN(STR_ENABLED_TEXT),  value = 0, flags = 0;
+        option text = STRING_TOKEN(STR_DISABLED_TEXT), value = 1, flags = DEFAULT;
       endoneof;
     endif;
     endif;
