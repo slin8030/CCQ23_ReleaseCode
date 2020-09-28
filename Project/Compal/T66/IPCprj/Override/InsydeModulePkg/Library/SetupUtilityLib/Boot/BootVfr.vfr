@@ -113,7 +113,7 @@ formset
 
 #if FeaturePcdGet(PcdH2ONetworkSupported)
     suppressif
-      ideqvallist SystemConfig.BootType == 1 OR ideqval SystemConfig.T66ShowSCU == 0;
+      ideqvallist SystemConfig.BootType == 1;
     oneof
       varid       = SystemConfig.PxeBootToLan,
       prompt      = STRING_TOKEN(NETWORK_STACK_CONFIG_STRING),
@@ -124,7 +124,7 @@ formset
     endif;
 
     suppressif
-      ideqvallist SystemConfig.BootType == 0 2 OR ideqval SystemConfig.T66ShowSCU == 0;
+      ideqvallist SystemConfig.BootType == 0 2;
     oneof
       varid       = SystemConfig.PxeBootToLan,
       prompt      = STRING_TOKEN(STR_PXE_BOOT_TO_LAN_STRING),
@@ -134,9 +134,8 @@ formset
     endoneof;
     endif;
 
-	
-	  suppressif
-    ideqvallist SystemConfig.BootType == 1 OR ideqval SystemConfig.T66ShowSCU == 0;
+    suppressif
+    ideqvallist SystemConfig.BootType == 1;
 
     grayoutif
     ideqvallist SystemConfig.PxeBootToLan == 0;
