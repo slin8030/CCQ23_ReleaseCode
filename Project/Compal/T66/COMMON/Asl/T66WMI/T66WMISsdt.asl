@@ -27,6 +27,5 @@ DefinitionBlock (
     )
 {
 // include ("OemASL.asl")
-  include ("T66WMI_Def.asl")
   include ("WMI/T66WMI.asl")
 }

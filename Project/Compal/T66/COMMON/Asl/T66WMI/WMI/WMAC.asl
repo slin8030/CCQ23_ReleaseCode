@@ -54,7 +54,8 @@ External(DIOP.WPIN, MethodObj)
     //   Arg1 : Function ID
     //   Arg2 : Input parameter 32bit
     // ****************************************************************************
-
+      Store(0,\STDT)  //Clear STDT
+      Store(0,\BFDT)  //Clear BFDT 
     //Arg2 data structure
       Name (ACPM, Buffer(4) {0x00})
       CreateByteField (ACPM, 0, PINN )   // Pin number
@@ -62,16 +63,17 @@ External(DIOP.WPIN, MethodObj)
       CreateWordField (ACPM, 2, RESE )   // Reseve
 
       if (LEqual (WMI_WMAC_SUPPORT, 0)) {
-        // Not support , return 0
-        return (0x00)
+        // Not support , return 0x8000
+        Store(0x8000,\STDT)  //CMFC Function Not Support
+        return (WMI_UNSUPPORTED)
       }
 
       Store(Arg2, ACPM)
       Switch (Arg1) {
         Case (Package () {
-                DIO_GetSupport,
-                DIO_GetAmount,
-                DIO_GetSettings}) {
+          DIO_GetSupport,
+          DIO_GetAmount,
+          DIO_GetSettings}) {
           Return (DIOP.WMIF(Arg1))
         }
 
@@ -109,6 +111,7 @@ External(DIOP.WPIN, MethodObj)
         }
 
         Default {
+          Store(0x8000,\STDT)  //CMFC Function Not Support
           Return(WMI_UNSUPPORTED)    // Not support
         }
       }

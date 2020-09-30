@@ -52,3 +52,6 @@
 #  Platform/BxtPlatformPkg/PlatformPkg.dec
 #[-end-151230-IB03090424-remove]#
   BroxtonSiPkg/BroxtonSiPkg.dec
+  $(PROJECT_PKG)/Project.dec
+  $(T66_COMMON_PATH)/T66CommonPkg.dec
+  $(COMPAL_COMMON_PATH)/CompalCommon.dec

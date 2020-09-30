@@ -46,11 +46,14 @@ External(TMUD, FieldUnitObj)
      //   Arg1 : Function ID
      //   Arg2 : Input parameter 32bit
      // ****************************************************************************
+      Store(0,\STDT)  //Clear STDT
+      Store(0,\BFDT)  //Clear BFDT 
       //Buffer for WMAD
       Name(ADBF, Buffer(4){})
       if (LEqual (WMI_WMAD_SUPPORT, 0)) {
-        // Not support , return 0
-        return (0x00)
+        // Not support , return 0x8000
+        Store(0x8000,STDT)  //CMFC Function Not Support
+        return (WMI_UNSUPPORTED)
       }
 
       Switch (Arg1) {
@@ -59,6 +62,7 @@ External(TMUD, FieldUnitObj)
         //  Store(20, \_PR.DTSF)                    // INIT_DTS_FUNCTION_AFTER_S3
           \_SB.CSMI(ThermalUtility_SW_SMI, Read_DTS_Temperature)        // Notify DTS SW SMI, Sub-function is null.
           Sleep(10)
+          Store(0x1,STDT)  //CMFC Function Success
           If(LGreater(\_PR.DTS2, \_PR.DTS1)) {
             Store(\_PR.DTS2, Local0)
           } else {
@@ -68,6 +72,7 @@ External(TMUD, FieldUnitObj)
         }
 
         Default {
+          Store(0x8000,STDT)  //CMFC Function Not Support
           Return(WMI_UNSUPPORTED)    // Not support
         }
       }

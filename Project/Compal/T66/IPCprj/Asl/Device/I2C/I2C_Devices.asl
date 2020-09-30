@@ -21,6 +21,7 @@
 */
 
 #include "TCA955.asl"       //DIO TCA955
+#include "Device\I2C\DIO_WMI.asl"
 
 
 

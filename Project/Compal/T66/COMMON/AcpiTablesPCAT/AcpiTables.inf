@@ -78,6 +78,7 @@
 #[PRJ]++ >>>> Modify for support  VirtualEEPROMVerifyTool and CMFCVerify  
   $(PROJECT_PKG)/Project.dec
   $(COMPAL_COMMON_PATH)/CompalCommon.dec
+  $(T66_COMMON_PATH)/T66CommonPkg.dec
 #[PRJ]++ <<<< Modify for support  VirtualEEPROMVerifyTool and CMFCVerify  
 #[-start-161019-IB07400799-add]#
 [FeaturePcd]
