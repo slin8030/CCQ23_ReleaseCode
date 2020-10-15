@@ -64,6 +64,13 @@ Scope(\_SB) {
          1,             // Instance Count
          0x02,          // Flags WMIACPI_REGFLAG_METHOD
   //
+  // Method WMAE :GUID("{3C30B71E-74EB-4251-9022-4B5DF0F03892}")
+  //
+         0x1E, 0xB7, 0x30, 0x3C, 0xEB, 0x74, 0x51, 0x42, 0x90, 0x22, 0x4B, 0x5D, 0xF0, 0xF0, 0x38, 0x92,
+         65, 69,        // Object ID (AE)
+         1,             // Instance Count
+         0x02,          // Flags WMIACPI_REGFLAG_METHOD
+  //
   // This GUID for returning the MOF data
   //
          0x21, 0x12, 0x90, 0x05, 0x66, 0xd5, 0xd1, 0x11, 0xb2, 0xf0, 0x00, 0xa0, 0xc9, 0x06, 0x29, 0x10,
@@ -88,6 +95,10 @@ Scope(\_SB) {
 
      #ifdef WMI_WMAD_SUPPORT
       #include "WMI/WMAD.asl"       // Method   : WMAD --> CPU
+     #endif
+	 
+     #ifdef WMI_WMAE_SUPPORT
+      #include "WMI/WMAE.asl"       // Method   : WMAE --> EC
      #endif
 
      #include "WMI/WQBA.asl"       // MOF data : WQAB

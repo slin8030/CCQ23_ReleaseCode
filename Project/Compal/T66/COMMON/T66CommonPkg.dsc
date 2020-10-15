@@ -36,6 +36,12 @@
   !else
     DEFINE WMI_WMAD_SUPPORT_OPTION    =
   !endif
+  
+  !if $(WMI_WMAE_SUPPORT) == YES
+    DEFINE WMI_WMAE_SUPPORT_OPTION    = /D WMI_WMAE_SUPPORT=1
+  !else
+    DEFINE WMI_WMAE_SUPPORT_OPTION    =
+  !endif  
 
   !if $(DEBUG_GPIO_SUPPORT) == YES
     DEFINE T66_DEBUG_GPIO_OPTION    = /D T66_DEBUG_GPIO=1
@@ -46,6 +52,7 @@
   DEFINE EDK_EDKII_DSC_T66_BUILD_OPTIONS= $(WMI_WMAB_SUPPORT_OPTION) \
                                           $(WMI_WMAC_SUPPORT_OPTION) \
                                           $(WMI_WMAD_SUPPORT_OPTION) \
+					  $(WMI_WMAE_SUPPORT_OPTION) \
                                           $(WMI_WMAC_SUPPORT_DIOP_PATH)
 
   *_*_X64_ASLPP_FLAGS = $(EDK_EDKII_DSC_T66_BUILD_OPTIONS)

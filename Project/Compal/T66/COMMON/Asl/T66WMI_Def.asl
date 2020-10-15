@@ -36,6 +36,7 @@
   #define GET_CMFC_FW_VERSION             0x02
 #define CMFC_BOOT_DEVICE_SEQUENCE       0x13
 #define CMFC_RELOAD_BIOS_DEFUAL_TVALUE  0x14
+#define CMFC_EC_COMMUNICATE_INTERFACE   0x15
 
 //********-[ WMAB :BIOS function list ]-*****************
 #define Reload_BIOS_Default_Value       0x01
@@ -65,4 +66,7 @@
 #define WMAD_FUNC_GetCPUDTS             0x01
 //**************************************************
 
+//********-[ WMAE :EC function list ]-*****************
+#define EC_ReadWriteCommend             0x01
+//**************************************************
 #endif

@@ -99,3 +99,23 @@ class EasiCPU : CompalAcpiBase
     void GetCPUDTS([out] uint32 Result);
 
 };
+
+ [Dynamic, Provider("WMIProv"),
+ WMI,
+ Description("Counter for number of times the case has been hit"),
+ GUID("{3C30B71E-74EB-4251-9022-4B5DF0F03892}"),
+ locale("MS\\0x409")]
+class EasiEC : CompalAcpiBase
+{
+    [key, read]
+     string InstanceName;
+    [read] Boolean Active;
+
+
+    [Implemented,
+     Description("Read Write EC Command"),
+     WmiMethodId(1)]
+    void ReadWriteCommend([in] uint64 uStatus,[out] uint64 Result);
+};
+
+
