@@ -302,9 +302,9 @@ $BLC_Inv_Type_03 02
 $Lfp_Pwm_Source_Selection_03 02
 $Lfp_Pwm_Controller_Selection_03 00
 $BLC_Inv_Polarity_03 00
-$BLC_Min_Brightness_03 00
+$BLC_Min_Brightness_03 0D
 $POST_BL_Brightness_03 B4
-$PWM_Frequency_03 E8 03
+$PWM_Frequency_03 A8 61
 
 PAGE Chromaticity Control
 $Chromacity_Enable_03 00
