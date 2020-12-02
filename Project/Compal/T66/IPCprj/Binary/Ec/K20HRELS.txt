@@ -1,5 +1,27 @@
 Filename : K20HRELS.txt
 
+
+**************************************************************************
+FR1AA ENE KB9022 EC-FW release (Rev. 0.06A)                   12-02-2020
+File name : K20H0006A.ROM
+Base on  : K20H0005A.ROM
+Checksum  : 0x034E
+Notification:
+	1.> Need flash EC's boot block? --> No
+Fixed:
+ 
+Known issue:
+
+Modified:
+
+Add function:
+1. Support slide to shutdown function
+2. Support PIR function
+3. Add multi monitor EDID support
+4. Add WLANSAR control
+
+Project ID List:
+  	20: FR1AA
 **************************************************************************
 FR1AA ENE KB9022 EC-FW release (Rev. 0.05A)                   06-20-2020
 File name : K20H0005A.ROM
@@ -17,7 +39,7 @@ Modified:
 Add function:
 
 Project ID List:
-	20:FR1AA
+  	20: FR1AA
 **************************************************************************
 FR1AA ENE KB9022 EC-FW release (Rev. 0.04A)                   05-25-2020
 File name : K20H0004A.ROM
