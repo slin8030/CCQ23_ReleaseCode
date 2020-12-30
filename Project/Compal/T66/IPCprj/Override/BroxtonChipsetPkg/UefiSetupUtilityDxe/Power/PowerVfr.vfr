@@ -50,6 +50,7 @@ formset
     //
     // Jump to  2)CPU Configuration Form
     //
+#if 0    
     goto CPU_CONFIGURATION_FORM_ID,
       prompt = STRING_TOKEN(STR_CPU_CONFIGURATION_TITLE),
       help   = STRING_TOKEN(STR_CPU_CONFIGURATION_HELP);
@@ -71,6 +72,7 @@ formset
 //      endoneof;
 //[-end-170314-IB07400847-remove]//
 //[-start-161118-IB07400817-add]//
+
       oneof
         varid       = SystemConfig.WakeOnPME,
         prompt      = STRING_TOKEN(STR_WAKE_ON_PME_STRING),
@@ -81,6 +83,7 @@ formset
         option text = STRING_TOKEN(STR_FORCE_ENABLED_TEXT), value = 2, flags = 0       | INTERACTIVE;
 //[-end-171115-IB07400928-modify]//
       endoneof;
+#endif      
 //[-end-161118-IB07400817-add]//
 //[-start-170314-IB07400847-add]//
 //[S4S5RTCWake]LouisYT[-start-200701-001-add]//
@@ -99,6 +102,7 @@ formset
       endoneof;
 #endif      
 //[S4S5RTCWake]LouisYT[-end-200701-001-add]//
+#if 0
       suppressif
         ideqvallist SystemConfig.WakeOnS5 == 0 3 4;
         time
@@ -148,7 +152,15 @@ formset
 //      prompt = STRING_TOKEN(STR_CPU_CONFIGURATION_TITLE),
 //      help   = STRING_TOKEN(STR_CPU_CONFIGURATION_HELP);
 //[-end-161103-IB07400807-modify]//
-      
+#endif 
+      oneof
+        varid       = SystemConfig.WakeOnPME,
+        prompt      = STRING_TOKEN(STR_WAKE_ON_PME_STRING),
+        help        = STRING_TOKEN(STR_WAKE_ON_PME_HELP),
+        option text = STRING_TOKEN(STR_DISABLED_TEXT),      value = 0, flags = DEFAULT | INTERACTIVE;
+        option text = STRING_TOKEN(STR_ENABLED_BY_OS_TEXT), value = 1, flags = 0       | INTERACTIVE;
+        option text = STRING_TOKEN(STR_FORCE_ENABLED_TEXT), value = 2, flags = 0       | INTERACTIVE;
+      endoneof;      
   endform;
 
 #include "Cpu.vfi"

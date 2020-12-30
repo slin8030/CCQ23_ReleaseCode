@@ -50,7 +50,7 @@ form formid = ROOT_FORM_ID,
 
     subtitle
       text = STRING_TOKEN(STR_BLANK_STRING);
-
+#if 0
     goto BOOT_CONFIGUATION_FORM_ID,  //
       prompt = STRING_TOKEN(STR_BOOT_CONFIG_STRING),
       help = STRING_TOKEN(STR_BOOT_CONFIG_HELP);
@@ -143,7 +143,7 @@ form formid = ROOT_FORM_ID,
       prompt = STRING_TOKEN(STR_SIO_NUVOTON5104D_TITLE),
       help = STRING_TOKEN(STR_BLANK_STRING);
   endif;
-
+#endif 
     oneof varid   = SystemConfig.ATX_Flag,
       prompt      = STRING_TOKEN(STR_ATX_PROMPT),
       help        = STRING_TOKEN(STR_ATX_HELP),
@@ -151,10 +151,17 @@ form formid = ROOT_FORM_ID,
       option text = STRING_TOKEN(STR_AT_TEXT),  value = 1, flags = DEFAULT | MANUFACTURING | RESET_REQUIRED;
     endoneof;  
   
+    oneof
+      varid       = SystemConfig.S3WakeOnUsb, // Wake on USB form S3
+      prompt      = STRING_TOKEN(STR_S3_WAKE_ON_USB_PROMPT),
+      help        = STRING_TOKEN(STR_S3_WAKE_ON_USB_HELP),
+      option text = STRING_TOKEN(STR_DISABLED_TEXT),    value = 0, flags = 0;
+      option text = STRING_TOKEN(STR_ENABLED_TEXT),     value = 1, flags = DEFAULT;
+    endoneof;  
 //[-start-160923-IB07400789-add]//
-    goto SEG_CHIPSET_FEATURE_FORM_ID,
-      prompt = STRING_TOKEN(STR_SEG_CHIPSET_FEATURE_TITLE),
-      help   = STRING_TOKEN(STR_SEG_CHIPSET_FEATURE_TITLE);
+//    goto SEG_CHIPSET_FEATURE_FORM_ID,
+//      prompt = STRING_TOKEN(STR_SEG_CHIPSET_FEATURE_TITLE),
+//      help   = STRING_TOKEN(STR_SEG_CHIPSET_FEATURE_TITLE);
 //[-end-160923-IB07400789-add]//
 
   endform;

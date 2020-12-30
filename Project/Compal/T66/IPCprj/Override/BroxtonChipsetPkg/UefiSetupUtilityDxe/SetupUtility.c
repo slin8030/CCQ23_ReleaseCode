@@ -975,11 +975,6 @@ CallSetupUtilityBrowser (
 
 
     if (gSUBrowser->Interface.MenuItemCount < MAX_ITEMS) {
-//[PRJ]+ >>>> Hidden T66 unsupported items in SCU and add T66 showAllPage function 
-      if ((Index == AdvanceHiiHandle || Index == PowerHiiHandle) && (ShowMoreInfo == FALSE)) {
-        goto NextMenu;
-      }
-//[PRJ]+ <<<< Hidden T66 unsupported items in SCU and add T66 showAllPage function	  
       TempToken = FormSetPtr->FormSetTitle;
       gSUBrowser->Interface.MenuList[gSUBrowser->Interface.MenuItemCount].MenuTitle = TempToken;
       //
@@ -995,9 +990,6 @@ CallSetupUtilityBrowser (
       //
       gSUBrowser->Interface.MenuItemCount++;
     }
-//[PRJ]+ >>>> Hidden T66 unsupported items in SCU and add T66 showAllPage function
-NextMenu:
-//[PRJ]+ <<<< Hidden T66 unsupported items in SCU and add T66 showAllPage function	
     BufferSize = 0;
     gBS->FreePool(Buffer);
   }
