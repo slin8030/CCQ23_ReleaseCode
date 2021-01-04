@@ -2,7 +2,26 @@ Filename : K20HRELS.txt
 
 
 **************************************************************************
-FR1AA ENE KB9022 EC-FW release (Rev. 0.06A)                   12-02-2020
+FR1AA ENE KB9022 EC-FW release (Rev. 0.07A)                   01-04-2021
+File name : K20H0007A.ROM
+Base on  : K20H0006A.ROM
+Checksum  : 0x034D
+Notification:
+	1.> Need flash EC's boot block? --> No
+Fixed:
+ 
+Known issue:
+
+Modified:
+1. Modefy version for BIOS update.
+
+Add function:
+
+
+Project ID List:
+  	20: FR1AA
+**************************************************************************
+FR1AA ENE KB9022 EC-FW release (Rev. 0.06A)                   11-26-2020
 File name : K20H0006A.ROM
 Base on  : K20H0005A.ROM
 Checksum  : 0x034E
