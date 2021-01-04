@@ -1,34 +1,33 @@
 <seqblk>
 	<panelid>0x02</panelid>
-	<panelpoweron>
+<panelpoweron>
 		<gpio>
 			<gpioresourceid>0x00</gpioresourceid>
 			<gpiono>0xC4</gpiono>
 			<gpioval>0x01</gpioval>
 		</gpio>
-		<delay>5000</delay>
+		<delay>12000</delay>
 		<gpio>
 			<gpioresourceid>0x00</gpioresourceid>
-			<gpiono>0x9</gpiono>
+			<gpiono>0x09</gpiono>
 			<gpioval>0x01</gpioval>
 		</gpio>
 		<delay>20000</delay>
 		<gpio>
 			<gpioresourceid>0x00</gpioresourceid>
-			<gpiono>0x9</gpiono>
+			<gpiono>0x09</gpiono>
 			<gpioval>0x00</gpioval>
 		</gpio>
 		<delay>1000</delay>
 		<gpio>
 			<gpioresourceid>0x00</gpioresourceid>
-			<gpiono>0x9</gpiono>
+			<gpiono>0x09</gpiono>
 			<gpioval>0x01</gpioval>
 		</gpio>
 	</panelpoweron>
-	<reset>
-		
+<reset>
 	</reset>
-	<dispon>
+<dispon>
 		<pkt>
 			<pktflag>0x00</pktflag>
 			<pkttype>0x05</pkttype>
@@ -44,22 +43,21 @@
 		</pkt>
 		<delay>5000</delay>
 	</dispon>
-	<bklton>
+<bklton>
 		<gpio>
 			<gpioresourceid>0x00</gpioresourceid>
 			<gpiono>0xC5</gpiono>
 			<gpioval>0x01</gpioval>
 		</gpio>
 	</bklton>
-	<senddcs>
+<senddcs>
 		<gpio>
 			<gpioresourceid>0x02</gpioresourceid>
 			<gpiono>0xC6</gpiono>
 			<gpioval>0x01</gpioval>
 		</gpio>
 	</senddcs>
-
-	<dispoff>
+<dispoff>
 		<delay>33400</delay>
 		<pkt>
 			<pktflag>0x00</pktflag>
@@ -76,7 +74,7 @@
 		</pkt>
 		<delay>180000</delay>
 	</dispoff>
-	<bkltoff>
+<bkltoff>
 		<gpio>
 			<gpioresourceid>0x02</gpioresourceid>
 			<gpiono>0xC5</gpiono>
@@ -84,9 +82,9 @@
 		</gpio>
 		<delay>1000</delay>
 	</bkltoff>
-	<unreset>
+<unreset>
 	</unreset>
-	<panelpoweroff>
+<panelpoweroff>
 		<gpio>
 			<gpioresourceid>0x02</gpioresourceid>
 			<gpiono>0xC4</gpiono>
