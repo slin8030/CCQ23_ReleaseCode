@@ -197,6 +197,11 @@
 
  
 #[PRJ]+ >>>> Add T66 common utility
+  !disable $(CHIPSET_PKG)/PlatformSmm/Platform.inf
+  $(CHIPSET_PKG)/PlatformSmm/Platform.inf {
+    <SOURCE_OVERRIDE_PATH>
+      $(T66_COMMON_PATH)/Override/$(CHIPSET_PKG)/PlatformSmm/
+  }
   $(T66_COMMON_PATH)/Tool/SideBand/SideBand.inf
   $(T66_COMMON_PATH)/Tool/BiosSet/BiosSet.inf
 # Do ME Unlock for ME update
