@@ -125,7 +125,7 @@
       # Type 4 | Length | Enable | Setup Default | Level Supported | Level Setting
       #-----------------------------------------------------------------------------
       0x00, 0x04, 0x01, 0x00, \                                                       # Identify Device Extensive
-      0x01, 0x05, 0x03, 0x01, 0x02, \                                                 # Device Mode Selection
+      0x01, 0x05, 0x03, 0x01, 0x01, \                                                 # Device Mode Selection
       0x02, 0x0D, 0x00, 0x43, 0x6F, 0x6D, 0x31, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, \ # ASL DDN Setting
       0x03, 0x04, 0x00, 0x01, \                                                       # ASL IRQ Setting
       0x04, 0x06, 0x00, 0x00, 0x03, 0x00, \                                           # FIFO Setting
