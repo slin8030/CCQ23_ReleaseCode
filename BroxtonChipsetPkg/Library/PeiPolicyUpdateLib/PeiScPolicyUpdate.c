@@ -1124,9 +1124,11 @@ UpdatePeiScPolicy (
     
     UsbConfig->PortUsb20[1].Enable = TRUE;
     UsbConfig->PortUsb20[1].OverCurrentPin = ScUsbOverCurrentPin1;
-    
+
+//[PRJ]++ Map USB port 2 to OC1 pin    
     UsbConfig->PortUsb20[2].Enable = TRUE;
-    UsbConfig->PortUsb20[2].OverCurrentPin = ScUsbOverCurrentPinSkip;
+    UsbConfig->PortUsb20[2].OverCurrentPin = ScUsbOverCurrentPin1;
+//[PRJ]-- Map USB port 2 to OC1 pin  
     
     UsbConfig->PortUsb20[3].Enable = TRUE;
     UsbConfig->PortUsb20[3].OverCurrentPin = ScUsbOverCurrentPinSkip;
@@ -1158,9 +1160,11 @@ UpdatePeiScPolicy (
     
     UsbConfig->PortUsb30[1].Enable = TRUE;
     UsbConfig->PortUsb30[1].OverCurrentPin = ScUsbOverCurrentPin1;
-    
-    UsbConfig->PortUsb30[2].Enable = FALSE;
-    UsbConfig->PortUsb30[2].OverCurrentPin = ScUsbOverCurrentPinSkip;
+
+//[PRJ]++ Map USB port 2 to OC1 pin      
+    UsbConfig->PortUsb30[2].Enable = TRUE;
+    UsbConfig->PortUsb30[2].OverCurrentPin = ScUsbOverCurrentPin1;
+//[PRJ]-- Map USB port 2 to OC1 pin  	
     
     UsbConfig->PortUsb30[3].Enable = FALSE;
     UsbConfig->PortUsb30[3].OverCurrentPin = ScUsbOverCurrentPinSkip;
