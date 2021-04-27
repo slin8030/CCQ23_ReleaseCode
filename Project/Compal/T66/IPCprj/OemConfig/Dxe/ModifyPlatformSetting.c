@@ -222,7 +222,7 @@ ConfigEC_NameSpace (
   
   if (mSystemConfiguration->WakeOnPME) {
     EC_Name_F4A4.Bits.LAN_Wake = 1;
-    EC_Name_F4A4.Bits.WLAN_Wake = 1;
+//[PRJ]+ >>>>Fix system will auto power on when first time boot to os and let system shutdown    EC_Name_F4A4.Bits.WLAN_Wake = 1;
   }
   
   if (mSystemConfiguration->S3WakeOnUsb) {
