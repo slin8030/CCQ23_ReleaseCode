@@ -34,12 +34,48 @@
 			<pktwc>0x0002</pktwc>
 			<pktdata>0x11 0x00 </pktdata>
 		</pkt>
-		<delay>120000</delay>
+		<delay>500000</delay>
 		<pkt>
 			<pktflag>0x00</pktflag>
 			<pkttype>0x05</pkttype>
 			<pktwc>0x0002</pktwc>
 			<pktdata>0x29 0x00 </pktdata>
+		</pkt>
+    <pkt>
+			<pktflag>0x00</pktflag>
+			<pkttype>0x15</pkttype>
+			<pktwc>0x0002</pktwc>
+			<pktdata>0xE0 0x00 </pktdata>
+		</pkt>
+    <pkt>
+			<pktflag>0x00</pktflag>
+			<pkttype>0x15</pkttype>
+			<pktwc>0x0002</pktwc>
+			<pktdata>0xE1 0x93 </pktdata>
+		</pkt>
+    <pkt>
+			<pktflag>0x00</pktflag>
+			<pkttype>0x15</pkttype>
+			<pktwc>0x0002</pktwc>
+			<pktdata>0xE2 0x65 </pktdata>
+		</pkt>
+    <pkt>
+			<pktflag>0x00</pktflag>
+			<pkttype>0x15</pkttype>
+			<pktwc>0x0002</pktwc>
+			<pktdata>0xE3 0xF8 </pktdata>
+		</pkt>
+    <pkt>
+			<pktflag>0x00</pktflag>
+			<pkttype>0x15</pkttype>
+			<pktwc>0x0002</pktwc>
+			<pktdata>0xE0 0x01 </pktdata>
+		</pkt>
+    <pkt>
+			<pktflag>0x00</pktflag>
+			<pkttype>0x15</pkttype>
+			<pktwc>0x0002</pktwc>
+			<pktdata>0x37 0x19 </pktdata>
 		</pkt>
 		<delay>5000</delay>
 	</dispon>
