@@ -13,6 +13,7 @@
 */
 
 #include "KernelSetupConfig.h"
+#include "SetupConfig.h"
 
 formset
 #if FeaturePcdGet(PcdH2OFormBrowserSupported)
@@ -32,7 +33,7 @@ formset
   //
   // Define a Buffer Storage (EFI_IFR_VARSTORE)
   //
-  varstore KERNEL_CONFIGURATION,             // This is the data structure type
+  varstore SYSTEM_CONFIGURATION,             // This is the data structure type
     varid = CONFIGURATION_VARSTORE_ID,       // Optional VarStore ID
     name  = SystemConfig,                    // Define referenced name in vfr
     guid  = SYSTEM_CONFIGURATION_GUID;       // GUID of this buffer storage
@@ -83,6 +84,16 @@ formset
       label MAIN_PAGE_PLATFORM_INFO_LABEL;
     endif;
 
+     numeric 
+      varid      = SystemConfig.SlideShutDown,
+      prompt     = STRING_TOKEN(STR_SLIDE_SHUTDOWN_STRING),
+      help       = STRING_TOKEN(STR_SLIDE_SHUTDOWN_HELP),
+      minimum    = 5,
+      maximum    = 60,
+      step       = 1,
+      default    = 20,
+    endnumeric;
+  
   //  label SETUP_UTILITY_LANG_MENU;
 
     //

@@ -88,7 +88,8 @@ typedef struct {
 //----------------------------------------------------------------------------------------------------------
 //OEM_Start
 //Offset(600);
-  UINT8         ODMRSV[84];                       // Reserve for ODM
+  UINT8         ODMRSV[83];                       // Reserve for ODM
+  UINT8         SlideShutDown;                     // Slide Shut Down
   UINT8         ATX_Flag;                             // ATX/AT
   UINT8         NCT5104;                          // NCT5104 detect
   UINT8         ComPortA_Pin9;                        // COM Pin9 :Ring/5V/12V
